@@ -1,15 +1,15 @@
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import InputBase from "@material-ui/core/InputBase";
-import Button from "@material-ui/core/Button";
-import React from "react";
-import { Link } from "react-router-dom";
-import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
-import useStyles from "./Style";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import InputBase from '@material-ui/core/InputBase';
+import Button from '@material-ui/core/Button';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import useStyles from './Style';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 
-import { animateScroll as scroll } from "react-scroll";
+import { animateScroll as scroll } from 'react-scroll';
 
 function DefaultLayoutFooter(props) {
   const classes = useStyles();
@@ -24,16 +24,14 @@ function DefaultLayoutFooter(props) {
       <div
         className="flex flex-wrap w-full"
         style={{
-          width: "100%",
-          background: `linear-gradient(90deg, #92BF1F -18.89%, #F7B033 125.73%)`,
-        }}
-      >
+          width: '100%',
+          background: `linear-gradient(90deg, #92BF1F -18.89%, #F7B033 125.73%)`
+        }}>
         <Box
           display="flex"
           flexDirection="row"
           alignItems="center"
-          justifyContent="space-between"
-        >
+          justifyContent="space-between">
           <Box className={classes.wrapperFooter}>
             <Typography className={classes.titleFooter}>
               ĐĂNG KÝ NHẬN THÔNG TIN MỚI NHẤT
@@ -77,8 +75,7 @@ function DefaultLayoutFooter(props) {
 
               <Typography
                 className="text-17 mb-4 font-bold"
-                style={{ marginTop: 10 }}
-              >
+                style={{ marginTop: 10 }}>
                 Nhà tài trợ
               </Typography>
               <img src="assets/images/sponsor.png" alt="logo" />
@@ -168,8 +165,7 @@ function DefaultLayoutFooter(props) {
       <Button
         className={classes.scrollToTop}
         variant="contained"
-        onClick={scrollToTop}
-      >
+        onClick={scrollToTop}>
         <ArrowUpwardIcon />
       </Button>
       {/*====================  End of scroll top  ====================*/}

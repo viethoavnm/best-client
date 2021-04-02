@@ -1,51 +1,51 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import Drawer from "@material-ui/core/Drawer";
-import Hidden from "@material-ui/core/Hidden";
-import List from "@material-ui/core/List";
-import PropTypes from "prop-types";
-import SidebarItem from "./SidebarItem";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import { drawerWidth } from "../../utils/styleVariables";
-import { makeStyles } from "@material-ui/core/styles";
-import { withRouter } from "react-router-dom";
-import withWidth from "@material-ui/core/withWidth";
-import Divider from "@material-ui/core/Divider";
-import { mailFolderListItems, otherMailFolderListItems } from "./tileData";
+import Drawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden';
+import List from '@material-ui/core/List';
+import PropTypes from 'prop-types';
+import SidebarItem from './SidebarItem';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import { drawerWidth } from '../../utils/styleVariables';
+import { makeStyles } from '@material-ui/core/styles';
+import { withRouter } from 'react-router-dom';
+import withWidth from '@material-ui/core/withWidth';
+import Divider from '@material-ui/core/Divider';
+import { mailFolderListItems, otherMailFolderListItems } from './tileData';
 
 const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   drawerPaper: {
-    position: "relative",
+    position: 'relative',
     width: drawerWidth,
     maxWidth: drawerWidth,
-    height: "100%",
-    zIndex: theme.zIndex.drawer + 99,
+    height: '100%',
+    zIndex: theme.zIndex.drawer + 99
   },
   modal: {
-    [theme.breakpoints.down("sm")]: {
-      top: "56px!important",
+    [theme.breakpoints.down('sm')]: {
+      top: '56px!important'
     },
-    [theme.breakpoints.up("sm")]: {
-      top: "64px!important",
+    [theme.breakpoints.up('sm')]: {
+      top: '64px!important'
     },
-    zIndex: "1000!important",
+    zIndex: '1000!important'
   },
   backdrop: {
-    [theme.breakpoints.down("sm")]: {
-      top: "56px",
+    [theme.breakpoints.down('sm')]: {
+      top: '56px'
     },
-    [theme.breakpoints.up("sm")]: {
-      top: "64px",
-    },
-  },
+    [theme.breakpoints.up('sm')]: {
+      top: '64px'
+    }
+  }
 }));
 
 const Sidebar = ({ opened, toggleDrawer, routes, location }) => {
   const classes = useStyles();
   const [activeRoute, setActiveRoute] = useState(undefined);
-  const toggleMenu = (index) =>
+  const toggleMenu = index =>
     setActiveRoute(activeRoute === index ? undefined : index);
 
   const menu = (
@@ -81,18 +81,17 @@ const Sidebar = ({ opened, toggleDrawer, routes, location }) => {
         <Drawer
           variant="persistent"
           classes={{
-            paper: classes.drawerPaper,
+            paper: classes.drawerPaper
           }}
           open={opened}
           ModalProps={{
             keepMounted: false,
             className: classes.modal,
             BackdropProps: {
-              className: classes.backdrop,
+              className: classes.backdrop
             },
-            onBackdropClick: toggleDrawer,
-          }}
-        >
+            onBackdropClick: toggleDrawer
+          }}>
           {/* {menu} */}
           {sideList}
         </Drawer>
@@ -102,7 +101,7 @@ const Sidebar = ({ opened, toggleDrawer, routes, location }) => {
         <SwipeableDrawer
           variant="temporary"
           classes={{
-            paper: classes.drawerPaper,
+            paper: classes.drawerPaper
           }}
           open={opened}
           onClose={toggleDrawer}
@@ -112,11 +111,10 @@ const Sidebar = ({ opened, toggleDrawer, routes, location }) => {
             keepMounted: false,
             className: classes.modal,
             BackdropProps: {
-              className: classes.backdrop,
+              className: classes.backdrop
             },
-            onBackdropClick: toggleDrawer,
-          }}
-        >
+            onBackdropClick: toggleDrawer
+          }}>
           {/* {menu} */}
           {sideList}
         </SwipeableDrawer>
@@ -130,7 +128,7 @@ Sidebar.prototypes = {
   toggleDrawer: PropTypes.func,
   closeDrawer: PropTypes.func,
   openDrawer: PropTypes.func,
-  routes: PropTypes.object,
+  routes: PropTypes.object
 };
 
 const SidebarWithRouter = withRouter(Sidebar);

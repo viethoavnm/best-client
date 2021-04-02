@@ -1,27 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import MomentUtils from '@date-io/moment';
+import { ThemeProvider } from '@material-ui/styles';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { renderRoutes } from 'react-router-config';
 
-function App() {
+import theme from './theme';
+import routes from './routes';
+import { ScrollReset, CookiesNotification } from './components';
+import './mixins/moment';
+import './mixins/validate';
+import './mock';
+import './assets/scss/index.scss';
 
-  console.log("change")
+const history = createBrowserHistory();
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p style={{fontFamily: 'Montserrat', fontWeight: '700', fontSize: '24px'}}>
-        Đệm lót sinh học - giải pháp trong chăn nuôi 
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <Router history={history}>
+          <ScrollReset />
+          <CookiesNotification />
+          {renderRoutes(routes)}
+        </Router>
+      </MuiPickersUtilsProvider>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;

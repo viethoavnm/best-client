@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import AppBar from "@material-ui/core/AppBar";
-import Hidden from "@material-ui/core/Hidden";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import PropTypes from "prop-types";
-import useStyles from "./Style";
+import AppBar from '@material-ui/core/AppBar';
+import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import PropTypes from 'prop-types';
+import useStyles from './Style';
 
 const Header = ({ logo, logoAltText, toggleDrawer }) => {
   const classes = useStyles();
@@ -33,7 +33,7 @@ const Header = ({ logo, logoAltText, toggleDrawer }) => {
 
 Header.prototypes = {
   logo: PropTypes.string,
-  logoAltText: PropTypes.string,
+  logoAltText: PropTypes.string
 };
 
 export default Header;

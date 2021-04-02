@@ -1,12 +1,12 @@
-import { Button, CardMedia } from "@material-ui/core";
-import React, { Component } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { Button, CardMedia } from '@material-ui/core';
+import React, { Component } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   marker: {
     width: 22,
-    height: 29,
-  },
+    height: 29
+  }
 }));
 
 const MarkerMap = ({ text }) => {
