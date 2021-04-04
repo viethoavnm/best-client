@@ -28,6 +28,7 @@ const useStyles = makeStyles(() =>
       height: '100%',
       transform: 'skew(-15deg)',
       backgroundColor: '#92BF1F',
+      left: 5,
       '&::after': {
         position: 'absolute',
         content: '" "',
@@ -38,15 +39,17 @@ const useStyles = makeStyles(() =>
       }
     },
     title: {
-      paddingLeft: 15,
-      textTransform: 'uppercase'
+      flexGrow: 1,
+      display: 'flex',
+      alignItems: 'center',
+      padding: '0 20px'
     }
   })
 );
-const Title = ({ children }) => {
+const Title = ({ className, children }) => {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
+    <div className={[classes.root, className].join(' ')}>
       <div className={classes.decoration}></div>
       <div className={classes.title}>{children}</div>
     </div>

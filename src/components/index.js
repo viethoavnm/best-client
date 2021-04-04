@@ -20,3 +20,5 @@ export { default as SearchBar2 } from './SearchBar2';
 export { default as Title } from './Title';
 export { default as NewsCard } from './NewsCard';
 export { default as EventCard } from './EventCard';
+export { default as Pagination } from './Pagination';
+export { default as LibraryCard } from './LibraryCard';
