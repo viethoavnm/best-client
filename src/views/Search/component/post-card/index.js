@@ -8,7 +8,6 @@ import {
 } from '@material-ui/core';
 import { AccessTime } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/styles';
-import { Fragment } from 'react';
 import PropTypes from 'prop-types';
 const useStyles = makeStyles(theme => ({
   root: {
@@ -63,7 +62,7 @@ const useStyles = makeStyles(theme => ({
 const PostCard = ({ image, title, date, description }) => {
   const classes = useStyles();
   return (
-    <Fragment>
+    <div>
       <Card className={classes.root} elevation={0}>
         <Grid container spacing={0}>
           <Grid item xs={12} sm={5} md={4}>
@@ -94,7 +93,7 @@ const PostCard = ({ image, title, date, description }) => {
         </Grid>
       </Card>
       <div className={classes.line}></div>
-    </Fragment>
+    </div>
   );
 };
 
