@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { LinearProgress } from '@material-ui/core';
 
-import { TopBar } from './components';
+import { TopBar, NavBar } from './components';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -55,6 +55,7 @@ const Dashboard = props => {
         className={classes.topBar}
         onOpenNavBarMobile={handleNavBarMobileOpen}
       />
+      <NavBar />
 
       <div className={classes.container}>
         <main className={classes.content}>

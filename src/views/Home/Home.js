@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/styles';
 
 import { Page } from 'components';
 
+import { FeaturedSection } from './components';
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: theme.breakpoints.values.lg,
@@ -14,7 +16,11 @@ const useStyles = makeStyles(theme => ({
 
 const Home = () => {
   const classes = useStyles();
-  return <Page className={classes.root} title="Home"></Page>;
+  return (
+    <Page className={classes.root} title="Home">
+      <FeaturedSection />
+    </Page>
+  );
 };
 
 export default Home;
