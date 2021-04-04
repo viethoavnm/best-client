@@ -1,33 +1,8 @@
 import { Grid } from '@material-ui/core';
-import { createStyles, makeStyles } from '@material-ui/styles';
 import { LibraryCard, Pagination, Title } from 'components';
 import { Fragment } from 'react';
+import useStyles from 'views/Library/style';
 import NewsEvent from '../../../Search/component/news-event';
-const useStyles = makeStyles(theme =>
-  createStyles({
-    rightSidebar: {
-      display: 'none',
-      [theme.breakpoints.up('md')]: {
-        display: 'block'
-      }
-    },
-    header: {
-      padding: '40px 0'
-    },
-    height: { height: 48 },
-    title: {
-      flexGrow: 1,
-      color: '#3A3A3A',
-      fontSize: 24,
-      fontWeight: 'bold'
-    },
-    breadcrumb: {
-      color: '#818181',
-      fontWeight: 500,
-      fontSize: 16
-    }
-  })
-);
 
 const VideoLibrary = () => {
   const classes = useStyles();
