@@ -3,8 +3,6 @@ import { Redirect } from 'react-router-dom';
 
 import DefaultLayout from './layouts/Default';
 import ErrorLayout from './layouts/Error';
-import Home from './views/Home';
-import About from './views/About';
 
 const routes = [
   {
@@ -14,17 +12,16 @@ const routes = [
       {
         path: '/',
         exact: true,
-        component: Home
+        component: lazy(() => import('./views/Home'))
       },
       {
         path: '/home',
         exact: true,
-        component: Home
+        component: lazy(() => import('./views/Home'))
       },
       {
         path: '/about-us',
-        exact: true,
-        component: About
+        component: lazy(() => import('./views/About'))
       },
       {
         component: () => <Redirect to="/errors/error-404" />

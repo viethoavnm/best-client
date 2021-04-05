@@ -1,13 +1,16 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
+import clsx from 'clsx';
+
 import { colors } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import CardMedia from '@material-ui/core/CardMedia';
 import Divider from '@material-ui/core/Divider';
 
-import { Page, ShareSocial } from 'components';
+import { Page, ShareSocial, RightSidebar } from 'components';
 import renderHTML from 'react-render-html';
 
 const useStyles = makeStyles(theme => ({
@@ -57,7 +60,8 @@ const htmlContent = `
   <p>Quyết định trước đó là tiền đề cho cái sau này. Con đường mới chỉ được mở ra khi chúng ta có hành động thiết thực</p>
 `;
 
-const About = () => {
+const About = props => {
+  const { className, ...rest } = props;
   const classes = useStyles();
   const _renderTitle = title => {
     return (
@@ -111,8 +115,20 @@ const About = () => {
     <Page className={classes.root} title="About">
       <div className={classes.content}>
         {_renderTitle('Giới Thiệu')}
-        {_renderHeaderArticle()}
-        {renderHTML(htmlContent)}
+
+        <Grid
+          {...rest}
+          className={clsx(classes.root, className)}
+          container
+          spacing={3}>
+          <Grid item lg={8} md={6} xl={9} xs={12}>
+            {_renderHeaderArticle()}
+            {renderHTML(htmlContent)}
+          </Grid>
+          <Grid item lg={4} md={6} xl={3} xs={12}>
+            <RightSidebar />
+          </Grid>
+        </Grid>
 
         <Divider className={classes.divider} />
       </div>

@@ -3,7 +3,13 @@ import { makeStyles } from '@material-ui/styles';
 
 import { Page } from 'components';
 
-import { FeaturedSection } from './components';
+import {
+  FeaturedSection,
+  NewsSection,
+  LibrarySection,
+  EventSsection,
+  MapSection
+} from './components';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,6 +25,10 @@ const Home = () => {
   return (
     <Page className={classes.root} title="Home">
       <FeaturedSection />
+      <NewsSection />
+      <LibrarySection />
+      <EventSsection />
+      <MapSection />
     </Page>
   );
 };
