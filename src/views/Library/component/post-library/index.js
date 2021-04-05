@@ -26,6 +26,16 @@ const PostLibrary = () => {
                 title="Biomass Gasification Technology (BEST)"
                 date="20/02/2020"
                 author="Le Huy"
+                description="Công nghệ khí hóa sinh khối là quá trình phản ứng nhiệt"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} lg={4}>
+              <LibraryCard
+                image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
+                title="ĐBSCL vượt qua khủng hoảng kép như thế nào?"
+                date="20/02/2020"
+                author="Le Huy"
+                description="Công nghệ "
               />
             </Grid>
             <Grid item xs={12} sm={6} lg={4}>
@@ -34,14 +44,7 @@ const PostLibrary = () => {
                 title="Biomass Gasification Technology (BEST)"
                 date="20/02/2020"
                 author="Le Huy"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} lg={4}>
-              <LibraryCard
-                image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
-                title="Biomass Gasification Technology (BEST)"
-                date="20/02/2020"
-                author="Le Huy"
+                description="Công nghệ khí hóa sinh khối là quá trình phản ứng nhiệt ĐBSCL vượt qua khủng hoảng kép như thế nào?"
               />
             </Grid>
           </Grid>

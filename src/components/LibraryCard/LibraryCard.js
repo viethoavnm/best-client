@@ -27,6 +27,9 @@ const useStyles = makeStyles(theme => ({
       height: 'auto'
     }
   },
+  height: {
+    height: 203
+  },
   title: {
     color: '#3A3A3A',
     fontWeight: 700,
@@ -38,15 +41,24 @@ const useStyles = makeStyles(theme => ({
   time: {
     color: '#929292',
     fontSize: 13,
-    lineHeight: '20px'
+    lineHeight: '20px',
+    overflow: 'hidden'
   },
   wall: {
     height: 20,
     border: 'solid 1px #C4C4C4',
     margin: '0 5px'
+  },
+  description: {
+    color: '#929292',
+    fontSize: 13,
+    lineHeight: '20px',
+    maxHeight: 60,
+    overflow: 'hidden'
   }
 }));
-const LibraryCard = ({ image, title, author, date }) => {
+
+const LibraryCard = ({ image, title, author, date, description }) => {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
@@ -58,12 +70,20 @@ const LibraryCard = ({ image, title, author, date }) => {
           title={title}
         />
       </CardActionArea>
-      <CardContent className={classes.content}>
+      <CardContent
+        className={
+          description
+            ? [classes.height, classes.content].join(' ')
+            : classes.content
+        }>
         <Typography gutterBottom component="h2" className={classes.title}>
           {title}
         </Typography>
         <Typography component="p" className={classes.time}>
           {author} <span className={classes.wall}></span> {date}
+        </Typography>
+        <Typography component="p" className={classes.description}>
+          {description}
         </Typography>
       </CardContent>
     </Card>
