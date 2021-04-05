@@ -42,7 +42,8 @@ const useStyles = makeStyles(() =>
       flexGrow: 1,
       display: 'flex',
       alignItems: 'center',
-      padding: '0 20px'
+      padding: '0 20px',
+      color: '#92BF1F'
     }
   })
 );
