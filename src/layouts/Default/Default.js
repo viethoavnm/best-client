@@ -6,13 +6,16 @@ import { LinearProgress } from '@material-ui/core';
 
 import { TopBar } from './components';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     height: '100%',
     width: '100%',
-    display: 'flex',
+    // display: 'flex',
     flexDirection: 'column',
-    overflow: 'hidden'
+    backgroundColor: '#ffffff',
+    [theme.breakpoints.only('xs')]: {
+      padding: 10
+    }
   },
   topBar: {
     zIndex: 2,
@@ -30,8 +33,10 @@ const useStyles = makeStyles(() => ({
     flex: '0 0 auto'
   },
   content: {
-    overflowY: 'auto',
-    flex: '1 1 auto'
+    // overflowY: 'auto',
+    flex: '1 0 auto',
+    maxWidth: 1140,
+    margin: '0 auto'
   }
 }));
 
