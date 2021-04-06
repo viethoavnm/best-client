@@ -10,10 +10,21 @@ import ShareSocial from 'components/ShareSocial';
 import useStylesLibrary from 'views/Library/style';
 import NewsEvent from 'views/Search/component/news-event';
 import useStyles from './style';
+import xss from 'xss';
 
 const DetailVideo = () => {
   const classes = useStyles();
   const classesLibrary = useStylesLibrary();
+
+  const video = `<iframe width="560" height="315" src="https://www.youtube.com/embed/ArsJOpFjMcE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+  const clean = xss(video, {
+    onIgnoreTag: (tag, html) => {
+      if (tag === 'iframe') {
+        return html;
+      }
+    }
+  });
+
   return (
     <Grid container spacing={4} style={{ padding: '25px 0' }}>
       <Grid item xs={12} md={8}>
@@ -39,14 +50,9 @@ const DetailVideo = () => {
             </Button>
           </ShareSocial>
         </div>
-        <div className={classes.video}>
-          <iframe
-            src="https://www.youtube.com/embed/NZ2ND2qllp8"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen></iframe>
-        </div>
+        <div
+          className={classes.video}
+          dangerouslySetInnerHTML={{ __html: clean }}></div>
         <div className={classes.author}>Nguyen Hong</div>
         <Divider className={classes.divider} />
       </Grid>

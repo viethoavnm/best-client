@@ -37,7 +37,6 @@ const useStyles = makeStyles(() =>
     video: {
       paddingBottom: '60%',
       position: 'relative',
-      marginBottom: 40,
       '& iframe': {
         position: 'absolute',
         width: '100%',
@@ -47,7 +46,8 @@ const useStyles = makeStyles(() =>
     author: {
       textAlign: 'right',
       fontSize: 18,
-      fontWeight: 600
+      fontWeight: 600,
+      marginTop: 40,
     },
     divider: {
       backgroundColor: '#E5E5E5',
