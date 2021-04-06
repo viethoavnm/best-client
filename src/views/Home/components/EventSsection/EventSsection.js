@@ -111,7 +111,7 @@ const EventSsection = props => {
               component="h1"
               variant="h3"
               color="inherit"
-              className={classes.title1}>
+              className={classes.smTitle}>
               {title.toUpperCase()}
             </Typography>
           </Box>
@@ -123,7 +123,7 @@ const EventSsection = props => {
               component="h1"
               variant="h3"
               color="inherit"
-              className={classes.title2}>
+              className={classes.lgTitle}>
               {title.toUpperCase()}
             </Typography>
           </Box>

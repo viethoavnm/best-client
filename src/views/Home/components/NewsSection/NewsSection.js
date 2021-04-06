@@ -1,27 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/styles';
 
 import { Hidden, Grid, Box, Typography } from '@material-ui/core';
 import LibraryItem from '../LibraryItem';
 import LibraryItem1 from '../LibraryItem1';
 
-const useStyles = makeStyles(theme => ({
-  root: {},
-  content: {
-    marginTop: theme.spacing(3)
-  },
-  slashIcon: {
-    height: '100%'
-  },
-  title: {
-    fontFamily: 'Montserrat',
-    fontWeight: '700',
-    color: '#3A3A3A',
-    padding: theme.spacing(2)
-  }
-}));
+import useStyles from './styles';
 
 const LibrarySection = props => {
   const { className, ...rest } = props;
@@ -30,26 +15,42 @@ const LibrarySection = props => {
 
   const _renderTitle = title => {
     return (
-      <Box
-        display="flex"
-        flexDirection="row"
-        alignItems="center"
-        marginBottom="30px"
-        marginTop="40px"
-        bgcolor="#F6F6F6">
-        <img
-          className={clsx(classes.slashIcon)}
-          src="images/ic-slash-title.svg"
-          alt="slash"
-        />
-        <Typography
-          component="h1"
-          variant="h3"
-          color="inherit"
-          className={classes.title}>
-          {title.toUpperCase()}
-        </Typography>
-      </Box>
+      <div>
+        <Hidden smDown>
+          <Box
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            marginBottom="30px"
+            marginTop="40px"
+            bgcolor="#F6F6F6">
+            <img
+              className={clsx(classes.slashIcon)}
+              src="images/ic-slash-title.svg"
+              alt="slash"
+            />
+            <Typography
+              component="h1"
+              variant="h3"
+              color="inherit"
+              className={classes.smTitle}>
+              {title.toUpperCase()}
+            </Typography>
+          </Box>
+        </Hidden>
+
+        <Hidden lgUp>
+          <Box display="flex" flexDirection="row" alignItems="center">
+            <Typography
+              component="h1"
+              variant="h3"
+              color="inherit"
+              className={classes.lgTitle}>
+              {title.toUpperCase()}
+            </Typography>
+          </Box>
+        </Hidden>
+      </div>
     );
   };
 

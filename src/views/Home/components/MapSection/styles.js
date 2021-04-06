@@ -11,14 +11,13 @@ const useStyles = makeStyles(theme => ({
   title1: {
     fontFamily: 'Montserrat',
     fontWeight: '700',
-    color: '#3A3A3A',
-    padding: theme.spacing(2)
+    color: '#3A3A3A'
   },
   title2: {
     fontFamily: 'Montserrat',
     fontWeight: '700',
     color: '#92BF1F',
-    padding: theme.spacing(2)
+    marginBottom: theme.spacing(2)
   },
   leftProject: {
     borderRadius: 10,
@@ -136,6 +135,18 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'row',
     marginBottom: 35,
     padding: 15
+  },
+  smTitle: {
+    fontFamily: 'Montserrat',
+    fontWeight: '700',
+    color: '#3A3A3A',
+    marginLeft: theme.spacing(2)
+  },
+  lgTitle: {
+    fontFamily: 'Montserrat',
+    fontWeight: '700',
+    color: '#92BF1F',
+    marginBottom: theme.spacing(2)
   }
 }));
 

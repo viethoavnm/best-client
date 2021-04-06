@@ -32,6 +32,7 @@ const mockEvent = [
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 const AppEventPickers = props => {
   const classes = useStyles(props);
+
   const [dateSelected, changeDateSelected] = useState(new Date());
   const [currentEvent, changeCurrentEvent] = useState(mockEvent[0]);
   // eslint-disable-next-line no-unused-vars
@@ -112,7 +113,7 @@ const AppEventPickers = props => {
                   <CardMedia
                     alt="image-event"
                     className={classes.thumbnailEvent}
-                    image="assets/images/new-1.png"
+                    image="images/new-1.png"
                   />
 
                   <Box
@@ -148,7 +149,7 @@ const AppEventPickers = props => {
                       <CardMedia
                         alt="location"
                         className={classes.media}
-                        image="assets/images/ic-location-white.svg"
+                        image="images/ic-location-white.svg"
                       />
                       <Typography className={classes.addressItem}>
                         {currentEvent.address}
