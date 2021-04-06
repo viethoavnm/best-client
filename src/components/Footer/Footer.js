@@ -8,6 +8,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import useStyles from './Style';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import clsx from 'clsx';
 
 import { animateScroll as scroll } from 'react-scroll';
 
@@ -56,7 +57,12 @@ function DefaultLayoutFooter(props) {
 
       {/*==================== Footer 1 ====================*/}
       <Container>
-        <Grid container direction="row" justify="center" alignItems="center">
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
+          spacing={3}>
           <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
             <div className="w-full sm:w-2/5 px-16" style={{ marginTop: 45 }}>
               <img
@@ -64,77 +70,164 @@ function DefaultLayoutFooter(props) {
                 src="images/logos/logo-best.png"
                 alt="logo"
               />
-              <Typography className="text-17 mb-4 font-bold">
+
+              <Typography
+                color="inherit"
+                className={clsx(classes.footerColumnTitle)}>
                 Công nghệ khí hóa sinh khối
               </Typography>
 
-              <Typography className="text-13" color="inherit">
+              <Typography
+                color="inherit"
+                className={clsx(classes.footerColumnDes)}>
                 Giải pháp năng lượng bền vững cho chế biến nông sản và quản lý
                 chất thải ở nông thôn Việt Nam.
               </Typography>
 
-              <Typography
-                className="text-17 mb-4 font-bold"
-                style={{ marginTop: 10 }}>
-                Nhà tài trợ
-              </Typography>
-              <img src="images/sponsor.png" alt="logo" />
+              <div className={clsx(classes.blockDownload)}>
+                <Box display="flex" flexDirection="row" alignItems="center">
+                  <Typography
+                    color="inherit"
+                    className={clsx(classes.downloadAppTitle)}>
+                    TẢI APP TẠI ĐÂY
+                  </Typography>
+                  <img src="images/ic-download.svg" alt="download" />
+                </Box>
+              </div>
+
+              <div className={clsx(classes.blockDownload)}>
+                <Typography
+                  color="inherit"
+                  className={clsx(classes.footerColumnTitle)}>
+                  Nhà tài trợ
+                </Typography>
+
+                <img src="images/sponsor.png" alt="logo" />
+              </div>
             </div>
           </Grid>
 
           <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
-            <div className="w-full sm:w-1/5" style={{ marginTop: 45 }}>
-              <Typography className="text-17 mb-4">Về chúng tôi</Typography>
-              <ul style={{ marginTop: 45 }}>
-                <li>
-                  <Link to="/home">Trang chủ</Link>
-                </li>
-                <li>
-                  <Link to="/about-us">Giới thiệu</Link>
-                </li>
-                <li>
-                  <Link to="/vcbg-technology">Công nghệ VCBG</Link>
-                </li>
+            <Typography
+              color="inherit"
+              className={clsx(classes.footerColumnTitle)}>
+              Về chúng tôi
+            </Typography>
 
-                <li>
-                  <Link to="/news">Bản tin</Link>
-                </li>
-                <li>
-                  <Link to="/events">Sự kiện sắp tới</Link>
-                </li>
-                <li>
-                  <Link to="/library">Thư viện</Link>
-                </li>
-              </ul>
+            <div className={clsx(classes.columnContent)}>
+              <Typography
+                color="inherit"
+                component={Link}
+                to="/home"
+                className={clsx(classes.eachRowItem)}>
+                Trang chủ
+              </Typography>
+
+              <Typography
+                color="inherit"
+                component={Link}
+                to="/about-us"
+                className={clsx(classes.eachRowItem)}>
+                Giới thiệu
+              </Typography>
+
+              <Typography
+                color="inherit"
+                component={Link}
+                to="/vcbg-technology"
+                className={clsx(classes.eachRowItem)}>
+                Công nghệ VCBG
+              </Typography>
+
+              <Typography
+                color="inherit"
+                component={Link}
+                to="/news"
+                className={clsx(classes.eachRowItem)}>
+                Bản tin
+              </Typography>
+
+              <Typography
+                color="inherit"
+                component={Link}
+                to="/events"
+                className={clsx(classes.eachRowItem)}>
+                Sự kiện sắp tới
+              </Typography>
+
+              <Typography
+                color="inherit"
+                component={Link}
+                to="/library"
+                className={clsx(classes.eachRowItem)}>
+                Thư viện
+              </Typography>
+            </div>
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
+            <Typography
+              color="inherit"
+              className={clsx(classes.footerColumnTitle)}>
+              Đơn vị thực hiện
+            </Typography>
+
+            <div className={clsx(classes.columnContent)}>
+              <Typography color="inherit" className={clsx(classes.eachRowItem)}>
+                Oxfam tại Việt Nam
+              </Typography>
+              <Typography color="inherit" className={clsx(classes.eachRowItem)}>
+                CCS
+              </Typography>
             </div>
           </Grid>
 
           <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
             <div className="w-full sm:w-1/5 px-16" style={{}}>
-              <Typography className="text-17 mb-4">Đơn vị thực hiện</Typography>
-              <ul style={{ marginTop: 45 }}>
-                <li>Oxfam tại Việt Nam</li>
-                <li>CCS</li>
-              </ul>
-            </div>
-          </Grid>
+              <Typography
+                color="inherit"
+                className={clsx(classes.footerColumnTitle)}>
+                Liên hệ
+              </Typography>
 
-          <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
-            <div className="w-full sm:w-1/5 px-16" style={{ marginTop: 45 }}>
-              <Typography className="text-17 mb-4">Liên hệ</Typography>
-              <ul style={{ marginTop: 45 }}>
-                <li>
-                  <i className="fi flaticon-envelope">admin@ccsspin.com</i>
-                </li>
-                <li>
-                  <i className="fi flaticon-call" />
-                  024 6260 5318
-                </li>
-                <li>
-                  <i className="fi flaticon-pin" />
-                  #49 ngõ 2 phố Hoàng Sâm, phường Nghĩa Đô, quận Cầu Giấy, TP Hà
-                  Nội, Việt Nam.
-                </li>
+              <ul style={{}}>
+                <Box
+                  display="flex"
+                  flexDirection="row"
+                  alignItems="center"
+                  className={clsx(classes.inforRow)}>
+                  <img
+                    className={clsx(classes.footerIcon)}
+                    src="images/icEmail.svg"
+                    alt="icEmail"
+                  />
+                  <Typography color="inherit" className={classes.smTitle}>
+                    admin@ccsspin.com
+                  </Typography>
+                </Box>
+
+                <Box display="flex" flexDirection="row" alignItems="center">
+                  <img
+                    className={clsx(classes.footerIcon)}
+                    src="images/icPhone.svg"
+                    alt="icPhone"
+                  />
+                  <Typography color="inherit" className={classes.smTitle}>
+                    024 6260 5318
+                  </Typography>
+                </Box>
+
+                <Box display="flex" flexDirection="row" alignItems="center">
+                  <img
+                    className={clsx(classes.footerIcon)}
+                    src="images/icLocation.svg"
+                    alt="icLocation"
+                  />
+                  <Typography color="inherit" className={classes.smTitle}>
+                    #49 ngõ 2 phố Hoàng Sâm, phường Nghĩa Đô, quận Cầu Giấy, TP
+                    Hà Nội, Việt Nam.
+                  </Typography>
+                </Box>
               </ul>
             </div>
           </Grid>
@@ -143,7 +236,7 @@ function DefaultLayoutFooter(props) {
       {/*==================== End of Footer 1 ====================*/}
 
       {/*==================== Footer 2 ====================*/}
-      <Container>
+      <div className={clsx(classes.secondFooterBlock)}>
         <Grid container direction="row" justify="center" alignItems="center">
           <Grid item xs={12} sm={6} md={10} lg={10} xl={10}>
             <Typography className="text-13" color="inherit">
@@ -154,11 +247,12 @@ function DefaultLayoutFooter(props) {
               phản ánh quan điểm của Liên minh Châu Âu.
             </Typography>
           </Grid>
+
           <Grid item xs={12} sm={6} md={2} lg={2} xl={2}>
             <Typography>© 2021 TESO</Typography>
           </Grid>
         </Grid>
-      </Container>
+      </div>
       {/*==================== End of Footer 2 ====================*/}
 
       {/*====================  Scroll top ====================*/}
