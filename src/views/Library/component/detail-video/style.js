@@ -12,6 +12,7 @@ const useStyles = makeStyles(() =>
       backgroundColor: '#92BF1F',
       color: '#ffffff',
       height: 24,
+      whiteSpace: 'nowrap',
       '&:hover': {
         backgroundColor: '#92BF1F',
         color: '#ffffff'
@@ -19,6 +20,7 @@ const useStyles = makeStyles(() =>
     },
     shareBox: {
       display: 'flex',
+      flexWrap: 'wrap',
       alignItems: 'center',
       marginBottom: 35
     },
@@ -47,7 +49,7 @@ const useStyles = makeStyles(() =>
       textAlign: 'right',
       fontSize: 18,
       fontWeight: 600,
-      marginTop: 40,
+      marginTop: 40
     },
     divider: {
       backgroundColor: '#E5E5E5',
