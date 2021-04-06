@@ -8,21 +8,21 @@ const useStyles = makeStyles(() =>
       display: 'flex',
       alignItems: 'center',
       backgroundColor: '#ffffff',
-      marginTop: 15,
+      marginTop: 20,
       '& .MuiCardContent-root': {
-        padding: 5
+        padding: 0
       }
     },
     img: {
-      width: 105,
-      height: 105,
+      width: 85,
+      height: 83,
       borderRadius: 10,
       backgroundColor: '#92BF1F',
       textAlign: 'center',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      marginRight: 15,
+      marginRight: 35,
       flexShrink: 0
     },
     date: {

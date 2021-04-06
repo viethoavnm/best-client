@@ -1,6 +1,6 @@
 import { createStyles, makeStyles } from '@material-ui/styles';
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles(theme =>
   createStyles({
     root: {
       position: 'relative',
@@ -20,6 +20,10 @@ const useStyles = makeStyles(() =>
         transform: 'skew(-15deg)',
         backgroundColor: '#ffffff',
         zIndex: 1
+      },
+      [theme.breakpoints.down('sm')]: {
+        backgroundColor: 'transparent',
+        height: 'auto'
       }
     },
     decoration: {
@@ -35,15 +39,33 @@ const useStyles = makeStyles(() =>
         marginLeft: '100%',
         width: 12,
         height: '100%',
-        backgroundColor: '#F7F7F7'
+        backgroundColor: '#F7F7F7',
+        [theme.breakpoints.down('sm')]: {
+          content: ''
+        }
+      },
+      [theme.breakpoints.down('sm')]: {
+        display: 'none'
       }
     },
     title: {
       flexGrow: 1,
       display: 'flex',
+      flexWrap: 'wrap',
       alignItems: 'center',
       padding: '0 20px',
-      color: '#92BF1F'
+      color: '#92BF1F',
+      [theme.breakpoints.down('sm')]: {
+        padding: 0,
+        flexDirection: 'column',
+        alignItems: 'start'
+      },
+      '& > div:first-child': {
+        [theme.breakpoints.down('sm')]: {
+          order: 2,
+          marginTop: 10
+        }
+      }
     }
   })
 );
