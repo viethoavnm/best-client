@@ -61,7 +61,7 @@ function DefaultLayoutFooter(props) {
             <div className="w-full sm:w-2/5 px-16" style={{ marginTop: 45 }}>
               <img
                 className="logo-icon"
-                src="assets/images/logos/logo-best.png"
+                src="images/logos/logo-best.png"
                 alt="logo"
               />
               <Typography className="text-17 mb-4 font-bold">
@@ -78,7 +78,7 @@ function DefaultLayoutFooter(props) {
                 style={{ marginTop: 10 }}>
                 Nhà tài trợ
               </Typography>
-              <img src="assets/images/sponsor.png" alt="logo" />
+              <img src="images/sponsor.png" alt="logo" />
             </div>
           </Grid>
 
@@ -110,7 +110,7 @@ function DefaultLayoutFooter(props) {
           </Grid>
 
           <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
-            <div className="w-full sm:w-1/5 px-16" style={{ marginTop: 45 }}>
+            <div className="w-full sm:w-1/5 px-16" style={{}}>
               <Typography className="text-17 mb-4">Đơn vị thực hiện</Typography>
               <ul style={{ marginTop: 45 }}>
                 <li>Oxfam tại Việt Nam</li>

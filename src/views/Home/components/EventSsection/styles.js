@@ -1,6 +1,9 @@
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    marginTop: theme.spacing(5)
+  },
   dayDate: {
     fontFamily: 'Montserrat',
     fontSize: '24px',

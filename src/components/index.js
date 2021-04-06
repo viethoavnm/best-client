@@ -19,3 +19,4 @@ export { default as TableEditBar } from './TableEditBar';
 export { default as ShareSocial } from './ShareSocial';
 export { default as RightSidebar } from './RightSidebar';
 export { default as MarkerMap } from './MarkerMap';
+export { default as Footer } from './Footer';

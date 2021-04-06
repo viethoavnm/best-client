@@ -8,7 +8,6 @@ import {
   Toolbar,
   Hidden,
   Input,
-  Popper,
   Paper,
   List,
   ListItem,
@@ -47,8 +46,6 @@ const TopBar = props => {
     setOpenSearchPopover(false);
   };
 
-  const popularSearches = ['Pages'];
-
   return (
     <AppBar {...rest} className={clsx(classes.root, className)} color="primary">
       <Toolbar>
@@ -68,30 +65,6 @@ const TopBar = props => {
               value={searchValue}
             />
           </div>
-
-          <Popper
-            anchorEl={searchRef.current}
-            className={classes.searchPopper}
-            open={openSearchPopover}
-            transition>
-            <ClickAwayListener onClickAway={handleSearchPopverClose}>
-              <Paper className={classes.searchPopperContent} elevation={3}>
-                <List>
-                  {popularSearches.map(search => (
-                    <ListItem
-                      button
-                      key={search}
-                      onClick={handleSearchPopverClose}>
-                      <ListItemIcon>
-                        <SearchIcon />
-                      </ListItemIcon>
-                      <ListItemText primary={search} />
-                    </ListItem>
-                  ))}
-                </List>
-              </Paper>
-            </ClickAwayListener>
-          </Popper>
         </Hidden>
 
         <Hidden lgUp>
