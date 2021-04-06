@@ -1,18 +1,18 @@
 {
   "parser": "babel-eslint",
-  "rules": {
-
-  },
   "env": {
     "es6": true,
     "browser": true
   },
-  "extends": "eslint:recommended",
+  "extends": ["eslint:recommended"],
   "ecmaFeatures": {
     "jsx": true,
     "experimentalObjectRestSpread": true
   },
   "plugins": [
     "react"
-  ]
+  ],
+  "rules": {
+    "no-unused-vars": 1 
+  }
 }
