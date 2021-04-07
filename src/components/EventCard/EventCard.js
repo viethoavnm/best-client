@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+import React from 'react';
 import { Card, CardContent, Typography } from '@material-ui/core';
 import { createStyles, makeStyles } from '@material-ui/styles';
 
@@ -67,3 +69,4 @@ const EventCard = ({ day, month, title }) => {
 };
 
 export default EventCard;
+/* eslint-enable react/prop-types */

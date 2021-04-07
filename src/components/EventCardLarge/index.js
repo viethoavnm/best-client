@@ -1,16 +1,18 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import Grid from '@material-ui/core/Grid';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-import CardActionArea from '@material-ui/core/CardActionArea';
+import {
+  Card,
+  Grid,
+  CardContent,
+  CardMedia,
+  CardActionArea,
+  Typography,
+  Box
+} from '@material-ui/core';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import moment from 'moment';
 import { useTheme } from '@material-ui/core/styles';
-import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -171,3 +173,4 @@ const EventCardLarge = ({ day, month, year, hourminute, title, location }) => {
 };
 
 export default EventCardLarge;
+/* eslint-enable react/prop-types */
