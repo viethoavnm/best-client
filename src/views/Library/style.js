@@ -11,7 +11,6 @@ const useStyles = makeStyles(theme =>
     header: {
       padding: '40px 0'
     },
-    height: { height: 48 },
     title: {
       flexGrow: 1,
       color: '#3A3A3A',

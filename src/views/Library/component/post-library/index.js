@@ -10,7 +10,7 @@ const PostLibrary = () => {
   return (
     <Fragment>
       <div className={classes.header}>
-        <Title className={classes.height}>
+        <Title size="large">
           <div className={classes.title}>Thông cáo báo chí</div>
           <div className={classes.breadcrumb}>
             Trang chủ / Thư viện/ Thông cáo báo chí

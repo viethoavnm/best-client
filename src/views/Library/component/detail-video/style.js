@@ -1,12 +1,19 @@
 import { createStyles, makeStyles } from '@material-ui/core';
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles(theme =>
   createStyles({
     title: {
       color: '#3A3A3A',
       fontSize: 36,
       fontWeight: 'bold',
-      marginBottom: 35
+      marginBottom: 35,
+      [theme.breakpoints.down('sm')]: {
+        fontSize: 24
+      },
+      [theme.breakpoints.down('xs')]: {
+        fontSize: 18,
+        marginBottom: 15
+      }
     },
     libraryBtn: {
       backgroundColor: '#92BF1F',
@@ -22,7 +29,13 @@ const useStyles = makeStyles(() =>
       display: 'flex',
       flexWrap: 'wrap',
       alignItems: 'center',
-      marginBottom: 35
+      marginBottom: 30,
+      '& > *': {
+        marginBottom: 10
+      },
+      [theme.breakpoints.down('xs')]: {
+        marginBottom: 15
+      }
     },
     time: {
       flexGrow: 1,

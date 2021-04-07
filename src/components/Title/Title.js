@@ -1,4 +1,5 @@
 import { createStyles, makeStyles } from '@material-ui/styles';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -7,7 +8,6 @@ const useStyles = makeStyles(theme =>
       display: 'flex',
       alignItems: 'center',
       backgroundColor: '#F7F7F7',
-      height: 32,
       fontWeight: 600,
       fontSize: 18,
       '&::after': {
@@ -25,6 +25,12 @@ const useStyles = makeStyles(theme =>
         backgroundColor: 'transparent',
         height: 'auto'
       }
+    },
+    large: {
+      height: 48
+    },
+    small: {
+      height: 32
     },
     decoration: {
       position: 'relative',
@@ -69,14 +75,20 @@ const useStyles = makeStyles(theme =>
     }
   })
 );
-const Title = ({ className, children }) => {
+const Title = ({ className, children, size = 'small' }) => {
   const classes = useStyles();
   return (
-    <div className={[classes.root, className].join(' ')}>
+    <div className={[classes.root, classes[size], className].join(' ')}>
       <div className={classes.decoration}></div>
       <div className={classes.title}>{children}</div>
     </div>
   );
+};
+
+Title.prototypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+  size: 'large' || 'small'
 };
 
 export default Title;

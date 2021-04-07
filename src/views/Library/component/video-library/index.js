@@ -10,7 +10,7 @@ const VideoLibrary = () => {
   return (
     <Fragment>
       <div className={classes.header}>
-        <Title className={classes.height}>
+        <Title size="large">
           <div className={classes.title}>VIDEO</div>
           <div className={classes.breadcrumb}>Trang chủ / Thư viện/ video</div>
         </Title>
