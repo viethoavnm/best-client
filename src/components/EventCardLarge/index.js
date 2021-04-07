@@ -19,7 +19,9 @@ const useStyles = makeStyles(theme =>
     root: {
       display: 'flex',
       overflow: 'visible',
-      marginBottom: 25
+      marginBottom: 25,
+      borderRadius: 10,
+      boxShadow: '0px 4px 60px rgba(150, 150, 150, 0.13)'
     },
     details: {
       flexDirection: 'column'
@@ -29,20 +31,12 @@ const useStyles = makeStyles(theme =>
     },
     media: {
       height: 0,
-      paddingTop: '77%'
-    },
-    controls: {
-      display: 'flex',
-      alignItems: 'center',
-      paddingLeft: 10,
-      paddingBottom: 10
-    },
-    playIcon: {
-      height: 38,
-      width: 38
+      paddingTop: '77%',
+      borderRadius: 10
     },
     title: {
-      marginBottom: 20,
+      marginTop: 24,
+      marginBottom: 42,
       color: '#3A3A3A',
       fontWeight: 500,
       overflow: 'hidden',
@@ -55,8 +49,11 @@ const useStyles = makeStyles(theme =>
       display: 'flex',
       alignItems: 'center',
       justifyItems: 'center',
-      marginBottom: 10,
+      marginBottom: 23,
       color: '#92BF1F'
+    },
+    detailGrid: {
+      paddingLeft: 32
     },
     iconGrid: {
       marginRight: 10,
@@ -70,7 +67,7 @@ const useStyles = makeStyles(theme =>
       '-webkit-box-orient': 'vertical',
       textOverflow: 'ellipsis'
     },
-    one: {
+    datetime: {
       width: '50%',
       borderRadius: 10,
       backgroundColor: '#92BF1F',
@@ -78,12 +75,12 @@ const useStyles = makeStyles(theme =>
       bottom: -16,
       right: -16
     },
-    two: {
+    datetimeContainer: {
       position: 'relative',
       paddingBottom: '100%',
       height: 0
     },
-    three: {
+    datetimeBlock: {
       textAlign: 'center',
       display: 'flex',
       alignItems: 'center',
@@ -102,7 +99,7 @@ const useStyles = makeStyles(theme =>
         fontSize: 22
       },
       [theme.breakpoints.up('lg')]: {
-        fontSize: 30
+        fontSize: 28
       },
       fontWeight: 500,
       whiteSpace: 'nowrap'
@@ -118,7 +115,7 @@ const useStyles = makeStyles(theme =>
         marginTop: 27
       },
       [theme.breakpoints.up('md')]: {
-        fontSize: 70,
+        fontSize: 68,
         marginTop: 37
       },
       fontWeight: 'bold',
@@ -132,17 +129,17 @@ const EventCardLarge = ({ day, month, year, hourminute, title, location }) => {
   const theme = useTheme();
   return (
     <Card className={classes.root}>
-      <Grid container spacing={2}>
+      <Grid container spacing={0}>
         <Grid item xs={5} md={4}>
           <CardActionArea className={classes.mediaBlock}>
             <CardMedia
-              className={`${classes.media} MuiPaper-rounded`}
+              className={`${classes.media}`}
               image="/images/tin-moi-nhat-1.png"
               title="Live from space album cover"
             />
-            <div className={classes.one}>
-              <div className={classes.two}>
-                <CardContent className={classes.three}>
+            <div className={classes.datetime}>
+              <div className={classes.datetimeContainer}>
+                <CardContent className={classes.datetimeBlock}>
                   <Typography component="div">
                     <Typography component="div" className={classes.month}>
                       Tháng {month}
@@ -156,7 +153,7 @@ const EventCardLarge = ({ day, month, year, hourminute, title, location }) => {
             </div>
           </CardActionArea>
         </Grid>
-        <Grid item xs={7} md={8}>
+        <Grid item xs={7} md={8} className={classes.detailGrid}>
           <div className={classes.details}>
             <CardContent className={classes.content}>
               <Typography
