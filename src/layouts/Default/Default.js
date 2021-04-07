@@ -20,8 +20,8 @@ const useStyles = makeStyles(() => ({
     position: 'relative'
   },
   container: {
-    display: 'flex',
-    flex: '1 1 auto',
+    // display: 'flex',
+    // flex: '1 1 auto',
     // overflow: 'hidden'
   },
   navBar: {

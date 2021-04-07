@@ -9,7 +9,7 @@ import { Search } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles(theme =>
   createStyles({
     root: {
       display: 'flex',
@@ -20,11 +20,14 @@ const useStyles = makeStyles(() =>
       paddingLeft: 20
     },
     iconButton: {
-      backgroundColor: '#92BF1F',
-      borderRadius: 0,
-      color: '#ffffff',
-      '&:hover': {
-        backgroundColor: '#92BF1F'
+      color: '#323232',
+      borderRadius: '0 4px 4px 0',
+      [theme.breakpoints.up('sm')]: {
+        color: '#ffffff',
+        backgroundColor: '#92BF1F',
+        '&:hover': {
+          backgroundColor: '#92BF1F'
+        }
       }
     }
   })

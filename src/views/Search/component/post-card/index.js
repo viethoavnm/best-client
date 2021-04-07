@@ -9,18 +9,14 @@ import {
 import { AccessTime } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
+
 const useStyles = makeStyles(theme => ({
-  root: {
-    lineHeight: 1.5
-  },
-  button: {
-    paddingBottom: '70%'
-  },
   img: {
-    position: 'absolute'
+    height: 0,
+    paddingBottom: '66%'
   },
   time: {
-    marginTop: 10,
+    marginTop: 8,
     color: '#ACB5BB',
     fontSize: 13,
     height: '20px',
@@ -32,68 +28,72 @@ const useStyles = makeStyles(theme => ({
     height: 14,
     marginRight: 10
   },
-  container: {
-    position: 'relative',
-    '& .MuiCardContent-root': {
-      padding: '0 15px'
-    },
-    [theme.breakpoints.up('sm')]: {
-      paddingBottom: '17.5%'
+  content: {
+    padding: 0,
+    '&:last-child': {
+      paddingBottom: 0
     }
   },
-  content: {
-    position: 'relative',
-    [theme.breakpoints.up('sm')]: {
-      position: 'absolute'
+  title: {
+    color: '#3A3A3A',
+    fontSize: 24,
+    fontWeight: 600,
+    lineHeight: 1.25,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    '-webkit-line-clamp': 2,
+    '-webkit-box-orient': 'vertical',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 20
+    },
+    [theme.breakpoints.down('xs')]: {
+      '-webkit-line-clamp': 3,
+      fontSize: 16
     }
   },
   description: {
-    marginTop: 15,
+    marginTop: 10,
+    color: '#3A3A3A',
     fontSize: 16,
-    [theme.breakpoints.up('sm')]: {
-      height: 'calc(100% - 73px)'
+    lineHeight: 1.25,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    '-webkit-line-clamp': 3,
+    '-webkit-box-orient': 'vertical',
+    [theme.breakpoints.only('xs')]: {
+      display: 'none'
     }
-  },
-  line: {
-    borderBottom: 'solid 1px #C4C4C4',
-    margin: '15px 0'
   }
 }));
 const PostCard = ({ image, title, date, description }) => {
   const classes = useStyles();
   return (
-    <div>
-      <Card className={classes.root} elevation={0}>
-        <Grid container spacing={0}>
-          <Grid item xs={12} sm={5} md={4}>
-            <CardActionArea className={classes.button}>
-              <CardMedia
-                className={classes.img}
-                component="img"
-                image={image}
-                alt={title}
-                title={title}
-              />
-            </CardActionArea>
-          </Grid>
-          <Grid item xs={12} sm={7} md={8} className={classes.container}>
-            <CardContent className={classes.content}>
-              <Typography variant="h3" component="h3">
-                {title}
-              </Typography>
-              <Typography className={classes.time} component="p">
-                <AccessTime className={classes.icon} />
-                {date}
-              </Typography>
-              <Typography className={classes.description} component="p">
-                {description}
-              </Typography>
-            </CardContent>
-          </Grid>
+    <Card className={classes.root} elevation={0}>
+      <Grid container spacing={2}>
+        <Grid item xs={5} sm={4} md={4}>
+          <CardActionArea>
+            <CardMedia className={classes.img} image={image} title={title} />
+            <div></div>
+          </CardActionArea>
         </Grid>
-      </Card>
-      <div className={classes.line}></div>
-    </div>
+        <Grid item xs={7} sm={8} md={8}>
+          <CardContent className={classes.content}>
+            <Typography className={classes.title} component="h2">
+              {title}
+            </Typography>
+            <Typography className={classes.time} component="p">
+              <AccessTime className={classes.icon} />
+              {date}
+            </Typography>
+            <Typography className={classes.description} component="p">
+              {description}
+            </Typography>
+          </CardContent>
+        </Grid>
+      </Grid>
+    </Card>
   );
 };
 
