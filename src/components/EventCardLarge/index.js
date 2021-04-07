@@ -27,9 +27,6 @@ const useStyles = makeStyles(theme =>
     content: {
       padding: 15
     },
-    mediaBlock: {
-      position: 'relative'
-    },
     media: {
       height: 0,
       paddingTop: '77%'
@@ -73,42 +70,59 @@ const useStyles = makeStyles(theme =>
       '-webkit-box-orient': 'vertical',
       textOverflow: 'ellipsis'
     },
-    dateBlock: {
-      [theme.breakpoints.down('md')]: {
-        width: 80,
-        height: 80
-      },
-      width: 120,
-      height: 120,
+    one: {
+      width: '50%',
       borderRadius: 10,
       backgroundColor: '#92BF1F',
+      position: 'absolute',
+      bottom: -16,
+      right: -16
+    },
+    two: {
+      position: 'relative',
+      paddingBottom: '100%',
+      height: 0
+    },
+    three: {
       textAlign: 'center',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       flexShrink: 0,
       position: 'absolute',
-      bottom: -15,
-      right: -12
+      width: '100%',
+      height: '100%'
     },
     month: {
       color: '#ffffff',
-      fontSize: 22,
-      [theme.breakpoints.down('md')]: {
-        fontSize: 17
+      [theme.breakpoints.down('sm')]: {
+        fontSize: 12
+      },
+      [theme.breakpoints.between('sm', 'md')]: {
+        fontSize: 22
+      },
+      [theme.breakpoints.up('lg')]: {
+        fontSize: 30
       },
       fontWeight: 500,
       whiteSpace: 'nowrap'
     },
     day: {
       color: '#ffffff',
-      [theme.breakpoints.down('md')]: {
+      [theme.breakpoints.down('sm')]: {
         fontSize: 33,
-        marginTop: 10
+        marginTop: 2
+      },
+      [theme.breakpoints.between('sm', 'md')]: {
+        fontSize: 60,
+        marginTop: 27
+      },
+      [theme.breakpoints.up('md')]: {
+        fontSize: 70,
+        marginTop: 37
       },
       fontWeight: 'bold',
-      fontSize: 60,
-      marginTop: 27
+      fontSize: 60
     }
   })
 );
@@ -126,16 +140,20 @@ const EventCardLarge = ({ day, month, year, hourminute, title, location }) => {
               image="/images/tin-moi-nhat-1.png"
               title="Live from space album cover"
             />
-            <CardContent className={classes.dateBlock}>
-              <Typography component="div">
-                <Typography component="div" className={classes.month}>
-                  Tháng {month}
-                </Typography>
-                <Typography component="div" className={classes.day}>
-                  {day}
-                </Typography>
-              </Typography>
-            </CardContent>
+            <div className={classes.one}>
+              <div className={classes.two}>
+                <CardContent className={classes.three}>
+                  <Typography component="div">
+                    <Typography component="div" className={classes.month}>
+                      Tháng {month}
+                    </Typography>
+                    <Typography component="div" className={classes.day}>
+                      {day}
+                    </Typography>
+                  </Typography>
+                </CardContent>
+              </div>
+            </div>
           </CardActionArea>
         </Grid>
         <Grid item xs={7} md={8}>
