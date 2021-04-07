@@ -10,6 +10,7 @@ import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import moment from 'moment';
 import { useTheme } from '@material-ui/core/styles';
+import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -22,7 +23,10 @@ const useStyles = makeStyles(theme =>
       flexDirection: 'column'
     },
     content: {
-      //padding: 0
+      padding: 15
+    },
+    mediaBlock: {
+      position: 'relative'
     },
     media: {
       height: 0,
@@ -49,17 +53,23 @@ const useStyles = makeStyles(theme =>
       textOverflow: 'ellipsis'
     },
     grid: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyItems: 'center',
       marginBottom: 10,
-      color: '#92BF1F',
-      overflow: 'hidden'
+      color: '#92BF1F'
     },
     iconGrid: {
-      marginRight: 10
+      marginRight: 10,
+      marginTop: 5,
+      flexShrink: 0
     },
     textGrid: {
-      display: 'inline-block',
       overflow: 'hidden',
-      whiteSpace: 'nowrap'
+      display: '-webkit-box',
+      '-webkit-line-clamp': 2,
+      '-webkit-box-orient': 'vertical',
+      textOverflow: 'ellipsis'
     },
     dateBlock: {
       [theme.breakpoints.down('md')]: {
@@ -101,23 +111,32 @@ const useStyles = makeStyles(theme =>
   })
 );
 
-const EventCardLarge = ({ date, title, location }) => {
+const EventCardLarge = ({ day, month, year, hourminute, title, location }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const dateTime = new Date(date);
   return (
     <Card className={classes.root}>
       <Grid container spacing={2}>
-        <Grid item xs={6} md={4}>
-          <CardActionArea>
+        <Grid item xs={5} md={4}>
+          <CardActionArea className={classes.mediaBlock}>
             <CardMedia
-              className={classes.media}
+              className={`${classes.media} MuiPaper-rounded`}
               image="/images/tin-moi-nhat-1.png"
               title="Live from space album cover"
             />
+            <CardContent className={classes.dateBlock}>
+              <Typography component="div">
+                <Typography component="div" className={classes.month}>
+                  Tháng {month}
+                </Typography>
+                <Typography component="div" className={classes.day}>
+                  {day}
+                </Typography>
+              </Typography>
+            </CardContent>
           </CardActionArea>
         </Grid>
-        <Grid item xs={6} md={8}>
+        <Grid item xs={7} md={8}>
           <div className={classes.details}>
             <CardContent className={classes.content}>
               <Typography
@@ -126,34 +145,22 @@ const EventCardLarge = ({ date, title, location }) => {
                 className={classes.title}>
                 {title}
               </Typography>
-              <Grid
-                container
-                direction="row"
-                alignItems="center"
-                className={classes.grid}>
-                <Grid item className={classes.iconGrid}>
+              <Box className={classes.grid}>
+                <Box className={classes.iconGrid}>
                   <LocationOnOutlinedIcon />
-                </Grid>
-                <Grid item>
-                  <Typography variant="span" className={classes.textGrid}>
-                    {location}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Grid
-                container
-                direction="row"
-                alignItems="center"
-                className={classes.grid}>
-                <Grid item className={classes.iconGrid}>
+                </Box>
+                <Typography variant="div" className={classes.textGrid}>
+                  {location}
+                </Typography>
+              </Box>
+              <Box className={classes.grid}>
+                <Box className={classes.iconGrid}>
                   <AccessTimeIcon />
-                </Grid>
-                <Grid item>
-                  <Typography variant="span" className={classes.textGrid}>
-                    {moment(dateTime).format('HH:mm DD/MM/YYYY')}
-                  </Typography>
-                </Grid>
-              </Grid>
+                </Box>
+                <Typography variant="div" className={classes.textGrid}>
+                  {hourminute} - {day}/{month}/{year}
+                </Typography>
+              </Box>
             </CardContent>
             <div className={classes.controls}></div>
           </div>
