@@ -1,3 +1,4 @@
+import { Box } from '@material-ui/core';
 import { createStyles, makeStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
 
@@ -7,19 +8,21 @@ const useStyles = makeStyles(theme =>
       position: 'relative',
       display: 'flex',
       alignItems: 'center',
-      backgroundColor: '#F7F7F7',
       fontWeight: 600,
       fontSize: 18,
       '&::after': {
         position: 'absolute',
-        right: -7,
+        right: -8,
         content: '" "',
         marginLeft: '100%',
         width: 12,
         height: '100%',
         transform: 'skew(-15deg)',
         backgroundColor: '#ffffff',
-        zIndex: 1
+        zIndex: 1,
+        [theme.breakpoints.down('sm')]: {
+          backgroundColor: 'transparent'
+        }
       },
       [theme.breakpoints.down('sm')]: {
         backgroundColor: 'transparent',
@@ -27,7 +30,13 @@ const useStyles = makeStyles(theme =>
       }
     },
     large: {
-      height: 48
+      height: 48,
+      '&::after': {
+        right: -6
+      },
+      '& >:first-child': {
+        width: 14
+      }
     },
     small: {
       height: 32
@@ -39,17 +48,6 @@ const useStyles = makeStyles(theme =>
       transform: 'skew(-15deg)',
       backgroundColor: '#92BF1F',
       left: 5,
-      '&::after': {
-        position: 'absolute',
-        content: '" "',
-        marginLeft: '100%',
-        width: 12,
-        height: '100%',
-        backgroundColor: '#F7F7F7',
-        [theme.breakpoints.down('sm')]: {
-          content: ''
-        }
-      },
       [theme.breakpoints.down('sm')]: {
         display: 'none'
       }
@@ -61,10 +59,16 @@ const useStyles = makeStyles(theme =>
       alignItems: 'center',
       padding: '0 20px',
       color: '#92BF1F',
+      backgroundColor: '#F7F7F7',
+      height: '100%',
+      marginLeft: -1,
       [theme.breakpoints.down('sm')]: {
         padding: 0,
         flexDirection: 'column',
-        alignItems: 'start'
+        alignItems: 'start',
+        height: 'auto',
+        backgroundColor: 'transparent',
+        marginLeft: 0
       },
       '& > div:first-child': {
         [theme.breakpoints.down('sm')]: {
