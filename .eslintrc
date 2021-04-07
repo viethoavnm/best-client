@@ -1,13 +1,16 @@
 {
   "parser": "babel-eslint",
   "rules": {
-
+    "react/jsx-uses-vars": "error",
+    "react/jsx-uses-react": "error"
   },
   "env": {
     "es6": true,
     "browser": true
   },
-  "extends": "eslint:recommended",
+  "extends": [
+    "plugin:react/recommended"
+  ],
   "ecmaFeatures": {
     "jsx": true,
     "experimentalObjectRestSpread": true
