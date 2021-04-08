@@ -9,9 +9,7 @@
     "es6": true,
     "browser": true
   },
-  "extends": [
-    "plugin:react/recommended"
-  ],
+  "extends": ["eslint:recommended"],
   "ecmaFeatures": {
     "jsx": true,
     "experimentalObjectRestSpread": true
