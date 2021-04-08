@@ -8,7 +8,12 @@ import PostLibrary from 'views/Library/component/post-library';
 import VideoLibrary from 'views/Library/component/video-library';
 import DefaultLayout from './layouts/Default';
 import ErrorLayout from './layouts/Error';
+<<<<<<< HEAD
 
+=======
+import Home from './views/Home';
+import Event from './views/Event';
+>>>>>>> event-component
 
 const routes = [
   {
@@ -18,7 +23,11 @@ const routes = [
       {
         path: '/',
         exact: true,
+<<<<<<< HEAD
         component: lazy(() => import('./views/Home'))
+=======
+        component: Event
+>>>>>>> event-component
       },
       {
         path: '/home',
@@ -56,11 +65,9 @@ const routes = [
         component: DetailVideo
       },
       {
-        path: '/about-us',
-        component: lazy(() => import('./views/About'))
-      },
-      {
-        component: () => <Redirect to="/errors/error-404" />
+        path: '/event',
+        exact: true,
+        component: Event
       }
     ]
   },

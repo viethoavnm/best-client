@@ -1,5 +1,7 @@
+import React from 'react';
 import { Card, CardContent, Typography } from '@material-ui/core';
 import { createStyles, makeStyles } from '@material-ui/styles';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -64,6 +66,12 @@ const EventCard = ({ day, month, title }) => {
       </CardContent>
     </Card>
   );
+};
+
+EventCard.propTypes = {
+  title: PropTypes.string,
+  day: PropTypes.number,
+  month: PropTypes.number
 };
 
 export default EventCard;
