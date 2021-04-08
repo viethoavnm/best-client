@@ -9,7 +9,7 @@ import VideoLibrary from 'views/Library/component/video-library';
 import DefaultLayout from './layouts/Default';
 import ErrorLayout from './layouts/Error';
 import Home from './views/Home';
-
+import Event from './views/Event';
 
 const routes = [
   {
@@ -19,7 +19,7 @@ const routes = [
       {
         path: '/',
         exact: true,
-        component: Home
+        component: Event
       },
       {
         path: '/home',
@@ -56,6 +56,11 @@ const routes = [
         exact: true,
         component: DetailVideo
       },
+      {
+        path: '/event',
+        exact: true,
+        component: Event
+      }
     ]
   },
   {
