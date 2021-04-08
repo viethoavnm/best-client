@@ -10,18 +10,19 @@ const useStyles = makeStyles(() => ({
   root: {
     height: '100%',
     width: '100%',
-    display: 'flex',
+    // display: 'flex',
     flexDirection: 'column',
-    overflow: 'hidden'
+    backgroundColor: '#ffffff',
+    padding: 15
   },
   topBar: {
     zIndex: 2,
     position: 'relative'
   },
   container: {
-    display: 'flex',
-    flex: '1 1 auto',
-    overflow: 'hidden'
+    // display: 'flex',
+    // flex: '1 1 auto',
+    // overflow: 'hidden'
   },
   navBar: {
     zIndex: 3,
@@ -30,8 +31,9 @@ const useStyles = makeStyles(() => ({
     flex: '0 0 auto'
   },
   content: {
-    overflowY: 'auto',
-    flex: '1 1 auto'
+    // overflowY: 'auto',
+    maxWidth: 1140,
+    margin: '0 auto'
   }
 }));
 

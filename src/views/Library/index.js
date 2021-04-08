@@ -11,7 +11,7 @@ const Library = () => {
   return (
     <Fragment>
       <div className={classes.header}>
-        <Title className={classes.height}>
+        <Title size="large">
           <div className={classes.title}>Thư viện</div>
           <div className={classes.breadcrumb}>Trang chủ / Thư viện</div>
         </Title>

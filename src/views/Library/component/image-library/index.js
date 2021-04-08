@@ -10,7 +10,7 @@ const ImageLibrary = () => {
   return (
     <Fragment>
       <div className={classes.header}>
-        <Title className={classes.height}>
+        <Title size="large">
           <div className={classes.title}>Ảnh</div>
           <div className={classes.breadcrumb}>Trang chủ / Thư viện/ ảnh</div>
         </Title>

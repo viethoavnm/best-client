@@ -1,9 +1,15 @@
 import React, { lazy } from 'react';
 import { Redirect } from 'react-router-dom';
-
+import Library from 'views/Library';
+import DetailVideo from 'views/Library/component/detail-video';
+import DocumentLibrary from 'views/Library/component/document-library';
+import ImageLibrary from 'views/Library/component/image-library';
+import PostLibrary from 'views/Library/component/post-library';
+import VideoLibrary from 'views/Library/component/video-library';
 import DefaultLayout from './layouts/Default';
 import ErrorLayout from './layouts/Error';
 import Home from './views/Home';
+
 
 const routes = [
   {
@@ -19,7 +25,37 @@ const routes = [
         path: '/home',
         exact: true,
         component: Home
-      }
+      },
+      {
+        path: '/library',
+        exact: true,
+        component: Library
+      },
+      {
+        path: '/library/image',
+        exact: true,
+        component: ImageLibrary
+      },
+      {
+        path: '/library/video',
+        exact: true,
+        component: VideoLibrary
+      },
+      {
+        path: '/library/post',
+        exact: true,
+        component: PostLibrary
+      },
+      {
+        path: '/library/document',
+        exact: true,
+        component: DocumentLibrary
+      },
+      {
+        path: '/library/video/detail',
+        exact: true,
+        component: DetailVideo
+      },
     ]
   },
   {

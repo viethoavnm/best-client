@@ -10,7 +10,7 @@ const DocumentLibrary = () => {
   return (
     <Fragment>
       <div className={classes.header}>
-        <Title className={classes.height}>
+        <Title size="large">
           <div className={classes.title}>TÀi LIỆU</div>
           <div className={classes.breadcrumb}>
             Trang chủ / Thư viện/ Tài liệu

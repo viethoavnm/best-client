@@ -2,7 +2,8 @@
   "parser": "babel-eslint",
   "rules": {
     "react/jsx-uses-vars": "error",
-    "react/jsx-uses-react": "error"
+    "react/jsx-uses-react": "error",
+    "no-unused-vars": "warn"
   },
   "env": {
     "es6": true,
