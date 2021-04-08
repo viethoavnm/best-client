@@ -22,3 +22,7 @@ export { default as NewsCard } from './NewsCard';
 export { default as EventCard } from './EventCard';
 export { default as Pagination } from './Pagination';
 export { default as LibraryCard } from './LibraryCard';
+export { default as ShareSocial } from './ShareSocial';
+export { default as RightSidebar } from './RightSidebar';
+export { default as MarkerMap } from './MarkerMap';
+export { default as Footer } from './Footer';

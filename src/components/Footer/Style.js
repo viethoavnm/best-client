@@ -42,6 +42,48 @@ const useStyles = makeStyles(theme => ({
     fontWeight: '500',
     color: '#572F12',
     lineHeight: '16px'
+  },
+  secondFooterBlock: {
+    padding: theme.spacing(3),
+    [theme.breakpoints.up('lg')]: {
+      justifyContent: 'center'
+    }
+  },
+  inforRow: {
+    pading: theme.spacing(1)
+  },
+  footerIcon: {
+    width: 20,
+    height: 20,
+    marginRight: theme.spacing(1)
+  },
+  footerColumnTitle: {
+    fontFamily: 'Montserrat',
+    fontWeight: '600',
+    color: '#3A3A3A'
+  },
+  footerColumnDes: {
+    fontFamily: 'Montserrat',
+    fontWeight: '400',
+    color: '#3A3A3A'
+  },
+  downloadAppTitle: {
+    fontFamily: 'Montserrat',
+    fontWeight: '600',
+    color: '#7FAB0F',
+    marginRight: theme.spacing(1)
+  },
+  blockDownload: {
+    marginTop: theme.spacing(2)
+  },
+  columnContent: {
+    fontFamily: 'Montserrat'
+  },
+  eachRowItem: {
+    ffontFamily: 'Montserrat',
+    fontWeight: '400',
+    color: '#3A3A3A',
+    marginTop: theme.spacing(1)
   }
 }));
 

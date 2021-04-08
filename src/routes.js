@@ -8,7 +8,6 @@ import PostLibrary from 'views/Library/component/post-library';
 import VideoLibrary from 'views/Library/component/video-library';
 import DefaultLayout from './layouts/Default';
 import ErrorLayout from './layouts/Error';
-import Home from './views/Home';
 
 
 const routes = [
@@ -19,12 +18,12 @@ const routes = [
       {
         path: '/',
         exact: true,
-        component: Home
+        component: lazy(() => import('./views/Home'))
       },
       {
         path: '/home',
         exact: true,
-        component: Home
+        component: lazy(() => import('./views/Home'))
       },
       {
         path: '/library',
@@ -56,6 +55,13 @@ const routes = [
         exact: true,
         component: DetailVideo
       },
+      {
+        path: '/about-us',
+        component: lazy(() => import('./views/About'))
+      },
+      {
+        component: () => <Redirect to="/errors/error-404" />
+      }
     ]
   },
   {
@@ -65,17 +71,17 @@ const routes = [
       {
         path: '/errors/error-401',
         exact: true,
-        component: lazy(() => import('views/Error401'))
+        component: lazy(() => import('./views/Error401'))
       },
       {
         path: '/errors/error-404',
         exact: true,
-        component: lazy(() => import('views/Error404'))
+        component: lazy(() => import('./views/Error404'))
       },
       {
         path: '/errors/error-500',
         exact: true,
-        component: lazy(() => import('views/Error500'))
+        component: lazy(() => import('./views/Error500'))
       },
       {
         component: () => <Redirect to="/errors/error-404" />

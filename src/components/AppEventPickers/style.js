@@ -103,7 +103,7 @@ const useStyles = makeStyles(theme => ({
   },
   eventDes: {
     backgroundColor: '#92BF1F',
-    height: '50%',
+    maxHeight: '50%',
     paddingLeft: 100,
     paddingRight: 100,
     paddingTop: 30,

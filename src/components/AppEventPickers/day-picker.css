@@ -13,11 +13,11 @@
 
   -webkit-user-select: none;
 
-     -moz-user-select: none;
+  -moz-user-select: none;
 
-      -ms-user-select: none;
+  -ms-user-select: none;
 
-          user-select: none;
+  user-select: none;
 }
 
 .DayPicker-Months {
@@ -35,15 +35,14 @@
 
   -webkit-user-select: none;
 
-     -moz-user-select: none;
+  -moz-user-select: none;
 
-      -ms-user-select: none;
+  -ms-user-select: none;
 
-          user-select: none;
+  user-select: none;
 }
 
-.DayPicker-NavBar {
-}
+.DayPicker-NavBar {}
 
 .DayPicker-NavButton {
   position: absolute;
@@ -86,7 +85,7 @@
   text-align: left;
 }
 
-.DayPicker-Caption > div {
+.DayPicker-Caption>div {
   font-weight: 500;
   font-size: 1.15em;
 }
@@ -199,8 +198,7 @@
   background-color: #51A0FA;
 }
 
-.DayPicker:not(.DayPicker--interactionDisabled)
-  .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
+.DayPicker:not(.DayPicker--interactionDisabled) .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
   background-color: #F0F8FF;
 }
 
