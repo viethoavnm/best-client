@@ -7,6 +7,7 @@ import { TopBar, NavBar } from './components';
 import { Footer } from 'components';
 
 import useStyles from './styles';
+import Header from './components/Header';
 
 const Default = props => {
   const { route } = props;
@@ -24,12 +25,8 @@ const Default = props => {
 
   return (
     <div className={classes.root}>
-      <TopBar
-        className={classes.topBar}
-        onOpenNavBarMobile={handleNavBarMobileOpen}
-      />
+      <Header />
       <NavBar />
-
       <div className={classes.container}>
         <main className={classes.content}>
           <Suspense fallback={<LinearProgress />}>

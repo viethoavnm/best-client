@@ -1,77 +1,65 @@
-import React, { useEffect } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { IconButton } from '@material-ui/core';
+import { Home, Menu as MenuIcon, Search } from '@material-ui/icons';
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
-import AppBar from '@material-ui/core/AppBar';
-
+import { Container } from 'components';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import useRouter from 'utils/useRouter';
-
-const useStyles = makeStyles(() => ({
-  root: { flexGrow: 1 },
-  webTitle: {
-    background: `linear-gradient(90deg, #92BF1F -18.89%, #F7B033 125.73%)`,
-    '-webkit-background-clip': 'text',
-    '-webkit-text-fill-color': 'transparent',
-    fontSize: 25,
-    fontWeight: 600
-  },
-  dividerTitle: {
-    width: 3,
-    height: '100%',
-    background: `linear-gradient(180deg, #F2AE00 0%, #709700 100%)`,
-    backgroundColor: 'red'
-  },
-  navBar: {
-    background: `linear-gradient(90deg, #92BF1F -18.89%, #F7B033 125.73%)`
-  },
-  border: {
-    borderLeft: `.5px solid #ffffff`,
-    lineHeight: 3
-  }
-}));
+import logo from '../../../../assets/img/logo-best.svg';
+import Language from './Language';
+import useStyles from './style';
 
 const NavBar = () => {
   const classes = useStyles();
+  const [openMenu, setOpenMenu] = useState(false);
   const router = useRouter();
-
   useEffect(() => {}, [router.location.pathname]);
 
+  const toggle = () => {
+    setOpenMenu(!openMenu);
+  };
+
   return (
-    <AppBar color="inherit" position="static">
-      <div className={clsx(classes.navBar)}>
-        <RouterLink to="/home">
-          {/* <FormattedMessage {...messages.home} /> */}
-          {`Trang chủ`}
-        </RouterLink>
-
-        <RouterLink to="/about-us">
-          {/* <FormattedMessage {...messages.home} /> */}
-          {`Giới thiệu`}
-        </RouterLink>
-        <RouterLink to="/vcbg-technology">
-          {/* <FormattedMessage {...messages.home} /> */}
-          {`Công nghệ VCBG`}
-        </RouterLink>
-        <RouterLink to="/events">
-          {/* <FormattedMessage {...messages.home} /> */}
-          {`Sự kiện sắp tới`}
-        </RouterLink>
-        <RouterLink to="/libs">
-          {/* <FormattedMessage {...messages.home} /> */}
-          {`Thư Viện`}
-        </RouterLink>
-        <RouterLink to="/news">
-          {/* <FormattedMessage {...messages.home} /> */}
-          {`Bản tin`}
-        </RouterLink>
-      </div>
-    </AppBar>
+    <div className={clsx(classes.root, openMenu && classes.menuOpenRoot)}>
+      <Container>
+        <div className={classes.container}>
+          <IconButton className={classes.pushmenu} onClick={toggle}>
+            <MenuIcon fontSize="large" />
+          </IconButton>
+          <div className={classes.imgBox}>
+            <img className={classes.img} src={logo} alt="logo" />
+          </div>
+          <div
+            className={clsx(classes.menuMobile, openMenu && classes.menuOpen)}>
+            <div className={classes.imgTopBox}>
+              <img className={classes.imgTop} src={logo} alt="logo" />
+            </div>
+            <ul className={classes.ul}>
+              <li className={classes.li}>
+                <Link to="/" className={[classes.a, classes.active].join(' ')}>
+                  <Home className={classes.icon} />
+                  <span className={classes.span}>Trang chủ</span>
+                </Link>
+              </li>
+              <li className={classes.li}>
+                <Link to="/" className={classes.a}>
+                  <Home className={classes.icon} />
+                  <span className={classes.span}>Giới thiệu</span>
+                </Link>
+              </li>
+            </ul>
+          </div>
+          {openMenu && (
+            <div className={classes.closeMenu} onClick={toggle}></div>
+          )}
+          <IconButton className={classes.search}>
+            <Search fontSize="large" />
+          </IconButton>
+          <Language />
+        </div>
+      </Container>
+    </div>
   );
-};
-
-NavBar.propTypes = {
-  className: PropTypes.string
 };
 
 export default NavBar;
