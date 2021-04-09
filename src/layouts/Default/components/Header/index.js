@@ -47,7 +47,7 @@ const Header = () => {
           <img className={classes.logo} src={logo} alt="logo" />
           <div className={classes.title}>Công nghệ khí hóa sinh khối</div>
           <div className={classes.divider}></div>
-          <div lassName={classes.description}>
+          <div className={classes.description}>
             Giải pháp năng lượng bền vững cho chế biến nông sản và quản lý chất
             thải ở nông thôn Việt Nam
           </div>

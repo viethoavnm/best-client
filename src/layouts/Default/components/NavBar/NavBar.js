@@ -20,7 +20,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className={clsx(classes.root, openMenu && classes.menuOpenRoot)}>
+    <nav className={clsx(classes.root, openMenu && classes.menuOpenRoot)}>
       <Container>
         <div className={classes.container}>
           <IconButton className={classes.pushmenu} onClick={toggle}>
@@ -58,7 +58,7 @@ const NavBar = () => {
           <Language />
         </div>
       </Container>
-    </div>
+    </nav>
   );
 };
 

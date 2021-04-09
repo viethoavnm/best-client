@@ -1,77 +1,59 @@
-/* eslint-disable react/no-multi-comp */
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Typography
+} from '@material-ui/core';
+import { AccessTime } from '@material-ui/icons';
+import clsx from 'clsx';
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Typography, colors } from '@material-ui/core';
 import useStyles from './styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 
-import { Label } from 'components';
-
-const FeaturedItem = props => {
-  const { tag, title, imageUrl, time, ...rest } = props;
-  console.log('FeaturedItem - props: ', props);
-
+const FeaturedItem = ({
+  image,
+  type,
+  title,
+  time,
+  classRoot,
+  classImg,
+  classContent,
+  classType,
+  classTitle,
+  classTime
+}) => {
   const classes = useStyles();
 
   return (
-    <Paper
-      {...rest}
-      className={classes.mainFeaturedPost}
-      style={{ backgroundImage: `url(${imageUrl})` }}>
-      {/* Increase the priority of the hero background image */}
-      {
-        <img
-          style={{ display: 'none', height: '100%' }}
-          src={imageUrl}
-          alt={tag}
+    <Card className={clsx(classes.root, classRoot && classRoot)} elevation={0}>
+      <CardActionArea>
+        <CardMedia
+          image={image}
+          title={title}
+          className={clsx(classes.img, classImg && classImg)}
         />
-      }
-
-      <div className={classes.overlay} />
-
-      <Grid container>
-        <Grid item md={6}>
-          <div className={classes.mainFeaturedPostContent}>
-            {tag && (
-              <Label className={classes.unread} color={colors.orange[500]}>
-                {tag}
-              </Label>
-            )}
-
-            <Typography
-              className={classes.title}
-              component="h1"
-              variant="h3"
-              color="inherit"
-              gutterBottom>
-              {title}
-            </Typography>
-
-            {time && (
-              <Box display="flex" flexDirection="row" alignItems="center">
-                <img
-                  src="images/ic-clock-white.svg"
-                  alt="clock"
-                  style={{ marginRight: 5 }}
-                />
-                <Typography className={classes.time}>{time}</Typography>
-              </Box>
-            )}
-          </div>
-        </Grid>
-      </Grid>
-    </Paper>
+      </CardActionArea>
+      <CardContent
+        className={clsx(classes.content, classContent && classContent)}>
+        <Typography
+          component="span"
+          className={clsx(classes.type, classType && classType)}>
+          {type}
+        </Typography>
+        <Typography
+          component="h2"
+          className={clsx(classes.title, classTitle && classTitle)}>
+          {title}
+        </Typography>
+        <Typography
+          component="p"
+          className={clsx(classes.time, classTime && classTime)}>
+          <AccessTime className={classes.icon} />
+          {time}
+        </Typography>
+      </CardContent>
+    </Card>
   );
-};
-
-FeaturedItem.propTypes = {
-  className: PropTypes.string,
-  tag: PropTypes.string.isRequired,
-  imageUrl: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  time: PropTypes.string
 };
 
 export default FeaturedItem;

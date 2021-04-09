@@ -11,6 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import clsx from 'clsx';
 
 import { animateScroll as scroll } from 'react-scroll';
+import Subscribe from '../Subscribe';
 
 function DefaultLayoutFooter(props) {
   const classes = useStyles();
@@ -21,41 +22,7 @@ function DefaultLayoutFooter(props) {
 
   return (
     <div>
-      {/*==================== Đăng ký nhận tin ====================*/}
-      <div
-        className="flex flex-wrap w-full"
-        style={{
-          width: '100%',
-          background: `linear-gradient(90deg, #92BF1F -18.89%, #F7B033 125.73%)`
-        }}>
-        <Box
-          display="flex"
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="space-between">
-          <Box className={classes.wrapperFooter}>
-            <Typography className={classes.titleFooter}>
-              ĐĂNG KÝ NHẬN THÔNG TIN MỚI NHẤT
-            </Typography>
-          </Box>
-
-          <Box display="flex" flexDirection="row" alignItems="center">
-            <InputBase
-              className={classes.inputEmail}
-              id="input-email"
-              placeholder="Nhập email của bạn"
-              variant="outlined"
-            />
-
-            <Button className={classes.btnEmail} variant="contained">
-              <Typography className={classes.textBtnEmail}>ĐĂNG KÝ</Typography>
-            </Button>
-          </Box>
-        </Box>
-      </div>
-      {/*==================== End of Đăng ký nhận tin ====================*/}
-
-      {/*==================== Footer 1 ====================*/}
+      <Subscribe/>
       <Container>
         <Grid
           container

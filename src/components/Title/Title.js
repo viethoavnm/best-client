@@ -91,7 +91,7 @@ const Title = ({ className, children, size = 'small' }) => {
 Title.prototypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  size: 'large' || 'small'
+  size: PropTypes.oneOf(['large', 'small'])
 };
 
 export default Title;
