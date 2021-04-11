@@ -14,10 +14,8 @@ const Home = () => {
       <FeaturedSection />
       <NewsSection />
       <LibrarySection />
-      <Container>
-        <EventSsection />
-        <MapSection />
-      </Container>
+      <EventSsection />
+      <MapSection />
     </Fragment>
   );
 };
