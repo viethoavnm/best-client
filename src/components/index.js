@@ -25,4 +25,4 @@ export { default as LibraryCard } from './LibraryCard';
 export { default as ShareSocial } from './ShareSocial';
 export { default as RightSidebar } from './RightSidebar';
 export { default as MarkerMap } from './MarkerMap';
-export { default as Footer } from './Footer';
+export { default as Container } from './Container';

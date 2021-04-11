@@ -1,32 +1,54 @@
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    marginTop: theme.spacing(5)
-  },
-  content: {
-    marginTop: theme.spacing(3)
-  },
-  slashIcon: {
-    height: '100%'
+  titleBox: {
+    marginBottom: 25
   },
   title: {
-    fontFamily: 'Montserrat',
-    fontWeight: '700',
+    fontSize: 24,
+    fontWeight: 'bold',
     color: '#3A3A3A',
-    padding: theme.spacing(2)
+    [theme.breakpoints.down('sm')]: {
+      color: '#92BF1F'
+    }
   },
-  smTitle: {
-    fontFamily: 'Montserrat',
-    fontWeight: '700',
-    color: '#3A3A3A',
-    marginLeft: theme.spacing(2)
+  rightRoot: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+    [theme.breakpoints.down('sm')]: {
+      '& > *:first-child': {
+        marginBottom: 16
+      }
+    },
+    '& .MuiCardContent-root': {
+      paddingBottom: 15
+    }
   },
-  lgTitle: {
-    fontFamily: 'Montserrat',
-    fontWeight: '700',
-    color: '#92BF1F',
-    marginBottom: theme.spacing(2)
+  rightContent: {
+    padding: 15
+  },
+  rightTitle: {
+    fontSize: 24
+  },
+  rightTime: {
+    display: 'none'
+  },
+  rightTypeTop: {
+    backgroundColor: '#E16C00'
+  },
+  rightTypeBottom: {
+    backgroundColor: '#0AACC2'
+  },
+  rightImgTop: {
+    [theme.breakpoints.up('sm')]: {
+      paddingBottom: '95%'
+    }
+  },
+  rightImgBottom: {
+    [theme.breakpoints.up('sm')]: {
+      paddingBottom: '58%'
+    }
   }
 }));
 

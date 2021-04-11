@@ -1,127 +1,73 @@
+import { Grid } from '@material-ui/core';
+import { ChevronRight } from '@material-ui/icons';
+import { Container, Title } from 'components';
 import React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-
-import { Hidden, Grid, Box, Typography } from '@material-ui/core';
-import LibraryItem from '../LibraryItem';
-import LibraryItem1 from '../LibraryItem1';
-
+import { Link } from 'react-router-dom';
+import FeaturedItem from '../FeaturedItem';
 import useStyles from './styles';
 
-const LibrarySection = props => {
-  const { className, ...rest } = props;
-
+const LibrarySection = () => {
   const classes = useStyles();
 
-  const _renderTitle = title => {
-    return (
-      <div>
-        <Hidden smDown>
-          <Box
-            display="flex"
-            flexDirection="row"
-            alignItems="center"
-            marginBottom="30px"
-            marginTop="40px"
-            bgcolor="#F6F6F6">
-            <img
-              className={clsx(classes.slashIcon)}
-              src="images/ic-slash-title.svg"
-              alt="slash"
-            />
-            <Typography
-              component="h1"
-              variant="h3"
-              color="inherit"
-              className={classes.smTitle}>
-              {title.toUpperCase()}
-            </Typography>
-          </Box>
-        </Hidden>
-
-        <Hidden lgUp>
-          <Box display="flex" flexDirection="row" alignItems="center">
-            <Typography
-              component="h1"
-              variant="h3"
-              color="inherit"
-              className={classes.lgTitle}>
-              {title.toUpperCase()}
-            </Typography>
-          </Box>
-        </Hidden>
-      </div>
-    );
-  };
-
   return (
-    <div {...rest} className={clsx(classes.root, className)}>
-      {_renderTitle('Thư Viện')}
-
-      <Hidden smDown>
-        <Grid container spacing={4}>
-          <Grid item xs={12} sm={6} md={6} lg={4} xl={4}>
-            <LibraryItem
+    <section>
+      <Container>
+        <Title size="large" className={classes.titleBox}>
+          <div className={classes.titleContent}>
+            <h2 className={classes.title}>Thư viện</h2>
+            <Link to="/" className={classes.readMore}>Xem thêm <ChevronRight/></Link>
+          </div>
+        </Title>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={4}>
+            <FeaturedItem
+              classImg={classes.img}
+              classContent={classes.content}
+              classType={classes.type}
+              classTitle={classes.titleCard}
               title="Đệm lót sinh học - giải pháp trong chăn nuôi "
-              imageUrl="images/lib-1.png"
+              image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
               time="30/12/2020"
             />
+            <div className={classes.titleMobile}>
+              <span className={classes.time}>30/12/2020 - </span>
+              <span>Đệm lót sinh học - giải pháp trong chăn nuôi</span>
+            </div>
           </Grid>
-
-          <Grid item xs={12} sm={6} md={6} lg={4} xl={4}>
-            <LibraryItem
-              title="Đệm lót sinh học - giải pháp trong chăn nuôi"
-              imageUrl="images/lib-2.png"
+          <Grid item xs={6} md={4}>
+            <FeaturedItem
+              classImg={classes.imgBottom}
+              classContent={classes.content}
+              classType={classes.type}
+              classTitle={classes.titleCard}
+              title="Đệm lót sinh học - giải pháp trong chăn nuôi "
+              image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
               time="30/12/2020"
             />
+            <div className={classes.titleMobile}>
+              <span className={classes.time}>30/12/2020 - </span>
+              <span>Đệm lót sinh học - giải pháp trong chăn nuôi</span>
+            </div>
           </Grid>
-
-          <Grid item xs={12} sm={6} md={6} lg={4} xl={4}>
-            <LibraryItem
-              title="Đệm lót sinh học - giải pháp trong chăn nuôi"
-              imageUrl="images/lib-3.png"
+          <Grid item xs={6} md={4}>
+            <FeaturedItem
+              classImg={classes.imgBottom}
+              classContent={classes.content}
+              classType={classes.type}
+              classTitle={classes.titleCard}
+              title="Đệm lót sinh học - giải pháp trong chăn nuôi "
+              image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
               time="30/12/2020"
             />
+            <div className={classes.titleMobile}>
+              <span className={classes.time}>30/12/2020 - </span>
+              <span>Đệm lót sinh học - giải pháp trong chăn nuôi</span>
+            </div>
           </Grid>
         </Grid>
-      </Hidden>
-
-      <Hidden lgUp>
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={6}>
-            <LibraryItem1
-              title="Đệm Lót Sinh Học Trong Chăn Nuôi - BIOGASS"
-              imageUrl="images/lib-1.png"
-              time="30/12/2020"
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <Grid container spacing={4}>
-              <Grid item xs={6} md={6}>
-                <LibraryItem1
-                  title="Đệm Lót Sinh Học Trong Chăn Nuôi - BIOGASS"
-                  imageUrl="images/lib-2.png"
-                  time="30/12/2020"
-                />
-              </Grid>
-              <Grid item xs={6} md={6}>
-                <LibraryItem1
-                  title="Đệm Lót Sinh Học Trong Chăn Nuôi - BIOGASS"
-                  imageUrl="images/lib-3.png"
-                  time="30/12/2020"
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Hidden>
-    </div>
+      </Container>
+    </section>
   );
-};
-
-LibrarySection.propTypes = {
-  className: PropTypes.string
 };
 
 export default LibrarySection;

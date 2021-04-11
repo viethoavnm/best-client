@@ -1,35 +1,24 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/styles';
-
-import { Page } from 'components';
-
+import { Container } from 'components';
+import React, { Fragment } from 'react';
 import {
-  FeaturedSection,
-  NewsSection,
-  LibrarySection,
   EventSsection,
-  MapSection
+  FeaturedSection,
+  LibrarySection,
+  MapSection,
+  NewsSection
 } from './components';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: theme.breakpoints.values.lg,
-    maxWidth: '100%',
-    margin: '0 auto',
-    padding: theme.spacing(3)
-  }
-}));
-
 const Home = () => {
-  const classes = useStyles();
   return (
-    <Page className={classes.root} title="Home">
+    <Fragment>
       <FeaturedSection />
       <NewsSection />
       <LibrarySection />
-      <EventSsection />
-      <MapSection />
-    </Page>
+      <Container>
+        <EventSsection />
+        <MapSection />
+      </Container>
+    </Fragment>
   );
 };
 

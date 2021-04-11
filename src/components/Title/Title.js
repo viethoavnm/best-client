@@ -1,4 +1,3 @@
-import { Box } from '@material-ui/core';
 import { createStyles, makeStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
 
@@ -92,7 +91,7 @@ const Title = ({ className, children, size = 'small' }) => {
 Title.prototypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  size: 'large' || 'small'
+  size: PropTypes.oneOf(['large', 'small'])
 };
 
 export default Title;
