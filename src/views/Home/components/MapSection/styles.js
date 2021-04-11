@@ -1,6 +1,64 @@
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
+  titleBox: {
+    marginTop: 40,
+    marginBottom: 25
+  },
+  title: {
+    flexGrow: 1,
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#3A3A3A',
+    textTransform: 'uppercase',
+    [theme.breakpoints.down('sm')]: {
+      color: '#92BF1F'
+    }
+  },
+  titleContent: {
+    flexGrow: 1,
+    display: 'flex',
+    alignItems: 'center',
+    width: '100%',
+    flexWrap: 'wrap'
+  },
+  readMore: {
+    color: '#92BF1F',
+    fontWeight: 500,
+    display: 'flex',
+    '&:hover': {
+      textDecoration: 'underline'
+    },
+    [theme.breakpoints.down('md')]: {
+      color: '#272727'
+    },
+    [theme.breakpoints.up('md')]: {
+      '& svg': {
+        display: 'none'
+      }
+    }
+  },
+  detailLocation: {
+    order: 2,
+    [theme.breakpoints.up('sm')]: {
+      order: 1,
+    }
+  },
+  detailCard: {
+    height: '100%',
+    backgroundColor: '#FFFFFF',
+    boxShadow: `0px 4px 60px 0px rgba(150, 150, 150, 0.24)`,
+    borderRadius: 16,
+  },
+  detailContent: {
+    padding: theme.spacing(3)
+  },
+  mapView: {
+    order: 1,
+    [theme.breakpoints.up('sm')]: {
+      order: 2,
+    }
+  },
   root: {
     marginTop: theme.spacing(5)
   },
@@ -49,13 +107,6 @@ const useStyles = makeStyles(theme => ({
   },
   boldText: {
     fontWeight: 600
-  },
-  title: {
-    fontFamily: 'Montserrat',
-    fontSize: '24px',
-    fontWeight: '700',
-    color: '#3A3A3A',
-    lineHeight: '29px'
   },
   icSlash: { width: 16, height: 40, marginRight: 16 },
   smallClock: {
