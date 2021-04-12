@@ -53,8 +53,11 @@ const NavBar = () => {
             <div className={classes.closeMenu} onClick={toggle}></div>
           )}
           <IconButton className={classes.search}>
-            <Search fontSize="large" />
+            <Link to="/search" >
+              <Search fontSize="large" />
+            </Link>
           </IconButton>
+
           <Language />
         </div>
       </Container>

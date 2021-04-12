@@ -26,6 +26,11 @@ const routes = [
         component: lazy(() => import('./views/Home'))
       },
       {
+        path: '/search',
+        exact: true,
+        component: lazy(() => import('./views/Search'))
+      },
+      {
         path: '/library',
         exact: true,
         component: Library

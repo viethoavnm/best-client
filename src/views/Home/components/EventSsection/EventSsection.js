@@ -39,10 +39,12 @@ const EventSsection = props => {
 
   const [dateSelected, changeDateSelected] = useState(new Date());
   const [currentEvent, changeCurrentEvent] = useState(mockEvent[0]);
+  const [year, setYear] = useState(new Date().getFullYear())
   // eslint-disable-next-line no-unused-vars
   const [events, setEvents] = useState(mockEvent);
 
   useEffect(() => {
+    console.log("year", year)
     const eventData = Lodash.find(events, event =>
       compareDate(event.startDate, dateSelected)
     );
@@ -140,6 +142,7 @@ const EventSsection = props => {
         renderDay={_renderDay}
         onDayClick={day => changeDateSelected(day)}
         selectedDays={[dateSelected]}
+        onMonthChange={month => console.log("month", month.getFullYear())}
       />
     );
   };

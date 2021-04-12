@@ -1,3 +1,4 @@
+import { Fragment, useEffect, useRef, useState, useCallback, memo } from 'react';
 import {
   Card,
   CardActionArea,
@@ -67,7 +68,7 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }));
-const PostCard = ({ image, title, date, description }) => {
+const PostCard = memo(({ image, title, date, description }) => {
   const classes = useStyles();
   return (
     <Card className={classes.root} elevation={0}>
@@ -95,7 +96,7 @@ const PostCard = ({ image, title, date, description }) => {
       </Grid>
     </Card>
   );
-};
+});
 
 PostCard.propTypes = {
   image: PropTypes.string,

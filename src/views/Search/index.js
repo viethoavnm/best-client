@@ -1,9 +1,10 @@
+
 import { Divider, Grid } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import { createStyles, makeStyles } from '@material-ui/styles';
 import { SearchBar2 } from 'components';
 import { debounce } from 'lodash';
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState, useCallback } from 'react';
 import { AutoSizer, List, WindowScroller } from 'react-virtualized';
 import NewsEvent from './component/news-event';
 import PostCard from './component/post-card';
@@ -72,14 +73,14 @@ const Search = () => {
     console.log(heightCard)
   }, [heightCard])
 
-  const _rowRenderer = ({ index, isScrolling, style }) => {
-    if (isScrolling) {
-      return (
-        <div style={{ ...style }} key={index}>
-          <Skeleton className={classes.skeleton} />
-        </div>
-      );
-    }
+  const _rowRenderer =  ({ index, isScrolling, style }) => {
+    // if (isScrolling) {
+    //   return (
+    //     <div style={{ ...style }} key={index}>
+    //       <Skeleton className={classes.skeleton} />
+    //     </div>
+    //   );
+    // }
     const { image, title, date, description } = data[index];
     return (
       <div style={style} key={index}>
