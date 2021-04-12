@@ -72,12 +72,16 @@ const MapSection = props => {
         {_renderTitle('Địa bàn dự án')}
 
         <Grid container>
-          <Grid item xs={12} sm={6} className={clsx(classes.detailLocation)}>
-            {_renderLocationDetail()}
+          <Grid item xs={12} sm={4} className={clsx(classes.detailLocation)}>
+            <Card className={classes.detailCard} elevation={0}>
+              {_renderLocationDetail()}
+            </Card>
           </Grid>
 
-          <Grid item xs={12} sm={6} className={clsx(classes.mapView)}>
-            {_renderMap()}
+          <Grid item xs={12} sm={8} className={clsx(classes.mapView)}>
+            <Card className={classes.detailCard} elevation={0}>
+              {_renderMap()}
+            </Card>
           </Grid>
         </Grid>
       </Container>

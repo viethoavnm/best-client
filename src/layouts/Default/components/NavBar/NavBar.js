@@ -71,9 +71,9 @@ const NavBar = () => {
                 </Link>
               </li>
               <li className={classes.li}>
-                <Link to="/" className={classes.a}>
+                <Link to="/event" className={classes.a}>
                   <Home className={classes.icon} />
-                  <span className={classes.span}>Giới thiệu</span>
+                  <span className={classes.span}>Sự kiện sắp tới</span>
                 </Link>
               </li>
             </ul>
