@@ -8,12 +8,41 @@ import useRouter from 'utils/useRouter';
 import logo from '../../../../assets/img/logo-best.svg';
 import Language from './Language';
 import useStyles from './style';
+import axios from 'utils/axios';
+import { urlGetSetting } from 'services/urlAPI';
 
 const NavBar = () => {
   const classes = useStyles();
   const [openMenu, setOpenMenu] = useState(false);
   const router = useRouter();
   useEffect(() => {}, [router.location.pathname]);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const fetchData = () => {
+      axios
+        .get(`${urlGetSetting}`, {})
+        .then(response => {
+          console.log('response: ', response);
+
+          if (mounted) {
+            console.log('response: ', response);
+
+            // setData(response.data);
+          }
+        })
+        .catch(error => {
+          console.log('error: ', error);
+        });
+    };
+
+    fetchData();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const toggle = () => {
     setOpenMenu(!openMenu);
