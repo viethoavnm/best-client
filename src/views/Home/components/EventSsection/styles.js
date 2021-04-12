@@ -1,6 +1,75 @@
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
+  titleBox: {
+    marginTop: 40,
+    marginBottom: 25
+  },
+  title: {
+    flexGrow: 1,
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#3A3A3A',
+    textTransform: 'uppercase',
+    [theme.breakpoints.down('sm')]: {
+      color: '#92BF1F'
+    }
+  },
+  titleContent: {
+    flexGrow: 1,
+    display: 'flex',
+    alignItems: 'center',
+    width: '100%',
+    flexWrap: 'wrap'
+  },
+  readMore: {
+    color: '#92BF1F',
+    fontWeight: 500,
+    display: 'flex',
+    '&:hover': {
+      textDecoration: 'underline'
+    },
+    [theme.breakpoints.down('md')]: {
+      color: '#272727'
+    },
+    [theme.breakpoints.up('md')]: {
+      '& svg': {
+        display: 'none'
+      }
+    }
+  },
+  rootCard: {
+    height: '100%',
+    backgroundColor: '#FFFFFF',
+    boxShadow: `0px 4px 60px 0px rgba(150, 150, 150, 0.24)`,
+    borderRadius: 16
+  },
+  eventLeft: {
+    backgroundColor: '#92BF1F'
+  },
+  eventRight: {
+    backgroundColor: '#FFFFFF'
+  },
+  eventDetailCard: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#92BF1F',
+  },
+  imgNoEvent: {
+    width: '100%'
+  },
+  noEventLable: {
+    color: 'white',
+    marginTop: theme.spacing(5),
+    fontWeight: 700,
+    fontSize: '24px'
+  },
+  eventTitle: {
+    color: 'white',
+    marginBottom: theme.spacing(2),
+    fontWeight: 700,
+    fontSize: '24px'
+  },
   root: {
     marginTop: theme.spacing(5)
   },
@@ -111,14 +180,6 @@ const useStyles = makeStyles(theme => ({
     paddingRight: 100,
     paddingTop: 30,
     paddingBottom: 30
-  },
-  title: {
-    fontFamily: 'Montserrat',
-    fontSize: '24px',
-    fontWeight: '700',
-    color: '#FFFFFF',
-    lineHeight: '29px',
-    marginBottom: '25px'
   },
   title1: {
     fontFamily: 'Montserrat',

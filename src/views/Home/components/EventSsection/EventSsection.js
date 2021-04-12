@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import Hidden from '@material-ui/core/Hidden';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Card from '@material-ui/core/CardMedia';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import DayPicker from 'react-day-picker';
@@ -11,6 +12,9 @@ import MomentLocaleUtils from 'react-day-picker/moment';
 import moment from 'moment';
 import Lodash from 'lodash';
 import useStyles from './styles';
+import { Link } from 'react-router-dom';
+import { ChevronRight } from '@material-ui/icons';
+import { Container, Title } from 'components';
 
 // import './calendar.scss';
 import './day-picker.css';
@@ -33,7 +37,7 @@ const mockEvent = [
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 
 const EventSsection = props => {
-  const { className, ...rest } = props;
+  const { classRoot, ...rest } = props;
 
   const classes = useStyles();
 
@@ -95,42 +99,12 @@ const EventSsection = props => {
 
   const _renderTitle = title => {
     return (
-      <div>
-        <Hidden smDown>
-          <Box
-            display="flex"
-            flexDirection="row"
-            alignItems="center"
-            marginBottom="30px"
-            marginTop="40px"
-            bgcolor="#F6F6F6">
-            <img
-              className={clsx(classes.slashIcon)}
-              src="images/ic-slash-title.svg"
-              alt="slash"
-            />
-            <Typography
-              component="h1"
-              variant="h3"
-              color="inherit"
-              className={classes.smTitle}>
-              {title.toUpperCase()}
-            </Typography>
-          </Box>
-        </Hidden>
-
-        <Hidden lgUp>
-          <Box display="flex" flexDirection="row" alignItems="center">
-            <Typography
-              component="h1"
-              variant="h3"
-              color="inherit"
-              className={classes.lgTitle}>
-              {title.toUpperCase()}
-            </Typography>
-          </Box>
-        </Hidden>
-      </div>
+      <Title size="large" className={classes.titleBox}>
+        <div className={classes.titleContent}>
+          <h2 className={classes.title}>{title}</h2>
+          <Link to="/" className={classes.readMore}>Xem thêm <ChevronRight/></Link>
+        </div>
+      </Title>
     );
   };
 
@@ -155,40 +129,42 @@ const EventSsection = props => {
         justify="space-between"
         alignItems="stretch">
         {Lodash.isEmpty(currentEvent) ? (
-          <Box display="flex" justifyContent="center" alignItems="center">
-            <Typography color="red" className={classes.noEvent}>
-              Không có sự kiện nào!
+          <Card className={clsx(classes.eventDetailCard)} elevation={0}>
+            <img
+              alt="img_no_event"
+              className={classes.imgNoEvent}
+              src="images/img_no_event.svg"
+            />
+            <Typography className={classes.noEventLable} align="center">
+              Hiện đang không có sự kiện nào
             </Typography>
-          </Box>
+          </Card>          
         ) : (
-          <>
-            <Grid item xs={12} sm={12}>
-              <Box position="relative" textAlign="center">
-                <CardMedia
-                  className={classes.thumbnailEvent}
-                  image="assets/images/new-1.png"
-                  alt="image-event"
-                />
+          <Card className={clsx(classes.eventDetailCard)} elevation={0}>
+            <Box position="relative" textAlign="center">
+              <CardMedia
+                className={classes.thumbnailEvent}
+                image="images/new-1.png"
+                alt="image-event"
+              />
 
-                <Box
-                  position="absolute"
-                  top="50%"
-                  left="50%"
-                  className={classes.wrapperDayEvent}>
-                  <Typography className={classes.dayEvent}>
-                    {moment(currentEvent.startDate).date()}
-                  </Typography>
-                  <Typography className={classes.weekday}>
-                    {moment(currentEvent.startDate).format('dddd')}
-                  </Typography>
-                </Box>
+              <Box
+                position="absolute"
+                top="50%"
+                left="50%"
+                className={classes.wrapperDayEvent}>
+                <Typography className={classes.dayEvent}>
+                  {moment(currentEvent.startDate).date()}
+                </Typography>
+                <Typography className={classes.weekday}>
+                  {moment(currentEvent.startDate).format('dddd')}
+                </Typography>
               </Box>
-            </Grid>
-
-            <Grid item xs={12} sm={12}>
-              <Box className={classes.eventDes}>
+            </Box>
+            
+            <Box className={classes.eventDes}>
                 <Box display="flex" alignItems="center" flexDirection="column">
-                  <Typography className={classes.title} align="center">
+                  <Typography className={classes.eventTitle} align="center">
                     {currentEvent.name}
                   </Typography>
 
@@ -199,7 +175,7 @@ const EventSsection = props => {
                     marginBottom="16px">
                     <CardMedia
                       className={classes.media}
-                      image="assets/images/ic-location-white.svg"
+                      image="images/ic-location-white.svg"
                       alt="location"
                     />
                     <Typography className={classes.addressItem}>
@@ -210,7 +186,7 @@ const EventSsection = props => {
                   <Box display="flex" alignItems="center" flexDirection="row">
                     <CardMedia
                       className={classes.media}
-                      image="assets/images/ic-clock-white.svg"
+                      image="images/ic-clock-white.svg"
                       alt="location"
                     />
                     <Typography className={classes.addressItem}>
@@ -219,36 +195,29 @@ const EventSsection = props => {
                   </Box>
                 </Box>
               </Box>
-            </Grid>
-          </>
+          </Card>
         )}
       </Grid>
     );
   };
 
   return (
-    <div {...rest} className={clsx(classes.root, className)}>
-      {_renderTitle('Sự kiện sắp tới')}
+    <section>
+      <Container>
+        {_renderTitle('Sự kiện sắp tới')}
 
-      <Hidden smDown>
-        <Grid container spacing={4}>
-          <Grid item xs={12} sm={6}>
-            {_renderEventDetail()}
+        <Card className={clsx(classes.rootCard)} elevation={0}>
+          <Grid container>
+            <Grid item xs={12} sm={6} className={clsx(classes.eventLeft)}>
+              {_renderEventDetail()}
+            </Grid>
+            <Grid item xs={12} sm={6} className={clsx(classes.eventRight)}>
+              {_renderDayPicker()}
+            </Grid>
           </Grid>
-
-          <Grid item xs={12} sm={6}>
-            {_renderDayPicker()}
-          </Grid>
-        </Grid>
-      </Hidden>
-
-      <Hidden lgUp>
-        <Grid container spacing={4} justify="center">
-          {_renderEventDetail()}
-          {_renderDayPicker()}
-        </Grid>
-      </Hidden>
-    </div>
+        </Card>
+      </Container>
+    </section>
   );
 };
 

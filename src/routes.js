@@ -12,6 +12,11 @@ import Event from './views/Event';
 
 const routes = [
   {
+    path: '/',
+    exact: true,
+    component: () => <Redirect to="/home" />
+  },
+  {
     route: '*',
     component: DefaultLayout,
     routes: [

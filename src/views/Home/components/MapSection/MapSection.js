@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { Hidden, Grid, Box, Typography } from '@material-ui/core';
 import GoogleMapReact from 'google-map-react';
-import { MarkerMap } from 'components';
+import { Container, Title, MarkerMap } from 'components';
+import { Link } from 'react-router-dom';
+import { ChevronRight } from '@material-ui/icons';
+import Card from '@material-ui/core/CardMedia';
 
 import useStyles from './styles';
 
@@ -14,42 +17,12 @@ const MapSection = props => {
 
   const _renderTitle = title => {
     return (
-      <div>
-        <Hidden smDown>
-          <Box
-            display="flex"
-            flexDirection="row"
-            alignItems="center"
-            marginBottom="30px"
-            marginTop="40px"
-            bgcolor="#F6F6F6">
-            <img
-              className={clsx(classes.slashIcon)}
-              src="images/ic-slash-title.svg"
-              alt="slash"
-            />
-            <Typography
-              component="h1"
-              variant="h3"
-              color="inherit"
-              className={classes.smTitle}>
-              {title.toUpperCase()}
-            </Typography>
-          </Box>
-        </Hidden>
-
-        <Hidden lgUp>
-          <Box display="flex" flexDirection="row" alignItems="center">
-            <Typography
-              component="h1"
-              variant="h3"
-              color="inherit"
-              className={classes.lgTitle}>
-              {title.toUpperCase()}
-            </Typography>
-          </Box>
-        </Hidden>
-      </div>
+      <Title size="large" className={classes.titleBox}>
+        <div className={classes.titleContent}>
+          <h2 className={classes.title}>{title}</h2>
+          {/* <Link to="/" className={classes.readMore}>Xem thêm <ChevronRight/></Link> */}
+        </div>
+      </Title>
     );
   };
 
@@ -94,32 +67,25 @@ const MapSection = props => {
   };
 
   return (
-    <div {...rest} className={clsx(classes.root, className)}>
-      {_renderTitle('Địa bàn dự án')}
+    <section>
+      <Container>
+        {_renderTitle('Địa bàn dự án')}
 
-      <Hidden smDown>
-        <Grid container spacing={4}>
-          <Grid item xs={12} sm={6}>
-            {_renderLocationDetail()}
+        <Grid container>
+          <Grid item xs={12} sm={4} className={clsx(classes.detailLocation)}>
+            <Card className={classes.detailCard} elevation={0}>
+              {_renderLocationDetail()}
+            </Card>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
-            {_renderMap()}
+          <Grid item xs={12} sm={8} className={clsx(classes.mapView)}>
+            <Card className={classes.detailCard} elevation={0}>
+              {_renderMap()}
+            </Card>
           </Grid>
         </Grid>
-      </Hidden>
-
-      <Hidden lgUp>
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={6}>
-            {_renderMap()}
-          </Grid>
-          <Grid item xs={12} md={6}>
-            {_renderLocationDetail()}
-          </Grid>
-        </Grid>
-      </Hidden>
-    </div>
+      </Container>
+    </section>
   );
 };
 
