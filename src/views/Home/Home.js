@@ -1,11 +1,11 @@
-import { Container } from 'components';
 import React, { Fragment } from 'react';
 import {
   EventSsection,
   FeaturedSection,
   LibrarySection,
   MapSection,
-  NewsSection
+  NewsSection,
+  DownloadAppSection
 } from './components';
 
 const Home = () => {
@@ -16,6 +16,7 @@ const Home = () => {
       <LibrarySection />
       <EventSsection />
       <MapSection />
+      <DownloadAppSection />
     </Fragment>
   );
 };

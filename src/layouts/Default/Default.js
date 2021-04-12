@@ -12,11 +12,9 @@ const Default = props => {
       <Header />
       <NavBar />
       <main>
-        <div style={{ padding: '40px 0' }}>
-          <Suspense fallback={<LinearProgress />}>
-            {renderRoutes(route.routes)}
-          </Suspense>
-        </div>
+        <Suspense fallback={<LinearProgress />}>
+          {renderRoutes(route.routes)}
+        </Suspense>
       </main>
       <Footer />
     </Fragment>

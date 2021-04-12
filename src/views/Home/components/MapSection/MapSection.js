@@ -28,7 +28,7 @@ const MapSection = props => {
 
   const _renderLocationDetail = () => {
     return (
-      <Box className={classes.leftProject}>
+      <Box className={classes.detailContent}>
         <Typography className={classes.titleProject}>
           Hộ cơ khí Hiệp Phát
         </Typography>
@@ -53,15 +53,20 @@ const MapSection = props => {
 
   const _renderMap = () => {
     return (
-      <Box height="328px" width="100%">
-        <GoogleMapReact
-          bootstrapURLKeys={{
-            key: 'AIzaSyApTCjw-LZYi0eZq47tvrm7gM_W1qQZQSg'
-          }}
-          defaultCenter={{ lat: 21.02, lng: 105.83416 }}
-          defaultZoom={11}>
-          <MarkerMap lat={21.027763} lng={105.83416} text="My Marker" />
-        </GoogleMapReact>
+      <Box display="flex" justifyContent="center" height="328px" width="100%">
+        <Box height="100%" width="100%" className={clsx(classes.mapContent)}>
+          <div className={clsx(classes.googleMapFrame)}>
+            <GoogleMapReact
+              bootstrapURLKeys={{
+                key: 'AIzaSyApTCjw-LZYi0eZq47tvrm7gM_W1qQZQSg'
+              }}
+              yesIWantToUseGoogleMapApiInternals
+              defaultCenter={{ lat: 21.02, lng: 105.83416 }}
+              defaultZoom={19}>
+              <MarkerMap lat={21.02} lng={105.83416} text="My Marker" />
+            </GoogleMapReact>
+          </div>
+        </Box>
       </Box>
     );
   };
@@ -72,7 +77,11 @@ const MapSection = props => {
         {_renderTitle('Địa bàn dự án')}
 
         <Grid container>
-          <Grid item xs={12} sm={4} className={clsx(classes.detailLocation)}>
+          <Grid
+            item
+            xs={12}
+            sm={4}
+            className={clsx(classes.detailLocationView)}>
             <Card className={classes.detailCard} elevation={0}>
               {_renderLocationDetail()}
             </Card>
