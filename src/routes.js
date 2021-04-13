@@ -69,6 +69,11 @@ const routes = [
         path: '/event',
         exact: true,
         component: Event
+      },
+      {
+        path: '/event/:id',
+        exact: true,
+        component: React.lazy(() => import('./views/Event/EventDetail'))
       }
     ]
   },

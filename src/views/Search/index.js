@@ -137,7 +137,6 @@ const Search = () => {
   }, [query]);
 
   useEffect(() => {
-    // console.log(heightCard)
     window.scrollTo(0, 0);
   }, []);
 

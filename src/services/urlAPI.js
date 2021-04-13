@@ -1,4 +1,5 @@
-export const urlBase = 'http://61.28.229.50/v1/';
+export const urlBase = 'http://admin.khihoasinhkhoi.com/v1/';
 
 export const urlGetSetting = 'setup/home-data';
 export const urlArticle = 'article';
+export const urlEvent = 'event';

@@ -15,6 +15,7 @@ import useStyles from './styles';
 import { Link } from 'react-router-dom';
 import { ChevronRight } from '@material-ui/icons';
 import { Container, Title } from 'components';
+import { getEvent } from 'services/event';
 
 // import './calendar.scss';
 import './day-picker.css';
@@ -43,12 +44,12 @@ const EventSsection = props => {
 
   const [dateSelected, changeDateSelected] = useState(new Date());
   const [currentEvent, changeCurrentEvent] = useState(mockEvent[0]);
-  const [year, setYear] = useState(new Date().getFullYear())
+  const [year, setYear] = useState(new Date().getFullYear());
   // eslint-disable-next-line no-unused-vars
   const [events, setEvents] = useState(mockEvent);
 
   useEffect(() => {
-    console.log("year", year)
+    console.log('year', year);
     const eventData = Lodash.find(events, event =>
       compareDate(event.startDate, dateSelected)
     );
@@ -102,7 +103,9 @@ const EventSsection = props => {
       <Title size="large" className={classes.titleBox}>
         <div className={classes.titleContent}>
           <h2 className={classes.title}>{title}</h2>
-          <Link to="/" className={classes.readMore}>Xem thêm <ChevronRight/></Link>
+          <Link to="/" className={classes.readMore}>
+            Xem thêm <ChevronRight />
+          </Link>
         </div>
       </Title>
     );
@@ -116,7 +119,7 @@ const EventSsection = props => {
         renderDay={_renderDay}
         onDayClick={day => changeDateSelected(day)}
         selectedDays={[dateSelected]}
-        onMonthChange={month => console.log("month", month.getFullYear())}
+        onMonthChange={month => console.log('month', month.getFullYear())}
       />
     );
   };
@@ -138,7 +141,7 @@ const EventSsection = props => {
             <Typography className={classes.noEventLable} align="center">
               Hiện đang không có sự kiện nào
             </Typography>
-          </Card>          
+          </Card>
         ) : (
           <Card className={clsx(classes.eventDetailCard)} elevation={0}>
             <Box position="relative" textAlign="center">
@@ -161,40 +164,40 @@ const EventSsection = props => {
                 </Typography>
               </Box>
             </Box>
-            
+
             <Box className={classes.eventDes}>
-                <Box display="flex" alignItems="center" flexDirection="column">
-                  <Typography className={classes.eventTitle} align="center">
-                    {currentEvent.name}
+              <Box display="flex" alignItems="center" flexDirection="column">
+                <Typography className={classes.eventTitle} align="center">
+                  {currentEvent.name}
+                </Typography>
+
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  flexDirection="row"
+                  marginBottom="16px">
+                  <CardMedia
+                    className={classes.media}
+                    image="images/ic-location-white.svg"
+                    alt="location"
+                  />
+                  <Typography className={classes.addressItem}>
+                    {currentEvent.address}
                   </Typography>
+                </Box>
 
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    flexDirection="row"
-                    marginBottom="16px">
-                    <CardMedia
-                      className={classes.media}
-                      image="images/ic-location-white.svg"
-                      alt="location"
-                    />
-                    <Typography className={classes.addressItem}>
-                      {currentEvent.address}
-                    </Typography>
-                  </Box>
-
-                  <Box display="flex" alignItems="center" flexDirection="row">
-                    <CardMedia
-                      className={classes.media}
-                      image="images/ic-clock-white.svg"
-                      alt="location"
-                    />
-                    <Typography className={classes.addressItem}>
-                      {moment(currentEvent.startDate).format(DATE_FORMAT)}
-                    </Typography>
-                  </Box>
+                <Box display="flex" alignItems="center" flexDirection="row">
+                  <CardMedia
+                    className={classes.media}
+                    image="images/ic-clock-white.svg"
+                    alt="location"
+                  />
+                  <Typography className={classes.addressItem}>
+                    {moment(currentEvent.startDate).format(DATE_FORMAT)}
+                  </Typography>
                 </Box>
               </Box>
+            </Box>
           </Card>
         )}
       </Grid>

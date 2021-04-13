@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import {
   Card,
@@ -13,6 +13,9 @@ import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import { useTheme } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import { DEFAULT_LANG } from 'utils/constant';
+import moment from 'moment';
+import Lodash from 'lodash';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -30,14 +33,19 @@ const useStyles = makeStyles(theme =>
     },
     media: {
       height: 0,
-      paddingTop: '77%',
+      [theme.breakpoints.down('sm')]: {
+        paddingTop: '100%'
+      },
+      [theme.breakpoints.up('sm')]: {
+        paddingTop: '77%'
+      },
       borderRadius: 10
     },
     title: {
       marginTop: 24,
       marginBottom: 42,
       color: '#3A3A3A',
-      fontWeight: 500,
+      fontWeight: 600,
       overflow: 'hidden',
       display: '-webkit-box',
       '-webkit-line-clamp': 2,
@@ -56,7 +64,10 @@ const useStyles = makeStyles(theme =>
       alignItems: 'center'
     },
     detailGrid: {
-      paddingLeft: 32
+      paddingLeft: 20,
+      [theme.breakpoints.up('sm')]: {
+        paddingTop: 12
+      }
     },
     iconGrid: {
       marginRight: 10,
@@ -127,17 +138,21 @@ const useStyles = makeStyles(theme =>
   })
 );
 
-const EventCardLarge = ({
-  day,
-  month,
-  year,
-  hourminute,
-  title,
-  image,
-  location
-}) => {
+const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
+const EventCardLarge = ({ item }) => {
+  const [lang, setLang] = useState(DEFAULT_LANG);
   const classes = useStyles();
   const theme = useTheme();
+
+  const image = Lodash.get(item, 'urlImg', '');
+  const name = Lodash.get(item, 'name', '');
+  const address = Lodash.get(item, 'address', '');
+  const startDate = Lodash.get(item, 'startDate', '');
+  const date = new Date(startDate);
+  const formatDate = moment(date).format(DATE_FORMAT);
+  const month = moment(date).month() + 1; // Moment base month on 0
+  const day = moment(date).date();
+
   return (
     <Card className={classes.root}>
       <Grid container spacing={0}>
@@ -146,7 +161,7 @@ const EventCardLarge = ({
             <CardMedia
               className={`${classes.media}`}
               image={image}
-              title={title}
+              // title={name}
             />
             <div className={classes.datetime}>
               <div className={classes.datetimeContainer}>
@@ -164,29 +179,33 @@ const EventCardLarge = ({
             </div>
           </CardActionArea>
         </Grid>
+
         <Grid item xs={7} md={8} className={classes.detailGrid}>
           <div className={classes.details}>
             <CardContent className={classes.content}>
               <Typography
-                variant="h3"
+                variant="h4"
                 color="textPrimary"
                 className={classes.title}>
-                {title}
+                {name}
               </Typography>
+
               <Box className={classes.grid}>
                 <Box className={classes.iconGrid}>
                   <LocationOnOutlinedIcon />
                 </Box>
                 <Typography variant="div" className={classes.textGrid}>
-                  {location}
+                  {address}
                 </Typography>
               </Box>
+
               <Box className={classes.grid}>
                 <Box className={classes.iconGrid}>
                   <AccessTimeIcon />
                 </Box>
                 <Typography variant="div" className={classes.textGrid}>
-                  {hourminute} - {day}/{month}/{year}
+                  {/* {hourminute} - {day}/{month}/{year} */}
+                  {formatDate}
                 </Typography>
               </Box>
             </CardContent>
