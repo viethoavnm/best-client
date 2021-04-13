@@ -9,7 +9,8 @@ import logo from '../../../../assets/img/logo-best.svg';
 import Language from './Language';
 import useStyles from './style';
 import axios from 'utils/axios';
-import { urlGetSetting } from 'services/urlAPI';
+import { urlGetMenuConfig } from 'services/urlAPI';
+import { replaceStrUrl } from 'utils';
 
 const NavBar = () => {
   const classes = useStyles();
@@ -21,15 +22,14 @@ const NavBar = () => {
     let mounted = true;
 
     const fetchData = () => {
-      axios
-        .get(`${urlGetSetting}`, {})
-        .then(response => {
-          console.log('response: ', response);
+      const key = 'MENU_WEB_CONFIG';
+      const path = replaceStrUrl(urlGetMenuConfig, [key]);
 
+      axios
+        .get(`${path}`, {})
+        .then(response => {
           if (mounted) {
             console.log('response: ', response);
-
-            // setData(response.data);
           }
         })
         .catch(error => {
@@ -55,9 +55,11 @@ const NavBar = () => {
           <IconButton className={classes.pushmenu} onClick={toggle}>
             <MenuIcon fontSize="large" />
           </IconButton>
+
           <div className={classes.imgBox}>
             <img className={classes.img} src={logo} alt="logo" />
           </div>
+
           <div
             className={clsx(classes.menuMobile, openMenu && classes.menuOpen)}>
             <div className={classes.imgTopBox}>
@@ -78,11 +80,13 @@ const NavBar = () => {
               </li>
             </ul>
           </div>
+
           {openMenu && (
             <div className={classes.closeMenu} onClick={toggle}></div>
           )}
+
           <IconButton className={classes.search}>
-            <Link to="/search" >
+            <Link to="/search">
               <Search fontSize="large" />
             </Link>
           </IconButton>

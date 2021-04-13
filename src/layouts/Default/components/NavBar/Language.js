@@ -30,6 +30,7 @@ const Language = () => {
   };
 
   const clickVn = () => {
+    console.log('click');
     setAnchorEl(null);
   };
 
