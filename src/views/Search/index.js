@@ -1,13 +1,17 @@
-
 import { Divider, Grid } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import { createStyles, makeStyles } from '@material-ui/styles';
-import { SearchBar2 } from 'components';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { SearchBar2, Container } from 'components';
 import { debounce } from 'lodash';
 import { Fragment, useEffect, useRef, useState, useCallback } from 'react';
 import { AutoSizer, List, WindowScroller } from 'react-virtualized';
 import NewsEvent from './component/news-event';
 import PostCard from './component/post-card';
+import { getArticle } from 'services/search';
+import Lodash from 'lodash';
+import moment from 'moment';
+import { DATE_FORMAT } from 'utils/constant';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -56,38 +60,107 @@ let post = {
     'Công nghệ khí hóa sinh khối là quá trình phản ứng nhiệt hóa học khi đốt cháy nhiên liệu sinh khối trong điều kiện thiếu oxy (cháy sơ cấp), sản sinh ra hỗn hợp khí gas (CO, H2, CH4). '
 };
 
+const DATA_LOADING = [1, 2, 3, 4, 5];
+
 const Search = () => {
   const classes = useStyles();
   const refCard = useRef(null);
+  const [lang, setLang] = useState('vi');
+  const [page, setPage] = useState(1);
+  const [query, setQuery] = useState('');
+  const limit = 5;
+  const [hasNext, setHasNext] = useState(false);
   const [heightCard, setHeightCard] = useState(204);
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState(() => {
-    let a = [];
-    for (let i = 0; i < 10; i++) {
-      a.push({ ...post });
-    }
-    return a;
-  });
+  const [loadmore, setLoadmore] = useState(false);
+  const [searchResults, setSearchResults] = useState(DATA_LOADING);
+  // const [data, setData] = useState(() => {
+  //   let a = [];
+  //   for (let i = 0; i < 10; i++) {
+  //     a.push({ ...post });
+  //   }
+  //   return a;
+  // });
 
-  useEffect(()=>{
-    console.log(heightCard)
-  }, [heightCard])
+  const transformData = list => {
+    const newList = list.map(obj => {
+      const transArr = Lodash.get(obj, 'translations', []);
+      const objTrans = Lodash.find(transArr, obj => obj.lang === lang);
+      delete objTrans._id;
+      return { ...obj, ...objTrans };
+    });
 
-  const _rowRenderer =  ({ index, isScrolling, style }) => {
-    // if (isScrolling) {
+    return newList;
+  };
+
+  useEffect(() => {
+    let params = { page, limit };
+    setLoading(true);
+    getArticle(params)
+      .then(res => {
+        const data = Lodash.get(res, 'data', {});
+        const results = Lodash.get(data, 'results', []);
+        const hasNextData = Lodash.get(data, 'hasNext', false);
+        const newList = transformData(results);
+        setSearchResults(newList);
+        setHasNext(hasNextData);
+      })
+      .catch(err => {
+        setSearchResults([]);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (query === '') return;
+    let params = { page: 1, limit, q: query };
+
+    setLoading(true);
+    getArticle(params)
+      .then(res => {
+        const data = Lodash.get(res, 'data', {});
+        const results = Lodash.get(data, 'results', []);
+        const hasNextData = Lodash.get(data, 'hasNext', false);
+        const newList = transformData(results);
+        setPage(1);
+        setSearchResults(newList);
+        setHasNext(hasNextData);
+      })
+      .catch(err => {
+        setSearchResults([]);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [query]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const _rowRenderer = ({ index, isScrolling, style }) => {
+    // if (loading) {
     //   return (
     //     <div style={{ ...style }} key={index}>
     //       <Skeleton className={classes.skeleton} />
     //     </div>
     //   );
     // }
-    const { image, title, date, description } = data[index];
+
+    const { urlImg, title, description } = searchResults[index];
+    const item = searchResults[index];
+    const startTime = Lodash.get(item, 'publishedAt', '');
+    const date = new Date(startTime);
+    const formatDate = moment(date).format(DATE_FORMAT);
+
     return (
       <div style={style} key={index}>
         <PostCard
-          image={image}
+          image={urlImg}
           title={title}
-          date={date}
+          date={formatDate}
           description={description}
         />
         <Divider className={classes.divider} />
@@ -108,18 +181,36 @@ const Search = () => {
   }, []);
 
   const onScroll = ({ clientHeight, scrollHeight, scrollTop }) => {
-    if (loading) return;
+    if (loading || loadmore || !hasNext) return;
     if (clientHeight + scrollTop > scrollHeight) {
-      setLoading(true);
+      setLoadmore(true);
       setTimeout(() => {
-        if (loading) return;
-        let a = [...data];
-        for (let i = 0; i < 10; i++) {
-          a.push({ ...post });
+        if (loading || loadmore || !hasNext) return;
+
+        let params = { page: page + 1, limit };
+        if (query !== '') {
+          params = { ...params, q: query };
         }
-        setLoading(false);
-        setData(a);
-      }, 2500);
+
+        getArticle(params)
+          .then(res => {
+            const data = Lodash.get(res, 'data', {});
+            const results = Lodash.get(data, 'results', []);
+            const hasNextData = Lodash.get(data, 'hasNext', false);
+            const newList = transformData(results);
+            setPage(page + 1);
+            setSearchResults([...searchResults, ...newList]);
+            setHasNext(hasNextData);
+          })
+          .catch(err => {
+            // setData([]);
+          })
+          .finally(() => {
+            setLoadmore(false);
+          });
+
+        // setData(a);
+      }, 800);
     }
   };
 
@@ -127,59 +218,85 @@ const Search = () => {
 
   return (
     <Fragment>
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={8} className={classes.search}>
-          <SearchBar2 />
+      <Container>
+        <Grid container spacing={4}>
+          <Grid item xs={12} md={8} className={classes.search}>
+            <SearchBar2 onSubmit={txt => setQuery(txt)} />
+          </Grid>
         </Grid>
-      </Grid>
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={8}>
-          <div ref={refCard} className={classes.hidden}>
-            <PostCard
-              image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
-              title="Công nghệ khí hóa sinh khối là quá trình phản ứng nhiệt hóa học khi đốt cháy nhiên liệu sinh khối trong điều kiện thiếu oxy (cháy sơ cấp), sản sinh ra hỗn hợp khí gas (CO, H2, CH4). Công nghệ khí hóa sinh khối là quá trình phản ứng nhiệt hóa học khi đốt cháy nhiên liệu sinh khối trong điều kiện thiếu oxy (cháy sơ cấp), sản sinh ra hỗn hợp khí gas (CO, H2, CH4). "
-              date="20/02/2020"
-              description="Công nghệ khí hóa sinh khối là quá trình phản ứng nhiệt hóa học khi đốt cháy nhiên liệu sinh khối trong điều kiện thiếu oxy (cháy sơ cấp), sản sinh ra hỗn hợp khí gas (CO, H2, CH4). Công nghệ khí hóa sinh khối là quá trình phản ứng nhiệt hóa học khi đốt cháy nhiên liệu sinh khối trong điều kiện thiếu oxy (cháy sơ cấp), sản sinh ra hỗn hợp khí gas (CO, H2, CH4). "
-            />
-            <Divider className={classes.divider} />
-          </div>
-          <div className={classes.result}>
-            <span className={classes.total}>10 </span>
-            kết quả phù hợp
-          </div>
-          <Divider className={classes.divider} />
-          <WindowScroller>
-            {({ height, isScrolling, registerChild, scrollTop }) => (
-              <AutoSizer disableHeight>
-                {({ width }) => (
-                  <div ref={registerChild}>
-                    <List
-                      autoHeight
-                      height={height}
-                      isScrolling={isScrolling}
-                      onScroll={delayedScroll}
-                      overscanRowCount={3}
-                      rowCount={data.length}
-                      rowHeight={heightCard}
-                      rowRenderer={_rowRenderer}
-                      scrollTop={scrollTop}
-                      width={width}
-                    />
-                  </div>
-                )}
-              </AutoSizer>
-            )}
-          </WindowScroller>
-          {loading && (
-            <div style={{ height: 200, display: 'flex', alignItems: 'center' }}>
-              <h1>Loading</h1>
+
+        <Grid container spacing={4}>
+          <Grid item xs={12} md={8}>
+            <div ref={refCard} className={classes.hidden}>
+              <PostCard
+                image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
+                title="Công nghệ khí hóa sinh khối là quá trình phản ứng nhiệt hóa học khi đốt cháy nhiên liệu sinh khối trong điều kiện thiếu oxy (cháy sơ cấp), sản sinh ra hỗn hợp khí gas (CO, H2, CH4). Công nghệ khí hóa sinh khối là quá trình phản ứng nhiệt hóa học khi đốt cháy nhiên liệu sinh khối trong điều kiện thiếu oxy (cháy sơ cấp), sản sinh ra hỗn hợp khí gas (CO, H2, CH4). "
+                date="20/02/2020"
+                description="Công nghệ khí hóa sinh khối là quá trình phản ứng nhiệt hóa học khi đốt cháy nhiên liệu sinh khối trong điều kiện thiếu oxy (cháy sơ cấp), sản sinh ra hỗn hợp khí gas (CO, H2, CH4). Công nghệ khí hóa sinh khối là quá trình phản ứng nhiệt hóa học khi đốt cháy nhiên liệu sinh khối trong điều kiện thiếu oxy (cháy sơ cấp), sản sinh ra hỗn hợp khí gas (CO, H2, CH4). "
+              />
+              <Divider className={classes.divider} />
             </div>
-          )}
+
+            <div className={classes.result}>
+              <span className={classes.total}>{searchResults.length} </span>
+              kết quả phù hợp
+            </div>
+
+            <Divider className={classes.divider} />
+
+            {loading && (
+              <div
+                style={{
+                  height: 80,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                <CircularProgress size={30} style={{ color: '#A0BE37' }} />
+              </div>
+            )}
+
+            <WindowScroller>
+              {({ height, isScrolling, registerChild, scrollTop }) => (
+                <AutoSizer disableHeight>
+                  {({ width }) => (
+                    <div ref={registerChild}>
+                      <List
+                        autoHeight
+                        height={height}
+                        isScrolling={isScrolling}
+                        onScroll={delayedScroll}
+                        overscanRowCount={3}
+                        rowCount={searchResults.length}
+                        rowHeight={heightCard}
+                        rowRenderer={_rowRenderer}
+                        scrollTop={scrollTop}
+                        width={width}
+                      />
+                    </div>
+                  )}
+                </AutoSizer>
+              )}
+            </WindowScroller>
+
+            {loadmore && (
+              <div
+                style={{
+                  height: 100,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                <CircularProgress size={30} style={{ color: '#A0BE37' }} />
+              </div>
+            )}
+          </Grid>
+
+          <Grid item xs={12} md={4} className={classes.rightSidebar}>
+            <NewsEvent />
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={4} className={classes.rightSidebar}>
-          <NewsEvent />
-        </Grid>
-      </Grid>
+      </Container>
     </Fragment>
   );
 };

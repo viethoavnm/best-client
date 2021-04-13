@@ -10,16 +10,20 @@ import clsx from 'clsx';
 import Lodash from 'lodash';
 import moment from 'moment';
 import Typography from '@material-ui/core/Typography';
+import ListItem from '@material-ui/core/ListItem';
 import DayPicker from 'react-day-picker';
 import MomentLocaleUtils from 'react-day-picker/moment';
 import Card from '@material-ui/core/CardMedia';
 import CardMedia from '@material-ui/core/CardMedia';
-
 import Box from '@material-ui/core/Box';
+import { DEFAULT_LANG } from 'utils/constant';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { useHistory } from 'react-router-dom';
 
 // import './calendar.scss';
 import './day-picker.css';
 import 'moment/locale/vi';
+import { getEventByYear } from 'services/event';
 
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 
@@ -39,6 +43,7 @@ const mockEvent = [
 ];
 
 const Event = () => {
+  const history = useHistory();
   const classes = useStyles();
   const [eventList, setEventList] = useState([
     {
@@ -81,13 +86,48 @@ const Event = () => {
 
   const [dateSelected, changeDateSelected] = useState(new Date());
   const [currentEvent, changeCurrentEvent] = useState(mockEvent[0]);
-  // eslint-disable-next-line no-unused-vars
   const [events, setEvents] = useState(mockEvent);
+  const [listEvent, setListEvent] = useState([]);
+  const [year, setYear] = useState(new Date().getFullYear());
+  const [lang, setLang] = useState(DEFAULT_LANG);
+  const [loading, setLoading] = useState(false);
+
+  const transformData = list => {
+    const newList = list.map(obj => {
+      const transArr = Lodash.get(obj, 'translations', []);
+      const objTrans = Lodash.find(transArr, obj => obj.lang === lang);
+      const { _id, ...res } = objTrans;
+      return { ...obj, ...res };
+    });
+
+    return newList;
+  };
+
+  // useEffect(() => {
+  //   const newList = transformData(listEvent);
+  //   setListEvent(newList);
+  // }, [lang, listEvent]);
 
   useEffect(() => {
-    const eventData = Lodash.find(events, event =>
+    setLoading(true);
+    getEventByYear(year)
+      .then(res => {
+        const data = Lodash.get(res, 'data', []);
+        const newList = transformData(data);
+        setListEvent(newList);
+      })
+      .catch(err => {})
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [year]);
+
+  useEffect(() => {
+    const eventData = Lodash.find(listEvent, event =>
       compareDate(event.startDate, dateSelected)
     );
+
+    console.log('object', eventData);
     // if (!Lodash.isEmpty(eventData)) {
     changeCurrentEvent(eventData);
     // }
@@ -99,7 +139,7 @@ const Event = () => {
 
   const _renderDay = day => {
     const dateData = day.getDate();
-    const dayEvent = Lodash.find(events, event =>
+    const dayEvent = Lodash.find(listEvent, event =>
       compareDate(event.startDate, day)
     );
     const isMatchEvent = !Lodash.isEmpty(dayEvent);
@@ -141,11 +181,19 @@ const Event = () => {
         renderDay={_renderDay}
         onDayClick={day => changeDateSelected(day)}
         selectedDays={[dateSelected]}
+        onMonthChange={date => {
+          setYear(date.getFullYear());
+        }}
       />
     );
   };
 
   const _renderEventDetail = () => {
+    const image = Lodash.get(currentEvent, 'urlImg', '');
+    const name = Lodash.get(currentEvent, 'name', '');
+    const address = Lodash.get(currentEvent, 'address', '');
+    const startDate = Lodash.get(currentEvent, 'startDate', '');
+
     return (
       <Grid
         container
@@ -168,7 +216,7 @@ const Event = () => {
             <Box position="relative" textAlign="center">
               <CardMedia
                 className={classes.thumbnailEvent}
-                image="images/new-1.png"
+                image={image}
                 alt="image-event"
               />
 
@@ -225,6 +273,12 @@ const Event = () => {
     );
   };
 
+  const handleClickItem = item => {
+    history.push({
+      pathname: `/event/${item._id}`
+    });
+  };
+
   return (
     <Fragment>
       <Container>
@@ -241,6 +295,7 @@ const Event = () => {
               <Grid item xs={12} sm={6} className={clsx(classes.eventLeft)}>
                 {_renderEventDetail()}
               </Grid>
+
               <Grid item xs={12} sm={6} className={clsx(classes.eventRight)}>
                 {_renderDayPicker()}
               </Grid>
@@ -249,30 +304,48 @@ const Event = () => {
         </section>
 
         <section className={clsx(classes.secondSection)}>
-          <Grid container>
+          <Grid container spacing={2}>
             <Grid item xs={12} md={8}>
               <Title size="large">
                 <div className={classes.title}>Sự kiện sắp diễn ra</div>
               </Title>
-              <Grid container spacing={2} className={classes.eventList}>
-                {eventList.map(item => {
-                  return (
-                    <Grid item xs={12} sm={12} lg={12}>
-                      <EventCardLarge
-                        title={item.title}
-                        image={item.image}
-                        day={item.day}
-                        month={item.month}
-                        year={item.year}
-                        hourminute={item.hourminute}
-                        location={item.location}
-                      />
-                      <Divider className={classes.divider} />
-                    </Grid>
-                  );
-                })}
-              </Grid>
+
+              {!loading ? (
+                <Grid container spacing={2} className={classes.eventList}>
+                  {listEvent.map(item => {
+                    return (
+                      <Grid item xs={12} sm={12} lg={12}>
+                        <ListItem onClick={() => handleClickItem(item)}>
+                          <EventCardLarge
+                            item={item}
+                            // title={item.title}
+                            // image={item.image}
+                            // startTime={item.startTime}
+                            // day={item.day}
+                            // month={item.month}
+                            // year={item.year}
+                            // hourminute={item.hourminute}
+                            // location={item.location}
+                          />
+                          <Divider className={classes.divider} />
+                        </ListItem>
+                      </Grid>
+                    );
+                  })}
+                </Grid>
+              ) : (
+                <div
+                  style={{
+                    height: 80,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                  <CircularProgress size={30} style={{ color: '#A0BE37' }} />
+                </div>
+              )}
             </Grid>
+
             <Grid item xs={12} md={4} className={classes.rightSidebar}>
               <NewsEvent />
             </Grid>

@@ -28,8 +28,11 @@ const NavBar = () => {
       axios
         .get(`${path}`, {})
         .then(response => {
+          // console.log('response: ', response);
+
           if (mounted) {
-            console.log('response: ', response);
+            // console.log('response: ', response);
+            // setData(response.data);
           }
         })
         .catch(error => {

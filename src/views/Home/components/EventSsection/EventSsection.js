@@ -14,6 +14,7 @@ import useStyles from './styles';
 import { Link } from 'react-router-dom';
 import { ChevronRight } from '@material-ui/icons';
 import { Container, Title } from 'components';
+import { getEvent } from 'services/event';
 
 // import './calendar.scss';
 import './day-picker.css';
