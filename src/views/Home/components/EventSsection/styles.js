@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
   eventDetailCard: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#92BF1F',
+    backgroundColor: '#92BF1F'
   },
   imgNoEvent: {
     width: '100%'
@@ -203,7 +203,8 @@ const useStyles = makeStyles(theme => ({
     fontWeight: '700',
     color: '#92BF1F',
     marginBottom: theme.spacing(2)
-  }
+  },
+  calanderView: {}
 }));
 
 export default useStyles;

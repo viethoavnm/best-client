@@ -3,8 +3,12 @@ import { Container, Title } from 'components';
 import React from 'react';
 import FeaturedItem from '../FeaturedItem';
 import useStyles from './styles';
+import PropTypes from 'prop-types';
 
-const FeaturedSection = () => {
+const FeaturedSection = props => {
+  const { featuredData } = props;
+  console.log('featuredData: ', featuredData);
+
   const classes = useStyles();
 
   return (
@@ -48,6 +52,11 @@ const FeaturedSection = () => {
       </Container>
     </section>
   );
+};
+
+FeaturedSection.propTypes = {
+  className: PropTypes.string,
+  featuredData: PropTypes.array
 };
 
 export default FeaturedSection;
