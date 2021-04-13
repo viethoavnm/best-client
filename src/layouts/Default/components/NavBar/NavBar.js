@@ -24,10 +24,10 @@ const NavBar = () => {
       axios
         .get(`${urlGetSetting}`, {})
         .then(response => {
-          console.log('response: ', response);
+          // console.log('response: ', response);
 
           if (mounted) {
-            console.log('response: ', response);
+            // console.log('response: ', response);
 
             // setData(response.data);
           }

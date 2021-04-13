@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -34,10 +34,11 @@ const useStyles = makeStyles(theme =>
 );
 
 const SearchBar2 = ({ placeholder, defaultValue, onSubmit }) => {
+  const [input, setInput] = useState(defaultValue);
   const classes = useStyles();
   const onSubmitValue = e => {
     e.preventDefault();
-    onSubmit instanceof Function && onSubmit();
+    onSubmit instanceof Function && onSubmit(input);
   };
   return (
     <Paper component="form" className={classes.root} onSubmit={onSubmitValue}>
@@ -46,6 +47,7 @@ const SearchBar2 = ({ placeholder, defaultValue, onSubmit }) => {
         placeholder={placeholder}
         defaultValue={defaultValue}
         inputProps={{ 'aria-label': placeholder }}
+        onChange={e => setInput(e.target.value)}
       />
       <IconButton
         type="submit"

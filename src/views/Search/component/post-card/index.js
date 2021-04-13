@@ -1,4 +1,11 @@
-import { Fragment, useEffect, useRef, useState, useCallback, memo } from 'react';
+import {
+  Fragment,
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  memo
+} from 'react';
 import {
   Card,
   CardActionArea,
@@ -14,7 +21,8 @@ import PropTypes from 'prop-types';
 const useStyles = makeStyles(theme => ({
   img: {
     height: 0,
-    paddingBottom: '66%'
+    paddingBottom: '66%',
+    borderRadius: 5
   },
   time: {
     marginTop: 8,
@@ -79,6 +87,7 @@ const PostCard = memo(({ image, title, date, description }) => {
             <div></div>
           </CardActionArea>
         </Grid>
+
         <Grid item xs={7} sm={8} md={8}>
           <CardContent className={classes.content}>
             <Typography className={classes.title} component="h2">
