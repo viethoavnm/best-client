@@ -53,8 +53,16 @@ const useStyles = makeStyles(theme =>
       minHeight: 149
     },
     btnMore: {
-      textAlign: 'center',
-      borderBottom: '1px solid #CECECE'
+      display: 'none',
+      [theme.breakpoints.down('sm')]: {
+        display: 'block',
+        marginTop: 24,
+        textAlign: 'center',
+        borderBottom: '1px solid #CECECE'
+      },
+      [theme.breakpoints.down('sx')]: {
+        marginTop: 0
+      }
     },
     more: {
       background: '#DEDEDE',
