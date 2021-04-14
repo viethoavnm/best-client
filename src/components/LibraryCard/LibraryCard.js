@@ -58,10 +58,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const LibraryCard = ({ image, title, author, date, description }) => {
+const LibraryCard = ({ image, title, author, date, description, className }) => {
   const classes = useStyles();
   return (
-    <Card>
+    <Card className={className}>
       <CardActionArea>
         <CardMedia className={classes.media} image={image} title={title} />
       </CardActionArea>
