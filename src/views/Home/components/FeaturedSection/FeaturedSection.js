@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 const FeaturedSection = props => {
   const { featuredData } = props;
-  console.log('featuredData: ', featuredData);
+  // console.log('featuredData: ', featuredData);
 
   const classes = useStyles();
 

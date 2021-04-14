@@ -10,42 +10,103 @@ import Language from './Language';
 import useStyles from './style';
 import axios from 'utils/axios';
 import { urlGetMenuConfig } from 'services/urlAPI';
-import { replaceStrUrl } from 'utils';
+import { getSafeValue, getTransObj, replaceStrUrl } from 'utils';
+import { useSelector, useDispatch } from 'react-redux';
+import Lodash from 'lodash';
+import { TYPE_MENU } from 'utils/constant';
+import { useLocation } from 'react-router-dom';
 
 const NavBar = () => {
   const classes = useStyles();
+  const location = useLocation();
   const [openMenu, setOpenMenu] = useState(false);
   const router = useRouter();
-  useEffect(() => {}, [router.location.pathname]);
+  const menuData = useSelector(state => state.setup.menu);
+  const lang = useSelector(state => state.multiLang.lang);
+  const [listMenu, setlistMenu] = useState([]);
+
+  // console.log('menuData', menuData);
+  // useEffect(() => {}, [router.location.pathname]);
+
+  // console.log(location.pathname);
 
   useEffect(() => {
     let mounted = true;
 
-    const fetchData = () => {
-      const key = 'MENU_WEB_CONFIG';
-      const path = replaceStrUrl(urlGetMenuConfig, [key]);
+    // const fetchData = () => {
+    //   const key = 'MENU_WEB_CONFIG';
+    //   const path = replaceStrUrl(urlGetMenuConfig, [key]);
 
-      axios
-        .get(`${path}`, {})
-        .then(response => {
-          // console.log('response: ', response);
+    //   axios
+    //     .get(`${path}`, {})
+    //     .then(response => {
+    //       // console.log('response: ', response);
 
-          if (mounted) {
-            // console.log('response: ', response);
-            // setData(response.data);
-          }
-        })
-        .catch(error => {
-          console.log('error: ', error);
-        });
-    };
+    //       if (mounted) {
+    //         // console.log('response: ', response);
+    //         // setData(response.data);
+    //       }
+    //     })
+    //     .catch(error => {
+    //       console.log('error: ', error);
+    //     });
+    // };
 
-    fetchData();
+    // fetchData();
 
     return () => {
       mounted = false;
     };
   }, []);
+
+  const transformMenu = (listMenu, lang) => {
+    const newList = Lodash.map(listMenu, obj => {
+      const type = getSafeValue(obj, 'type', '');
+      const translations = getSafeValue(obj, 'translations', []);
+      const objTrans = getTransObj(translations, lang);
+      const idObj = getSafeValue(obj, 'id', '');
+
+      let link = '/';
+      switch (type) {
+        case TYPE_MENU.HOME: {
+          link = '/home';
+          break;
+        }
+        case TYPE_MENU.CATEGORY: {
+          link = `/category/${idObj}`;
+          break;
+        }
+        case TYPE_MENU.POST: {
+          link = `/post/${idObj}`;
+          break;
+        }
+
+        case TYPE_MENU.EVENT: {
+          link = '/event';
+          break;
+        }
+
+        case TYPE_MENU.LIBRARY: {
+          link = '/library';
+          break;
+        }
+
+        default:
+          break;
+      }
+
+      return { ...obj, link, ...objTrans };
+    });
+
+    return newList;
+  };
+
+  useEffect(() => {
+    // Transform data to new form data, and get route from there.
+    const newListMenu = transformMenu(menuData, lang);
+    // console.log('newListMenu', newListMenu);
+    setlistMenu(newListMenu);
+  }, [menuData, lang]);
 
   const toggle = () => {
     setOpenMenu(!openMenu);
@@ -68,19 +129,26 @@ const NavBar = () => {
             <div className={classes.imgTopBox}>
               <img className={classes.imgTop} src={logo} alt="logo" />
             </div>
+
             <ul className={classes.ul}>
-              <li className={classes.li}>
-                <Link to="/" className={[classes.a, classes.active].join(' ')}>
-                  <Home className={classes.icon} />
-                  <span className={classes.span}>Trang chủ</span>
-                </Link>
-              </li>
-              <li className={classes.li}>
-                <Link to="/event" className={classes.a}>
-                  <Home className={classes.icon} />
-                  <span className={classes.span}>Sự kiện sắp tới</span>
-                </Link>
-              </li>
+              {listMenu.map(obj => {
+                const link = obj.link;
+                const isSamePath = link === location.pathname;
+
+                return (
+                  <li className={classes.li}>
+                    <Link
+                      to={obj.link}
+                      onClick={toggle}
+                      className={[classes.a, isSamePath && classes.active].join(
+                        ' '
+                      )}>
+                      {/* <Home className={classes.icon} /> */}
+                      <span className={classes.span}>{obj.name}</span>
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
@@ -88,11 +156,11 @@ const NavBar = () => {
             <div className={classes.closeMenu} onClick={toggle}></div>
           )}
 
-          <IconButton className={classes.search}>
-            <Link to="/search">
+          <Link to="/search">
+            <IconButton className={classes.search}>
               <Search fontSize="large" />
-            </Link>
-          </IconButton>
+            </IconButton>
+          </Link>
 
           <Language />
         </div>

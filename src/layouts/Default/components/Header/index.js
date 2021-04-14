@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import { Container } from 'components';
+import { useSelector } from 'react-redux';
 import logo from '../../../../assets/img/logo-best.svg';
 import { BREAKPOINTS } from '../NavBar/style';
 
@@ -40,6 +41,7 @@ const useStyles = makeStyles(theme => ({
 
 const Header = () => {
   const classes = useStyles();
+
   return (
     <header>
       <Container>

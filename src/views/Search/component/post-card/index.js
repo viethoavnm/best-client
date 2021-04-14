@@ -80,29 +80,31 @@ const PostCard = memo(({ image, title, date, description }) => {
   const classes = useStyles();
   return (
     <Card className={classes.root} elevation={0}>
-      <Grid container spacing={2}>
-        <Grid item xs={5} sm={4} md={4}>
-          <CardActionArea>
-            <CardMedia className={classes.img} image={image} title={title} />
-            <div></div>
-          </CardActionArea>
-        </Grid>
+      <CardActionArea onClick={() => console.log('click search item')}>
+        <Grid container spacing={2}>
+          <Grid item xs={5} sm={4} md={4}>
+            <CardActionArea>
+              <CardMedia className={classes.img} image={image} title={title} />
+              <div></div>
+            </CardActionArea>
+          </Grid>
 
-        <Grid item xs={7} sm={8} md={8}>
-          <CardContent className={classes.content}>
-            <Typography className={classes.title} component="h2">
-              {title}
-            </Typography>
-            <Typography className={classes.time} component="p">
-              <AccessTime className={classes.icon} />
-              {date}
-            </Typography>
-            <Typography className={classes.description} component="p">
-              {description}
-            </Typography>
-          </CardContent>
+          <Grid item xs={7} sm={8} md={8}>
+            <CardContent className={classes.content}>
+              <Typography className={classes.title} component="h2">
+                {title}
+              </Typography>
+              <Typography className={classes.time} component="p">
+                <AccessTime className={classes.icon} />
+                {date}
+              </Typography>
+              <Typography className={classes.description} component="p">
+                {description}
+              </Typography>
+            </CardContent>
+          </Grid>
         </Grid>
-      </Grid>
+      </CardActionArea>
     </Card>
   );
 });

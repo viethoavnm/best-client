@@ -13,7 +13,7 @@ import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import { useTheme } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import { DEFAULT_LANG } from 'utils/constant';
+import { VI_LANG } from 'utils/constant';
 import moment from 'moment';
 import Lodash from 'lodash';
 
@@ -140,7 +140,7 @@ const useStyles = makeStyles(theme =>
 
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 const EventCardLarge = ({ item }) => {
-  const [lang, setLang] = useState(DEFAULT_LANG);
+  const [lang, setLang] = useState(VI_LANG);
   const classes = useStyles();
   const theme = useTheme();
 
