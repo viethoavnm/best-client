@@ -36,6 +36,11 @@ const routes = [
         component: lazy(() => import('./views/Search'))
       },
       {
+        path: '/category/:id',
+        exact: true,
+        component: lazy(() => import('./views/News'))
+      },
+      {
         path: '/library',
         exact: true,
         component: Library
@@ -74,6 +79,11 @@ const routes = [
         path: '/event/:id',
         exact: true,
         component: React.lazy(() => import('./views/Event/EventDetail'))
+      },
+      {
+        path: '/post/:id',
+        exact: true,
+        component: React.lazy(() => import('./views/Post/index.js'))
       },
       {
         path: '/news',

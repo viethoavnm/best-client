@@ -103,7 +103,7 @@ const EventSsection = props => {
       <Title size="large" className={classes.titleBox}>
         <div className={classes.titleContent}>
           <h2 className={classes.title}>{title}</h2>
-          <Link to="/" className={classes.readMore}>
+          <Link to="/event" className={classes.readMore}>
             Xem thêm <ChevronRight />
           </Link>
         </div>
@@ -133,21 +133,37 @@ const EventSsection = props => {
   const _renderEventDetail = () => {
     return (
       <Grid
+        item
         container
-        direction="column"
-        justify="space-between"
-        alignItems="stretch">
+        // direction="column"
+        justifyContent="center"
+        justify="center"
+        alignItems="center">
         {Lodash.isEmpty(currentEvent) ? (
-          <Card className={clsx(classes.eventDetailCard)}>
-            <img
+          // <Card className={clsx(classes.eventDetailCard)}>
+          //   <img
+          //     alt="img_no_event"
+          //     className={classes.imgNoEvent}
+          //     src="images/img_no_event.svg"
+          //   />
+          //   <Typography className={classes.noEventLable} align="center">
+          //     Hiện đang không có sự kiện nào
+          //   </Typography>
+          // </Card>
+          <Box
+            style={{
+              paddingTop: '50px',
+              paddingBottom: '50px'
+            }}>
+            <CardMedia
               alt="img_no_event"
               className={classes.imgNoEvent}
-              src="images/img_no_event.svg"
+              image="images/img_no_event.svg"
             />
             <Typography className={classes.noEventLable} align="center">
               Hiện đang không có sự kiện nào
             </Typography>
-          </Card>
+          </Box>
         ) : (
           <Card className={clsx(classes.eventDetailCard)}>
             <Box position="relative" textAlign="center">

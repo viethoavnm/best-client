@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   Card,
   CardActionArea,
@@ -8,17 +8,18 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 const useStyles = makeStyles(theme => ({
   media: {
     height: 0,
     paddingBottom: '60%'
   },
-  
+
   content: {
     padding: '10px 15px',
     minHeight: 143,
     [theme.breakpoints.only('xs')]: {
-      minHeight: 'auto !important',
+      minHeight: 'auto !important'
     }
   },
   height: {
@@ -33,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     textOverflow: 'ellipsis',
     display: '-webkit-box',
     '-webkit-line-clamp': 3,
-    '-webkit-box-orient': 'vertical',
+    '-webkit-box-orient': 'vertical'
   },
   time: {
     color: '#929292',
@@ -54,12 +55,21 @@ const useStyles = makeStyles(theme => ({
     textOverflow: 'ellipsis',
     display: '-webkit-box',
     '-webkit-line-clamp': 3,
-    '-webkit-box-orient': 'vertical',
+    '-webkit-box-orient': 'vertical'
   }
 }));
 
-const LibraryCard = ({ image, title, author, date, description, className }) => {
+const LibraryCard = ({
+  image,
+  title,
+  author,
+  date,
+  description,
+  className
+}) => {
   const classes = useStyles();
+  const dateFormat = moment(date).format('DD/MM/YYYY');
+
   return (
     <Card className={className}>
       <CardActionArea>
@@ -75,7 +85,7 @@ const LibraryCard = ({ image, title, author, date, description, className }) => 
           {title}
         </Typography>
         <Typography component="p" className={classes.time}>
-          {author} <span className={classes.wall}></span> {date}
+          {author} <span className={classes.wall}></span> {dateFormat}
         </Typography>
         <Typography component="p" className={classes.description}>
           {description}

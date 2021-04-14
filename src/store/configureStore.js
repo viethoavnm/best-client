@@ -2,21 +2,24 @@ import { applyMiddleware, createStore, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createLogger } from 'redux-logger';
-
 import rootReducer from 'reducers';
-
 const loggerMiddleware = createLogger();
+import { configureStore } from '@reduxjs/toolkit';
 
-export default function configureStore(preloadedState = {}) {
-  const middlewares = [thunkMiddleware]; // loggerMiddleware
-  const middlewareEnhancer = composeWithDevTools(
-    applyMiddleware(...middlewares)
-  );
+export default configureStore({
+  reducer: rootReducer
+});
 
-  const enhancers = [middlewareEnhancer];
-  const composedEnhancers = compose(...enhancers);
+// export default function configureStore(preloadedState = {}) {
+//   const middlewares = [thunkMiddleware]; // loggerMiddleware
+//   const middlewareEnhancer = composeWithDevTools(
+//     applyMiddleware(...middlewares)
+//   );
 
-  const store = createStore(rootReducer, preloadedState, composedEnhancers);
+//   const enhancers = [middlewareEnhancer];
+//   const composedEnhancers = compose(...enhancers);
 
-  return store;
-}
+//   const store = createStore(rootReducer, preloadedState, composedEnhancers);
+
+//   return store;
+// }

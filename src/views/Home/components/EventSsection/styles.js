@@ -56,7 +56,9 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#92BF1F'
   },
   imgNoEvent: {
-    width: '100%'
+    // width: '100%'
+    height: 0,
+    paddingTop: '45%' // 16:9
   },
   noEventLable: {
     color: 'white',

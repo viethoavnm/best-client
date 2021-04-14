@@ -80,18 +80,30 @@ const useStyles = makeStyles(theme =>
       backgroundColor: '#FFFFFF'
     },
     eventDetailCard: {
+      position: 'relative',
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#92BF1F'
+      // maxWidth: 500
     },
     imgNoEvent: {
-      width: '100%'
+      // width: '100%',
+      // height: 250
+      height: 0,
+      paddingTop: '45%' // 16:9
     },
     noEventLable: {
       color: 'white',
       marginTop: theme.spacing(5),
       fontWeight: 700,
-      fontSize: '24px'
+      fontSize: '24px',
+      alignSelf: 'center',
+      [theme.breakpoints.down('sm')]: {
+        fontSize: '18px'
+      }
+      // position: 'absolute',
+      // top: '20px',
+      // left: '20px'
     },
 
     titleBox: {
@@ -117,11 +129,12 @@ const useStyles = makeStyles(theme =>
       marginBottom: theme.spacing(2),
       fontWeight: 700,
       fontSize: '24px',
-      lineHeight: '19px',
+      lineHeight: '30px',
       [theme.breakpoints.down('sm')]: {
         paddingLeft: 20,
         paddingRight: 20,
-        fontSize: '16px'
+        fontSize: '18px',
+        lineHeight: '22px'
       }
     },
     root: {
