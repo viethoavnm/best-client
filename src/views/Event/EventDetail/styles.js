@@ -31,6 +31,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: 30
   },
   divider: {
+    marginTop: 30,
     marginBottom: 30
   },
   listItem: {

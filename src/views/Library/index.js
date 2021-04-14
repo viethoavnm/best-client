@@ -22,7 +22,7 @@ const Library = () => {
           <Grid item xs={12} md={8}>
             <div className={classes.typeBox}>
               <div className={classes.type}>ẢNH</div>
-              <Link to="/" className={classes.readMore}>
+              <Link to="/library/image" className={classes.readMore}>
                 Xem thêm
               </Link>
             </div>
@@ -55,7 +55,7 @@ const Library = () => {
             <Divider className={classes.divider} />
             <div className={classes.typeBox}>
               <div className={classes.type}>VIDEO</div>
-              <Link to="/" className={classes.readMore}>
+              <Link to="/library/video" className={classes.readMore}>
                 Xem thêm
               </Link>
             </div>
@@ -88,7 +88,7 @@ const Library = () => {
             <Divider className={classes.divider} />
             <div className={classes.typeBox}>
               <div className={classes.type}>THÔNG CÁO BÁO CHÍ</div>
-              <Link to="/" className={classes.readMore}>
+              <Link to="/library/post" className={classes.readMore}>
                 Xem thêm
               </Link>
             </div>
@@ -121,7 +121,7 @@ const Library = () => {
             <Divider className={classes.divider} />
             <div className={classes.typeBox}>
               <div className={classes.type}>TÀI LIỆU</div>
-              <Link to="/" className={classes.readMore}>
+              <Link to="/library/document" className={classes.readMore}>
                 Xem thêm
               </Link>
             </div>

@@ -27,19 +27,19 @@ const eventDetail = {
 
 const events = [
   {
-    image: 'images/lib-1.png',
+    image: 'images/new-1.png',
     name: `Hội thảo “Khí hóa sinh khối - Giải pháp bền vững và kinh tế”.`,
     address: 'Đường số 68, Nguyễn Hoàng, Hà Nội',
     startTime: '2020-03-27T06:30'
   },
   {
-    image: 'images/lib-2.png',
+    image: 'images/new-1.png',
     name: `Hội thảo hoa quả và thực phẩm lần thứ XXI`,
     address: 'Đường số 8, Thanh Xuân, Triều Khúc, Hà Nội',
     startTime: '2020-06-12T10:30'
   },
   {
-    image: 'images/lib-3.png',
+    image: 'images/new-1.png',
     name: `Công cuộc đổi mới nông thôn 2021`,
     address: 'Đường số 8, Thanh Xuân, Triều Khúc, Hà Nội',
     startTime: '2020-12-01T15:30'
@@ -234,7 +234,7 @@ const EventDetail = props => {
 
   const _renderContentEvent = () => {
     const content = Lodash.get(event, 'content', '');
-    const htmlContent = htmlStr; //Lodash.unescape(htmlStr);
+    const htmlContent = Lodash.unescape(content);
 
     return (
       <Box>

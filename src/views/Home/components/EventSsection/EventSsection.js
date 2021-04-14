@@ -133,21 +133,36 @@ const EventSsection = props => {
   const _renderEventDetail = () => {
     return (
       <Grid
+        item
         container
-        direction="column"
+        // direction="column"
         justify="space-between"
         alignItems="stretch">
         {Lodash.isEmpty(currentEvent) ? (
-          <Card className={clsx(classes.eventDetailCard)}>
-            <img
+          // <Card className={clsx(classes.eventDetailCard)}>
+          //   <img
+          //     alt="img_no_event"
+          //     className={classes.imgNoEvent}
+          //     src="images/img_no_event.svg"
+          //   />
+          //   <Typography className={classes.noEventLable} align="center">
+          //     Hiện đang không có sự kiện nào
+          //   </Typography>
+          // </Card>
+          <Box
+            style={{
+              paddingTop: '50px',
+              paddingBottom: '50px'
+            }}>
+            <CardMedia
               alt="img_no_event"
               className={classes.imgNoEvent}
-              src="images/img_no_event.svg"
+              image="images/img_no_event.svg"
             />
             <Typography className={classes.noEventLable} align="center">
               Hiện đang không có sự kiện nào
             </Typography>
-          </Card>
+          </Box>
         ) : (
           <Card className={clsx(classes.eventDetailCard)}>
             <Box position="relative" textAlign="center">

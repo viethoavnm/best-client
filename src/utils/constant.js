@@ -12,4 +12,18 @@ export const TYPE_MENU = {
   LIBRARY: 'library'
 };
 
+export const TYPE_HOME_DATA = {
+  NEWS: 'news',
+  CATEGORY: 'category',
+  LIBRARY: 'library',
+  EVENT: 'event',
+  COMPANY_LOCATION: 'company-location'
+};
+
+export const UI_TYPE_HOME_DATA = {
+  ONE: '1',
+  TWO: '2',
+  THREE: '3'
+};
+
 export const LIST_LOADING = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
