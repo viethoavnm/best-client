@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Grid } from '@material-ui/core';
 import { Container, Title, Pagination, LibraryCard } from 'components';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { Fragment } from 'react';
 import clsx from 'clsx';
 import moment from 'moment';
@@ -86,6 +87,7 @@ const News = () => {
   const [page, setPage] = useState(1);
   const [hasNext, setHasNext] = useState(false);
   const [articles, setArticles] = useState([]);
+  const limit = 10;
   const lang = useSelector(state => state.multiLang.lang);
 
   const transformMenu = (listMenu, lang) => {
@@ -106,20 +108,25 @@ const News = () => {
 
   useEffect(() => {
     setLoading(true);
-    const params = { page, limit: 20 };
+    const params = { page, limit };
     getArticle(params)
       .then(res => {
         const results = getSafeValue(res, 'data.results', []);
+        const dataHasNext = getSafeValue(res, 'data.hasNext', false);
         const newList = transformMenu(results, lang);
-        // setPage(page + 1);
-        console.log('res', res);
         setArticles(newList);
+        setHasNext(dataHasNext);
+        window.scrollTo(0, 0);
       })
       .catch()
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [page]);
+
+  const onChangePage = (e, page) => {
+    setPage(page);
+  };
 
   return (
     <Fragment>
@@ -132,6 +139,18 @@ const News = () => {
         </div>
 
         <section className={clsx(classes.secondSection)}>
+          {loading && (
+            <div
+              style={{
+                height: 80,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+              <CircularProgress size={30} style={{ color: '#A0BE37' }} />
+            </div>
+          )}
+
           <Grid container spacing={2}>
             <Grid item xs={12} md={8}>
               <div className={clsx(classes.cardSection)}>
@@ -162,7 +181,11 @@ const News = () => {
                   <Button className={classes.more}>xem thêm</Button>
                 </div> */}
               </div>
-              <Pagination count={10} />
+
+              <Pagination
+                count={hasNext && !loading ? page + 1 : page}
+                onChange={onChangePage}
+              />
             </Grid>
 
             <Grid item xs={12} md={4} className={classes.rightSidebar}>
