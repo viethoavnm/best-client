@@ -163,6 +163,7 @@ const EventCardLarge = ({ item }) => {
               image={image}
               // title={name}
             />
+
             <div className={classes.datetime}>
               <div className={classes.datetimeContainer}>
                 <CardContent className={classes.datetimeBlock}>

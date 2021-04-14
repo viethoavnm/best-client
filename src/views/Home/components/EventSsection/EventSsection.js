@@ -103,7 +103,7 @@ const EventSsection = props => {
       <Title size="large" className={classes.titleBox}>
         <div className={classes.titleContent}>
           <h2 className={classes.title}>{title}</h2>
-          <Link to="/" className={classes.readMore}>
+          <Link to="/event" className={classes.readMore}>
             Xem thêm <ChevronRight />
           </Link>
         </div>
@@ -136,8 +136,9 @@ const EventSsection = props => {
         item
         container
         // direction="column"
-        justify="space-between"
-        alignItems="stretch">
+        justifyContent="center"
+        justify="center"
+        alignItems="center">
         {Lodash.isEmpty(currentEvent) ? (
           // <Card className={clsx(classes.eventDetailCard)}>
           //   <img
