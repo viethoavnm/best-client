@@ -1,5 +1,16 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { withStyles, Typography } from '@material-ui/core';
 
+export const CustomColor = withStyles(theme => ({
+  root: {
+    [theme.breakpoints.down('md')]: {
+      background:
+        '-webkit-linear-gradient(61.69deg, #E2A813 11.8%, #84AF0B 66.82%)',
+      '-webkit-background-clip': 'text',
+      WebkitTextFillColor: 'transparent'
+    }
+  }
+}))(Typography);
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -47,6 +58,24 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3),
     [theme.breakpoints.up('lg')]: {
       justifyContent: 'center'
+    },
+    [theme.breakpoints.down('md')]: {
+      borderTop: '1px solid #D3D3D3',
+      marginTop: 24,
+      textAlign: 'center'
+    }
+  },
+  secondFooterItem: {
+    [theme.breakpoints.down('md')]: {
+      '&:first-child': {
+        order: 2
+      },
+      '&:nth-child(2)': {
+        order: 1
+      },
+      '&:nth-child(2) p': {
+        fontSize: 16
+      }
     }
   },
   inforRow: {
@@ -67,6 +96,19 @@ const useStyles = makeStyles(theme => ({
     fontWeight: '400',
     color: '#3A3A3A'
   },
+  footerInfoDownload: {
+    [theme.breakpoints.down('md')]: {
+      display: 'none'
+    }
+  },
+  footerInfoDownloadSX: {
+    display: 'none',
+    [theme.breakpoints.down('md')]: {
+      display: 'flex',
+      margin: 16,
+      justifyContent: 'space-between'
+    }
+  },
   downloadAppTitle: {
     fontFamily: 'Montserrat',
     fontWeight: '600',
@@ -83,7 +125,41 @@ const useStyles = makeStyles(theme => ({
     ffontFamily: 'Montserrat',
     fontWeight: '400',
     color: '#3A3A3A',
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
+    display: 'block'
+  },
+  footerItem: {
+    [theme.breakpoints.down('md')]: {
+      '&:first-child': {
+        order: 1,
+        textAlign: 'center'
+      },
+      '&:nth-child(2)': {
+        order: '3 !important'
+      },
+      '&:nth-child(3)': {
+        order: '2 !important'
+      },
+      '&:nth-child(4)': {
+        order: 4
+      },
+      '&:nth-child(5)': {
+        order: 5
+      }
+    },
+    [theme.breakpoints.down('sm')]: {
+      '&:nth-child(2)': {
+        order: 2
+      },
+      '&:nth-child(3)': {
+        order: 3
+      }
+    }
+  },
+  smTitle: {
+    marginTop: theme.spacing(1),
+    fontSize: 13,
+    color: '#2C2C2C'
   }
 }));
 

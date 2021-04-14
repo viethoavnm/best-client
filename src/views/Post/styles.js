@@ -156,6 +156,14 @@ const useStyles = makeStyles(theme => ({
     color: '#818181',
     fontWeight: 500,
     fontSize: 16
+  },
+  boxSuggest: {
+    '&:first-child >figure': {
+      width: '100% !important'
+    },
+    '&:first-child img': {
+      width: '100%'
+    }
   }
 }));
 
