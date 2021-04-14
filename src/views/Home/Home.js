@@ -33,7 +33,7 @@ const Home = () => {
         .get(`${path}`, {})
         .then(response => {
           if (mounted) {
-            console.log('GetHomeData: ', response);
+            // console.log('GetHomeData: ', response);
             const resHomeData = response?.data;
 
             setHomeData(resHomeData);
@@ -60,7 +60,7 @@ const Home = () => {
 
   return (
     <Fragment>
-      <Button
+      {/* <Button
         variant="contained"
         onClick={() => {
           // dispatch(updateLang('en'));
@@ -69,7 +69,7 @@ const Home = () => {
           // });
         }}>
         Default
-      </Button>
+      </Button> */}
 
       <FeaturedSection featuredData={featuredData} />
       <NewsSection newsData={newsData} />

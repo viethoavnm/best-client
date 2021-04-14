@@ -11,3 +11,5 @@ export const TYPE_MENU = {
   EVENT: 'event',
   LIBRARY: 'library'
 };
+
+export const LIST_LOADING = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];

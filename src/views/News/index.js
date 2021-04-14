@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Grid } from '@material-ui/core';
 import { Container, Title, Pagination, LibraryCard } from 'components';
 import { Fragment } from 'react';
@@ -8,6 +8,11 @@ import { useHistory } from 'react-router-dom';
 import useStyles from './style';
 import image from '../../assets/img/news1.svg';
 import NewsEvent from '../Search/component/news-event';
+import { getArticle } from '../../services/articles';
+import { LIST_LOADING } from 'utils/constant';
+import { getSafeValue, getTransObj } from 'utils';
+import Lodash from 'lodash';
+import { useSelector } from 'react-redux';
 const mock = [
   {
     image: image,
@@ -77,6 +82,45 @@ const mock = [
 const News = () => {
   const history = useHistory();
   const classes = useStyles();
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [hasNext, setHasNext] = useState(false);
+  const [articles, setArticles] = useState([]);
+  const lang = useSelector(state => state.multiLang.lang);
+
+  const transformMenu = (listMenu, lang) => {
+    const newList = Lodash.map(listMenu, obj => {
+      const translations = getSafeValue(obj, 'translations', []);
+      const objTrans = getTransObj(translations, lang);
+
+      return { ...obj, ...objTrans };
+    });
+
+    return newList;
+  };
+
+  useEffect(() => {
+    const newList = transformMenu(articles, lang);
+    setArticles(newList);
+  }, [lang]);
+
+  useEffect(() => {
+    setLoading(true);
+    const params = { page, limit: 20 };
+    getArticle(params)
+      .then(res => {
+        const results = getSafeValue(res, 'data.results', []);
+        const newList = transformMenu(results, lang);
+        // setPage(page + 1);
+        console.log('res', res);
+        setArticles(newList);
+      })
+      .catch()
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <Fragment>
       <Container>
@@ -92,7 +136,7 @@ const News = () => {
             <Grid item xs={12} md={8}>
               <div className={clsx(classes.cardSection)}>
                 <Grid container spacing={2}>
-                  {mock.map((item, index) => {
+                  {articles.map((item, index) => {
                     return (
                       <Grid
                         item
@@ -103,19 +147,20 @@ const News = () => {
                         className={classes.cardBox}>
                         <LibraryCard
                           className={classes.cardItem}
-                          image={item.image}
+                          image={item.urlImg}
                           title={item.title}
-                          date={item.createAt}
-                          author={item.userCreate}
-                          description={item.content}
+                          date={item.publishedAt}
+                          author={item.authorName}
+                          description={item.description}
                         />
                       </Grid>
                     );
                   })}
                 </Grid>
-                <div className={classes.btnMore}>
+
+                {/* <div className={classes.btnMore}>
                   <Button className={classes.more}>xem thêm</Button>
-                </div>
+                </div> */}
               </div>
               <Pagination count={10} />
             </Grid>

@@ -1,5 +1,6 @@
 import { vsprintf } from 'sprintf-js';
 import Lodash from 'lodash';
+import { VI_LANG } from '../utils/constant';
 
 export const replaceStrUrl = (baseUrl, arrStr) => {
   var path = vsprintf(baseUrl, arrStr);
@@ -28,11 +29,12 @@ export const getSafeValue = (object, keyItem, defaultValue) => {
   return safeValue;
 };
 
-export const getTransObj = (listTrans, lang) => {
+export const getTransObj = (listTrans, lang = VI_LANG) => {
   let objTrans = Lodash.find(listTrans, obj => obj.lang === lang);
   if (Lodash.isEmpty(objTrans) && listTrans.length > 0) {
     objTrans = listTrans[0];
   }
 
-  return objTrans;
+  const { _id, ...rest } = objTrans;
+  return rest;
 };
