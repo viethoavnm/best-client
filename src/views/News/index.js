@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Grid } from '@material-ui/core';
+import { Button, CardActionArea, Grid } from '@material-ui/core';
 import { Container, Title, Pagination, LibraryCard } from 'components';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Fragment } from 'react';
@@ -128,6 +128,11 @@ const News = () => {
     setPage(page);
   };
 
+  const handleClickPost = obj => {
+    const id = getSafeValue(obj, '_id', '');
+    history.push(`/post/${id}`);
+  };
+
   return (
     <Fragment>
       <Container>
@@ -164,14 +169,16 @@ const News = () => {
                         md={4}
                         key={index}
                         className={classes.cardBox}>
-                        <LibraryCard
-                          className={classes.cardItem}
-                          image={item.urlImg}
-                          title={item.title}
-                          date={item.publishedAt}
-                          author={item.authorName}
-                          description={item.description}
-                        />
+                        <CardActionArea onClick={() => handleClickPost(item)}>
+                          <LibraryCard
+                            className={classes.cardItem}
+                            image={item.urlImg}
+                            title={item.title}
+                            date={item.publishedAt}
+                            author={item.authorName}
+                            description={item.description}
+                          />
+                        </CardActionArea>
                       </Grid>
                     );
                   })}

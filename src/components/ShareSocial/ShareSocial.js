@@ -18,7 +18,6 @@ const ShareSocial = () => {
       display="flex"
       flexDirection="row"
       justifyContent="space-between"
-      marginBottom="30px"
       alignItems="center">
       <Box
         display="flex"
@@ -34,7 +33,7 @@ const ShareSocial = () => {
         <FacebookShareButton url={currenUrl}>
           <CardMedia
             className={classes.icSocial}
-            image="images/icFbShare.svg"
+            image="/images/icFbShare.svg"
             alt="fb"
           />
         </FacebookShareButton>
@@ -42,7 +41,7 @@ const ShareSocial = () => {
         <TwitterShareButton url={currenUrl}>
           <CardMedia
             className={classes.icSocial}
-            image="images/icTwitterShare.svg"
+            image="/images/icTwitterShare.svg"
             alt="twitter"
           />
         </TwitterShareButton>
@@ -50,7 +49,7 @@ const ShareSocial = () => {
         <InstapaperShareButton url={currenUrl}>
           <CardMedia
             className={classes.icSocial}
-            image="images/icInstagramShare.svg"
+            image="/images/icInstagramShare.svg"
             alt="insta"
           />
         </InstapaperShareButton>
@@ -58,7 +57,7 @@ const ShareSocial = () => {
         <LinkedinShareButton url={currenUrl}>
           <CardMedia
             className={classes.icSocial}
-            image="images/icLinkedInShare.svg"
+            image="/images/icLinkedInShare.svg"
             alt="linkedin"
           />
         </LinkedinShareButton>
@@ -66,7 +65,7 @@ const ShareSocial = () => {
 
       <CardMedia
         className={classes.icShare}
-        image="images/icShare.svg"
+        image="/images/icShare.svg"
         alt="social"
       />
     </Box>

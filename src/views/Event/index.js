@@ -27,44 +27,27 @@ import { fetchMenuWeb } from '../../reducers/setupSlice.js';
 import './day-picker.css';
 import 'moment/locale/vi';
 import { getEventByYear } from 'services/event';
+import { getTransObj } from 'utils';
 
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 
-const mockEvent = [
-  {
-    name: 'Sự kiện chào mừng công nghệ sinh khối mới',
-    content: 'Đột phát trong công nghệ phát triển sinh khối mới',
-    address: 'Số 168 đông triều, thanh xuân, hà nội',
-    startDate: '2021-04-30T13:48:00.000Z'
-  },
-  {
-    name: 'Sự kiện chào mừng nông thôn mới 2021',
-    content: 'Sự kiện nông thôn mới thường niên năm 2021',
-    address: 'Số 68 triều khúc, thanh xuân, hà nội',
-    startDate: '2021-04-24T10:00:00.000Z'
-  }
-];
-
-const htmlOrigin = `&lt;p&gt;&lt;span style=&quot;background-color:rgb(255,255,255);color:rgb(34,34,34);&quot;&gt;&lt;strong&gt;Mới đây, Trung tâm Nghiên cứu, Tư vấn sáng tạo và Phát triển bền vững (CCS) phối hợp với Oxfam Việt Nam thực hiện dự án &quot;Công nghệ khí hóa sinh khối - Giải pháp năng lượng bền vững cho chế biến nông sản và quản lý chất thải ở nông thôn Việt Nam&quot;.&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color:rgb(255,255,255);color:rgb(63,77,93);&quot;&gt;Hiện nay, Việt Nam đã có một số mô hình thiết bị năng lượng sinh khối, nhưng chưa có mô hình nào được áp dụng rộng rãi. Chính phủ cũng đã có chính sách khuyến khích đầu tư mạnh mẽ cho năng lượng sinh khối. Tuy nhiên, việc áp dụng công nghệ năng lượng sinh khối vẫn chưa khả quan. Nguyên nhân sâu xa của vấn đề này là chưa có mô hình công nghệ sinh khối phù hợp với khả năng tài chính và hạ tầng công nghệ ở các địa phương. Mặt khác, thị trường này vẫn còn thiếu hụt hệ thống hỗ trợ để triển khai mô hình, hệ thống thu mua nguyên liệu sinh khối vẫn còn nhỏ lẻ, rải rác…&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;text-align:justify;&quot;&gt;Theo thống kê của Bộ Công Thương, sản xuất nông nghiệp tại Việt Nam hàng năm tạo ra khoảng 118 triệu tấn chất thải nông nghiệp&amp;nbsp;nhưng chỉ có 11% số này được tái sử dụng.&lt;/p&gt;&lt;p style=&quot;text-align:justify;&quot;&gt;Để khắc phục tình trạng trên, Liên minh châu Âu (EU) đã tài trợ dự án &quot;Công nghệ khí hóa sinh khối - Giải pháp năng lượng bền vững cho chế biến nông sản và quản lý chất thải ở nông thôn Việt Nam&quot; (BEST), với mô hình bếp đun khí hóa sinh khối.&lt;/p&gt;&lt;p style=&quot;text-align:justify;&quot;&gt;&amp;nbsp;&lt;/p&gt;&lt;figure class=&quot;image image_resized&quot; style=&quot;width:61.03%;&quot;&gt;&lt;img src=&quot;https://hcm01.vstorage.vngcloud.vn/v1/AUTH_2e1fb7d4d103449c9aff1956ce121f81/test_container/e05ed367-12d6-490c-9941-3f50cfa3e55f.jpeg&quot;&gt;&lt;/figure&gt;&lt;p style=&quot;text-align:justify;&quot;&gt;Được biết, công nghệ lò đốt VCBG đã được Oxfam và CCS thử nghiệm tại Thái Nguyên trong năm 2018 và 2019, cho thấy hiệu quả và phù hợp với khả năng tài chính của doanh nghiệp nhỏ, cũng như hộ nông dân chế biến nông sản.&lt;/p&gt;&lt;p style=&quot;text-align:justify;&quot;&gt;&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;text-align:justify;&quot;&gt;Mô hình bếp đun khí hóa sinh khối bao gồm một lò phản ứng, tương tự như một bếp đơn giản, trong đó nhiên liệu sinh khối rắn được đưa vào. Việc cung cấp không khí cho nhiên liệu cần được kiểm soát chặt chẽ để cho phép chỉ đốt một phần của nhiên liệu. Trong quá trình này, các loại khí sinh ra được giữ lại và có thể được sử dụng như một nhiên liệu khí. Giải pháp năng lượng này khi được áp dụng sẽ đem lại nhiều giá trị cho các đối tượng hưởng lợi về kinh tế, nhận thức và đào tạo nguồn nhân lực tại vùng nông thôn của tỉnh, đáp ứng yêu cầu phát triển bền vững, bảo vệ môi trường sinh thái.&lt;/p&gt;&lt;p style=&quot;text-align:justify;&quot;&gt;&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;text-align:justify;&quot;&gt;Để nhân rộng mô hình, dự án BEST lần này sẽ được triển khai tại 4 tỉnh Thái Nguyên, Lào Cai, Tuyên Quang và Yên Bái từ năm 2020 – 2024.&lt;/p&gt;&lt;p style=&quot;text-align:justify;&quot;&gt;Bà Vũ Quỳnh Hoa, Phó Giám đốc quốc gia Oxfam tại Việt Nam cho hay, dự án BEST nhằm giải quyết các vấn đề cốt lõi thông qua việc thúc đẩy VCBG ở quy mô nhỏ để phù hợp với khả năng tài chính và công nghệ của doanh nghiệp, hộ gia đình và phát triển hệ thống dịch vụ hỗ trợ tại địa phương. Dự án sẽ làm việc với 2.500 hộ chế biến nông sản và doanh nghiệp nhỏ, 100 doanh nghiệp cơ khí và 400 đơn vị cung ứng sinh khối.&lt;/p&gt;&lt;p style=&quot;text-align:justify;&quot;&gt;Trưởng ban Hợp tác phát triển&amp;nbsp;EU&amp;nbsp;Koen Duchateau đánh giá, với việc sử dụng công nghệ khí hóa sinh khối trong chế biến nông sản trong các doanh nghiệp nhỏ và vừa và các hộ sản xuất góp phần giảm việc sử dụng khí ga và than, đồng thời tận dụng được các nguồn phụ phẩm hiện có. Không chỉ tiết kiệm, hiệu quả về chi phí, giải pháp này còn góp phần tăng chất lượng sản phẩm, đem lại hiệu quả kinh tế và môi trường.&lt;/p&gt;`;
-
 const Event = () => {
-  moment.locale('vi');
+  // moment.locale('vi');
   const history = useHistory();
   const classes = useStyles();
   const [dateSelected, changeDateSelected] = useState(new Date());
-  const [currentEvent, changeCurrentEvent] = useState(mockEvent[0]);
-  const [events, setEvents] = useState(mockEvent);
+  const [currentEvent, changeCurrentEvent] = useState({});
+  const [events, setEvents] = useState({});
   const [listEvent, setListEvent] = useState([]);
   const [year, setYear] = useState(new Date().getFullYear());
-  const [lang, setLang] = useState(VI_LANG);
+  const lang = useSelector(state => state.multiLang.lang);
   const [loading, setLoading] = useState(false);
-  const htmlUnescape = Lodash.unescape(htmlOrigin);
   // const dispatch = useDispatch();
 
   const transformData = list => {
     const newList = list.map(obj => {
       const transArr = Lodash.get(obj, 'translations', []);
-      const objTrans = Lodash.find(transArr, obj => obj.lang === lang);
+      const objTrans = getTransObj(transArr, lang);
       const { _id, ...res } = objTrans;
       return { ...obj, ...res };
     });

@@ -20,6 +20,8 @@ import { getArticleDetail } from 'services/articles';
 import renderHTML from 'react-render-html';
 import NewsEvent from 'views/Search/component/news-event';
 import { Hidden } from '@material-ui/core';
+import ShareSocial from '../../components/ShareSocial';
+import './img-html.css';
 
 const events = [
   {
@@ -85,7 +87,6 @@ const PostDetail = props => {
         const dataRes = Lodash.get(res, 'data', {});
         const newData = transformData(dataRes);
         setData(newData);
-        console.log('newData', newData);
       })
       .catch(err => {})
       .finally(() => {
@@ -231,15 +232,43 @@ const PostDetail = props => {
     );
   };
 
+  const renderSubHeader = () => {
+    return (
+      <Box
+        display="flex"
+        flexDirection="row"
+        justifyContent="space-between"
+        marginBottom="30px"
+        alignItems="center">
+        <Box
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="center">
+          <CardMedia
+            className={classes.smallClock}
+            image="/images/ic-small-clock.svg"
+            alt="small-clock"
+          />
+
+          <Typography className={classes.timeSuggest}>30/12/2020</Typography>
+        </Box>
+
+        <ShareSocial />
+      </Box>
+    );
+  };
+
   const _renderContentEvent = () => {
     const content = Lodash.get(data, 'content', '');
     const htmlContent = Lodash.unescape(content);
 
     return (
       <Box>
-        {/* {_renderTitle('GIỚI THIỆU')} */}
-        {/* {renderHTML(htmlContent)} */}
+        {renderSubHeader()}
+
         <div
+          className="dynamic-content-div"
           dangerouslySetInnerHTML={{
             __html: htmlContent
           }}></div>

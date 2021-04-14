@@ -9,19 +9,26 @@ import { AccessTime, ChevronRight } from '@material-ui/icons';
 import { Container, Title } from 'components';
 import React, { useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import useStylesLibrarySection from '../LibrarySection/styles';
 import NewsItem from '../NewsItem';
 import useStyles from './styles';
 import useStylesNewsItem from '../NewsItem/styles';
 import { useSelector, useDispatch } from 'react-redux';
-import { getSafeValue, getTransObj } from 'utils';
+import { getSafeValue, getTransObj, getLinkFromArticle } from 'utils';
 import Lodash from 'lodash';
 import moment from 'moment';
-import { DATE_FORMAT } from 'utils/constant';
-import { TYPE_HOME_DATA, UI_TYPE_HOME_DATA } from 'utils/constant';
+import {
+  TYPE_HOME_DATA,
+  UI_TYPE_HOME_DATA,
+  SubTypeArticle,
+  DATE_FORMAT
+} from 'utils/constant';
+import { useHistory } from 'react-router-dom';
 
 const NewsSection = props => {
   const { data } = props;
+  const history = useHistory();
   const lang = useSelector(state => state.multiLang.lang);
   const classesLibrary = useStylesLibrarySection();
   const classesNewsItem = useStylesNewsItem();
@@ -69,6 +76,11 @@ const NewsSection = props => {
     setLinkDirect(link);
   }, [lang, data]);
 
+  const handleClickArticle = obj => {
+    const linkRedirect = getLinkFromArticle(obj);
+    history.push(linkRedirect);
+  };
+
   const renderFirstArticle = () => {
     if (listData.length === 0) {
       return <></>;
@@ -82,7 +94,7 @@ const NewsSection = props => {
 
     return (
       <Card className={classes.rootCard} elevation={0}>
-        <CardActionArea>
+        <CardActionArea onClick={() => handleClickArticle(obj)}>
           <CardMedia image={urlImg} title={title} className={classes.img} />
         </CardActionArea>
 
@@ -121,12 +133,14 @@ const NewsSection = props => {
 
           return (
             <Grid item xs={6} md={12}>
-              <NewsItem
-                type={obj.nameCate}
-                title={obj.title}
-                image={obj.urlImg}
-                time={date}
-              />
+              <CardActionArea onClick={() => handleClickArticle(obj)}>
+                <NewsItem
+                  type={obj.nameCate}
+                  title={obj.title}
+                  image={obj.urlImg}
+                  time={date}
+                />
+              </CardActionArea>
             </Grid>
           );
         })}

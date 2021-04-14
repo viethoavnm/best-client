@@ -15,40 +15,46 @@ import { Link } from 'react-router-dom';
 import { ChevronRight } from '@material-ui/icons';
 import { Container, Title } from 'components';
 import { getEvent } from 'services/event';
+import { useSelector, useDispatch } from 'react-redux';
 
 // import './calendar.scss';
 import './day-picker.css';
 import 'moment/locale/vi';
+import { getTransObj } from 'utils';
 
-const mockEvent = [
-  {
-    name: 'Sự kiện chào mừng công nghệ sinh khối mới',
-    content: 'Đột phát trong công nghệ phát triển sinh khối mới',
-    address: 'Số 168 đông triều, thanh xuân, hà nội',
-    startDate: '2021-04-30T13:48:00.000Z'
-  },
-  {
-    name: 'Sự kiện chào mừng nông thôn mới 2021',
-    content: 'Sự kiện nông thôn mới thường niên năm 2021',
-    address: 'Số 68 triều khúc, thanh xuân, hà nội',
-    startDate: '2021-04-24T10:00:00.000Z'
-  }
-];
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 
 const EventSsection = props => {
-  const { eventsData, classRoot, ...rest } = props;
+  const { eventsData, classRoot, data, ...rest } = props;
 
   const classes = useStyles();
-
   const [dateSelected, changeDateSelected] = useState(new Date());
   const [currentEvent, changeCurrentEvent] = useState();
   const [year, setYear] = useState(new Date().getFullYear());
   const [events, setEvents] = useState([]);
+  const lang = useSelector(state => state.multiLang.lang);
+
+  const transformData = list => {
+    const newList = list.map(obj => {
+      const transArr = Lodash.get(obj, 'translations', []);
+      const objTrans = getTransObj(transArr, lang);
+      const { _id, ...res } = objTrans;
+      return { ...obj, ...res };
+    });
+
+    return newList;
+  };
 
   useEffect(() => {
-    setEvents(eventsData);
-  }, [eventsData]);
+    const listEvent = Lodash.get(data, 'data', []);
+    const newList = transformData(listEvent);
+    console.log('data', data);
+    setEvents(newList);
+  }, [data]);
+
+  // useEffect(() => {
+  //   setEvents(eventsData);
+  // }, [eventsData]);
 
   useEffect(() => {
     const eventData = Lodash.find(events, event =>
@@ -233,10 +239,22 @@ const EventSsection = props => {
 
         <Card className={clsx(classes.rootCard)} elevation={0}>
           <Grid container>
-            <Grid item xs={12} sm={6} className={clsx(classes.eventLeft)}>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              className={clsx(classes.eventLeft)}>
               {_renderEventDetail()}
             </Grid>
-            <Grid item xs={12} sm={6} className={clsx(classes.eventRight)}>
+
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              justify="center"
+              className={clsx(classes.eventRight)}>
               {_renderDayPicker()}
             </Grid>
           </Grid>

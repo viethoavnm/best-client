@@ -6,6 +6,7 @@ import DocumentLibrary from 'views/Library/component/document-library';
 import ImageLibrary from 'views/Library/component/image-library';
 import PostLibrary from 'views/Library/component/post-library';
 import VideoLibrary from 'views/Library/component/video-library';
+import PostLibraryDetail from 'views/Library/component/PostLibraryDetail';
 import DefaultLayout from './layouts/Default';
 import ErrorLayout from './layouts/Error';
 import Event from './views/Event';
@@ -61,12 +62,17 @@ const routes = [
         component: PostLibrary
       },
       {
+        path: '/library/post/:id',
+        exact: true,
+        component: PostLibraryDetail
+      },
+      {
         path: '/library/document',
         exact: true,
         component: DocumentLibrary
       },
       {
-        path: '/library/video/detail',
+        path: '/library/video/:id',
         exact: true,
         component: DetailVideo
       },

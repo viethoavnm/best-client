@@ -64,10 +64,7 @@ const Home = () => {
       {/* <Button
         variant="contained"
         onClick={() => {
-          // dispatch(updateLang('en'));
-          // history.push({
-          //   pathname: `/event`
-          // });
+          dispatch(updateLang('en'));
         }}>
         Default
       </Button> */}
@@ -75,12 +72,6 @@ const Home = () => {
       {homeDataDynamic.map(obj => {
         return handleRenderHome(obj);
       })}
-
-      {/* <UiSection1 data={featuredData} />
-      <UiSection3 newsData={newsData} />
-      <UiSection2 />
-      <EventSsection eventsData={eventsData} />
-      <MapSection /> */}
 
       <DownloadAppSection />
     </Fragment>
