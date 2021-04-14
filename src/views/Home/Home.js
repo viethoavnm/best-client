@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import {
   EventSsection,
-  FeaturedSection,
-  LibrarySection,
+  FeaturedSection as UiSection1,
+  LibrarySection as UiSection3,
   MapSection,
-  NewsSection,
+  NewsSection as UiSection2,
   DownloadAppSection
 } from './components';
 import { urlGetHomeData } from 'services/urlAPI';
@@ -22,34 +22,9 @@ const Home = () => {
   const [newsData, setNewsData] = useState([]);
   const [eventsData, setEventsData] = useState([]);
   const dispatch = useDispatch();
+  const homeDataDynamic = useSelector(state => state.setup.homeData);
 
-  useEffect(() => {
-    let mounted = true;
-
-    const fetchData = () => {
-      const path = urlGetHomeData;
-
-      axios
-        .get(`${path}`, {})
-        .then(response => {
-          if (mounted) {
-            // console.log('GetHomeData: ', response);
-            const resHomeData = response?.data;
-
-            setHomeData(resHomeData);
-          }
-        })
-        .catch(error => {
-          console.log('error: ', error);
-        });
-    };
-
-    fetchData();
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
+  console.log('homeDataDynamic', homeDataDynamic);
 
   useEffect(() => {
     const event = homeData.find(object => object.type === 'event');
@@ -71,9 +46,10 @@ const Home = () => {
         Default
       </Button> */}
 
-      <FeaturedSection featuredData={featuredData} />
-      <NewsSection newsData={newsData} />
-      <LibrarySection />
+      <UiSection1 featuredData={featuredData} />
+      <UiSection3 newsData={newsData} />
+      <UiSection2 />
+
       <EventSsection eventsData={eventsData} />
       <MapSection />
       <DownloadAppSection />

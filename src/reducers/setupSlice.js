@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getSetupByKey } from '../services/setup';
+import { getSetupByKey, getHomeData } from '../services/setup';
 import { MENU_WEB_CONFIG, HOME_WEB_CONFIG } from '../utils/constant';
 import Lodash from 'lodash';
 
@@ -12,8 +12,8 @@ export const fetchMenuWeb = createAsyncThunk('setup/fetchMenuWeb', async () => {
 export const fetchHomeData = createAsyncThunk(
   'setup/fetchHomeData',
   async () => {
-    const response = await getSetupByKey(HOME_WEB_CONFIG);
-    const data = Lodash.get(response, 'data.data', []);
+    const response = await getHomeData();
+    const data = Lodash.get(response, 'data', []);
     return data;
   }
 );
