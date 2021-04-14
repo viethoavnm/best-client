@@ -34,7 +34,9 @@ const NewsEvent = () => {
         title="ĐBSCL vượt qua khủng hoảng kép như thế nào?"
         date="20/12/2020"
       />
+
       <Divider className={classes.divider} />
+
       <Title>Sự kiện sắp tới</Title>
       <EventCard
         day="Tháng 10"

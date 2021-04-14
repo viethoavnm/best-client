@@ -40,12 +40,14 @@ const useStyles = makeStyles(theme =>
         paddingTop: '77%'
       },
       borderRadius: 10
+      // 'object-fit': 'contain'
     },
     title: {
       marginTop: 24,
       marginBottom: 42,
       color: '#3A3A3A',
       fontWeight: 600,
+      lineHeight: '30px',
       overflow: 'hidden',
       display: '-webkit-box',
       '-webkit-line-clamp': 2,
@@ -139,7 +141,7 @@ const useStyles = makeStyles(theme =>
 );
 
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
-const EventCardLarge = ({ item }) => {
+const EventCardLarge = ({ item, onClick }) => {
   const [lang, setLang] = useState(VI_LANG);
   const classes = useStyles();
   const theme = useTheme();
@@ -155,65 +157,67 @@ const EventCardLarge = ({ item }) => {
 
   return (
     <Card className={classes.root}>
-      <Grid container spacing={0}>
-        <Grid item xs={5} md={4} className={classes.mediaGrid}>
-          <CardActionArea>
-            <CardMedia
-              className={`${classes.media}`}
-              image={image}
-              // title={name}
-            />
+      <CardActionArea onClick={onClick}>
+        <Grid container spacing={0}>
+          <Grid item xs={5} md={4} className={classes.mediaGrid}>
+            <CardActionArea>
+              <CardMedia
+                className={`${classes.media}`}
+                image={image}
+                // title={name}
+              />
 
-            <div className={classes.datetime}>
-              <div className={classes.datetimeContainer}>
-                <CardContent className={classes.datetimeBlock}>
-                  <Typography component="div">
-                    <Typography component="div" className={classes.month}>
-                      Tháng {month}
+              <div className={classes.datetime}>
+                <div className={classes.datetimeContainer}>
+                  <CardContent className={classes.datetimeBlock}>
+                    <Typography component="div">
+                      <Typography component="div" className={classes.month}>
+                        Tháng {month}
+                      </Typography>
+                      <Typography component="div" className={classes.day}>
+                        {day}
+                      </Typography>
                     </Typography>
-                    <Typography component="div" className={classes.day}>
-                      {day}
-                    </Typography>
-                  </Typography>
-                </CardContent>
+                  </CardContent>
+                </div>
               </div>
+            </CardActionArea>
+          </Grid>
+
+          <Grid item xs={7} md={8} className={classes.detailGrid}>
+            <div className={classes.details}>
+              <CardContent className={classes.content}>
+                <Typography
+                  variant="h4"
+                  color="textPrimary"
+                  className={classes.title}>
+                  {name}
+                </Typography>
+
+                <Box className={classes.grid}>
+                  <Box className={classes.iconGrid}>
+                    <LocationOnOutlinedIcon />
+                  </Box>
+                  <Typography variant="div" className={classes.textGrid}>
+                    {address}
+                  </Typography>
+                </Box>
+
+                <Box className={classes.grid}>
+                  <Box className={classes.iconGrid}>
+                    <AccessTimeIcon />
+                  </Box>
+                  <Typography variant="div" className={classes.textGrid}>
+                    {/* {hourminute} - {day}/{month}/{year} */}
+                    {formatDate}
+                  </Typography>
+                </Box>
+              </CardContent>
+              <div className={classes.controls}></div>
             </div>
-          </CardActionArea>
+          </Grid>
         </Grid>
-
-        <Grid item xs={7} md={8} className={classes.detailGrid}>
-          <div className={classes.details}>
-            <CardContent className={classes.content}>
-              <Typography
-                variant="h4"
-                color="textPrimary"
-                className={classes.title}>
-                {name}
-              </Typography>
-
-              <Box className={classes.grid}>
-                <Box className={classes.iconGrid}>
-                  <LocationOnOutlinedIcon />
-                </Box>
-                <Typography variant="div" className={classes.textGrid}>
-                  {address}
-                </Typography>
-              </Box>
-
-              <Box className={classes.grid}>
-                <Box className={classes.iconGrid}>
-                  <AccessTimeIcon />
-                </Box>
-                <Typography variant="div" className={classes.textGrid}>
-                  {/* {hourminute} - {day}/{month}/{year} */}
-                  {formatDate}
-                </Typography>
-              </Box>
-            </CardContent>
-            <div className={classes.controls}></div>
-          </div>
-        </Grid>
-      </Grid>
+      </CardActionArea>
     </Card>
   );
 };

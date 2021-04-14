@@ -329,20 +329,21 @@ const Event = () => {
                   {listEvent.map(item => {
                     return (
                       <Grid item xs={12} sm={12} lg={12}>
-                        <ListItem onClick={() => handleClickItem(item)}>
-                          <EventCardLarge
-                            item={item}
-                            // title={item.title}
-                            // image={item.image}
-                            // startTime={item.startTime}
-                            // day={item.day}
-                            // month={item.month}
-                            // year={item.year}
-                            // hourminute={item.hourminute}
-                            // location={item.location}
-                          />
-                          <Divider className={classes.divider} />
-                        </ListItem>
+                        {/* <ListItem onClick={() => handleClickItem(item)}> */}
+                        <EventCardLarge
+                          item={item}
+                          onClick={() => handleClickItem(item)}
+                          // title={item.title}
+                          // image={item.image}
+                          // startTime={item.startTime}
+                          // day={item.day}
+                          // month={item.month}
+                          // year={item.year}
+                          // hourminute={item.hourminute}
+                          // location={item.location}
+                        />
+                        <Divider className={classes.divider} />
+                        {/* </ListItem> */}
                       </Grid>
                     );
                   })}

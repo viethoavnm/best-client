@@ -81,6 +81,11 @@ const routes = [
         component: React.lazy(() => import('./views/Event/EventDetail'))
       },
       {
+        path: '/post/:id',
+        exact: true,
+        component: React.lazy(() => import('./views/Post/index.js'))
+      },
+      {
         path: '/news',
         exact: true,
         component: React.lazy(() => import('./views/News'))

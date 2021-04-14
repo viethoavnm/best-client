@@ -22,7 +22,8 @@ function DefaultLayoutFooter(props) {
 
   return (
     <div>
-      <Subscribe/>
+      <Subscribe />
+
       <Container>
         <Grid
           container
@@ -34,7 +35,7 @@ function DefaultLayoutFooter(props) {
             <div className="w-full sm:w-2/5 px-16" style={{ marginTop: 45 }}>
               <img
                 className="logo-icon"
-                src="images/logos/logo-best.png"
+                src="/images/logos/logo-best.png"
                 alt="logo"
               />
 
@@ -58,7 +59,8 @@ function DefaultLayoutFooter(props) {
                     className={clsx(classes.downloadAppTitle)}>
                     TẢI APP TẠI ĐÂY
                   </Typography>
-                  <img src="images/ic-download.svg" alt="download" />
+
+                  <img src="/images/ic-download.svg" alt="download" />
                 </Box>
               </div>
 
@@ -69,7 +71,7 @@ function DefaultLayoutFooter(props) {
                   Nhà tài trợ
                 </Typography>
 
-                <img src="images/sponsor.png" alt="logo" />
+                <img src="/images/sponsor.png" alt="logo" />
               </div>
             </div>
           </Grid>
@@ -165,7 +167,7 @@ function DefaultLayoutFooter(props) {
                   className={clsx(classes.inforRow)}>
                   <img
                     className={clsx(classes.footerIcon)}
-                    src="images/icEmail.svg"
+                    src="/images/icEmail.svg"
                     alt="icEmail"
                   />
                   <Typography color="inherit" className={classes.smTitle}>
@@ -176,7 +178,7 @@ function DefaultLayoutFooter(props) {
                 <Box display="flex" flexDirection="row" alignItems="center">
                   <img
                     className={clsx(classes.footerIcon)}
-                    src="images/icPhone.svg"
+                    src="/images/icPhone.svg"
                     alt="icPhone"
                   />
                   <Typography color="inherit" className={classes.smTitle}>
@@ -187,7 +189,7 @@ function DefaultLayoutFooter(props) {
                 <Box display="flex" flexDirection="row" alignItems="center">
                   <img
                     className={clsx(classes.footerIcon)}
-                    src="images/icLocation.svg"
+                    src="/images/icLocation.svg"
                     alt="icLocation"
                   />
                   <Typography color="inherit" className={classes.smTitle}>

@@ -27,6 +27,7 @@ const Default = props => {
           {renderRoutes(route.routes)}
         </Suspense>
       </main>
+
       <Footer />
     </Fragment>
   );
