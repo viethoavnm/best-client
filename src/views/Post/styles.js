@@ -141,6 +141,21 @@ const useStyles = makeStyles(theme => ({
     fontWeight: '500',
     color: '#000000',
     lineHeight: '20px'
+  },
+  header: {
+    padding: '40px 0'
+  },
+  titleSection: {
+    flexGrow: 1,
+    color: '#3A3A3A',
+    fontSize: 24,
+    fontWeight: 'bold',
+    textTransform: 'uppercase'
+  },
+  breadcrumb: {
+    color: '#818181',
+    fontWeight: 500,
+    fontSize: 16
   }
 }));
 
