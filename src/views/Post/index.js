@@ -59,10 +59,10 @@ const PostDetail = props => {
   const [lang, setLang] = useState(VI_LANG);
   const [loading, setLoading] = useState(true);
 
-  const image = Lodash.get(event, 'urlImg', '');
-  const name = Lodash.get(event, 'name', '');
-  const address = Lodash.get(event, 'address', '');
-  const startTime = Lodash.get(event, 'startDate', '');
+  const image = Lodash.get(data, 'urlImg', '');
+  const name = Lodash.get(data, 'name', '');
+  const address = Lodash.get(data, 'address', '');
+  const startTime = Lodash.get(data, 'startDate', '');
   const date = new Date(startTime);
   const formatDate = moment(date).format(DATE_FORMAT);
   const month = moment(date).month() + 1; // Moment base month on 0
@@ -232,12 +232,12 @@ const PostDetail = props => {
   };
 
   const _renderContentEvent = () => {
-    const content = Lodash.get(event, 'content', '');
+    const content = Lodash.get(data, 'content', '');
     const htmlContent = Lodash.unescape(content);
 
     return (
       <Box>
-        {_renderTitle('GIỚI THIỆU')}
+        {/* {_renderTitle('GIỚI THIỆU')} */}
         {/* {renderHTML(htmlContent)} */}
         <div
           dangerouslySetInnerHTML={{
@@ -245,7 +245,7 @@ const PostDetail = props => {
           }}></div>
 
         <Divider className={classes.divider} />
-        {_renderTitle('SỰ KIỆN KHÁC')}
+        {_renderTitle('BÀI VIẾT LIÊN QUAN')}
         {_renderSuggestEvents()}
       </Box>
     );
@@ -253,6 +253,13 @@ const PostDetail = props => {
 
   return (
     <Container bgcolor="#FDFDFD">
+      <div className={classes.header}>
+        <Title size="large">
+          <div className={classes.titleSection}>Bài viết</div>
+          <div className={classes.breadcrumb}>Trang chủ / Bài viết</div>
+        </Title>
+      </div>
+
       {loading ? (
         <div
           style={{
@@ -265,13 +272,9 @@ const PostDetail = props => {
         </div>
       ) : (
         <Fragment>
-          <Box marginTop="40px" />
-
           <Grid container spacing={4}>
             <Grid item xs={12} md={8}>
-              <CardMedia className={classes.thumbnail} alt="" image={image} />
-
-              {_renderInfoEvent()}
+              {/* <CardMedia className={classes.thumbnail} alt="" image={image} /> */}
               {_renderContentEvent()}
             </Grid>
 
