@@ -191,27 +191,31 @@ const PostDetail = props => {
     const formatDateItem = moment(dateItem).format(DATE_FORMAT_2);
 
     return (
-      <ListItem onClick={() => handleClickItem(item)}>
-        <Box>
+      <ListItem
+        onClick={() => handleClickItem(item)}
+        className={classes.itemSuggest}>
+        <Box className={classes.boxSuggest}>
           <CardMedia
             className={classes.thumbnailSuggest}
             alt=""
             image={imageItem}
           />
-          <Typography className={classes.titleItemSuggest}>
-            {nameItem}
-          </Typography>
-
-          <Box display="flex" flexDirection="row">
-            <CardMedia
-              className={classes.smallClock}
-              image="/images/ic-small-clock.svg"
-              alt="small-clock"
-            />
-            <Typography className={classes.timeSuggest}>
-              {formatDateItem}
+          <div>
+            <Typography className={classes.titleItemSuggest}>
+              {nameItem}
             </Typography>
-          </Box>
+
+            <Box display="flex" flexDirection="row">
+              <CardMedia
+                className={classes.smallClock}
+                image="/images/ic-small-clock.svg"
+                alt="small-clock"
+              />
+              <Typography className={classes.timeSuggest}>
+                {formatDateItem}
+              </Typography>
+            </Box>
+          </div>
         </Box>
       </ListItem>
     );
@@ -222,7 +226,13 @@ const PostDetail = props => {
 
     return (
       <List className={classes.listSuggest}>
-        {listSuggest.map(item => _renderItem(item))}
+        {listSuggest.map(item => {
+          return (
+            <Grid item xs={12} sm={6} md={4}>
+              {_renderItem(item)}
+            </Grid>
+          );
+        })}
       </List>
     );
   };
