@@ -8,8 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import ListItem from '@material-ui/core/ListItem';
 import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
-import { VI_LANG } from 'utils/constant';
+import { DATE_FORMAT, VI_LANG } from 'utils/constant';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import RightNews from 'components/RightNews';
 
 import Lodash from 'lodash';
 import moment from 'moment';
@@ -24,8 +25,6 @@ import ShareSocial from '../../components/ShareSocial';
 import './img-html.css';
 import { useSelector } from 'react-redux';
 
-const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
-const DATE_FORMAT_2 = 'DD/MM/YYYY';
 const PostDetail = props => {
   const limitSuggest = 4;
   const classes = useStyles();
@@ -41,9 +40,9 @@ const PostDetail = props => {
   const image = Lodash.get(data, 'urlImg', '');
   const name = Lodash.get(data, 'name', '');
   const address = Lodash.get(data, 'address', '');
-  const startTime = Lodash.get(data, 'startDate', '');
+  const startTime = Lodash.get(data, 'publishedAt', '');
   const date = new Date(startTime);
-  const formatDate = moment(date).format(DATE_FORMAT);
+  const formatDate = moment(startTime).format(DATE_FORMAT);
   const month = moment(date).month() + 1; // Moment base month on 0
   const day = moment(date).date();
   const dayStr = moment(date).format('dddd');
@@ -188,7 +187,7 @@ const PostDetail = props => {
     const nameItem = Lodash.get(item, 'title', '');
     const startTimeItem = Lodash.get(item, 'publishedAt', '');
     const dateItem = new Date(startTimeItem);
-    const formatDateItem = moment(dateItem).format(DATE_FORMAT_2);
+    const formatDateItem = moment(dateItem).format(DATE_FORMAT);
 
     return (
       <ListItem onClick={() => handleClickItem(item)}>
@@ -263,12 +262,14 @@ const PostDetail = props => {
         {renderSubHeader()}
 
         <div
+          // style={{ minHeight: '80vh' }}
           className="dynamic-content-div"
           // className={classes.boxSuggest}
           // id="id_articel_suggest"
           dangerouslySetInnerHTML={{
             __html: htmlContent
-          }}></div>
+          }}
+        />
 
         <Divider className={classes.divider} />
         {_renderTitle('BÀI VIẾT LIÊN QUAN')}
@@ -307,7 +308,7 @@ const PostDetail = props => {
 
             <Hidden mdDown>
               <Grid item xs={12} md={4}>
-                <NewsEvent />
+                <RightNews />
               </Grid>
             </Hidden>
           </Grid>

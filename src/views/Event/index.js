@@ -23,6 +23,7 @@ import { useHistory } from 'react-router-dom';
 import renderHTML from 'react-render-html';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchMenuWeb } from '../../reducers/setupSlice.js';
+import RightNews from 'components/RightNews';
 
 import './day-picker.css';
 import 'moment/locale/vi';
@@ -32,7 +33,6 @@ import { getTransObj } from 'utils';
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 
 const Event = () => {
-  // moment.locale('vi');
   const history = useHistory();
   const classes = useStyles();
   const [dateSelected, changeDateSelected] = useState(new Date());
@@ -128,7 +128,7 @@ const Event = () => {
   const _renderDayPicker = () => {
     return (
       <DayPicker
-        locale="vi"
+        locale={lang}
         localeUtils={MomentLocaleUtils}
         renderDay={_renderDay}
         onDayClick={day => changeDateSelected(day)}
@@ -345,7 +345,7 @@ const Event = () => {
             </Grid>
 
             <Grid item xs={12} md={4} className={classes.rightSidebar}>
-              <NewsEvent />
+              <RightNews />
             </Grid>
           </Grid>
         </section>

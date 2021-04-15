@@ -35,8 +35,6 @@ export const getTransObj = (listTrans, lang = VI_LANG) => {
     objTrans = listTrans[0];
   }
 
-  console.log('objTrans', objTrans);
-
   if (Lodash.has(objTrans, '_id')) {
     const newObj = Lodash.omit(objTrans, ['_id']);
     return newObj;
@@ -57,22 +55,22 @@ export const getLinkFromArticle = article => {
     // Library have 4 type, we need to check it to navigate
     switch (type) {
       case TYPE_ARTICLE.file: {
-        linkUrl = `library/file/${id}`;
+        linkUrl = `/library/file/${id}`;
         break;
       }
 
       case TYPE_ARTICLE.news: {
-        linkUrl = `library/news/${id}`;
+        linkUrl = `/library/news/${id}`;
         break;
       }
 
       case TYPE_ARTICLE.video: {
-        linkUrl = `library/video/${id}`;
+        linkUrl = `/library/video/${id}`;
         break;
       }
 
       case TYPE_ARTICLE.image: {
-        linkUrl = `library/image/${id}`;
+        linkUrl = `/library/image/${id}`;
         break;
       }
 

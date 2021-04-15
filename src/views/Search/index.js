@@ -12,6 +12,7 @@ import { getArticle } from 'services/search';
 import Lodash from 'lodash';
 import moment from 'moment';
 import { DATE_FORMAT } from 'utils/constant';
+import RightNews from 'components/RightNews';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -293,7 +294,7 @@ const Search = () => {
           </Grid>
 
           <Grid item xs={12} md={4} className={classes.rightSidebar}>
-            <NewsEvent />
+            <RightNews />
           </Grid>
         </Grid>
       </Container>

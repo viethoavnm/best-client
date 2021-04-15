@@ -6,6 +6,7 @@ import { Footer, NavBar } from './components';
 import Header from './components/Header';
 import { fetchMenuWeb, fetchHomeData } from '../../reducers/setupSlice.js';
 import { useSelector, useDispatch } from 'react-redux';
+import { fetchNewArticle, fetNewEvent } from 'reducers/rightBarSlice';
 
 const Default = props => {
   const { route } = props;
@@ -15,6 +16,8 @@ const Default = props => {
   useEffect(() => {
     dispatch(fetchMenuWeb());
     dispatch(fetchHomeData());
+    dispatch(fetchNewArticle());
+    dispatch(fetNewEvent());
   }, []);
 
   return (
@@ -23,9 +26,11 @@ const Default = props => {
       <NavBar />
 
       <main>
-        <Suspense fallback={<LinearProgress />}>
-          {renderRoutes(route.routes)}
-        </Suspense>
+        <div style={{ minHeight: '100vh' }}>
+          <Suspense fallback={<LinearProgress />}>
+            {renderRoutes(route.routes)}
+          </Suspense>
+        </div>
       </main>
 
       <Footer />

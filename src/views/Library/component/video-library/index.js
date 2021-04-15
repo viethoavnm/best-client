@@ -46,7 +46,7 @@ const VideoLibrary = () => {
           <Pagination count={10} />
         </Grid>
         <Grid item xs={12} md={4} className={classes.rightSidebar}>
-          <NewsEvent />
+          <RightNews />
         </Grid>
       </Grid>
     </Fragment>

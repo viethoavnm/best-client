@@ -15,7 +15,7 @@ const useStyles = makeStyles(() =>
       display: 'flex',
       alignItems: 'center',
       backgroundColor: '#ffffff',
-      marginTop: 20,
+      // marginTop: 20,
       '& .MuiCardContent-root': {
         padding: 0
       }
@@ -25,7 +25,7 @@ const useStyles = makeStyles(() =>
       width: 104,
       height: 104,
       flexShrink: 0,
-      borderRadius: '50%',
+      borderRadius: '50%'
     },
     img: {
       width: 104,

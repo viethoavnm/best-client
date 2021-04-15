@@ -1,5 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { VI_LANG } from '../utils/constant';
+import moment from 'moment';
+
+export const updateLanguage = createAsyncThunk(
+  'multiLang/updateLang',
+  async lang => {
+    console.log('came here');
+    moment.locale(lang);
+    return lang;
+  }
+);
 
 export const multiLangSlice = createSlice({
   name: 'multiLang',
@@ -8,6 +18,11 @@ export const multiLangSlice = createSlice({
   },
   reducers: {
     updateLang: (state, action) => {
+      state.lang = action.payload;
+    }
+  },
+  extraReducers: {
+    [updateLanguage.fulfilled]: (state, action) => {
       state.lang = action.payload;
     }
   }

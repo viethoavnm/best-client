@@ -3,6 +3,7 @@ import { LibraryCard, Pagination, Title, Container } from 'components';
 import { Fragment, useState } from 'react';
 import useStyles from 'views/Library/style';
 import NewsEvent from '../../../Search/component/news-event';
+import RightNews from 'components/RightNews';
 
 const ImageLibrary = () => {
   const classes = useStyles();
@@ -55,7 +56,7 @@ const ImageLibrary = () => {
           </Grid>
 
           <Grid item xs={12} md={4} className={classes.rightSidebar}>
-            <NewsEvent />
+            <RightNews />
           </Grid>
         </Grid>
       </Container>

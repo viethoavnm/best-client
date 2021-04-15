@@ -11,7 +11,7 @@ import MomentLocaleUtils from 'react-day-picker/moment';
 import moment from 'moment';
 import Lodash from 'lodash';
 import useStyles from './styles';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { ChevronRight } from '@material-ui/icons';
 import { Container, Title } from 'components';
 import { getEvent } from 'services/event';
@@ -21,15 +21,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import './day-picker.css';
 import 'moment/locale/vi';
 import { getTransObj } from 'utils';
+import { CardActionArea } from '@material-ui/core';
 
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 
 const EventSsection = props => {
   const { eventsData, classRoot, data, ...rest } = props;
-
+  const history = useHistory();
   const classes = useStyles();
   const [dateSelected, changeDateSelected] = useState(new Date());
-  const [currentEvent, changeCurrentEvent] = useState();
+  const [currentEvent, changeCurrentEvent] = useState({});
   const [year, setYear] = useState(new Date().getFullYear());
   const [events, setEvents] = useState([]);
   const lang = useSelector(state => state.multiLang.lang);
@@ -48,7 +49,6 @@ const EventSsection = props => {
   useEffect(() => {
     const listEvent = Lodash.get(data, 'data', []);
     const newList = transformData(listEvent);
-    console.log('data', data);
     setEvents(newList);
   }, [data]);
 
@@ -123,7 +123,7 @@ const EventSsection = props => {
         <Box height="100%" width="100%" className={clsx(classes.mapContent)}>
           <div className={clsx(classes.googleMapFrame)}>
             <DayPicker
-              locale="vi"
+              locale={lang}
               localeUtils={MomentLocaleUtils}
               renderDay={_renderDay}
               onDayClick={day => changeDateSelected(day)}
@@ -136,6 +136,12 @@ const EventSsection = props => {
     );
   };
 
+  const handleClickEvent = () => {
+    history.push({
+      pathname: `/event/${currentEvent._id}`
+    });
+  };
+
   const _renderEventDetail = () => {
     return (
       <Grid
@@ -146,16 +152,6 @@ const EventSsection = props => {
         justify="center"
         alignItems="center">
         {Lodash.isEmpty(currentEvent) ? (
-          // <Card className={clsx(classes.eventDetailCard)}>
-          //   <img
-          //     alt="img_no_event"
-          //     className={classes.imgNoEvent}
-          //     src="images/img_no_event.svg"
-          //   />
-          //   <Typography className={classes.noEventLable} align="center">
-          //     Hiện đang không có sự kiện nào
-          //   </Typography>
-          // </Card>
           <Box
             style={{
               paddingTop: '50px',
@@ -172,60 +168,62 @@ const EventSsection = props => {
           </Box>
         ) : (
           <Card className={clsx(classes.eventDetailCard)}>
-            <Box position="relative" textAlign="center">
-              <CardMedia
-                className={classes.thumbnailEvent}
-                image={currentEvent?.urlImg}
-                alt="image-event"
-              />
-
-              <Box
-                position="absolute"
-                top="50%"
-                left="50%"
-                className={classes.wrapperDayEvent}>
-                <Typography className={classes.dayEvent}>
-                  {moment(currentEvent.startDate).date()}
-                </Typography>
-                <Typography className={classes.weekday}>
-                  {moment(currentEvent.startDate).format('dddd')}
-                </Typography>
-              </Box>
-            </Box>
-
-            <Box className={classes.eventDes}>
-              <Box display="flex" alignItems="center" flexDirection="column">
-                <Typography className={classes.eventTitle} align="center">
-                  {currentEvent.translations[0].name}
-                </Typography>
+            <CardActionArea onClick={handleClickEvent}>
+              <Box position="relative" textAlign="center">
+                <CardMedia
+                  className={classes.thumbnailEvent}
+                  image={currentEvent?.urlImg}
+                  alt="image-event"
+                />
 
                 <Box
-                  display="flex"
-                  alignItems="center"
-                  flexDirection="row"
-                  marginBottom="16px">
-                  <CardMedia
-                    className={classes.media}
-                    image="images/ic-location-white.svg"
-                    alt="location"
-                  />
-                  <Typography className={classes.addressItem}>
-                    {currentEvent.translations[0].address}
+                  position="absolute"
+                  top="50%"
+                  left="50%"
+                  className={classes.wrapperDayEvent}>
+                  <Typography className={classes.dayEvent}>
+                    {moment(currentEvent.startDate).date()}
                   </Typography>
-                </Box>
-
-                <Box display="flex" alignItems="center" flexDirection="row">
-                  <CardMedia
-                    className={classes.media}
-                    image="images/ic-clock-white.svg"
-                    alt="location"
-                  />
-                  <Typography className={classes.addressItem}>
-                    {moment(currentEvent.startDate).format(DATE_FORMAT)}
+                  <Typography className={classes.weekday}>
+                    {moment(currentEvent.startDate).format('dddd')}
                   </Typography>
                 </Box>
               </Box>
-            </Box>
+
+              <Box className={classes.eventDes}>
+                <Box display="flex" alignItems="center" flexDirection="column">
+                  <Typography className={classes.eventTitle} align="center">
+                    {currentEvent.translations[0].name}
+                  </Typography>
+
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    flexDirection="row"
+                    marginBottom="16px">
+                    <CardMedia
+                      className={classes.media}
+                      image="images/ic-location-white.svg"
+                      alt="location"
+                    />
+                    <Typography className={classes.addressItem}>
+                      {currentEvent.translations[0].address}
+                    </Typography>
+                  </Box>
+
+                  <Box display="flex" alignItems="center" flexDirection="row">
+                    <CardMedia
+                      className={classes.media}
+                      image="images/ic-clock-white.svg"
+                      alt="location"
+                    />
+                    <Typography className={classes.addressItem}>
+                      {moment(currentEvent.startDate).format(DATE_FORMAT)}
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
+            </CardActionArea>
           </Card>
         )}
       </Grid>

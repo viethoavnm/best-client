@@ -4,7 +4,7 @@ import moment from 'moment';
 export const changeDefaultMoment = createAsyncThunk(
   'multiLang/changeDefaultMoment',
   async () => {
-    moment.locale('en');
+    // moment.locale('en');
   }
 );
 

@@ -1,4 +1,4 @@
-import { Button, Divider, Grid } from '@material-ui/core';
+import { Button, Divider, Grid, CircularProgress } from '@material-ui/core';
 import {
   AccessTime,
   Facebook,
@@ -9,11 +9,12 @@ import {
 import Lodash from 'lodash';
 import moment from 'moment';
 import ShareSocial from 'components/ShareSocial';
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import useStylesLibrary from 'views/Library/style';
 import NewsEvent from 'views/Search/component/news-event';
 import useStylesDetailVideo from '../detail-video/style';
 import { Container } from 'components';
+import RightNews from 'components/RightNews';
 import { useSelector } from 'react-redux';
 import { getSafeValue, getTransObj } from 'utils';
 import { getArticleDetail } from 'services/articles';
@@ -27,7 +28,7 @@ const DetailDocument = props => {
   const refPdf = useRef(null);
   const [heightPdf, setHeightPdf] = useState(null);
   const lang = useSelector(state => state.multiLang.lang);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState({});
   const image = Lodash.get(data, 'urlImg', '');
   const title = Lodash.get(data, 'title', '');
@@ -51,20 +52,21 @@ const DetailDocument = props => {
   const transformData = obj => {
     const transArr = getSafeValue(obj, 'translations', []);
     const objTrans = getTransObj(transArr, lang);
-    const { _id, ...res } = objTrans;
-    return { ...obj, ...res };
+    return { ...obj, ...objTrans };
   };
 
   useEffect(() => {
     const id = props.match.params.id;
+    const indexUrl = props.match.params.indexUrl;
 
     setLoading(true);
     getArticleDetail(id)
       .then(res => {
         const dataRes = getSafeValue(res, 'data', {});
         const newData = transformData(dataRes);
-        const sourceFile = getSafeValue(dataRes, 'sources', []);
-        const pdfFile = sourceFile.length > 0 ? sourceFile[0] : '';
+        // const sourceFile = getSafeValue(dataRes, 'sources', []);
+        const pdfFile = getSafeValue(dataRes, `sources[${indexUrl}]`, '');
+        // const pdfFile = sourceFile.length > 0 ? sourceFile[0] : '';
         setPdf(pdfFile);
         setData(newData);
         setData(newData);
@@ -79,32 +81,47 @@ const DetailDocument = props => {
     <Container>
       <Grid container spacing={4} style={{ padding: '25px 0' }}>
         <Grid item xs={12} md={8}>
-          <div className={classesDetailVideo.title}>{title}</div>
-          <div className={classesDetailVideo.shareBox}>
-            {/* <Button className={classesDetailVideo.libraryBtn}>THƯ VIỆN</Button> */}
-            <div className={classesDetailVideo.time}>
-              <AccessTime className={classesDetailVideo.timeIcon} />
-              <div>{formatDate}</div>
+          {loading && (
+            <div
+              style={{
+                height: 80,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+              <CircularProgress size={30} style={{ color: '#A0BE37' }} />
             </div>
-            <ShareSocial />
-          </div>
+          )}
 
-          <div ref={refPdf}>
-            {heightPdf && (
-              <iframe
-                src={`https://drive.google.com/viewerng/viewer?embedded=true&url=${pdf}#toolbar=0&scrollbar=0`}
-                frameBorder="0"
-                scrolling="auto"
-                height={heightPdf}
-                width="100%"></iframe>
-            )}
-          </div>
+          <Fragment>
+            <div className={classesDetailVideo.title}>{title}</div>
+            <div className={classesDetailVideo.shareBox}>
+              {/* <Button className={classesDetailVideo.libraryBtn}>THƯ VIỆN</Button> */}
+              <div className={classesDetailVideo.time}>
+                <AccessTime className={classesDetailVideo.timeIcon} />
+                <div>{formatDate}</div>
+              </div>
+              <ShareSocial />
+            </div>
 
-          <div className={classesDetailVideo.author}>{authorName}</div>
-          <Divider className={classesDetailVideo.divider} />
+            <div ref={refPdf}>
+              {heightPdf && (
+                <iframe
+                  src={`https://drive.google.com/viewerng/viewer?embedded=true&url=${pdf}#toolbar=0&scrollbar=0`}
+                  frameBorder="0"
+                  scrolling="auto"
+                  height={heightPdf}
+                  width="100%"></iframe>
+              )}
+            </div>
+
+            <div className={classesDetailVideo.author}>{authorName}</div>
+            <Divider className={classesDetailVideo.divider} />
+          </Fragment>
         </Grid>
+
         <Grid item xs={12} md={4} className={classesLibrary.rightSidebar}>
-          <NewsEvent />
+          <RightNews />
         </Grid>
       </Grid>
     </Container>

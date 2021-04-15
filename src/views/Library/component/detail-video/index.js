@@ -11,6 +11,7 @@ import useStylesLibrary from 'views/Library/style';
 import NewsEvent from 'views/Search/component/news-event';
 import useStyles from './style';
 import xss from 'xss';
+import RightNews from 'components/RightNews';
 
 const DetailVideo = () => {
   const classes = useStyles();
@@ -57,7 +58,7 @@ const DetailVideo = () => {
         <Divider className={classes.divider} />
       </Grid>
       <Grid item xs={12} md={4} className={classesLibrary.rightSidebar}>
-        <NewsEvent />
+        <RightNews />
       </Grid>
     </Grid>
   );

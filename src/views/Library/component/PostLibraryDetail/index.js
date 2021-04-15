@@ -24,6 +24,7 @@ import ShareSocial from 'components/ShareSocial';
 import './img-html.css';
 import { useSelector } from 'react-redux';
 import { getSafeValue, getTransObj } from 'utils';
+import RightNews from 'components/RightNews';
 
 const events = [
   {
@@ -269,10 +270,12 @@ const PostLibraryDetail = props => {
         {renderSubHeader()}
 
         <div
+          style={{ minHeight: '80vh' }}
           className="dynamic-content-div"
           dangerouslySetInnerHTML={{
             __html: htmlContent
-          }}></div>
+          }}
+        />
 
         <Divider className={classes.divider} />
         {_renderTitle('BÀI VIẾT LIÊN QUAN')}
@@ -310,7 +313,7 @@ const PostLibraryDetail = props => {
 
             <Hidden mdDown>
               <Grid item xs={12} md={4}>
-                <NewsEvent />
+                <RightNews />
               </Grid>
             </Hidden>
           </Grid>

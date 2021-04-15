@@ -9,6 +9,7 @@ import PostLibrary from 'views/Library/component/post-library';
 import VideoLibrary from 'views/Library/component/video-library';
 import PostLibraryDetail from 'views/Library/component/PostLibraryDetail';
 import FileLibraryDetail from 'views/Library/component/FileLibraryDetail';
+import FileLibrary from 'views/Library/component/FileLibrary';
 import AlbumLibrary from 'views/Library/component/album-library';
 import DefaultLayout from './layouts/Default';
 import ErrorLayout from './layouts/Error';
@@ -71,6 +72,11 @@ const routes = [
       },
       {
         path: '/library/file/:id',
+        exact: true,
+        component: FileLibrary
+      },
+      {
+        path: '/library/file/:id/:indexUrl',
         exact: true,
         component: FileLibraryDetail
       },

@@ -9,6 +9,7 @@ import MomentLocaleUtils from 'react-day-picker/moment';
 import moment from 'moment';
 import Lodash from 'lodash';
 import useStyles from './style';
+import { useSelector } from 'reac-redux';
 
 // import './calendar.scss';
 import './day-picker.css';
@@ -32,7 +33,7 @@ const mockEvent = [
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 const AppEventPickers = props => {
   const classes = useStyles(props);
-
+  const lang = useSelector(state => state.multiLang.lang);
   const [dateSelected, changeDateSelected] = useState(new Date());
   const [currentEvent, changeCurrentEvent] = useState(mockEvent[0]);
   // eslint-disable-next-line no-unused-vars
@@ -176,7 +177,7 @@ const AppEventPickers = props => {
 
       <Grid item sm={6} xs={12}>
         <DayPicker
-          locale="vi"
+          locale={lang}
           localeUtils={MomentLocaleUtils}
           onDayClick={day => changeDateSelected(day)}
           renderDay={_renderDay}

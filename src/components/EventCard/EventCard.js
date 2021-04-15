@@ -10,7 +10,6 @@ const useStyles = makeStyles(() =>
       display: 'flex',
       alignItems: 'center',
       backgroundColor: '#ffffff',
-      marginTop: 20,
       '& .MuiCardContent-root': {
         padding: 0
       }
@@ -38,13 +37,19 @@ const useStyles = makeStyles(() =>
       fontSize: 30,
       marginTop: 10
     },
-    title: {
+    titleStyle: {
       color: '#3A3A3A',
       fontWeight: 500,
-      overflow: 'hidden'
+      lineHeight: '30px',
+      overflow: 'hidden',
+      display: '-webkit-box',
+      '-webkit-line-clamp': 2,
+      '-webkit-box-orient': 'vertical',
+      textOverflow: 'ellipsis'
     }
   })
 );
+
 const EventCard = ({ day, month, title }) => {
   const classes = useStyles();
   return (
@@ -54,13 +59,15 @@ const EventCard = ({ day, month, title }) => {
           <Typography component="div" className={classes.date}>
             {day}
           </Typography>
+
           <Typography component="div" className={classes.month}>
             {month}
           </Typography>
         </Typography>
       </CardContent>
+
       <CardContent>
-        <Typography variant="h4" component="h4" className={classes.title}>
+        <Typography variant="h4" className={classes.titleStyle}>
           {title}
         </Typography>
       </CardContent>

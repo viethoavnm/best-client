@@ -9,6 +9,7 @@ import Box from '@material-ui/core/Box';
 import CardMedia from '@material-ui/core/CardMedia';
 import Divider from '@material-ui/core/Divider';
 import { colors } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   root: {

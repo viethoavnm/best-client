@@ -9,6 +9,7 @@ const useStyles = makeStyles(theme =>
       alignItems: 'center',
       fontWeight: 600,
       fontSize: 18,
+      marginBottom: 20,
       '&::after': {
         position: 'absolute',
         right: -8,

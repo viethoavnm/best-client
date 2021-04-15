@@ -12,6 +12,7 @@ import { TYPE_ARTICLE, DATE_FORMAT } from 'utils/constant';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
+import RightNews from 'components/RightNews';
 
 const Library = props => {
   const classes = useStyles();
@@ -161,7 +162,7 @@ const Library = props => {
             </Grid>
 
             <Grid item xs={12} md={4} className={classes.rightSidebar}>
-              <NewsEvent />
+              <RightNews />
             </Grid>
           </Grid>
         )}

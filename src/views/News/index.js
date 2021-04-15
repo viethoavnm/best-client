@@ -13,6 +13,7 @@ import { LIST_LOADING } from 'utils/constant';
 import { getSafeValue, getTransObj } from 'utils';
 import Lodash from 'lodash';
 import { useSelector } from 'react-redux';
+import RightNews from 'components/RightNews';
 
 const News = () => {
   const history = useHistory();
@@ -130,7 +131,7 @@ const News = () => {
             </Grid>
 
             <Grid item xs={12} md={4} className={classes.rightSidebar}>
-              <NewsEvent />
+              <RightNews />
             </Grid>
           </Grid>
         </section>

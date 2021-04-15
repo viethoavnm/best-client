@@ -3,6 +3,7 @@ import { LibraryCard, Pagination, Title } from 'components';
 import { Fragment } from 'react';
 import useStyles from 'views/Library/style';
 import NewsEvent from '../../../Search/component/news-event';
+import RightNews from 'components/RightNews';
 
 const PostLibrary = () => {
   const classes = useStyles();
@@ -51,7 +52,7 @@ const PostLibrary = () => {
           <Pagination count={10} />
         </Grid>
         <Grid item xs={12} md={4} className={classes.rightSidebar}>
-          <NewsEvent />
+          <RightNews />
         </Grid>
       </Grid>
     </Fragment>

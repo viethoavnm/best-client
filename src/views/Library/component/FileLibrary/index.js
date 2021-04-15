@@ -19,7 +19,6 @@ import { useState, useEffect, Fragment } from 'react';
 import useStylesLibrary from 'views/Library/style';
 import NewsEvent from 'views/Search/component/news-event';
 import useStylesDetailVideo from '../detail-video/style';
-import CarouselImg from './component/carousel-img';
 import { Container } from 'components';
 import { getArticleDetail } from 'services/articles';
 import { getSafeValue, getTransObj } from 'utils';
@@ -27,6 +26,7 @@ import moment from 'moment';
 import { DATE_FORMAT } from 'utils/constant';
 import { useSelector } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { useHistory } from 'react-router-dom';
 import RightNews from 'components/RightNews';
 
 const useStyles = makeStyles(() =>
@@ -47,8 +47,10 @@ const useStyles = makeStyles(() =>
   })
 );
 
-const AlbumLibrary = props => {
+const FileLibrary = props => {
   const classes = useStyles();
+  const history = useHistory();
+  const id = props.match.params.id;
   const classesDetailVideo = useStylesDetailVideo();
   const classesLibrary = useStylesLibrary();
   const [openCarousel, setOpenCarousel] = useState(false);
@@ -72,8 +74,6 @@ const AlbumLibrary = props => {
   };
 
   useEffect(() => {
-    const id = props.match.params.id;
-
     setLoading(true);
     getArticleDetail(id)
       .then(res => {
@@ -89,6 +89,10 @@ const AlbumLibrary = props => {
         setLoading(false);
       });
   }, []);
+
+  const goToPdfFile = index => {
+    history.push(`/library/file/${id}/${index}`);
+  };
 
   return (
     <Container>
@@ -106,12 +110,6 @@ const AlbumLibrary = props => {
             <ShareSocial />
           </div>
 
-          <CarouselImg
-            listImg={listImg}
-            open={openCarousel}
-            onClose={() => setOpenCarousel(false)}
-          />
-
           <Grid container spacing={2}>
             {loading ? (
               <div
@@ -125,16 +123,16 @@ const AlbumLibrary = props => {
               </div>
             ) : (
               <Fragment>
-                {listImg.map(url => {
+                {listImg.map((url, index) => {
                   return (
                     <Grid item xs={12} sm={6} md={4}>
                       <CardActionArea
                         // className={classes.imageBox}
-                        onClick={() => setOpenCarousel(true)}>
+                        onClick={() => goToPdfFile(index)}>
                         <CardMedia
                           className={classes.image}
                           // component="img"
-                          image={url}
+                          image={'/images/ic_pdf.svg'}
                           title=""
                         />
                       </CardActionArea>
@@ -156,4 +154,5 @@ const AlbumLibrary = props => {
     </Container>
   );
 };
-export default AlbumLibrary;
+
+export default FileLibrary;
