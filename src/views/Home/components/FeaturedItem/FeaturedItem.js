@@ -20,38 +20,40 @@ const FeaturedItem = ({
   classContent,
   classType,
   classTitle,
-  classTime
+  classTime,
+  handleClick
 }) => {
   const classes = useStyles();
 
   return (
     <Card className={clsx(classes.root, classRoot && classRoot)} elevation={0}>
-      <CardActionArea>
+      <CardActionArea onClick={handleClick}>
         <CardMedia
           image={image}
           title={title}
           className={clsx(classes.img, classImg && classImg)}
         />
+
+        <CardContent
+          className={clsx(classes.content, classContent && classContent)}>
+          <Typography
+            component="span"
+            className={clsx(classes.type, classType && classType)}>
+            {type}
+          </Typography>
+          <Typography
+            component="h2"
+            className={clsx(classes.title, classTitle && classTitle)}>
+            {title}
+          </Typography>
+          <Typography
+            component="p"
+            className={clsx(classes.time, classTime && classTime)}>
+            <AccessTime className={classes.icon} />
+            {time}
+          </Typography>
+        </CardContent>
       </CardActionArea>
-      <CardContent
-        className={clsx(classes.content, classContent && classContent)}>
-        <Typography
-          component="span"
-          className={clsx(classes.type, classType && classType)}>
-          {type}
-        </Typography>
-        <Typography
-          component="h2"
-          className={clsx(classes.title, classTitle && classTitle)}>
-          {title}
-        </Typography>
-        <Typography
-          component="p"
-          className={clsx(classes.time, classTime && classTime)}>
-          <AccessTime className={classes.icon} />
-          {time}
-        </Typography>
-      </CardContent>
     </Card>
   );
 };

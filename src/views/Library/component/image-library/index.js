@@ -9,7 +9,6 @@ const ImageLibrary = () => {
   const [page, setPage] = useState(1);
 
   const handleChange = (e, val) => {
-    console.log('val', val);
     setPage(val);
   };
 

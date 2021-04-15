@@ -13,7 +13,7 @@ const DocumentLibrary = () => {
         <Title size="large">
           <div className={classes.title}>TÀi LIỆU</div>
           <div className={classes.breadcrumb}>
-            Trang chủ / Thư viện/ Tài liệu
+            Trang chủ / Thư viện / Tài liệu
           </div>
         </Title>
       </div>

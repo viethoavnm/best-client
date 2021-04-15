@@ -41,8 +41,8 @@ const useStyles = makeStyles(theme =>
       flexGrow: 1,
       display: 'flex',
       alignItems: 'center',
-      color: '#979797',
-      marginLeft: 25
+      color: '#979797'
+      // marginLeft: 25
     },
     timeIcon: {
       width: 18,

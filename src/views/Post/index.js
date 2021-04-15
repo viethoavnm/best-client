@@ -20,6 +20,9 @@ import { getArticleDetail, getArticle } from 'services/articles';
 import renderHTML from 'react-render-html';
 import NewsEvent from 'views/Search/component/news-event';
 import { Hidden } from '@material-ui/core';
+import ShareSocial from '../../components/ShareSocial';
+import './img-html.css';
+import { useSelector } from 'react-redux';
 
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 const DATE_FORMAT_2 = 'DD/MM/YYYY';
@@ -31,7 +34,8 @@ const PostDetail = props => {
   const location = useLocation();
   const [data, setData] = useState({});
   const [dataSuggest, setDataSuggest] = useState([]);
-  const [lang, setLang] = useState(VI_LANG);
+  // const [lang, setLang] = useState(VI_LANG);
+  const lang = useSelector(state => state.multiLang.lang);
   const [loading, setLoading] = useState(true);
 
   const image = Lodash.get(data, 'urlImg', '');
@@ -60,17 +64,17 @@ const PostDetail = props => {
         const dataRes = Lodash.get(res, 'data', {});
         const newData = transformData(dataRes);
         setData(newData);
-        console.log('newData', newData);
       })
       .catch(err => {})
       .finally(() => {
         setLoading(false);
       });
   }, []);
+
   useEffect(() => {
     const { category } = data;
     if (category) {
-      getArticle({ category })
+      getArticle({ category: category._id })
         .then(res => {
           const data = Lodash.get(res, 'data.results', []);
           const dataGet = data.reduce((arr, cur) => {
@@ -82,6 +86,7 @@ const PostDetail = props => {
         .catch(err => {});
     }
   }, [data]);
+
   const _renderInfoEvent = () => {
     return (
       <>
@@ -214,10 +219,38 @@ const PostDetail = props => {
 
   const _renderSuggestEvents = () => {
     const listSuggest = dataSuggest.slice(0, limitSuggest);
+
     return (
       <List className={classes.listSuggest}>
         {listSuggest.map(item => _renderItem(item))}
       </List>
+    );
+  };
+
+  const renderSubHeader = () => {
+    return (
+      <Box
+        display="flex"
+        flexDirection="row"
+        justifyContent="space-between"
+        marginBottom="30px"
+        alignItems="center">
+        <Box
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="center">
+          <CardMedia
+            className={classes.smallClock}
+            image="/images/ic-small-clock.svg"
+            alt="small-clock"
+          />
+
+          <Typography className={classes.timeSuggest}>{formatDate}</Typography>
+        </Box>
+
+        <ShareSocial />
+      </Box>
     );
   };
 
@@ -227,16 +260,19 @@ const PostDetail = props => {
 
     return (
       <Box>
-        {/* {_renderTitle('GIỚI THIỆU')} */}
-        {/* {renderHTML(htmlContent)} */}
+        {renderSubHeader()}
+
         <div
-          className={classes.boxSuggest}
-          id="id_articel_suggest"
+          className="dynamic-content-div"
+          // className={classes.boxSuggest}
+          // id="id_articel_suggest"
           dangerouslySetInnerHTML={{
             __html: htmlContent
           }}></div>
+
         <Divider className={classes.divider} />
         {_renderTitle('BÀI VIẾT LIÊN QUAN')}
+
         {_renderSuggestEvents()}
       </Box>
     );

@@ -6,15 +6,17 @@ import useStyles from './styles';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { produce } from 'immer'; // from tool kit
-import { getSafeValue, getTransObj } from 'utils';
 import Lodash from 'lodash';
 import moment from 'moment';
-import { DATE_FORMAT } from 'utils/constant';
+import { DATE_FORMAT, SubTypeArticle } from 'utils/constant';
+import { useHistory } from 'react-router-dom';
+import { getLinkFromArticle, getSafeValue, getTransObj } from 'utils';
 
 const FeaturedSection = props => {
   const { data, isNews } = props;
   const lang = useSelector(state => state.multiLang.lang);
   const classes = useStyles();
+  const history = useHistory();
   const [listData, setListData] = useState([]);
   const [cateName, setCateName] = useState('');
 
@@ -45,6 +47,12 @@ const FeaturedSection = props => {
     setListData(newList);
   }, [lang, data]);
 
+  const handleClickArticle = obj => {
+    const linkRedirect = getLinkFromArticle(obj);
+    history.push(linkRedirect);
+    // console.log('linkRedirect', linkRedirect);
+  };
+
   const renderFirstArticle = () => {
     if (listData.length === 0) {
       return <></>;
@@ -56,6 +64,7 @@ const FeaturedSection = props => {
 
     return (
       <FeaturedItem
+        handleClick={() => handleClickArticle(obj)}
         type={obj.nameCate}
         title={obj.title}
         image={obj.urlImg}
@@ -73,6 +82,7 @@ const FeaturedSection = props => {
 
     return (
       <FeaturedItem
+        handleClick={() => handleClickArticle(obj)}
         classImg={classes.rightImgTop}
         classContent={classes.rightContent}
         classType={classes.rightTypeTop}
@@ -93,18 +103,17 @@ const FeaturedSection = props => {
     const obj = listData[2];
 
     return (
-      <Fragment>
-        <FeaturedItem
-          classImg={classes.rightImgBottom}
-          classContent={classes.rightContent}
-          classType={classes.rightTypeBottom}
-          classTitle={classes.rightTitle}
-          classTime={classes.rightTime}
-          type={obj.nameCate}
-          title={obj.title}
-          image={obj.urlImg}
-        />
-      </Fragment>
+      <FeaturedItem
+        handleClick={() => handleClickArticle(obj)}
+        classImg={classes.rightImgBottom}
+        classContent={classes.rightContent}
+        classType={classes.rightTypeBottom}
+        classTitle={classes.rightTitle}
+        classTime={classes.rightTime}
+        type={obj.nameCate}
+        title={obj.title}
+        image={obj.urlImg}
+      />
     );
   };
 

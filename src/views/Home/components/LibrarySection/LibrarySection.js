@@ -6,15 +6,21 @@ import { Link } from 'react-router-dom';
 import FeaturedItem from '../FeaturedItem';
 import useStyles from './styles';
 import { useSelector, useDispatch } from 'react-redux';
-import { getSafeValue, getTransObj } from 'utils';
+import { getSafeValue, getTransObj, getLinkFromArticle } from 'utils';
 import Lodash from 'lodash';
 import moment from 'moment';
-import { DATE_FORMAT } from 'utils/constant';
-import { TYPE_HOME_DATA, UI_TYPE_HOME_DATA } from 'utils/constant';
+import {
+  TYPE_HOME_DATA,
+  UI_TYPE_HOME_DATA,
+  SubTypeArticle,
+  DATE_FORMAT
+} from 'utils/constant';
+import { useHistory } from 'react-router-dom';
 
 const LibrarySection = props => {
   const classes = useStyles();
   const { data } = props;
+  const history = useHistory();
   const lang = useSelector(state => state.multiLang.lang);
   const [listData, setListData] = useState([]);
   const [cateName, setCateName] = useState('');
@@ -58,6 +64,11 @@ const LibrarySection = props => {
     setLinkDirect(link);
   }, [lang, data]);
 
+  const handleClickArticle = obj => {
+    const linkRedirect = getLinkFromArticle(obj);
+    history.push(linkRedirect);
+  };
+
   const renderFirstArticle = () => {
     if (listData.length === 0) {
       return <></>;
@@ -72,6 +83,7 @@ const LibrarySection = props => {
     return (
       <Fragment>
         <FeaturedItem
+          handleClick={() => handleClickArticle(obj)}
           classImg={classes.img}
           classContent={classes.content}
           classType={classes.type}
@@ -105,6 +117,7 @@ const LibrarySection = props => {
           return (
             <Grid item xs={6} md={4}>
               <FeaturedItem
+                handleClick={() => handleClickArticle(obj)}
                 classImg={classes.imgBottom}
                 classContent={classes.content}
                 classType={classes.type}

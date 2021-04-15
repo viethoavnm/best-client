@@ -69,9 +69,9 @@ const EventCard = ({ day, month, title }) => {
 };
 
 EventCard.propTypes = {
-  title: PropTypes.string,
-  day: PropTypes.number,
-  month: PropTypes.number
+  // title: PropTypes.string,
+  // day: PropTypes.number,
+  // month: PropTypes.number
 };
 
 export default EventCard;

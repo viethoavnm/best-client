@@ -12,6 +12,18 @@ export const TYPE_MENU = {
   LIBRARY: 'library'
 };
 
+export const TYPE_ARTICLE = {
+  image: 'image',
+  video: 'video',
+  news: 'news',
+  file: 'file'
+};
+
+export const SubTypeArticle = {
+  single: 'single',
+  library: 'library'
+};
+
 export const TYPE_HOME_DATA = {
   NEWS: 'news',
   CATEGORY: 'category',
