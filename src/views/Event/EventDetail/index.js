@@ -20,7 +20,6 @@ import { getEventDetail } from 'services/event';
 import renderHTML from 'react-render-html';
 import NewsEvent from 'views/Search/component/news-event';
 import { Hidden } from '@material-ui/core';
-import RightNews from 'components/RightNews';
 
 const eventDetail = {
   image: '/images/lib-1.png',
@@ -56,10 +55,12 @@ const events = [
   }
 ];
 
+const htmlStr = `<h2><strong>Pin mặt trời truyền điện từ không gian xuống trái đất</strong></h2><p>&nbsp;</p><p><strong>Mới đây, giới khoa học vừa có một bước tiến mới trong tham vọng truyền điện mặt trời từ không gian xuống bất cứ vị trí nào trên mặt đất.</strong></p><p>&nbsp;</p><p style="text-align:justify;">Các nhà khoa học làm việc cho dự án của Bộ Quốc phòng Mỹ vừa thử nghiệm thành công một tấm pin năng lượng mặt trời với kích thước cỡ một hộp bánh pizza trong không gian.</p><p style="text-align:justify;">&nbsp;</p><p style="text-align:justify;">Theo CNN, thiết bị này là nguyên mẫu và bước đầu trong kế hoạch chế tạo hệ thống có thể truyền điện từ không gian xuống bất cứ vị trí nào trên mặt đất.</p><p style="text-align:justify;">&nbsp;</p><p style="text-align:justify;"><strong>Nhà máy phát điện không gian</strong></p><p style="text-align:justify;">&nbsp;</p><p style="text-align:justify;">Tấm pin được gọi là bộ phận ăng ten tần số vô tuyến quang năng (PRAM), được phóng lên lần đầu vào tháng 5/2020. PRAM được gắn trên X-37B - phi thuyền thực hiện nhiều nhiệm vụ bí ẩn của Lầu Năm Góc. PRAM chuyển hóa quang năng thành điện năng khi X-37B bay quanh trái đất với tốc độ 90 phút/vòng.</p><p style="text-align:justify;">&nbsp;</p><p style="text-align:justify;">Tấm pin này được thiết kế để tận dụng tối đa ánh sáng trong không gian chưa đi xuyên qua bầu khí quyển của trái đất, do đó giữ lại nhiều năng lượng sóng xanh với cường độ mạnh hơn so với trên mặt đất. Ánh sáng xanh khuếch tán khi đi vào bầu khí quyển, cũng là nguyên nhân khiến bầu trời có màu xanh.</p><figure class="image image_resized" style="width:55.57%;"><img src="https://hcm01.vstorage.vngcloud.vn/v1/AUTH_2e1fb7d4d103449c9aff1956ce121f81/test_container/c1f383fe-15d3-415e-8816-50aa7df3203a.jpeg"></figure><p style="text-align:justify;">“Chúng tôi có được vô số ánh sáng trong không gian nhờ điều đó”, theo ông Paul Jaffe, chuyên gia phát triển dự án.</p><p style="text-align:justify;">Thử nghiệm mới nhất cho thấy tấm pin năng lượng kích thước 30cm x 30cm có thể sản sinh ra 10watt năng lượng để truyền đi, đủ để cấp nguồn cho một máy tính bảng.</p><p style="text-align:justify;">&nbsp;</p><p style="text-align:justify;">Dự án có kế hoạch dùng hàng chục tấm pin nên có thể tạo ra cuộc cách mạng trong lĩnh vực phát điện và phân phối đến những nơi xa xôi trên địa cầu. Bên cạnh đó, nó còn có thể bổ sung cho các lưới điện lớn trên thế giới.</p><p style="text-align:justify;">“Tương lai, một dự án điện mặt trời trong không gian sẽ có công suất nhiều gigawatt, bằng hoặc vượt cả những nhà máy điện lớn nhất hiện nay, nên sẽ cung cấp đủ điện cho một thành phố”, ông Jaffe dự báo.</p><p style="text-align:justify;">Hiện tấm pin trong thử nghiệm vẫn chưa thực sự truyền điện trở về trái đất, nhưng công nghệ đã được chứng minh. Nếu dự án phát triển những tấm pin năng lượng khổng lồ với diện tích nhiều km2, nó có thể gửi vi ba (sóng tần số siêu cao) trở về trái đất để chuyển hóa thành điện năng.</p><p>&nbsp;</p>
+`;
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 const DATE_FORMAT_2 = 'DD/MM/YYYY';
 const EventDetail = props => {
-  // moment.locale('vi');
+  moment.locale('vi');
   const classes = useStyles();
   const pageLayout = useRef(null);
   const history = useHistory();
@@ -205,27 +206,31 @@ const EventDetail = props => {
     const formatDateItem = moment(dateItem).format(DATE_FORMAT_2);
 
     return (
-      <ListItem onClick={() => handleClickItem(item)}>
-        <Box>
+      <ListItem
+        onClick={() => handleClickItem(item)}
+        className={classes.itemSuggest}>
+        <Box className={classes.boxSuggest}>
           <CardMedia
             className={classes.thumbnailSuggest}
             alt=""
             image={imageItem}
           />
-          <Typography className={classes.titleItemSuggest}>
-            {nameItem}
-          </Typography>
-
-          <Box display="flex" flexDirection="row">
-            <CardMedia
-              className={classes.smallClock}
-              image="/images/ic-small-clock.svg"
-              alt="small-clock"
-            />
-            <Typography className={classes.timeSuggest}>
-              {formatDateItem}
+          <div>
+            <Typography className={classes.titleItemSuggest}>
+              {nameItem}
             </Typography>
-          </Box>
+
+            <Box display="flex" flexDirection="row">
+              <CardMedia
+                className={classes.smallClock}
+                image="/images/ic-small-clock.svg"
+                alt="small-clock"
+              />
+              <Typography className={classes.timeSuggest}>
+                {formatDateItem}
+              </Typography>
+            </Box>
+          </div>
         </Box>
       </ListItem>
     );
@@ -234,7 +239,13 @@ const EventDetail = props => {
   const _renderSuggestEvents = () => {
     return (
       <List className={classes.listSuggest}>
-        {events.map(item => _renderItem(item))}
+        {events.map(item => {
+          return (
+            <Grid item xs={12} sm={6} md={4} className={classes.gridSuggest}>
+              {_renderItem(item)}
+            </Grid>
+          );
+        })}
       </List>
     );
   };
@@ -286,7 +297,7 @@ const EventDetail = props => {
 
             <Hidden mdDown>
               <Grid item xs={12} md={4}>
-                <RightNews />
+                <NewsEvent />
               </Grid>
             </Hidden>
           </Grid>
