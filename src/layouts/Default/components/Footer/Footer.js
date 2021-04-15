@@ -46,6 +46,7 @@ function DefaultLayoutFooter(props) {
       </>
     );
   };
+
   return (
     <div>
       <Subscribe />

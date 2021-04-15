@@ -5,9 +5,7 @@ import { initReactI18next } from 'react-i18next';
 // (tip move them in a JSON file and import them)
 const resources = {
   en: {
-    translation: {
-      'Welcome to React': 'Welcome to React and react-i18next'
-    }
+    titleNew: {}
   }
 };
 
@@ -16,9 +14,7 @@ i18n
   .init({
     resources,
     lng: 'vn',
-
     keySeparator: false, // we do not use keys in form messages.welcome
-
     interpolation: {
       escapeValue: false // react already safes from xss
     }

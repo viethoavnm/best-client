@@ -6,3 +6,4 @@ export const urlGetSetting = 'setup/home-data';
 export const urlArticle = 'article';
 export const urlEvent = 'event';
 export const urlSetup = 'setup';
+export const urlEmail = 'email-sub';
