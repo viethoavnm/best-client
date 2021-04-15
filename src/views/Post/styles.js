@@ -19,7 +19,14 @@ const useStyles = makeStyles(theme => ({
     width: `${(272 * 100) / 1440}vw`,
     height: 160,
     borderRadius: 10,
-    marginBottom: 8
+    marginBottom: 8,
+    [theme.breakpoints.down('767')]: {
+      width: `${(272 * 100) / 767}vw`
+    },
+    [theme.breakpoints.down('601')]: {
+      width: `${(272 * 100) / 600}vw`,
+      marginBottom: 0
+    }
   },
   thumbnail: {
     height: 0,
@@ -50,7 +57,39 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'row',
     padding: 0,
-    marginBottom: 44
+    marginBottom: 44,
+    [theme.breakpoints.down('767')]: {
+      flexWrap: 'wrap'
+    }
+  },
+  itemSuggest: {
+    [theme.breakpoints.down('768')]: {
+      justifyContent: 'center'
+    },
+    [theme.breakpoints.down('601')]: {
+      justifyContent: 'initial'
+    }
+  },
+  gridSuggest: {
+    '& > li': {
+      [theme.breakpoints.down('601')]: {
+        borderBottom: '1px solid #E5E5E5',
+        paddingTop: 20,
+        paddingBottom: 20
+      }
+    },
+    '&:last-child > li': {
+      [theme.breakpoints.down('601')]: {
+        borderBottom: 'none !important'
+      }
+    }
+  },
+  boxSuggest: {
+    [theme.breakpoints.down('600')]: {
+      display: 'grid',
+      gridTemplateColumns: `${(272 * 100) / 600}vw auto`,
+      gridColumnGap: 12
+    }
   },
   titleItem: {
     marginTop: 3,
@@ -71,7 +110,10 @@ const useStyles = makeStyles(theme => ({
     fontSize: '14px',
     fontWeight: '500',
     color: '#979797',
-    lineHeight: '17px'
+    lineHeight: '17px',
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: theme.spacing(2)
+    }
   },
   titleItemSuggest: {
     fontFamily: 'Montserrat',
@@ -156,14 +198,6 @@ const useStyles = makeStyles(theme => ({
     color: '#818181',
     fontWeight: 500,
     fontSize: 16
-  },
-  boxSuggest: {
-    '&:first-child >figure': {
-      width: '100% !important'
-    },
-    '&:first-child img': {
-      width: '100%'
-    }
   }
 }));
 
