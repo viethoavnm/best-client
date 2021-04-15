@@ -23,8 +23,9 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('767')]: {
       width: `${(272 * 100) / 767}vw`
     },
-    [theme.breakpoints.down('600')]: {
-      width: `${(272 * 100) / 600}vw`
+    [theme.breakpoints.down('601')]: {
+      width: `${(272 * 100) / 600}vw`,
+      marginBottom: 0
     }
   },
   thumbnail: {
@@ -65,8 +66,22 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('768')]: {
       justifyContent: 'center'
     },
-    [theme.breakpoints.down('600')]: {
+    [theme.breakpoints.down('601')]: {
       justifyContent: 'initial'
+    }
+  },
+  gridSuggest: {
+    '& > li': {
+      [theme.breakpoints.down('601')]: {
+        borderBottom: '1px solid #E5E5E5',
+        paddingTop: 20,
+        paddingBottom: 20
+      }
+    },
+    '&:last-child > li': {
+      [theme.breakpoints.down('601')]: {
+        borderBottom: 'none !important'
+      }
     }
   },
   boxSuggest: {
