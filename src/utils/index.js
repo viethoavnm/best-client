@@ -57,22 +57,22 @@ export const getLinkFromArticle = article => {
     // Library have 4 type, we need to check it to navigate
     switch (type) {
       case TYPE_ARTICLE.file: {
-        linkUrl = `library/post/${id}`;
+        linkUrl = `library/file/${id}`;
         break;
       }
 
       case TYPE_ARTICLE.news: {
-        linkUrl = `library/post/${id}`;
+        linkUrl = `library/news/${id}`;
         break;
       }
 
       case TYPE_ARTICLE.video: {
-        linkUrl = `library/post/${id}`;
+        linkUrl = `library/video/${id}`;
         break;
       }
 
       case TYPE_ARTICLE.image: {
-        linkUrl = `library/post/${id}`;
+        linkUrl = `library/image/${id}`;
         break;
       }
 
