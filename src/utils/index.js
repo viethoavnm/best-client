@@ -35,8 +35,14 @@ export const getTransObj = (listTrans, lang = VI_LANG) => {
     objTrans = listTrans[0];
   }
 
-  const { _id, ...rest } = objTrans;
-  return rest;
+  console.log('objTrans', objTrans);
+
+  if (Lodash.has(objTrans, '_id')) {
+    const newObj = Lodash.omit(objTrans, ['_id']);
+    return newObj;
+  } else {
+    return objTrans;
+  }
 };
 
 export const getLinkFromArticle = article => {
