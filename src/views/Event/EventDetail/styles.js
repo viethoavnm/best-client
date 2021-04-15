@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     paddingRight: 150
   },
   thumbnailSuggest: {
-    width: `${(272 * 100) / 1440}vw`,
+    // width: `${(272 * 100) / 1440}vw`,
     height: 160,
     borderRadius: 10,
     marginBottom: 8,
@@ -53,16 +53,22 @@ const useStyles = makeStyles(theme => ({
     // paddingBottom: 20
   },
   listSuggest: {
-    width: '100%',
+    width: 'calc(100% + 33.333333%)',
     display: 'flex',
     flexDirection: 'row',
     padding: 0,
     marginBottom: 44,
+    [theme.breakpoints.down('960')]: {
+      width: '100%'
+    },
     [theme.breakpoints.down('767')]: {
       flexWrap: 'wrap'
     }
   },
   itemSuggest: {
+    '& > div': {
+      width: '100%'
+    },
     [theme.breakpoints.down('768')]: {
       justifyContent: 'center'
     },
