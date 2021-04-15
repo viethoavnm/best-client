@@ -22,6 +22,8 @@ import NewsEvent from 'views/Search/component/news-event';
 import { Hidden } from '@material-ui/core';
 import ShareSocial from 'components/ShareSocial';
 import './img-html.css';
+import { useSelector } from 'react-redux';
+import { getSafeValue, getTransObj } from 'utils';
 
 const events = [
   {
@@ -52,15 +54,14 @@ const events = [
 
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 const DATE_FORMAT_2 = 'DD/MM/YYYY';
-const PostDetail = props => {
+const PostLibraryDetail = props => {
   const classes = useStyles();
   const pageLayout = useRef(null);
   const history = useHistory();
   const location = useLocation();
   const [data, setData] = useState({});
-  const [lang, setLang] = useState(VI_LANG);
+  const lang = useSelector(state => state.multiLang.lang);
   const [loading, setLoading] = useState(true);
-
   const image = Lodash.get(data, 'urlImg', '');
   const name = Lodash.get(data, 'name', '');
   const address = Lodash.get(data, 'address', '');
@@ -72,8 +73,8 @@ const PostDetail = props => {
   const dayStr = moment(date).format('dddd');
 
   const transformData = obj => {
-    const transArr = Lodash.get(obj, 'translations', []);
-    const objTrans = Lodash.find(transArr, obj => obj.lang === lang);
+    const transArr = getSafeValue(obj, 'translations', []);
+    const objTrans = getTransObj(transArr, lang);
     const { _id, ...res } = objTrans;
     return { ...obj, ...res };
   };
@@ -319,4 +320,4 @@ const PostDetail = props => {
   );
 };
 
-export default PostDetail;
+export default PostLibraryDetail;

@@ -72,9 +72,9 @@ const LibraryCard = ({
 
   return (
     <Card className={className}>
-      <CardActionArea>
-        <CardMedia className={classes.media} image={image} title={title} />
-      </CardActionArea>
+      {/* <CardActionArea> */}
+      <CardMedia className={classes.media} image={image} title={title} />
+      {/* </CardActionArea> */}
       <CardContent
         className={
           description

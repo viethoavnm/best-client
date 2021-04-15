@@ -6,15 +6,15 @@ import { Fragment } from 'react';
 import clsx from 'clsx';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
-import useStyles from './style';
-import NewsEvent from '../Search/component/news-event';
-import { getArticle } from '../../services/articles';
-import { LIST_LOADING } from 'utils/constant';
+import useStyles from './styles';
+import NewsEvent from 'components/RightNews';
+import { getArticle } from 'services/articles';
+import { TYPE_ARTICLE } from 'utils/constant';
 import { getSafeValue, getTransObj } from 'utils';
 import Lodash from 'lodash';
 import { useSelector } from 'react-redux';
 
-const News = () => {
+const LibrarySubCate = props => {
   const history = useHistory();
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
@@ -23,6 +23,8 @@ const News = () => {
   const [articles, setArticles] = useState([]);
   const limit = 12;
   const lang = useSelector(state => state.multiLang.lang);
+  const typeLibrary = props.match.params.type;
+  const [titleHeader, setTitleHeader] = useState('');
 
   const transformMenu = (listMenu, lang) => {
     const newList = Lodash.map(listMenu, obj => {
@@ -36,13 +38,39 @@ const News = () => {
   };
 
   useEffect(() => {
+    let title = '';
+    switch (typeLibrary) {
+      case TYPE_ARTICLE.image:
+        title = 'ẢNH';
+        break;
+
+      case TYPE_ARTICLE.video:
+        title = 'VIDEO';
+        break;
+
+      case TYPE_ARTICLE.file:
+        title = 'TÀI LIỆU';
+        break;
+
+      case TYPE_ARTICLE.news:
+        title = 'THÔNG CÁO BÁO CHÍ';
+        break;
+
+      default:
+        break;
+    }
+
+    setTitleHeader(title);
+  }, []);
+
+  useEffect(() => {
     const newList = transformMenu(articles, lang);
     setArticles(newList);
   }, [lang]);
 
   useEffect(() => {
     setLoading(true);
-    const params = { page, limit };
+    const params = { page, limit, type: typeLibrary, subType: 'library' };
     getArticle(params)
       .then(res => {
         const results = getSafeValue(res, 'data.results', []);
@@ -64,7 +92,7 @@ const News = () => {
 
   const handleClickPost = obj => {
     const id = getSafeValue(obj, '_id', '');
-    history.push(`/post/${id}`);
+    history.push(`/library/${typeLibrary}/${id}`);
   };
 
   return (
@@ -72,8 +100,8 @@ const News = () => {
       <Container>
         <div className={classes.header}>
           <Title size="large">
-            <div className={classes.title}>BẢN TIN</div>
-            <div className={classes.breadcrumb}>Trang chủ / bản tin</div>
+            <div className={classes.title}>{titleHeader}</div>
+            <div className={classes.breadcrumb}>Trang chủ / {titleHeader}</div>
           </Title>
         </div>
 
@@ -139,4 +167,4 @@ const News = () => {
   );
 };
 
-export default News;
+export default LibrarySubCate;

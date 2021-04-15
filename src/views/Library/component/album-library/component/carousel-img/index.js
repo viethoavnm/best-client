@@ -2,9 +2,9 @@ import { Box, CardMedia, createStyles, Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { createPortal } from 'react-dom';
 import { Carousel } from 'react-responsive-carousel';
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
-const useStyles = makeStyles((theme) =>
+const useStyles = makeStyles(theme =>
   createStyles({
     modal: {
       position: 'fixed',
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const CarouselImg = ({ open, onClose }) => {
+const CarouselImg = ({ open, onClose, listImg }) => {
   const classes = useStyles();
 
   const onClickModal = () => {
@@ -42,30 +42,18 @@ const CarouselImg = ({ open, onClose }) => {
           showStatus={false}
           useKeyboardArrows
           className="presentation-mode">
-          <Box>
-            <CardMedia
-              className={classes.img}
-              component="img"
-              image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
-              title="Contemplative Reptile"
-            />
-          </Box>
-          <Box>
-            <CardMedia
-              className={classes.img}
-              component="img"
-              image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
-              title="Contemplative Reptile"
-            />
-          </Box>
-          <Box>
-            <CardMedia
-              className={classes.img}
-              component="img"
-              image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
-              title="Contemplative Reptile"
-            />
-          </Box>
+          {listImg.map(img => {
+            return (
+              <Box>
+                <CardMedia
+                  className={classes.img}
+                  component="img"
+                  image={img}
+                  title=""
+                />
+              </Box>
+            );
+          })}
         </Carousel>
       </Box>
     </Modal>,

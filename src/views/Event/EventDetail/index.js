@@ -249,6 +249,7 @@ const EventDetail = props => {
         {_renderTitle('GIỚI THIỆU')}
         {/* {renderHTML(htmlContent)} */}
         <div
+          className="dynamic-content-div"
           dangerouslySetInnerHTML={{
             __html: htmlContent
           }}></div>

@@ -4,9 +4,12 @@ import Library from 'views/Library';
 import DetailVideo from 'views/Library/component/detail-video';
 import DocumentLibrary from 'views/Library/component/document-library';
 import ImageLibrary from 'views/Library/component/image-library';
+import LibrarySubCate from 'views/Library/component/LibrarySubCate';
 import PostLibrary from 'views/Library/component/post-library';
 import VideoLibrary from 'views/Library/component/video-library';
 import PostLibraryDetail from 'views/Library/component/PostLibraryDetail';
+import FileLibraryDetail from 'views/Library/component/FileLibraryDetail';
+import AlbumLibrary from 'views/Library/component/album-library';
 import DefaultLayout from './layouts/Default';
 import ErrorLayout from './layouts/Error';
 import Event from './views/Event';
@@ -47,35 +50,35 @@ const routes = [
         component: Library
       },
       {
-        path: '/library/image',
+        path: '/library/:type',
         exact: true,
-        component: ImageLibrary
+        component: LibrarySubCate
       },
       {
-        path: '/library/video',
-        exact: true,
-        component: VideoLibrary
-      },
-      {
-        path: '/library/post',
-        exact: true,
-        component: PostLibrary
-      },
-      {
-        path: '/library/post/:id',
+        path: '/library/news/:id',
         exact: true,
         component: PostLibraryDetail
       },
       {
-        path: '/library/document',
-        exact: true,
-        component: DocumentLibrary
-      },
-      {
         path: '/library/video/:id',
         exact: true,
-        component: DetailVideo
+        component: PostLibraryDetail
       },
+      {
+        path: '/library/image/:id',
+        exact: true,
+        component: AlbumLibrary
+      },
+      {
+        path: '/library/file/:id',
+        exact: true,
+        component: FileLibraryDetail
+      },
+      // {
+      //   path: '/library/video/:id',
+      //   exact: true,
+      //   component: DetailVideo
+      // },
       {
         path: '/event',
         exact: true,

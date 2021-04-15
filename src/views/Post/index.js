@@ -22,6 +22,7 @@ import NewsEvent from 'views/Search/component/news-event';
 import { Hidden } from '@material-ui/core';
 import ShareSocial from '../../components/ShareSocial';
 import './img-html.css';
+import { useSelector } from 'react-redux';
 
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 const DATE_FORMAT_2 = 'DD/MM/YYYY';
@@ -33,7 +34,8 @@ const PostDetail = props => {
   const location = useLocation();
   const [data, setData] = useState({});
   const [dataSuggest, setDataSuggest] = useState([]);
-  const [lang, setLang] = useState(VI_LANG);
+  // const [lang, setLang] = useState(VI_LANG);
+  const lang = useSelector(state => state.multiLang.lang);
   const [loading, setLoading] = useState(true);
 
   const image = Lodash.get(data, 'urlImg', '');
@@ -72,7 +74,7 @@ const PostDetail = props => {
   useEffect(() => {
     const { category } = data;
     if (category) {
-      getArticle({ category })
+      getArticle({ category: category._id })
         .then(res => {
           const data = Lodash.get(res, 'data.results', []);
           const dataGet = data.reduce((arr, cur) => {
@@ -244,7 +246,7 @@ const PostDetail = props => {
             alt="small-clock"
           />
 
-          <Typography className={classes.timeSuggest}>30/12/2020</Typography>
+          <Typography className={classes.timeSuggest}>{formatDate}</Typography>
         </Box>
 
         <ShareSocial />
@@ -263,13 +265,14 @@ const PostDetail = props => {
         <div
           className="dynamic-content-div"
           // className={classes.boxSuggest}
-          id="id_articel_suggest"
+          // id="id_articel_suggest"
           dangerouslySetInnerHTML={{
             __html: htmlContent
           }}></div>
 
         <Divider className={classes.divider} />
         {_renderTitle('BÀI VIẾT LIÊN QUAN')}
+
         {_renderSuggestEvents()}
       </Box>
     );
