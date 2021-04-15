@@ -16,10 +16,17 @@ const useStyles = makeStyles(theme => ({
     paddingRight: 150
   },
   thumbnailSuggest: {
-    width: `${(272 * 100) / 1440}vw`,
+    // width: `${(272 * 100) / 1440}vw`,
     height: 160,
     borderRadius: 10,
-    marginBottom: 8
+    marginBottom: 8,
+    [theme.breakpoints.down('767')]: {
+      width: `${(272 * 100) / 767}vw`
+    },
+    [theme.breakpoints.down('601')]: {
+      width: `${(272 * 100) / 600}vw`,
+      marginBottom: 0
+    }
   },
   thumbnail: {
     height: 0,
@@ -46,11 +53,42 @@ const useStyles = makeStyles(theme => ({
     // paddingBottom: 20
   },
   listSuggest: {
-    width: '100%',
+    width: 'calc(100% + 33.333333%)',
     display: 'flex',
     flexDirection: 'row',
     padding: 0,
-    marginBottom: 44
+    marginBottom: 44,
+    [theme.breakpoints.down('960')]: {
+      width: '100%'
+    },
+    [theme.breakpoints.down('767')]: {
+      flexWrap: 'wrap'
+    }
+  },
+  itemSuggest: {
+    '& > div': {
+      width: '100%'
+    },
+    [theme.breakpoints.down('768')]: {
+      justifyContent: 'center'
+    },
+    [theme.breakpoints.down('601')]: {
+      justifyContent: 'initial'
+    }
+  },
+  gridSuggest: {
+    '& > li': {
+      [theme.breakpoints.down('601')]: {
+        borderBottom: '1px solid #E5E5E5',
+        paddingTop: 20,
+        paddingBottom: 20
+      }
+    },
+    '&:last-child > li': {
+      [theme.breakpoints.down('601')]: {
+        borderBottom: 'none !important'
+      }
+    }
   },
   titleItem: {
     marginTop: 3,
@@ -71,7 +109,17 @@ const useStyles = makeStyles(theme => ({
     fontSize: '14px',
     fontWeight: '500',
     color: '#979797',
-    lineHeight: '17px'
+    lineHeight: '17px',
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: theme.spacing(2)
+    }
+  },
+  boxSuggest: {
+    [theme.breakpoints.down('600')]: {
+      display: 'grid',
+      gridTemplateColumns: `${(272 * 100) / 600}vw auto`,
+      gridColumnGap: 12
+    }
   },
   titleItemSuggest: {
     fontFamily: 'Montserrat',
