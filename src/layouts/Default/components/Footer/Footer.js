@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import useStyles from './Style';
+import useStyles, { CustomColor } from './Style';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import clsx from 'clsx';
@@ -19,7 +19,33 @@ function DefaultLayoutFooter(props) {
   const scrollToTop = () => {
     scroll.scrollToTop();
   };
+  const renderfooter = () => {
+    return (
+      <>
+        <div className={clsx(classes.footerItem)}>
+          <Box display="flex" flexDirection="row" alignItems="center">
+            <Typography
+              color="inherit"
+              className={clsx(classes.downloadAppTitle)}>
+              TẢI APP TẠI ĐÂY
+            </Typography>
 
+            <img src="/images/ic-download.svg" alt="download" />
+          </Box>
+        </div>
+
+        <div className={clsx(classes.footerItem)}>
+          <Typography
+            color="inherit"
+            className={clsx(classes.footerColumnTitle)}>
+            Nhà tài trợ
+          </Typography>
+
+          <img src="/images/sponsor.png" alt="logo" />
+        </div>
+      </>
+    );
+  };
   return (
     <div>
       <Subscribe />
@@ -31,7 +57,14 @@ function DefaultLayoutFooter(props) {
           justify="center"
           alignItems="center"
           spacing={3}>
-          <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={6}
+            lg={3}
+            xl={3}
+            className={clsx(classes.footerItem)}>
             <div className="w-full sm:w-2/5 px-16" style={{ marginTop: 45 }}>
               <img
                 className="logo-icon"
@@ -39,11 +72,11 @@ function DefaultLayoutFooter(props) {
                 alt="logo"
               />
 
-              <Typography
+              <CustomColor
                 color="inherit"
                 className={clsx(classes.footerColumnTitle)}>
                 Công nghệ khí hóa sinh khối
-              </Typography>
+              </CustomColor>
 
               <Typography
                 color="inherit"
@@ -51,32 +84,20 @@ function DefaultLayoutFooter(props) {
                 Giải pháp năng lượng bền vững cho chế biến nông sản và quản lý
                 chất thải ở nông thôn Việt Nam.
               </Typography>
-
-              <div className={clsx(classes.blockDownload)}>
-                <Box display="flex" flexDirection="row" alignItems="center">
-                  <Typography
-                    color="inherit"
-                    className={clsx(classes.downloadAppTitle)}>
-                    TẢI APP TẠI ĐÂY
-                  </Typography>
-
-                  <img src="/images/ic-download.svg" alt="download" />
-                </Box>
-              </div>
-
-              <div className={clsx(classes.blockDownload)}>
-                <Typography
-                  color="inherit"
-                  className={clsx(classes.footerColumnTitle)}>
-                  Nhà tài trợ
-                </Typography>
-
-                <img src="/images/sponsor.png" alt="logo" />
+              <div className={clsx(classes.footerInfoDownload)}>
+                {renderfooter()}
               </div>
             </div>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={6}
+            lg={3}
+            xl={3}
+            className={clsx(classes.footerItem)}>
             <Typography
               color="inherit"
               className={clsx(classes.footerColumnTitle)}>
@@ -134,7 +155,14 @@ function DefaultLayoutFooter(props) {
             </div>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={6}
+            lg={3}
+            xl={3}
+            className={clsx(classes.footerItem)}>
             <Typography
               color="inherit"
               className={clsx(classes.footerColumnTitle)}>
@@ -151,7 +179,14 @@ function DefaultLayoutFooter(props) {
             </div>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={6}
+            lg={3}
+            xl={3}
+            className={clsx(classes.footerItem)}>
             <div className="w-full sm:w-1/5 px-16" style={{}}>
               <Typography
                 color="inherit"
@@ -200,6 +235,14 @@ function DefaultLayoutFooter(props) {
               </ul>
             </div>
           </Grid>
+          <Grid
+            container
+            direction="row"
+            alignItems="center"
+            spacing={3}
+            className={clsx(classes.footerItem, classes.footerInfoDownloadSX)}>
+            {renderfooter()}
+          </Grid>
         </Grid>
       </Container>
       {/*==================== End of Footer 1 ====================*/}
@@ -207,7 +250,14 @@ function DefaultLayoutFooter(props) {
       {/*==================== Footer 2 ====================*/}
       <div className={clsx(classes.secondFooterBlock)}>
         <Grid container direction="row" justify="center" alignItems="center">
-          <Grid item xs={12} sm={6} md={10} lg={10} xl={10}>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={10}
+            lg={10}
+            xl={10}
+            className={clsx(classes.secondFooterItem)}>
             <Typography className="text-13" color="inherit">
               Trang web này được thiết lập và duy trì với sự hỗ trợ tài chính
               của Liên minh Châu Âu. Các nội dung trong trang này thuộc trách
@@ -217,7 +267,14 @@ function DefaultLayoutFooter(props) {
             </Typography>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={2} lg={2} xl={2}>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={2}
+            lg={2}
+            xl={2}
+            className={clsx(classes.secondFooterItem)}>
             <Typography>© 2021 TESO</Typography>
           </Grid>
         </Grid>

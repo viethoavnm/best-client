@@ -16,48 +16,23 @@ import moment from 'moment';
 import { useHistory, useLocation } from 'react-router-dom';
 import useStyles from './styles';
 import 'moment/locale/vi';
-import { getArticleDetail } from 'services/articles';
+import { getArticleDetail, getArticle } from 'services/articles';
 import renderHTML from 'react-render-html';
 import NewsEvent from 'views/Search/component/news-event';
 import { Hidden } from '@material-ui/core';
 import ShareSocial from '../../components/ShareSocial';
 import './img-html.css';
 
-const events = [
-  {
-    image: '/images/new-1.png',
-    name: `Hội thảo “Khí hóa sinh khối - Giải pháp bền vững và kinh tế”.`,
-    address: 'Đường số 68, Nguyễn Hoàng, Hà Nội',
-    startTime: '2020-03-27T06:30'
-  },
-  {
-    image: '/images/new-1.png',
-    name: `Hội thảo hoa quả và thực phẩm lần thứ XXI`,
-    address: 'Đường số 8, Thanh Xuân, Triều Khúc, Hà Nội',
-    startTime: '2020-06-12T10:30'
-  },
-  {
-    image: '/images/new-1.png',
-    name: `Công cuộc đổi mới nông thôn 2021`,
-    address: 'Đường số 8, Thanh Xuân, Triều Khúc, Hà Nội',
-    startTime: '2020-12-01T15:30'
-  },
-  {
-    image: '/images/new-1.png',
-    name: `Xây dựng trường học cho học sinh vùng nông thôn Cao Bằng Xây dựng trường học cho học sinh vùng nông thôn Cao Bằng. Xây dựng trường học cho học sinh vùng nông thôn Cao Bằng.`,
-    address: 'Đường số 8, Thanh Xuân, Triều Khúc, Hà Nội',
-    startTime: '2020-01-31T10:30'
-  }
-];
-
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 const DATE_FORMAT_2 = 'DD/MM/YYYY';
 const PostDetail = props => {
+  const limitSuggest = 4;
   const classes = useStyles();
   const pageLayout = useRef(null);
   const history = useHistory();
   const location = useLocation();
   const [data, setData] = useState({});
+  const [dataSuggest, setDataSuggest] = useState([]);
   const [lang, setLang] = useState(VI_LANG);
   const [loading, setLoading] = useState(true);
 
@@ -93,6 +68,22 @@ const PostDetail = props => {
         setLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    const { category } = data;
+    if (category) {
+      getArticle({ category })
+        .then(res => {
+          const data = Lodash.get(res, 'data.results', []);
+          const dataGet = data.reduce((arr, cur) => {
+            const newData = transformData(cur);
+            return [...arr, newData];
+          }, []);
+          setDataSuggest(dataGet);
+        })
+        .catch(err => {});
+    }
+  }, [data]);
 
   const _renderInfoEvent = () => {
     return (
@@ -191,9 +182,9 @@ const PostDetail = props => {
   };
 
   const _renderItem = item => {
-    const imageItem = Lodash.get(item, 'image', '');
-    const nameItem = Lodash.get(item, 'name', '');
-    const startTimeItem = Lodash.get(item, 'startTime', '');
+    const imageItem = Lodash.get(item, 'urlImg', '');
+    const nameItem = Lodash.get(item, 'title', '');
+    const startTimeItem = Lodash.get(item, 'publishedAt', '');
     const dateItem = new Date(startTimeItem);
     const formatDateItem = moment(dateItem).format(DATE_FORMAT_2);
 
@@ -225,9 +216,11 @@ const PostDetail = props => {
   };
 
   const _renderSuggestEvents = () => {
+    const listSuggest = dataSuggest.slice(0, limitSuggest);
+
     return (
       <List className={classes.listSuggest}>
-        {events.map(item => _renderItem(item))}
+        {listSuggest.map(item => _renderItem(item))}
       </List>
     );
   };
@@ -269,6 +262,8 @@ const PostDetail = props => {
 
         <div
           className="dynamic-content-div"
+          // className={classes.boxSuggest}
+          id="id_articel_suggest"
           dangerouslySetInnerHTML={{
             __html: htmlContent
           }}></div>
