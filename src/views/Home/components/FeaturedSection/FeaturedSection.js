@@ -62,12 +62,13 @@ const FeaturedSection = props => {
 
     const obj = listData[0];
     const publishedAt = getSafeValue(obj, 'publishedAt', '');
+    const nameCate = getSafeValue(obj, 'nameCate', '');
     const date = moment(publishedAt).format(DATE_FORMAT);
 
     return (
       <FeaturedItem
         handleClick={() => handleClickArticle(obj)}
-        type={obj.nameCate}
+        type={nameCate}
         title={obj.title}
         image={obj.urlImg}
         time={date}
@@ -76,11 +77,12 @@ const FeaturedSection = props => {
   };
 
   const renderTopRightArticle = () => {
-    if (typeof listData[1] === undefined) {
+    if (listData.length < 2) {
       return <></>;
     }
 
     const obj = listData[1];
+    const nameCate = getSafeValue(obj, 'nameCate', '');
 
     return (
       <FeaturedItem
@@ -90,7 +92,7 @@ const FeaturedSection = props => {
         classType={classes.rightTypeTop}
         classTitle={classes.rightTitle}
         classTime={classes.rightTime}
-        type={obj.nameCate}
+        type={nameCate}
         title={obj.title}
         image={obj.urlImg}
       />
@@ -98,11 +100,12 @@ const FeaturedSection = props => {
   };
 
   const renderBottomRight = () => {
-    if (typeof listData[2] === undefined) {
+    if (listData.length < 3) {
       return <></>;
     }
 
     const obj = listData[2];
+    const nameCate = getSafeValue(obj, 'nameCate', '');
 
     return (
       <FeaturedItem
@@ -112,7 +115,7 @@ const FeaturedSection = props => {
         classType={classes.rightTypeBottom}
         classTitle={classes.rightTitle}
         classTime={classes.rightTime}
-        type={obj.nameCate}
+        type={nameCate}
         title={obj.title}
         image={obj.urlImg}
       />

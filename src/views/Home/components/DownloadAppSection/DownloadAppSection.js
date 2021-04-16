@@ -14,10 +14,7 @@ const DownloadAppSection = props => {
   return (
     <section>
       <Card className={clsx(classes.rootCard)} elevation={0}>
-        <img
-          src="images/img_download_app.png"
-          className={clsx(classes.media)}
-        />
+        <img src="images/dowload-app.svg" className={clsx(classes.media)} />
       </Card>
     </section>
   );

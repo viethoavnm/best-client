@@ -72,17 +72,16 @@ const PostLibraryDetail = props => {
   const month = moment(date).month() + 1; // Moment base month on 0
   const day = moment(date).date();
   const dayStr = moment(date).format('dddd');
+  const id = props.match.params.id;
 
   const transformData = obj => {
     const transArr = getSafeValue(obj, 'translations', []);
     const objTrans = getTransObj(transArr, lang);
-    const { _id, ...res } = objTrans;
+    const { ...res } = objTrans;
     return { ...obj, ...res };
   };
 
   useEffect(() => {
-    const id = props.match.params.id;
-
     setLoading(true);
     getArticleDetail(id)
       .then(res => {
@@ -94,7 +93,7 @@ const PostLibraryDetail = props => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [id]);
 
   const _renderInfoEvent = () => {
     return (
@@ -263,6 +262,13 @@ const PostLibraryDetail = props => {
 
   const _renderContentEvent = () => {
     const content = Lodash.get(data, 'content', '');
+    // console.log('content', content);
+    // const htmlContent = `<figure class="media"><div data-oembed-url="https://www.youtube.com/watch?v=Rbi52ZYtVKM&amp;ab_channel=PatrickM"><div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;"><iframe src="https://www.youtube.com/embed/Rbi52ZYtVKM" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe></div></div></figure>
+    // `;
+    // const escape = Lodash.escape(htmlContent);
+    // const unescape = Lodash.unescape(escape);
+    // console.log('escape', escape);
+    // console.log('unescape', unescape);
     const htmlContent = Lodash.unescape(content);
 
     return (

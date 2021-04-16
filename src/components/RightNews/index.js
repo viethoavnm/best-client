@@ -28,8 +28,6 @@ const RightNews = () => {
   const [events, setEvents] = useState([]);
   const history = useHistory();
 
-  console.log('newEvent', newEvent);
-
   const transformArticle = (listMenu, lang) => {
     const newList = Lodash.map(listMenu, obj => {
       const cateTrans = getSafeValue(obj, 'category.translations', []);

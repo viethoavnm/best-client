@@ -9,6 +9,11 @@ const useStyles = makeStyles(theme => ({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#3A3A3A',
+    overflow: 'hidden',
+    display: '-webkit-box',
+    '-webkit-line-clamp': 2,
+    '-webkit-box-orient': 'vertical',
+    textOverflow: 'ellipsis',
     [theme.breakpoints.down('sm')]: {
       color: '#92BF1F'
     }
