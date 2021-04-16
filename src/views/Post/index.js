@@ -24,6 +24,7 @@ import { Hidden } from '@material-ui/core';
 import ShareSocial from '../../components/ShareSocial';
 import './img-html.css';
 import { useSelector } from 'react-redux';
+import { getLinkFromArticle } from 'utils';
 
 const PostDetail = props => {
   const limitSuggest = 4;
@@ -72,7 +73,7 @@ const PostDetail = props => {
   useEffect(() => {
     const { category } = data;
     if (category) {
-      getArticle({ category: category._id })
+      getArticle({ category: category._id, subType: 'single', type: 'news' })
         .then(res => {
           const data = Lodash.get(res, 'data.results', []);
           const dataGet = data.reduce((arr, cur) => {
@@ -178,7 +179,8 @@ const PostDetail = props => {
   };
 
   const handleClickItem = item => {
-    //
+    const linkDirect = getLinkFromArticle(item);
+    history.push(linkDirect);
   };
 
   const _renderItem = item => {
