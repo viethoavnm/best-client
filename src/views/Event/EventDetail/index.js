@@ -16,58 +16,26 @@ import moment from 'moment';
 import { useHistory, useLocation } from 'react-router-dom';
 import useStyles from './styles';
 import 'moment/locale/vi';
-import { getEventDetail } from 'services/event';
+import { getEvent, getEventDetail } from 'services/event';
 import renderHTML from 'react-render-html';
 import NewsEvent from 'views/Search/component/news-event';
 import { Hidden } from '@material-ui/core';
+import RightNews from 'components/RightNews';
+import { getLinkFromArticle, getSafeValue } from 'utils';
+import { useSelector } from 'react-redux';
 
-const eventDetail = {
-  image: '/images/lib-1.png',
-  name: `Hội thảo “Khí hóa sinh khối - Giải pháp bền vững và kinh tế”.`,
-  address: 'Đường số 68, Nguyễn Hoàng, Hà Nội',
-  startTime: '2020-03-27T06:30'
-};
-
-const events = [
-  {
-    image: '/images/new-1.png',
-    name: `Hội thảo “Khí hóa sinh khối - Giải pháp bền vững và kinh tế”.`,
-    address: 'Đường số 68, Nguyễn Hoàng, Hà Nội',
-    startTime: '2020-03-27T06:30'
-  },
-  {
-    image: '/images/new-1.png',
-    name: `Hội thảo hoa quả và thực phẩm lần thứ XXI`,
-    address: 'Đường số 8, Thanh Xuân, Triều Khúc, Hà Nội',
-    startTime: '2020-06-12T10:30'
-  },
-  {
-    image: '/images/new-1.png',
-    name: `Công cuộc đổi mới nông thôn 2021`,
-    address: 'Đường số 8, Thanh Xuân, Triều Khúc, Hà Nội',
-    startTime: '2020-12-01T15:30'
-  },
-  {
-    image: '/images/new-1.png',
-    name: `Xây dựng trường học cho học sinh vùng nông thôn Cao Bằng Xây dựng trường học cho học sinh vùng nông thôn Cao Bằng. Xây dựng trường học cho học sinh vùng nông thôn Cao Bằng.`,
-    address: 'Đường số 8, Thanh Xuân, Triều Khúc, Hà Nội',
-    startTime: '2020-01-31T10:30'
-  }
-];
-
-const htmlStr = `<h2><strong>Pin mặt trời truyền điện từ không gian xuống trái đất</strong></h2><p>&nbsp;</p><p><strong>Mới đây, giới khoa học vừa có một bước tiến mới trong tham vọng truyền điện mặt trời từ không gian xuống bất cứ vị trí nào trên mặt đất.</strong></p><p>&nbsp;</p><p style="text-align:justify;">Các nhà khoa học làm việc cho dự án của Bộ Quốc phòng Mỹ vừa thử nghiệm thành công một tấm pin năng lượng mặt trời với kích thước cỡ một hộp bánh pizza trong không gian.</p><p style="text-align:justify;">&nbsp;</p><p style="text-align:justify;">Theo CNN, thiết bị này là nguyên mẫu và bước đầu trong kế hoạch chế tạo hệ thống có thể truyền điện từ không gian xuống bất cứ vị trí nào trên mặt đất.</p><p style="text-align:justify;">&nbsp;</p><p style="text-align:justify;"><strong>Nhà máy phát điện không gian</strong></p><p style="text-align:justify;">&nbsp;</p><p style="text-align:justify;">Tấm pin được gọi là bộ phận ăng ten tần số vô tuyến quang năng (PRAM), được phóng lên lần đầu vào tháng 5/2020. PRAM được gắn trên X-37B - phi thuyền thực hiện nhiều nhiệm vụ bí ẩn của Lầu Năm Góc. PRAM chuyển hóa quang năng thành điện năng khi X-37B bay quanh trái đất với tốc độ 90 phút/vòng.</p><p style="text-align:justify;">&nbsp;</p><p style="text-align:justify;">Tấm pin này được thiết kế để tận dụng tối đa ánh sáng trong không gian chưa đi xuyên qua bầu khí quyển của trái đất, do đó giữ lại nhiều năng lượng sóng xanh với cường độ mạnh hơn so với trên mặt đất. Ánh sáng xanh khuếch tán khi đi vào bầu khí quyển, cũng là nguyên nhân khiến bầu trời có màu xanh.</p><figure class="image image_resized" style="width:55.57%;"><img src="https://hcm01.vstorage.vngcloud.vn/v1/AUTH_2e1fb7d4d103449c9aff1956ce121f81/test_container/c1f383fe-15d3-415e-8816-50aa7df3203a.jpeg"></figure><p style="text-align:justify;">“Chúng tôi có được vô số ánh sáng trong không gian nhờ điều đó”, theo ông Paul Jaffe, chuyên gia phát triển dự án.</p><p style="text-align:justify;">Thử nghiệm mới nhất cho thấy tấm pin năng lượng kích thước 30cm x 30cm có thể sản sinh ra 10watt năng lượng để truyền đi, đủ để cấp nguồn cho một máy tính bảng.</p><p style="text-align:justify;">&nbsp;</p><p style="text-align:justify;">Dự án có kế hoạch dùng hàng chục tấm pin nên có thể tạo ra cuộc cách mạng trong lĩnh vực phát điện và phân phối đến những nơi xa xôi trên địa cầu. Bên cạnh đó, nó còn có thể bổ sung cho các lưới điện lớn trên thế giới.</p><p style="text-align:justify;">“Tương lai, một dự án điện mặt trời trong không gian sẽ có công suất nhiều gigawatt, bằng hoặc vượt cả những nhà máy điện lớn nhất hiện nay, nên sẽ cung cấp đủ điện cho một thành phố”, ông Jaffe dự báo.</p><p style="text-align:justify;">Hiện tấm pin trong thử nghiệm vẫn chưa thực sự truyền điện trở về trái đất, nhưng công nghệ đã được chứng minh. Nếu dự án phát triển những tấm pin năng lượng khổng lồ với diện tích nhiều km2, nó có thể gửi vi ba (sóng tần số siêu cao) trở về trái đất để chuyển hóa thành điện năng.</p><p>&nbsp;</p>
-`;
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 const DATE_FORMAT_2 = 'DD/MM/YYYY';
 const EventDetail = props => {
-  moment.locale('vi');
+  // moment.locale('vi');
   const classes = useStyles();
   const pageLayout = useRef(null);
   const history = useHistory();
   const location = useLocation();
-  const [event, setEvent] = useState(eventDetail);
-  const [lang, setLang] = useState(VI_LANG);
+  const [event, setEvent] = useState({});
+  const lang = useSelector(state => state.multiLang.lang);
   const [loading, setLoading] = useState(true);
+  const [suggestEvent, setSuggestEvent] = useState([]);
 
   const image = Lodash.get(event, 'urlImg', '');
   const name = Lodash.get(event, 'name', '');
@@ -78,6 +46,7 @@ const EventDetail = props => {
   const month = moment(date).month() + 1; // Moment base month on 0
   const day = moment(date).date();
   const dayStr = moment(date).format('dddd');
+  const idEvent = props.match.params.id;
 
   const transformData = obj => {
     const transArr = Lodash.get(obj, 'translations', []);
@@ -87,12 +56,10 @@ const EventDetail = props => {
   };
 
   useEffect(() => {
-    const idEvent = props.match.params.id;
-
     setLoading(true);
     getEventDetail(idEvent)
       .then(res => {
-        const data = Lodash.get(res, 'data', {});
+        const data = getSafeValue(res, 'data', {});
         const newData = transformData(data);
         setEvent(newData);
       })
@@ -100,6 +67,20 @@ const EventDetail = props => {
       .finally(() => {
         setLoading(false);
       });
+  }, [idEvent]);
+
+  useEffect(() => {
+    const params = { limit: 4, isPublish: 1 };
+    getEvent(params)
+      .then(res => {
+        console.log(res);
+        const data = getSafeValue(res, 'data.results', []);
+        const newList = Lodash.map(data, obj => {
+          return transformData(obj);
+        });
+        setSuggestEvent(newList);
+      })
+      .catch(err => {});
   }, []);
 
   const _renderInfoEvent = () => {
@@ -195,13 +176,13 @@ const EventDetail = props => {
   };
 
   const handleClickItem = item => {
-    //
+    history.push(`/event/${item._id}`);
   };
 
   const _renderItem = item => {
-    const imageItem = Lodash.get(item, 'image', '');
+    const imageItem = Lodash.get(item, 'urlImg', '');
     const nameItem = Lodash.get(item, 'name', '');
-    const startTimeItem = Lodash.get(item, 'startTime', '');
+    const startTimeItem = Lodash.get(item, 'startDate', '');
     const dateItem = new Date(startTimeItem);
     const formatDateItem = moment(dateItem).format(DATE_FORMAT_2);
 
@@ -239,7 +220,7 @@ const EventDetail = props => {
   const _renderSuggestEvents = () => {
     return (
       <List className={classes.listSuggest}>
-        {events.map(item => {
+        {suggestEvent.map(item => {
           return (
             <Grid item xs={12} sm={6} md={4} className={classes.gridSuggest}>
               {_renderItem(item)}
@@ -265,7 +246,7 @@ const EventDetail = props => {
           }}></div>
 
         <Divider className={classes.divider} />
-        {_renderTitle('SỰ KIỆN KHÁC')}
+        {suggestEvent.length > 0 && _renderTitle('SỰ KIỆN KHÁC')}
         {_renderSuggestEvents()}
       </Box>
     );
@@ -297,7 +278,7 @@ const EventDetail = props => {
 
             <Hidden mdDown>
               <Grid item xs={12} md={4}>
-                <NewsEvent />
+                <RightNews />
               </Grid>
             </Hidden>
           </Grid>

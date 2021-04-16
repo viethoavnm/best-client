@@ -13,6 +13,8 @@ import Lodash from 'lodash';
 import moment from 'moment';
 import { DATE_FORMAT } from 'utils/constant';
 import RightNews from 'components/RightNews';
+import { getLinkFromArticle } from 'utils';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -51,25 +53,15 @@ const useStyles = makeStyles(theme =>
   })
 );
 
-let post = {
-  image:
-    'https://material-ui.com/static/images/cards/contemplative-reptile.jpg',
-  title:
-    'Biomass Gasification Technology (BEST) Biomass Gasification Technology (BEST) Biomass Gasification Technology (BEST)',
-  date: '20/02/2020',
-  description:
-    'Công nghệ khí hóa sinh khối là quá trình phản ứng nhiệt hóa học khi đốt cháy nhiên liệu sinh khối trong điều kiện thiếu oxy (cháy sơ cấp), sản sinh ra hỗn hợp khí gas (CO, H2, CH4). '
-};
-
 const DATA_LOADING = [1, 2, 3, 4, 5];
-
 const Search = () => {
   const classes = useStyles();
   const refCard = useRef(null);
   const [lang, setLang] = useState('vi');
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState('');
-  const limit = 5;
+  const history = useHistory();
+  const limit = 8;
   const [hasNext, setHasNext] = useState(false);
   const [heightCard, setHeightCard] = useState(204);
   const [loading, setLoading] = useState(false);
@@ -141,6 +133,11 @@ const Search = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const handleClickSearch = item => {
+    const linkDirect = getLinkFromArticle(item);
+    history.push(linkDirect);
+  };
+
   const _rowRenderer = ({ index, isScrolling, style }) => {
     // if (loading) {
     //   return (
@@ -163,6 +160,7 @@ const Search = () => {
           title={title}
           date={formatDate}
           description={description}
+          onClick={() => handleClickSearch(item)}
         />
         <Divider className={classes.divider} />
       </div>

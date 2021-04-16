@@ -3,6 +3,7 @@ import { Container } from 'components';
 import { useSelector } from 'react-redux';
 import logo from '../../../../assets/img/logo-best.svg';
 import { BREAKPOINTS } from '../NavBar/style';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,17 +42,19 @@ const useStyles = makeStyles(theme => ({
 
 const Header = () => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   return (
     <header>
       <Container>
         <div className={classes.root}>
           <img className={classes.logo} src={logo} alt="logo" />
-          <div className={classes.title}>Công nghệ khí hóa sinh khối</div>
+          <div className={classes.title}> {t('nameProject')}</div>
           <div className={classes.divider}></div>
           <div className={classes.description}>
-            Giải pháp năng lượng bền vững cho chế biến nông sản và quản lý chất
-            thải ở nông thôn Việt Nam
+            {t('sloganFirst')}
+            <br />
+            {t('sloganSecond')}
           </div>
         </div>
       </Container>

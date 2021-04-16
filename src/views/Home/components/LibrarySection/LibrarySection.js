@@ -16,11 +16,13 @@ import {
   DATE_FORMAT
 } from 'utils/constant';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const LibrarySection = props => {
   const classes = useStyles();
   const { data } = props;
   const history = useHistory();
+  const { t, i18n } = useTranslation();
   const lang = useSelector(state => state.multiLang.lang);
   const [listData, setListData] = useState([]);
   const [cateName, setCateName] = useState('');
@@ -144,7 +146,7 @@ const LibrarySection = props => {
           <div className={classes.titleContent}>
             <h2 className={classes.title}>{cateName}</h2>
             <Link to={linkDrect} className={classes.readMore}>
-              Xem thêm <ChevronRight />
+              {t('viewMore')} <ChevronRight />
             </Link>
           </div>
         </Title>

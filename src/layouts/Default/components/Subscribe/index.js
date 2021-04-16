@@ -3,25 +3,81 @@ import { Container } from 'components';
 import React, { useState } from 'react';
 import useStyles from './styles';
 import { postEmail } from 'services/emailSub';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const Subscribe = () => {
   const classes = useStyles();
   const [emailInput, setEmailInput] = useState('');
+  const [openSnackBar, setOpenSnackBar] = React.useState(false);
+  const [openFailAlert, setOpenFailAlert] = React.useState(false);
+  // We will change to state to control alert fail/success later.
 
   const submitEmailSub = () => {
     const body = {
       email: emailInput
     };
 
+    setOpenSnackBar(false);
+    setOpenFailAlert(false);
     postEmail(body)
-      .then(res => console.log('res', res))
+      .then(res => {
+        console.log('res', res);
+        setEmailInput('');
+        setOpenSnackBar(true);
+      })
       .catch(err => {
         console.log('err', err.response);
+        setOpenFailAlert(true);
       });
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackBar(false);
+  };
+
+  const handleCloseFail = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenFailAlert(false);
   };
 
   return (
     <div className={classes.root}>
+      <Snackbar
+        open={openSnackBar}
+        autoHideDuration={6000}
+        onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity="success"
+          style={{ minWidth: '400px', height: '50px' }}>
+          Đăng kí email thành công
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={openFailAlert}
+        autoHideDuration={6000}
+        onClose={handleCloseFail}>
+        <Alert
+          onClose={handleCloseFail}
+          severity="error"
+          style={{ minWidth: '400px', height: '50px' }}>
+          Đăng kí email không thành công. Vui lòng thử lại sau!
+        </Alert>
+      </Snackbar>
+
       <Container>
         <div className={classes.content}>
           <div className={classes.label}>ĐĂNG KÝ NHẬN THÔNG TIN MỚI NHẤT</div>

@@ -270,7 +270,7 @@ const PostLibraryDetail = props => {
         {renderSubHeader()}
 
         <div
-          style={{ minHeight: '80vh' }}
+          style={{ minHeight: '90vh' }}
           className="dynamic-content-div"
           dangerouslySetInnerHTML={{
             __html: htmlContent

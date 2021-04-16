@@ -25,10 +25,12 @@ import {
   DATE_FORMAT
 } from 'utils/constant';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const NewsSection = props => {
   const { data } = props;
   const history = useHistory();
+  const { t, i18n } = useTranslation();
   const lang = useSelector(state => state.multiLang.lang);
   const classesLibrary = useStylesLibrarySection();
   const classesNewsItem = useStylesNewsItem();
@@ -156,7 +158,7 @@ const NewsSection = props => {
             <h2 className={classesLibrary.title}>{cateName}</h2>
 
             <Link to={linkDrect} className={classesLibrary.readMore}>
-              Xem thêm <ChevronRight />
+              {t('viewMore')} <ChevronRight />
             </Link>
           </div>
         </Title>

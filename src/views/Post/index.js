@@ -46,6 +46,7 @@ const PostDetail = props => {
   const month = moment(date).month() + 1; // Moment base month on 0
   const day = moment(date).date();
   const dayStr = moment(date).format('dddd');
+  const id = props.match.params.id;
 
   const transformData = obj => {
     const transArr = Lodash.get(obj, 'translations', []);
@@ -55,8 +56,6 @@ const PostDetail = props => {
   };
 
   useEffect(() => {
-    const id = props.match.params.id;
-
     setLoading(true);
     getArticleDetail(id)
       .then(res => {
@@ -68,7 +67,7 @@ const PostDetail = props => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     const { category } = data;
@@ -272,10 +271,8 @@ const PostDetail = props => {
         {renderSubHeader()}
 
         <div
-          // style={{ minHeight: '80vh' }}
+          style={{ minHeight: '90vh' }}
           className="dynamic-content-div"
-          // className={classes.boxSuggest}
-          // id="id_articel_suggest"
           dangerouslySetInnerHTML={{
             __html: htmlContent
           }}

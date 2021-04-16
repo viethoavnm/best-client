@@ -54,6 +54,12 @@ const useStyles = makeStyles(theme => ({
     color: '#572F12',
     lineHeight: '16px'
   },
+  textFooter: {
+    fontSize: '9px',
+    [theme.breakpoints.up('lg')]: {
+      paddingRight: '200px'
+    }
+  },
   secondFooterBlock: {
     padding: theme.spacing(3),
     [theme.breakpoints.up('lg')]: {
@@ -66,17 +72,17 @@ const useStyles = makeStyles(theme => ({
     }
   },
   secondFooterItem: {
-    [theme.breakpoints.down('md')]: {
-      '&:first-child': {
-        order: 2
-      },
-      '&:nth-child(2)': {
-        order: 1
-      },
-      '&:nth-child(2) p': {
-        fontSize: 16
-      }
-    }
+    // [theme.breakpoints.down('md')]: {
+    //   '&:first-child': {
+    //     order: 2
+    //   },
+    //   '&:nth-child(2)': {
+    //     order: 1
+    //   },
+    //   '&:nth-child(2) p': {
+    //     fontSize: 16
+    //   }
+    // }
   },
   inforRow: {
     pading: theme.spacing(1)

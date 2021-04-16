@@ -118,7 +118,7 @@ const useStyles = makeStyles(theme => ({
     color: '#979797',
     lineHeight: '17px',
     [theme.breakpoints.down('sm')]: {
-      marginBottom: theme.spacing(2)
+      // marginBottom: theme.spacing(2)
     }
   },
   titleItemSuggest: {

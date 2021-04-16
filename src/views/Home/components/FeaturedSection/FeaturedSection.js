@@ -11,11 +11,13 @@ import moment from 'moment';
 import { DATE_FORMAT, SubTypeArticle } from 'utils/constant';
 import { useHistory } from 'react-router-dom';
 import { getLinkFromArticle, getSafeValue, getTransObj } from 'utils';
+import { useTranslation } from 'react-i18next';
 
 const FeaturedSection = props => {
   const { data, isNews } = props;
   const lang = useSelector(state => state.multiLang.lang);
   const classes = useStyles();
+  const { t, i18n } = useTranslation();
   const history = useHistory();
   const [listData, setListData] = useState([]);
   const [cateName, setCateName] = useState('');
@@ -125,9 +127,7 @@ const FeaturedSection = props => {
     <section>
       <Container>
         <Title size="large" className={classes.titleBox}>
-          <h2 className={classes.title}>
-            {isNews ? 'TIN MỚI NHẤT' : cateName}
-          </h2>
+          <h2 className={classes.title}>{isNews ? t('newTitle') : cateName}</h2>
         </Title>
 
         <Grid container spacing={2}>

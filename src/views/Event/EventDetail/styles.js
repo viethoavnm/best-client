@@ -126,7 +126,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: '16px',
     fontWeight: '600',
     color: '#000000',
-    lineHeight: '19px',
+    lineHeight: '21px',
     marginBottom: 8,
     height: 40,
     overflow: 'hidden',

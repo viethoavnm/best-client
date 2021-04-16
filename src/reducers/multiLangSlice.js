@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { VI_LANG } from '../utils/constant';
 import moment from 'moment';
+import i18n from 'i18next';
 
 export const updateLanguage = createAsyncThunk(
   'multiLang/updateLang',
   async lang => {
-    console.log('came here');
     moment.locale(lang);
+    i18n.changeLanguage(lang);
     return lang;
   }
 );

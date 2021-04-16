@@ -69,7 +69,7 @@ function DefaultLayoutFooter(props) {
             <div className="w-full sm:w-2/5 px-16" style={{ marginTop: 45 }}>
               <img
                 className="logo-icon"
-                src="/images/logos/logo-best.png"
+                src="/images/logo-best.svg"
                 alt="logo"
               />
 
@@ -255,11 +255,11 @@ function DefaultLayoutFooter(props) {
             item
             xs={12}
             sm={6}
-            md={10}
-            lg={10}
-            xl={10}
+            md={9}
+            lg={9}
+            xl={9}
             className={clsx(classes.secondFooterItem)}>
-            <Typography className="text-13" color="inherit">
+            <Typography className={classes.textFooter} color="inherit">
               Trang web này được thiết lập và duy trì với sự hỗ trợ tài chính
               của Liên minh Châu Âu. Các nội dung trong trang này thuộc trách
               nhiệm của tổ chức Oxfam tại Việt Nam và Trung tâm Nghiên cứu, Tư

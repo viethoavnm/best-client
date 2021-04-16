@@ -41,12 +41,12 @@ const useStyles = makeStyles(theme => ({
     }
   },
   li: {
-    [theme.breakpoints.down(BREAKPOINTS)]: {
-      borderTop: '1px solid rgba(255, 255, 255, 0.32)',
-      '&:last-child': {
-        borderBottom: '1px solid rgba(255, 255, 255, 0.32)'
-      }
-    }
+    // [theme.breakpoints.down(BREAKPOINTS)]: {
+    //   borderTop: '1px solid rgba(255, 255, 255, 0.32)',
+    //   '&:last-child': {
+    //     borderBottom: '1px solid rgba(255, 255, 255, 0.32)'
+    //   }
+    // }
   },
   active: {
     backgroundColor: 'rgba(255, 255, 255, 0.32)',
@@ -79,7 +79,7 @@ const useStyles = makeStyles(theme => ({
   },
   span: {
     margin: 0,
-    padding: '4px 12px',
+    padding: '0px 12px',
     borderLeft: '1px solid #ffffff',
     [theme.breakpoints.down(BREAKPOINTS)]: {
       borderLeft: 'none',
@@ -109,7 +109,7 @@ const useStyles = makeStyles(theme => ({
     margin: '20px auto'
   },
   search: {
-    padding: 17,
+    // padding: '10px',
     borderRadius: 0,
     color: '#ffffff',
     backgroundColor: 'rgba(255, 255, 255, 0.32)',

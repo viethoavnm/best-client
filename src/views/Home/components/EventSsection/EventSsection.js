@@ -22,13 +22,14 @@ import './day-picker.css';
 import 'moment/locale/vi';
 import { getTransObj } from 'utils';
 import { CardActionArea } from '@material-ui/core';
-
+import { useTranslation } from 'react-i18next';
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 
 const EventSsection = props => {
   const { eventsData, classRoot, data, ...rest } = props;
   const history = useHistory();
   const classes = useStyles();
+  const { t } = useTranslation();
   const [dateSelected, changeDateSelected] = useState(new Date());
   const [currentEvent, changeCurrentEvent] = useState({});
   const [year, setYear] = useState(new Date().getFullYear());
@@ -110,7 +111,7 @@ const EventSsection = props => {
         <div className={classes.titleContent}>
           <h2 className={classes.title}>{title}</h2>
           <Link to="/event" className={classes.readMore}>
-            Xem thêm <ChevronRight />
+            {t('viewMore')} <ChevronRight />
           </Link>
         </div>
       </Title>
@@ -119,19 +120,15 @@ const EventSsection = props => {
 
   const _renderDayPicker = () => {
     return (
-      <Box display="flex" justifyContent="center" height="400px" width="100%">
-        <Box height="100%" width="100%" className={clsx(classes.mapContent)}>
-          <div className={clsx(classes.googleMapFrame)}>
-            <DayPicker
-              locale={lang}
-              localeUtils={MomentLocaleUtils}
-              renderDay={_renderDay}
-              onDayClick={day => changeDateSelected(day)}
-              selectedDays={[dateSelected]}
-              onMonthChange={month => console.log('month', month.getFullYear())}
-            />
-          </div>
-        </Box>
+      <Box display="flex" justifyContent="center">
+        <DayPicker
+          locale={lang}
+          localeUtils={MomentLocaleUtils}
+          renderDay={_renderDay}
+          onDayClick={day => changeDateSelected(day)}
+          selectedDays={[dateSelected]}
+          onMonthChange={month => console.log('month', month.getFullYear())}
+        />
       </Box>
     );
   };
@@ -163,7 +160,7 @@ const EventSsection = props => {
               image="images/img_no_event.svg"
             />
             <Typography className={classes.noEventLable} align="center">
-              Hiện đang không có sự kiện nào
+              {t('noEvent')}
             </Typography>
           </Box>
         ) : (
@@ -233,7 +230,7 @@ const EventSsection = props => {
   return (
     <section>
       <Container>
-        {_renderTitle('Sự kiện sắp tới')}
+        {_renderTitle(t('titleEvent'))}
 
         <Card className={clsx(classes.rootCard)} elevation={0}>
           <Grid container>
@@ -252,6 +249,7 @@ const EventSsection = props => {
               sm={12}
               md={6}
               justify="center"
+              alignItems="center"
               className={clsx(classes.eventRight)}>
               {_renderDayPicker()}
             </Grid>

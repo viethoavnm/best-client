@@ -126,9 +126,9 @@ const NavBar = () => {
 
           <div
             className={clsx(classes.menuMobile, openMenu && classes.menuOpen)}>
-            <div className={classes.imgTopBox}>
+            {/* <div className={classes.imgTopBox}>
               <img className={classes.imgTop} src={logo} alt="logo" />
-            </div>
+            </div> */}
 
             <ul className={classes.ul}>
               {listMenu.map(obj => {

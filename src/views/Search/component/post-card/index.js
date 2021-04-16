@@ -76,11 +76,11 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }));
-const PostCard = memo(({ image, title, date, description }) => {
+const PostCard = memo(({ image, title, date, description, onClick }) => {
   const classes = useStyles();
   return (
     <Card className={classes.root} elevation={0}>
-      <CardActionArea onClick={() => console.log('click search item')}>
+      <CardActionArea onClick={onClick}>
         <Grid container spacing={2}>
           <Grid item xs={5} sm={4} md={4}>
             <CardActionArea>
