@@ -9,12 +9,13 @@ import useStyles, { CustomColor } from './Style';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import clsx from 'clsx';
-
+import { useTranslation } from 'react-i18next';
 import { animateScroll as scroll } from 'react-scroll';
 import Subscribe from '../Subscribe';
 
 function DefaultLayoutFooter(props) {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const scrollToTop = () => {
     scroll.scrollToTop();
@@ -102,7 +103,7 @@ function DefaultLayoutFooter(props) {
             <Typography
               color="inherit"
               className={clsx(classes.footerColumnTitle)}>
-              Về chúng tôi
+              {t('aboutUs')}
             </Typography>
 
             <div className={clsx(classes.columnContent)}>
@@ -167,7 +168,7 @@ function DefaultLayoutFooter(props) {
             <Typography
               color="inherit"
               className={clsx(classes.footerColumnTitle)}>
-              Đơn vị thực hiện
+              {t('agencies')}
             </Typography>
 
             <div className={clsx(classes.columnContent)}>

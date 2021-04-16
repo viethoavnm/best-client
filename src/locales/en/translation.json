@@ -5,5 +5,13 @@
   "sloganFirst": "Sustainable energy solutions for agricultural product processing",
   "sloganSecond": "and waste management in rural Vietnam",
   "titleEvent": "Upcoming events",
-  "noEvent": "There are currently no events"
+  "noEvent": "There are currently no events",
+  "titleLocationCompany": "Location",
+  "titleEmailSub": "REGISTER TO RECEIVE THE LATEST INFORMATION",
+  "emaiSubFail": "Email registration failed. Please try again later!",
+  "emailSubSuccess": "Đăng kí email thành công",
+  "placeholderEmail": "Please input your email",
+  "txtRegister": "Register",
+  "aboutUs": "About Us",
+  "agencies": "Implementing agencies"
 }

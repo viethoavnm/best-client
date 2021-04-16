@@ -5,5 +5,13 @@
   "sloganFirst": "Giải pháp năng lượng bền vững cho chế biến nông sản",
   "sloganSecond": "và quản lý chất thải ở nông thôn Việt Nam",
   "titleEvent": "Sự kiện sắp tới",
-  "noEvent": "Hiện đang không có sự kiện nào"
+  "noEvent": "Hiện đang không có sự kiện nào",
+  "titleLocationCompany": "Địa bàn dự án",
+  "titleEmailSub": "ĐĂNG KÝ NHẬN THÔNG TIN MỚI NHẤT",
+  "emaiSubFail": "Đăng kí email không thành công. Vui lòng thử lại sau!",
+  "emailSubSuccess": "Đăng kí email thành công",
+  "placeholderEmail": "Nhập email của bạn",
+  "txtRegister": "Đăng ký",
+  "aboutUs": "Về chúng tôi",
+  "agencies": "Đơn vị thực hiện"
 }

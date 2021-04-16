@@ -5,6 +5,7 @@ import useStyles from './styles';
 import { postEmail } from 'services/emailSub';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import { useTranslation } from 'react-i18next';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -15,6 +16,7 @@ const Subscribe = () => {
   const [emailInput, setEmailInput] = useState('');
   const [openSnackBar, setOpenSnackBar] = React.useState(false);
   const [openFailAlert, setOpenFailAlert] = React.useState(false);
+  const { t } = useTranslation();
   // We will change to state to control alert fail/success later.
 
   const submitEmailSub = () => {
@@ -62,7 +64,7 @@ const Subscribe = () => {
           onClose={handleClose}
           severity="success"
           style={{ minWidth: '400px', height: '50px' }}>
-          Đăng kí email thành công
+          {t('emailSubSuccess')}
         </Alert>
       </Snackbar>
 
@@ -74,17 +76,17 @@ const Subscribe = () => {
           onClose={handleCloseFail}
           severity="error"
           style={{ minWidth: '400px', height: '50px' }}>
-          Đăng kí email không thành công. Vui lòng thử lại sau!
+          {t('emaiSubFail')}
         </Alert>
       </Snackbar>
 
       <Container>
         <div className={classes.content}>
-          <div className={classes.label}>ĐĂNG KÝ NHẬN THÔNG TIN MỚI NHẤT</div>
+          <div className={classes.label}>{t('titleEmailSub')}</div>
           <Paper component="form" elevation={0} className={classes.form}>
             <InputBase
               className={classes.input}
-              placeholder="Nhập email của bạn"
+              placeholder={t('placeholderEmail')}
               inputProps={{ 'aria-label': 'Subscribe' }}
               onChange={e => {
                 setEmailInput(e.target.value);
@@ -92,7 +94,7 @@ const Subscribe = () => {
             />
 
             <Button className={classes.button} onClick={submitEmailSub}>
-              Đăng ký
+              {t('txtRegister')}
             </Button>
           </Paper>
         </div>

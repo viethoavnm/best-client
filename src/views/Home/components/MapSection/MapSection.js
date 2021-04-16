@@ -7,12 +7,12 @@ import { Container, Title, MarkerMap } from 'components';
 import { Link } from 'react-router-dom';
 import { ChevronRight } from '@material-ui/icons';
 import Card from '@material-ui/core/CardMedia';
-
+import { useTranslation } from 'react-i18next';
 import useStyles from './styles';
 
 const MapSection = props => {
   const { className, ...rest } = props;
-
+  const { t } = useTranslation();
   const classes = useStyles();
 
   const _renderTitle = title => {
@@ -74,7 +74,7 @@ const MapSection = props => {
   return (
     <section>
       <Container>
-        {_renderTitle('Địa bàn dự án')}
+        {_renderTitle(t('titleLocationCompany'))}
 
         <Grid container>
           <Grid
