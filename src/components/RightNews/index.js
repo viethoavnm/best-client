@@ -34,8 +34,9 @@ const RightNews = () => {
       const translations = getSafeValue(obj, 'translations', []);
       const objTrans = getTransObj(translations, lang);
       const objCateTrans = getTransObj(cateTrans, lang);
+      const nameCate = getSafeValue(objCateTrans, 'name', '');
 
-      return { ...obj, ...objTrans, cateName: objCateTrans.name };
+      return { ...obj, ...objTrans, cateName: nameCate };
     });
 
     return newList;
@@ -75,13 +76,14 @@ const RightNews = () => {
   return (
     <Fragment>
       {articles.length > 0 && <Title>TIN MỚI NHẤT</Title>}
-      {articles.map(article => {
+      {articles.map((article, key) => {
         const cateName = getSafeValue(article, 'cateName', '');
         const publishedAt = getSafeValue(article, 'publishedAt', '');
         const date = moment(publishedAt).format(DATE_FORMAT);
 
         return (
           <CardActionArea
+            key={key}
             onClick={() => handleClickArticle(article)}
             style={{ paddingTop: 10, paddingBottom: 10 }}>
             <NewsCard
@@ -97,7 +99,7 @@ const RightNews = () => {
       {articles.length > 0 && <Divider className={classes.divider} />}
 
       {events.length && <Title>SỰ KIỆN SẮP TỚI</Title>}
-      {events.map(event => {
+      {events.map((event, key) => {
         const name = getSafeValue(event, 'name', '');
         const startDate = getSafeValue(event, 'startDate', '');
         const month = moment(startDate).month() + 1; // Moment base month on 0
@@ -105,6 +107,7 @@ const RightNews = () => {
 
         return (
           <CardActionArea
+            key={key}
             onClick={() => handleClickEvent(event)}
             style={{ paddingTop: 10, paddingBottom: 10 }}>
             <EventCard day={`Tháng ${month}`} month={day} title={name} />

@@ -131,12 +131,12 @@ const NavBar = () => {
             </div> */}
 
             <ul className={classes.ul}>
-              {listMenu.map(obj => {
+              {listMenu.map((obj, key) => {
                 const link = obj.link;
                 const isSamePath = link === location.pathname;
 
                 return (
-                  <li className={classes.li}>
+                  <li className={classes.li} key={key}>
                     <Link
                       to={obj.link}
                       onClick={toggle}

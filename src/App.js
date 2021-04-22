@@ -27,7 +27,7 @@ const App = () => {
     <StoreProvider store={store}>
       <ThemeProvider theme={theme}>
         <MuiPickersUtilsProvider utils={MomentUtils}>
-          <Router history={history}>
+          <Router>
             <ScrollReset />
             <CookiesNotification />
 

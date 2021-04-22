@@ -46,8 +46,8 @@ const DetailDocument = props => {
   useEffect(() => {
     let rect = refPdf?.current?.getBoundingClientRect();
     let heightPdf = window.innerHeight - rect.top - 20;
-    setHeightPdf(Math.max(heightPdf, matches ? 500 : 300));
-  }, []);
+    setHeightPdf(Math.max(heightPdf, matches ? 700 : 300));
+  }, [pdf]);
 
   const transformData = obj => {
     const transArr = getSafeValue(obj, 'translations', []);
@@ -66,9 +66,9 @@ const DetailDocument = props => {
         const newData = transformData(dataRes);
         // const sourceFile = getSafeValue(dataRes, 'sources', []);
         const pdfFile = getSafeValue(dataRes, `sources[${indexUrl}]`, '');
+        // console.log('pdfFile', pdfFile);
         // const pdfFile = sourceFile.length > 0 ? sourceFile[0] : '';
         setPdf(pdfFile);
-        setData(newData);
         setData(newData);
       })
       .catch(err => {})

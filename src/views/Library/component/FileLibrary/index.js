@@ -125,7 +125,7 @@ const FileLibrary = props => {
               <Fragment>
                 {listImg.map((url, index) => {
                   return (
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={4} key={index}>
                       <CardActionArea
                         // className={classes.imageBox}
                         onClick={() => goToPdfFile(index)}>

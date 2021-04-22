@@ -24,7 +24,7 @@ import { Hidden } from '@material-ui/core';
 import ShareSocial from '../../components/ShareSocial';
 import './img-html.css';
 import { useSelector } from 'react-redux';
-import { getLinkFromArticle } from 'utils';
+import { getLinkFromArticle, getSafeValue, getTransObj } from 'utils';
 
 const PostDetail = props => {
   const limitSuggest = 4;
@@ -50,10 +50,9 @@ const PostDetail = props => {
   const id = props.match.params.id;
 
   const transformData = obj => {
-    const transArr = Lodash.get(obj, 'translations', []);
-    const objTrans = Lodash.find(transArr, obj => obj.lang === lang);
-    const { _id, ...res } = objTrans;
-    return { ...obj, ...res };
+    const transArr = getSafeValue(obj, 'translations', []);
+    const objTrans = getTransObj(transArr, lang);
+    return { ...obj, ...objTrans };
   };
 
   useEffect(() => {
