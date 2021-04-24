@@ -85,8 +85,6 @@ const EventDetail = props => {
 
   useEffect(() => {
     if (event._id) {
-      // eslint-disable-next-line no-debugger
-      debugger;
       const newData = transformData(event);
       setEvent(newData);
     }
