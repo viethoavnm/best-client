@@ -134,8 +134,6 @@ const Search = () => {
   }, [query]);
 
   useEffect(() => {
-    // eslint-disable-next-line no-debugger
-    debugger;
     if (searchResults.length) {
       const { _id = null } = searchResults[0];
       if (_id) {
