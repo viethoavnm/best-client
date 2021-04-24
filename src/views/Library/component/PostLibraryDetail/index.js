@@ -23,8 +23,9 @@ import { Hidden } from '@material-ui/core';
 import ShareSocial from 'components/ShareSocial';
 import './img-html.css';
 import { useSelector } from 'react-redux';
-import { getSafeValue, getTransObj } from 'utils';
+import { getSafeValue, getTransObj, formatDateLang } from 'utils';
 import RightNews from 'components/RightNews';
+import { useTranslation } from 'react-i18next';
 
 const events = [
   {
@@ -56,6 +57,7 @@ const events = [
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 const DATE_FORMAT_2 = 'DD/MM/YYYY';
 const PostLibraryDetail = props => {
+  const { t } = useTranslation();
   const classes = useStyles();
   const pageLayout = useRef(null);
   const history = useHistory();
@@ -95,6 +97,13 @@ const PostLibraryDetail = props => {
       });
   }, [id]);
 
+  useEffect(() => {
+    if (data?._id) {
+      const newData = transformData(data);
+      setData(newData);
+    }
+  }, [lang]);
+
   const _renderInfoEvent = () => {
     return (
       <>
@@ -119,7 +128,7 @@ const PostLibraryDetail = props => {
                   align="center"
                   noWrap
                   className={classes.monthEvent}>
-                  Tháng {month}
+                  {t(`${formatDateLang(`Tháng ${month}`)}`)}
                 </Typography>
               </Box>
 
@@ -276,7 +285,7 @@ const PostLibraryDetail = props => {
         {renderSubHeader()}
 
         <div
-          style={{ minHeight: '90vh' }}
+          // style={{ minHeight: '90vh' }}
           className="dynamic-content-div"
           dangerouslySetInnerHTML={{
             __html: htmlContent
@@ -284,8 +293,6 @@ const PostLibraryDetail = props => {
         />
 
         <Divider className={classes.divider} />
-        {_renderTitle('BÀI VIẾT LIÊN QUAN')}
-        {_renderSuggestEvents()}
       </Box>
     );
   };
@@ -294,8 +301,10 @@ const PostLibraryDetail = props => {
     <Container bgcolor="#FDFDFD">
       <div className={classes.header}>
         <Title size="large">
-          <div className={classes.titleSection}>Bài viết</div>
-          <div className={classes.breadcrumb}>Trang chủ / Bài viết</div>
+          <div className={classes.titleSection}>{t('titleArticles')}</div>
+          <div className={classes.breadcrumb}>
+            {t('txtHome')} / {t('titleArticles')}
+          </div>
         </Title>
       </div>
 
@@ -322,6 +331,10 @@ const PostLibraryDetail = props => {
                 <RightNews />
               </Grid>
             </Hidden>
+          </Grid>
+          <Grid>
+            {_renderTitle(`${t('titleArticlesRelate')}`)}
+            {_renderSuggestEvents()}
           </Grid>
         </Fragment>
       )}

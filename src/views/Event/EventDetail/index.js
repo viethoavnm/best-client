@@ -21,8 +21,9 @@ import renderHTML from 'react-render-html';
 import NewsEvent from 'views/Search/component/news-event';
 import { Hidden } from '@material-ui/core';
 import RightNews from 'components/RightNews';
-import { getLinkFromArticle, getSafeValue } from 'utils';
+import { formatDateLang, getSafeValue } from 'utils';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 const DATE_FORMAT_2 = 'DD/MM/YYYY';
@@ -36,10 +37,10 @@ const EventDetail = props => {
   const lang = useSelector(state => state.multiLang.lang);
   const [loading, setLoading] = useState(true);
   const [suggestEvent, setSuggestEvent] = useState([]);
-
+  const { t } = useTranslation();
   const image = Lodash.get(event, 'urlImg', '');
-  const name = Lodash.get(event, 'name', '');
-  const address = Lodash.get(event, 'address', '');
+  // const name = Lodash.get(event, 'name', '');
+  // const address = Lodash.get(event, 'address', '');
   const startTime = Lodash.get(event, 'startDate', '');
   const date = new Date(startTime);
   const formatDate = moment(date).format(DATE_FORMAT);
@@ -47,7 +48,6 @@ const EventDetail = props => {
   const day = moment(date).date();
   const dayStr = moment(date).format('dddd');
   const idEvent = props.match.params.id;
-
   const transformData = obj => {
     const transArr = Lodash.get(obj, 'translations', []);
     const objTrans = Lodash.find(transArr, obj => obj.lang === lang);
@@ -83,6 +83,21 @@ const EventDetail = props => {
       .catch(err => {});
   }, []);
 
+  useEffect(() => {
+    if (event._id) {
+      // eslint-disable-next-line no-debugger
+      debugger;
+      const newData = transformData(event);
+      setEvent(newData);
+    }
+    if (suggestEvent.length) {
+      const newList = Lodash.map(suggestEvent, obj => {
+        return transformData(obj);
+      });
+      setSuggestEvent(newList);
+    }
+  }, [lang]);
+
   const _renderInfoEvent = () => {
     return (
       <>
@@ -107,7 +122,7 @@ const EventDetail = props => {
                   align="center"
                   noWrap
                   className={classes.monthEvent}>
-                  Tháng {month}
+                  {t(`${formatDateLang(`Tháng ${month}`)}`)}
                 </Typography>
               </Box>
 
@@ -124,7 +139,7 @@ const EventDetail = props => {
           </Box>
 
           <Box>
-            <Typography className={classes.titleItem}>{name}</Typography>
+            <Typography className={classes.titleItem}>{event?.name}</Typography>
 
             <Box
               display="flex"
@@ -136,7 +151,9 @@ const EventDetail = props => {
                 image="/images/ic-location.svg"
                 alt="location"
               />
-              <Typography className={classes.addressItem}>{address}</Typography>
+              <Typography className={classes.addressItem}>
+                {event?.address}
+              </Typography>
             </Box>
 
             <Box display="flex" alignItems="center" flexDirection="row">
@@ -237,7 +254,7 @@ const EventDetail = props => {
 
     return (
       <Box>
-        {_renderTitle('GIỚI THIỆU')}
+        {_renderTitle(`${t('txtIntroduce')}`)}
         {/* {renderHTML(htmlContent)} */}
         <div
           className="dynamic-content-div"
@@ -246,8 +263,6 @@ const EventDetail = props => {
           }}></div>
 
         <Divider className={classes.divider} />
-        {suggestEvent.length > 0 && _renderTitle('SỰ KIỆN KHÁC')}
-        {_renderSuggestEvents()}
       </Box>
     );
   };
@@ -281,6 +296,10 @@ const EventDetail = props => {
                 <RightNews />
               </Grid>
             </Hidden>
+          </Grid>
+          <Grid>
+            {suggestEvent.length > 0 && _renderTitle(`${t('otherEvents')}`)}
+            {_renderSuggestEvents()}
           </Grid>
         </Fragment>
       )}

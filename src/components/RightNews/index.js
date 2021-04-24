@@ -9,6 +9,8 @@ import { DATE_FORMAT } from 'utils/constant';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
+import { useTranslation } from 'react-i18next';
+import { formatDateLang } from 'utils';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -27,7 +29,7 @@ const RightNews = () => {
   const [articles, setArticles] = useState([]);
   const [events, setEvents] = useState([]);
   const history = useHistory();
-
+  const { t } = useTranslation();
   const transformArticle = (listMenu, lang) => {
     const newList = Lodash.map(listMenu, obj => {
       const cateTrans = getSafeValue(obj, 'category.translations', []);
@@ -74,7 +76,7 @@ const RightNews = () => {
 
   return (
     <Fragment>
-      {articles.length > 0 && <Title>TIN MỚI NHẤT</Title>}
+      {articles.length > 0 && <Title>{t('newTitle')}</Title>}
       {articles.map(article => {
         const cateName = getSafeValue(article, 'cateName', '');
         const publishedAt = getSafeValue(article, 'publishedAt', '');
@@ -96,7 +98,7 @@ const RightNews = () => {
 
       {articles.length > 0 && <Divider className={classes.divider} />}
 
-      {events.length && <Title>SỰ KIỆN SẮP TỚI</Title>}
+      {events.length && <Title transform="uppercase">{t('titleEvent')}</Title>}
       {events.map(event => {
         const name = getSafeValue(event, 'name', '');
         const startDate = getSafeValue(event, 'startDate', '');
@@ -107,7 +109,11 @@ const RightNews = () => {
           <CardActionArea
             onClick={() => handleClickEvent(event)}
             style={{ paddingTop: 10, paddingBottom: 10 }}>
-            <EventCard day={`Tháng ${month}`} month={day} title={name} />
+            <EventCard
+              day={t(`${formatDateLang(`Tháng ${month}`)}`)}
+              month={day}
+              title={name}
+            />
           </CardActionArea>
         );
       })}

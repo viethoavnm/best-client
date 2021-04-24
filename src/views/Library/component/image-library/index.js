@@ -4,8 +4,10 @@ import { Fragment, useState } from 'react';
 import useStyles from 'views/Library/style';
 import NewsEvent from '../../../Search/component/news-event';
 import RightNews from 'components/RightNews';
+import { useTranslation } from 'react-i18next';
 
 const ImageLibrary = () => {
+  const { t } = useTranslation();
   const classes = useStyles();
   const [page, setPage] = useState(1);
 
@@ -18,8 +20,10 @@ const ImageLibrary = () => {
       <Container>
         <div className={classes.header}>
           <Title size="large">
-            <div className={classes.title}>Ảnh</div>
-            <div className={classes.breadcrumb}>Trang chủ / Thư viện/ ảnh</div>
+            <div className={classes.title}>{t('titleImage')}</div>
+            <div className={classes.breadcrumb}>
+              {t('txtHome')} / {t('titleLibrary')}/ {t('titleImage')}
+            </div>
           </Title>
         </div>
 

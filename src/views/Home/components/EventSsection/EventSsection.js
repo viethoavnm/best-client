@@ -53,9 +53,13 @@ const EventSsection = props => {
     setEvents(newList);
   }, [data]);
 
-  // useEffect(() => {
-  //   setEvents(eventsData);
-  // }, [eventsData]);
+  useEffect(() => {
+    if (events.length) {
+      const newList = transformData(events);
+      setEvents(newList);
+      setCurrentEvent(newList);
+    }
+  }, [lang]);
 
   useEffect(() => {
     const eventData = Lodash.find(events, event =>
@@ -65,6 +69,17 @@ const EventSsection = props => {
     changeCurrentEvent(eventData);
   }, [dateSelected]);
 
+  const setCurrentEvent = data => {
+    let res = events;
+    if (data?.length) {
+      res = data;
+    }
+    const eventData = Lodash.find(res, event =>
+      compareDate(event.startDate, dateSelected)
+    );
+
+    changeCurrentEvent(eventData);
+  };
   const compareDate = (firstDate, secondDate) => {
     return moment(firstDate).isSame(secondDate, 'day');
   };

@@ -14,6 +14,7 @@ import { getSafeValue, getTransObj } from 'utils';
 import Lodash from 'lodash';
 import { useSelector } from 'react-redux';
 import RightNews from 'components/RightNews';
+import { useTranslation } from 'react-i18next';
 
 const News = () => {
   const history = useHistory();
@@ -24,6 +25,7 @@ const News = () => {
   const [articles, setArticles] = useState([]);
   const limit = 12;
   const lang = useSelector(state => state.multiLang.lang);
+  const { t } = useTranslation();
 
   const transformMenu = (listMenu, lang) => {
     const newList = Lodash.map(listMenu, obj => {
@@ -73,8 +75,10 @@ const News = () => {
       <Container>
         <div className={classes.header}>
           <Title size="large">
-            <div className={classes.title}>BẢN TIN</div>
-            <div className={classes.breadcrumb}>Trang chủ / bản tin</div>
+            <div className={classes.title}>{t('titleNews')}</div>
+            <div className={classes.breadcrumb}>
+              {t('txtHome')} / {t('titleNews')}
+            </div>
           </Title>
         </div>
 

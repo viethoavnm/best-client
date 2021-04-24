@@ -78,9 +78,9 @@ const useStyles = makeStyles(theme => ({
     fontSize: '16px',
     fontWeight: '600',
     color: '#000000',
-    lineHeight: '19px',
+    lineHeight: '20px',
     marginBottom: 8,
-    height: 40,
+    height: 37,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     wordWrap: 'break-word'

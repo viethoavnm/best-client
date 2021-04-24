@@ -10,7 +10,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Divider from '@material-ui/core/Divider';
 import { colors } from '@material-ui/core';
 import { useSelector } from 'react-redux';
-
+import { useTranslation } from 'react-i18next';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'inline-flex',
@@ -41,6 +41,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const RightSidebar = props => {
+  const { t } = useTranslation();
   const { className, ...rest } = props;
   const classes = useStyles();
 
@@ -68,7 +69,7 @@ const RightSidebar = props => {
       <Grid container direction="column">
         {_renderTitle('Tin mới nhất')}
         <Divider className={classes.divider} />
-        {_renderTitle('Sự kiện sắp tới')}
+        {_renderTitle(`${t('titleEvent')}`)}
       </Grid>
     </div>
   );

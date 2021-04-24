@@ -13,14 +13,16 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import RightNews from 'components/RightNews';
+import { useTranslation } from 'react-i18next';
 
 const Library = props => {
   const classes = useStyles();
   const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [dataTranform, setDataTranform] = useState([]);
   const lang = useSelector(state => state.multiLang.lang);
-
+  const { t } = useTranslation();
   const transformData = (list, lang) => {
     const newList = Lodash.map(list, obj => {
       const translations = getSafeValue(obj, 'translations', []);
@@ -44,7 +46,7 @@ const Library = props => {
     const newList = [
       {
         type: TYPE_ARTICLE.image,
-        title: 'ẢNH',
+        title: 'titleImage',
         data: listImg
       },
       {
@@ -54,12 +56,12 @@ const Library = props => {
       },
       {
         type: TYPE_ARTICLE.file,
-        title: 'TÀI LIỆU',
+        title: 'titleDocument',
         data: listFile
       },
       {
         type: TYPE_ARTICLE.news,
-        title: 'THÔNG CÁO BÁO CHÍ',
+        title: 'PressRelease',
         data: listNews
       }
     ];
@@ -75,12 +77,21 @@ const Library = props => {
         const newData = transformData(dataRes, lang);
         const sectionData = createSectionData(newData);
         setData(sectionData);
+        setDataTranform(newData);
       })
       .catch(err => {})
       .finally(() => {
         setLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    if (data.length) {
+      const newData = transformData(dataTranform, lang);
+      const sectionData = createSectionData(newData);
+      setData(sectionData);
+    }
+  }, [lang]);
 
   const handleClickArticle = obj => {
     const type = getSafeValue(obj, 'type', '');
@@ -99,9 +110,9 @@ const Library = props => {
     return (
       <Fragment>
         <div className={classes.typeBox}>
-          <div className={classes.type}>{title}</div>
+          <div className={classes.type}>{t(title)}</div>
           <Link to={`/library/${type}`} className={classes.readMore}>
-            Xem thêm
+            {t('seeMore')}
           </Link>
         </div>
 
@@ -110,9 +121,8 @@ const Library = props => {
             const urlImg = getSafeValue(obj, 'urlImg', '');
             const title = getSafeValue(obj, 'title', '');
             const authorName = getSafeValue(obj, 'authorName', '');
-            const publishedAt = getSafeValue(obj, 'publishedAt', '');
-            const date = moment(publishedAt).format(DATE_FORMAT);
-
+            const date = getSafeValue(obj, 'publishedAt', '');
+            // const date = moment(publishedAt).format(DATE_FORMAT);
             return (
               <Grid item xs={12} sm={6} lg={4}>
                 <CardActionArea onClick={() => handleClickArticle(obj)}>
@@ -132,14 +142,15 @@ const Library = props => {
       </Fragment>
     );
   };
-
   return (
     <Fragment>
       <Container>
         <div className={classes.header}>
           <Title size="large">
-            <div className={classes.title}>Thư viện</div>
-            <div className={classes.breadcrumb}>Trang chủ / Thư viện</div>
+            <div className={classes.title}>{t('titleLibrary')}</div>
+            <div className={classes.breadcrumb}>
+              {t('txtHome')} / {t('titleLibrary')}
+            </div>
           </Title>
         </div>
 

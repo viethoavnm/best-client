@@ -2,6 +2,7 @@ import { createStyles, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { EventCard, NewsCard, Title } from 'components';
 import { Fragment } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -12,6 +13,7 @@ const useStyles = makeStyles(() =>
   })
 );
 const NewsEvent = () => {
+  const { t } = useTranslation();
   const classes = useStyles();
   return (
     <Fragment>
@@ -37,7 +39,7 @@ const NewsEvent = () => {
 
       <Divider className={classes.divider} />
 
-      <Title>Sự kiện sắp tới</Title>
+      <Title>{t('titleEvent')}</Title>
       <EventCard
         day="Tháng 10"
         month="20"

@@ -4,17 +4,19 @@ import { Fragment } from 'react';
 import useStyles from 'views/Library/style';
 import NewsEvent from '../../../Search/component/news-event';
 import RightNews from 'components/RightNews';
+import { useTranslation } from 'react-i18next';
 
 const DocumentLibrary = () => {
+  const { t } = useTranslation();
   const classes = useStyles();
 
   return (
     <Fragment>
       <div className={classes.header}>
         <Title size="large">
-          <div className={classes.title}>TÀi LIỆU</div>
+          <div className={classes.title}>{t('titleDocument')}</div>
           <div className={classes.breadcrumb}>
-            Trang chủ / Thư viện / Tài liệu
+            {t('txtHome')} / {t('titleLibrary')}/ {t('titleDocument')}
           </div>
         </Title>
       </div>

@@ -14,6 +14,7 @@ import { getSafeValue, getTransObj } from 'utils';
 import Lodash from 'lodash';
 import { useSelector } from 'react-redux';
 import RightNews from 'components/RightNews';
+import { useTranslation } from 'react-i18next';
 
 const LibrarySubCate = props => {
   const history = useHistory();
@@ -26,6 +27,7 @@ const LibrarySubCate = props => {
   const lang = useSelector(state => state.multiLang.lang);
   const typeLibrary = props.match.params.type;
   const [titleHeader, setTitleHeader] = useState('');
+  const { t } = useTranslation();
 
   const transformMenu = (listMenu, lang) => {
     const newList = Lodash.map(listMenu, obj => {
@@ -42,7 +44,7 @@ const LibrarySubCate = props => {
     let title = '';
     switch (typeLibrary) {
       case TYPE_ARTICLE.image:
-        title = 'ẢNH';
+        title = 'titleImage';
         break;
 
       case TYPE_ARTICLE.video:
@@ -50,11 +52,11 @@ const LibrarySubCate = props => {
         break;
 
       case TYPE_ARTICLE.file:
-        title = 'TÀI LIỆU';
+        title = 'titleDocument';
         break;
 
       case TYPE_ARTICLE.news:
-        title = 'THÔNG CÁO BÁO CHÍ';
+        title = 'PressRelease';
         break;
 
       default:
@@ -101,8 +103,10 @@ const LibrarySubCate = props => {
       <Container>
         <div className={classes.header}>
           <Title size="large">
-            <div className={classes.title}>{titleHeader}</div>
-            <div className={classes.breadcrumb}>Trang chủ / {titleHeader}</div>
+            <div className={classes.title}>{t(titleHeader)}</div>
+            <div className={classes.breadcrumb}>
+              {t('txtHome')} / {t(titleHeader)}
+            </div>
           </Title>
         </div>
 

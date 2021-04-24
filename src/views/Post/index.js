@@ -24,7 +24,8 @@ import { Hidden } from '@material-ui/core';
 import ShareSocial from '../../components/ShareSocial';
 import './img-html.css';
 import { useSelector } from 'react-redux';
-import { getLinkFromArticle } from 'utils';
+import { getLinkFromArticle, formatDateLang } from 'utils';
+import { useTranslation } from 'react-i18next';
 
 const PostDetail = props => {
   const limitSuggest = 4;
@@ -37,6 +38,7 @@ const PostDetail = props => {
   // const [lang, setLang] = useState(VI_LANG);
   const lang = useSelector(state => state.multiLang.lang);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   const image = Lodash.get(data, 'urlImg', '');
   const name = Lodash.get(data, 'name', '');
@@ -48,7 +50,6 @@ const PostDetail = props => {
   const day = moment(date).date();
   const dayStr = moment(date).format('dddd');
   const id = props.match.params.id;
-
   const transformData = obj => {
     const transArr = Lodash.get(obj, 'translations', []);
     const objTrans = Lodash.find(transArr, obj => obj.lang === lang);
@@ -85,7 +86,19 @@ const PostDetail = props => {
         .catch(err => {});
     }
   }, [data]);
-
+  useEffect(() => {
+    if (data?._id) {
+      const newData = transformData(data);
+      setData(newData);
+    }
+    if (dataSuggest.length) {
+      const dataGet = dataSuggest.reduce((arr, cur) => {
+        const newData = transformData(cur);
+        return [...arr, newData];
+      }, []);
+      setDataSuggest(dataGet);
+    }
+  }, [lang]);
   const _renderInfoEvent = () => {
     return (
       <>
@@ -110,7 +123,7 @@ const PostDetail = props => {
                   align="center"
                   noWrap
                   className={classes.monthEvent}>
-                  Tháng {month}
+                  {t(`${formatDateLang(`Tháng ${month}`)}`)}
                 </Typography>
               </Box>
 
@@ -273,17 +286,13 @@ const PostDetail = props => {
         {renderSubHeader()}
 
         <div
-          style={{ minHeight: '90vh' }}
+          // style={{ minHeight: '90vh' }}
           className="dynamic-content-div"
           dangerouslySetInnerHTML={{
             __html: htmlContent
           }}
         />
-
         <Divider className={classes.divider} />
-        {_renderTitle('BÀI VIẾT LIÊN QUAN')}
-
-        {_renderSuggestEvents()}
       </Box>
     );
   };
@@ -292,8 +301,10 @@ const PostDetail = props => {
     <Container bgcolor="#FDFDFD">
       <div className={classes.header}>
         <Title size="large">
-          <div className={classes.titleSection}>Bài viết</div>
-          <div className={classes.breadcrumb}>Trang chủ / Bài viết</div>
+          <div className={classes.titleSection}>{t('titleArticles')}</div>
+          <div className={classes.breadcrumb}>
+            {t('txtHome')} / {t('titleArticles')}
+          </div>
         </Title>
       </div>
 
@@ -320,6 +331,11 @@ const PostDetail = props => {
                 <RightNews />
               </Grid>
             </Hidden>
+          </Grid>
+          <Grid>
+            {dataSuggest.length > 0 &&
+              _renderTitle(`${t('titleArticlesRelate')}`)}
+            {_renderSuggestEvents()}
           </Grid>
         </Fragment>
       )}
