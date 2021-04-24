@@ -14,7 +14,7 @@ import useStyles from './styles';
 import { Link, useHistory } from 'react-router-dom';
 import { ChevronRight } from '@material-ui/icons';
 import { Container, Title } from 'components';
-import { getEvent } from 'services/event';
+import { getEvent, getEventByYear } from 'services/event';
 import { useSelector, useDispatch } from 'react-redux';
 
 // import './calendar.scss';
@@ -54,6 +54,17 @@ const EventSsection = props => {
   }, [data]);
 
   useEffect(() => {
+    getEventByYear(year)
+      .then(res => {
+        const data = Lodash.get(res, 'data', []);
+        const newList = transformData(data);
+        setEvents(newList);
+      })
+      .catch(err => {})
+      .finally(() => {});
+  }, [year]);
+
+  useEffect(() => {
     if (events.length) {
       const newList = transformData(events);
       setEvents(newList);
@@ -62,11 +73,12 @@ const EventSsection = props => {
   }, [lang]);
 
   useEffect(() => {
-    const eventData = Lodash.find(events, event =>
-      compareDate(event.startDate, dateSelected)
-    );
+    // const eventData = Lodash.find(events, event =>
+    //   compareDate(event.startDate, dateSelected)
+    // );
 
-    changeCurrentEvent(eventData);
+    // changeCurrentEvent(eventData);
+    setCurrentEvent();
   }, [dateSelected]);
 
   const setCurrentEvent = data => {
@@ -142,7 +154,10 @@ const EventSsection = props => {
           renderDay={_renderDay}
           onDayClick={day => changeDateSelected(day)}
           selectedDays={[dateSelected]}
-          onMonthChange={month => console.log('month', month.getFullYear())}
+          onMonthChange={date => {
+            setYear(date.getFullYear());
+          }}
+          // onMonthChange={month => console.log('month', month.getFullYear())}
         />
       </Box>
     );
