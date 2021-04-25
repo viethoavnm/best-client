@@ -14,7 +14,7 @@ import useStyles from './styles';
 import { Link, useHistory } from 'react-router-dom';
 import { ChevronRight } from '@material-ui/icons';
 import { Container, Title } from 'components';
-import { getEvent } from 'services/event';
+import { getEvent, getEventByYear } from 'services/event';
 import { useSelector, useDispatch } from 'react-redux';
 
 // import './calendar.scss';
@@ -53,18 +53,45 @@ const EventSsection = props => {
     setEvents(newList);
   }, [data]);
 
-  // useEffect(() => {
-  //   setEvents(eventsData);
-  // }, [eventsData]);
+  useEffect(() => {
+    getEventByYear(year)
+      .then(res => {
+        const data = Lodash.get(res, 'data', []);
+        const newList = transformData(data);
+        setEvents(newList);
+      })
+      .catch(err => {})
+      .finally(() => {});
+  }, [year]);
 
   useEffect(() => {
-    const eventData = Lodash.find(events, event =>
+    if (events.length) {
+      const newList = transformData(events);
+      setEvents(newList);
+      setCurrentEvent(newList);
+    }
+  }, [lang]);
+
+  useEffect(() => {
+    // const eventData = Lodash.find(events, event =>
+    //   compareDate(event.startDate, dateSelected)
+    // );
+
+    // changeCurrentEvent(eventData);
+    setCurrentEvent();
+  }, [dateSelected]);
+
+  const setCurrentEvent = data => {
+    let res = events;
+    if (data?.length) {
+      res = data;
+    }
+    const eventData = Lodash.find(res, event =>
       compareDate(event.startDate, dateSelected)
     );
 
     changeCurrentEvent(eventData);
-  }, [dateSelected]);
-
+  };
   const compareDate = (firstDate, secondDate) => {
     return moment(firstDate).isSame(secondDate, 'day');
   };
@@ -127,7 +154,10 @@ const EventSsection = props => {
           renderDay={_renderDay}
           onDayClick={day => changeDateSelected(day)}
           selectedDays={[dateSelected]}
-          onMonthChange={month => console.log('month', month.getFullYear())}
+          onMonthChange={date => {
+            setYear(date.getFullYear());
+          }}
+          // onMonthChange={month => console.log('month', month.getFullYear())}
         />
       </Box>
     );

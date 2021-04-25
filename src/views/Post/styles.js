@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
     // paddingBottom: 20
   },
   listSuggest: {
-    width: 'calc(100% + 33.333333%)',
+    width: '100%',
     display: 'flex',
     flexDirection: 'row',
     padding: 0,
@@ -66,6 +66,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   itemSuggest: {
+    cursor: 'pointer',
     '& > div': {
       width: '100%'
     },
@@ -126,9 +127,9 @@ const useStyles = makeStyles(theme => ({
     fontSize: '16px',
     fontWeight: '600',
     color: '#000000',
-    lineHeight: '19px',
+    lineHeight: '20px',
     marginBottom: 8,
-    height: 40,
+    height: 37,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     wordWrap: 'break-word'
@@ -146,7 +147,8 @@ const useStyles = makeStyles(theme => ({
     fontSize: '24px',
     fontWeight: '700',
     color: '#3A3A3A',
-    lineHeight: '29px'
+    lineHeight: '29px',
+    textTransform: 'uppercase'
   },
   icSlash: { width: 16, height: 40, marginRight: 16 },
   media: { width: 24, height: 24, marginRight: 10 },

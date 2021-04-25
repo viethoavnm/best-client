@@ -81,3 +81,34 @@ export const getLinkFromArticle = article => {
 
   return linkUrl;
 };
+
+export const formatDateLang = month => {
+  switch (month) {
+    case 'Tháng 1':
+      return 'month.January';
+    case 'Tháng 2':
+      return 'month.February';
+    case 'Tháng 3':
+      return 'month.March';
+    case 'Tháng 4':
+      return 'month.April';
+    case 'Tháng 5':
+      return 'month.May';
+    case 'Tháng 6':
+      return 'month.June';
+    case 'Tháng 7':
+      return 'month.July';
+    case 'Tháng 8':
+      return 'month.August';
+    case 'Tháng 9':
+      return 'month.September';
+    case 'Tháng 10':
+      return 'month.October';
+    case 'Tháng 11':
+      return 'month.November';
+    case 'Tháng 12':
+      return 'month.December';
+    default:
+      return;
+  }
+};

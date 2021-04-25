@@ -15,6 +15,8 @@ import { DATE_FORMAT } from 'utils/constant';
 import RightNews from 'components/RightNews';
 import { getLinkFromArticle } from 'utils';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -57,7 +59,8 @@ const DATA_LOADING = [1, 2, 3, 4, 5];
 const Search = () => {
   const classes = useStyles();
   const refCard = useRef(null);
-  const [lang, setLang] = useState('vi');
+  // const [lang, setLang] = useState('vi');
+  const lang = useSelector(state => state.multiLang.lang);
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState('');
   const history = useHistory();
@@ -67,6 +70,7 @@ const Search = () => {
   const [loading, setLoading] = useState(false);
   const [loadmore, setLoadmore] = useState(false);
   const [searchResults, setSearchResults] = useState(DATA_LOADING);
+  const { t } = useTranslation();
   // const [data, setData] = useState(() => {
   //   let a = [];
   //   for (let i = 0; i < 10; i++) {
@@ -128,6 +132,16 @@ const Search = () => {
         setLoading(false);
       });
   }, [query]);
+
+  useEffect(() => {
+    if (searchResults.length) {
+      const { _id = null } = searchResults[0];
+      if (_id) {
+        const newList = transformData(searchResults);
+        setSearchResults(newList);
+      }
+    }
+  }, [lang]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -238,7 +252,7 @@ const Search = () => {
 
             <div className={classes.result}>
               <span className={classes.total}>{searchResults.length} </span>
-              kết quả phù hợp
+              {t('matchingResults')}
             </div>
 
             <Divider className={classes.divider} />

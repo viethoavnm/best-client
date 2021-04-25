@@ -24,7 +24,7 @@ import renderHTML from 'react-render-html';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchMenuWeb } from '../../reducers/setupSlice.js';
 import RightNews from 'components/RightNews';
-
+import { useTranslation } from 'react-i18next';
 import './day-picker.css';
 import 'moment/locale/vi';
 import { getEventByYear } from 'services/event';
@@ -42,6 +42,8 @@ const Event = () => {
   const [year, setYear] = useState(new Date().getFullYear());
   const lang = useSelector(state => state.multiLang.lang);
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
+
   // const dispatch = useDispatch();
 
   const transformData = list => {
@@ -75,18 +77,34 @@ const Event = () => {
   }, [year]);
 
   useEffect(() => {
-    const eventData = Lodash.find(listEvent, event =>
+    setCurrentEvent();
+    // }
+  }, [dateSelected]);
+
+  useEffect(() => {
+    if (listEvent.length) {
+      const dataNews = transformData(listEvent);
+      setListEvent(dataNews);
+      setCurrentEvent(dataNews);
+    }
+  }, [lang]);
+
+  const compareDate = (firstDate, secondDate) => {
+    return moment(firstDate).isSame(secondDate, 'day');
+  };
+
+  const setCurrentEvent = data => {
+    let res = listEvent;
+    if (data?.length) {
+      res = data;
+    }
+    const eventData = Lodash.find(res, event =>
       compareDate(event.startDate, dateSelected)
     );
 
     // console.log('object', eventData);
     // if (!Lodash.isEmpty(eventData)) {
     changeCurrentEvent(eventData);
-    // }
-  }, [dateSelected]);
-
-  const compareDate = (firstDate, secondDate) => {
-    return moment(firstDate).isSame(secondDate, 'day');
   };
 
   const _renderDay = day => {
@@ -177,7 +195,7 @@ const Event = () => {
               image="images/img_no_event.svg"
             />
             <Typography className={classes.noEventLable} align="center">
-              Hiện đang không có sự kiện nào
+              {t('noEvent')}
             </Typography>
           </Box>
         ) : (
@@ -258,7 +276,6 @@ const Event = () => {
       pathname: `/event/${item._id}`
     });
   };
-
   return (
     <Fragment>
       {/* {renderHTML(htmlUnescape)} */}
@@ -268,9 +285,9 @@ const Event = () => {
         {/* <Button onClick={() => dispatch(fetchMenuWeb())}>sadsds</Button> */}
         <section>
           <Title size="large">
-            <div className={classes.title}>Sự kiện</div>
+            <div className={classes.title}>{t('eventsTitle')}</div>
             <div className={classes.breadcrumb}>
-              Trang chủ / Sự Kiện Sắp Tới
+              {t('txtHome')} / {t('titleEvent')}
             </div>
           </Title>
 
@@ -304,7 +321,7 @@ const Event = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} md={8}>
               <Title size="large">
-                <div className={classes.title}>Sự kiện sắp diễn ra</div>
+                <div className={classes.title}>{t('upcomingEvents')}</div>
               </Title>
 
               {!loading ? (

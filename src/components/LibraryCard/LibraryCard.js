@@ -69,7 +69,6 @@ const LibraryCard = ({
 }) => {
   const classes = useStyles();
   const dateFormat = moment(date).format('DD/MM/YYYY');
-
   return (
     <Card className={className}>
       {/* <CardActionArea> */}

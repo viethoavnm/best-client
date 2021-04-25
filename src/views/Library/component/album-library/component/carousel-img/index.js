@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import { createPortal } from 'react-dom';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-
+import './styles.css';
 const useStyles = makeStyles(theme =>
   createStyles({
     modal: {
@@ -18,6 +18,11 @@ const useStyles = makeStyles(theme =>
       width: '100%',
       [theme.breakpoints.up('sm')]: {
         maxWidth: '80%'
+      },
+      '&:focus': {
+        border: 'none',
+        boxShadow: 'none',
+        outline: 'none !important'
       }
     },
     img: {

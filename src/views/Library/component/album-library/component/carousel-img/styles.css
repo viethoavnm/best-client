@@ -1,0 +1,11 @@
+.presentation-mode .carousel .slide {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+.presentation-mode .carousel .slide > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}

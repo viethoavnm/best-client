@@ -32,11 +32,13 @@ const useStyles = makeStyles(theme =>
       flexGrow: 1,
       color: '#000000',
       fontWeight: 600,
-      fontSize: 24
+      fontSize: 24,
+      textTransform: 'uppercase'
     },
     readMore: {
       color: '#92BF1F',
-      fontSize: 19
+      fontSize: 19,
+      cursor: 'pointer'
     },
     divider: {
       margin: '25px 0',

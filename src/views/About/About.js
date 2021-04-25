@@ -12,6 +12,7 @@ import Divider from '@material-ui/core/Divider';
 
 import { Page, ShareSocial, RightSidebar } from 'components';
 import renderHTML from 'react-render-html';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -63,6 +64,7 @@ const htmlContent = `
 const About = props => {
   const { className, ...rest } = props;
   const classes = useStyles();
+  const { t } = useTranslation();
   const _renderTitle = title => {
     return (
       <Box
@@ -84,7 +86,7 @@ const About = props => {
         </Box>
 
         <Typography className={classes.breadScrumb}>
-          Trang chủ/ Giới thiệu
+          {t('txtHome')} / {t('txtIntroduce')}
         </Typography>
       </Box>
     );
@@ -114,7 +116,7 @@ const About = props => {
   return (
     <Page className={classes.root} title="About">
       <div className={classes.content}>
-        {_renderTitle('Giới Thiệu')}
+        {_renderTitle(`${t('txtIntroduce')}`)}
 
         <Grid
           {...rest}

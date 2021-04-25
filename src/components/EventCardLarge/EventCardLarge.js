@@ -16,6 +16,8 @@ import PropTypes from 'prop-types';
 import { VI_LANG } from 'utils/constant';
 import moment from 'moment';
 import Lodash from 'lodash';
+import { formatDateLang } from 'utils';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -142,6 +144,7 @@ const useStyles = makeStyles(theme =>
 
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 const EventCardLarge = ({ item, onClick }) => {
+  const { t } = useTranslation();
   const [lang, setLang] = useState(VI_LANG);
   const classes = useStyles();
   const theme = useTheme();
@@ -172,7 +175,7 @@ const EventCardLarge = ({ item, onClick }) => {
                   <CardContent className={classes.datetimeBlock}>
                     <Typography component="div">
                       <Typography component="div" className={classes.month}>
-                        Tháng {month}
+                        {t(`${formatDateLang(`Tháng ${month}`)}`)}
                       </Typography>
                       <Typography component="div" className={classes.day}>
                         {day}
