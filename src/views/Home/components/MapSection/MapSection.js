@@ -1,14 +1,22 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { Hidden, Grid, Box, Typography } from '@material-ui/core';
-import GoogleMapReact from 'google-map-react';
-import { Container, Title, MarkerMap } from 'components';
-import { Link } from 'react-router-dom';
-import { ChevronRight } from '@material-ui/icons';
+import {
+  Box,
+  Button,
+  Grid,
+  Link as LinkUi,
+  Typography
+} from '@material-ui/core';
 import Card from '@material-ui/core/CardMedia';
+import clsx from 'clsx';
+import { Container, MarkerMap, Title } from 'components';
+import GoogleMapReact from 'google-map-react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
+import { ReactComponent as MapIcon } from '../../../../assets/img/map.svg';
 import useStyles from './styles';
+
+export const mapIcon = 'map-icon';
 
 const MapSection = props => {
   const { className, ...rest } = props;
@@ -71,8 +79,23 @@ const MapSection = props => {
     );
   };
 
+  const renderMapIcon = () => {
+    const refMapIcon = document.getElementById(mapIcon);
+    if (refMapIcon) {
+      return createPortal(
+        <Button component={LinkUi} className={classes.mapIcon} href="#map">
+          <MapIcon />
+          <span>Bản đồ</span>
+        </Button>,
+        refMapIcon
+      );
+    }
+    return null;
+  };
+
   return (
-    <section>
+    <section id="map">
+      {renderMapIcon()}
       <Container>
         {_renderTitle(t('titleLocationCompany'))}
 

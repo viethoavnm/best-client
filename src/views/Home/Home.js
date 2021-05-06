@@ -5,7 +5,8 @@ import {
   LibrarySection as UiSection3,
   MapSection,
   NewsSection as UiSection2,
-  DownloadAppSection
+  DownloadAppSection,
+  ContactForm
 } from './components';
 import { urlGetHomeData } from 'services/urlAPI';
 import axios from 'utils/axios';
@@ -74,6 +75,7 @@ const Home = () => {
       })}
 
       <DownloadAppSection />
+      <ContactForm/>
     </Fragment>
   );
 };

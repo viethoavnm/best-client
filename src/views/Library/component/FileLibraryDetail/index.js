@@ -1,26 +1,20 @@
-import { Button, Divider, Grid, CircularProgress } from '@material-ui/core';
-import {
-  AccessTime,
-  Facebook,
-  Instagram,
-  LinkedIn,
-  Twitter
-} from '@material-ui/icons';
-import Lodash from 'lodash';
-import moment from 'moment';
-import ShareSocial from 'components/ShareSocial';
-import { Fragment, useEffect, useRef, useState } from 'react';
-import useStylesLibrary from 'views/Library/style';
-import NewsEvent from 'views/Search/component/news-event';
-import useStylesDetailVideo from '../detail-video/style';
+import { CircularProgress, Divider, Grid, Link } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { AccessTime } from '@material-ui/icons';
 import { Container } from 'components';
 import RightNews from 'components/RightNews';
+import ShareSocial from 'components/ShareSocial';
+import Lodash from 'lodash';
+import moment from 'moment';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getSafeValue, getTransObj } from 'utils';
 import { getArticleDetail } from 'services/articles';
+import { getSafeValue, getTransObj } from 'utils';
 import { DATE_FORMAT } from 'utils/constant';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import useStylesLibrary from 'views/Library/style';
+import { ReactComponent as DownloadIcon } from '../../../../assets/img/download.svg';
+import useStylesDetailVideo from '../detail-video/style';
 
 const DetailDocument = props => {
   const classesDetailVideo = useStylesDetailVideo();
@@ -114,7 +108,13 @@ const DetailDocument = props => {
                   width="100%"></iframe>
               )}
             </div>
-
+            <div className={classesDetailVideo.download}>
+              Nhấn vào đây để tải:&nbsp;
+              <Link href={pdf} target="_blank">
+                Tải xuống&nbsp;
+                <DownloadIcon />
+              </Link>
+            </div>
             <div className={classesDetailVideo.author}>{authorName}</div>
             <Divider className={classesDetailVideo.divider} />
           </Fragment>

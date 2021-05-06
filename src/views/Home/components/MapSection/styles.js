@@ -92,6 +92,21 @@ const useStyles = makeStyles(theme => ({
     color: '#C4C4C4',
     lineHeight: '21px',
     marginBottom: 8
+  },
+  mapIcon: {
+    fontWeight: 600,
+    '&:hover': {
+      textDecoration: 'none',
+      backgroundColor: '#ffffff1a'
+    },
+    '& .MuiButton-label': {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      fontSize: 12,
+      textTransform: 'initial',
+      color: '#ffffff'
+    }
   }
 }));
 

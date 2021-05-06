@@ -1,20 +1,18 @@
 import { IconButton } from '@material-ui/core';
-import { Home, Menu as MenuIcon, Search } from '@material-ui/icons';
+import { Menu as MenuIcon, Search } from '@material-ui/icons';
 import clsx from 'clsx';
 import { Container } from 'components';
+import Lodash from 'lodash';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
+import { getSafeValue, getTransObj } from 'utils';
+import { TYPE_MENU } from 'utils/constant';
 import useRouter from 'utils/useRouter';
+import { mapIcon } from 'views/Home/components/MapSection/MapSection';
 import logo from '../../../../assets/img/logo-best.svg';
 import Language from './Language';
 import useStyles from './style';
-import axios from 'utils/axios';
-import { urlGetMenuConfig } from 'services/urlAPI';
-import { getSafeValue, getTransObj, replaceStrUrl } from 'utils';
-import { useSelector, useDispatch } from 'react-redux';
-import Lodash from 'lodash';
-import { TYPE_MENU } from 'utils/constant';
-import { useLocation } from 'react-router-dom';
 
 const NavBar = () => {
   const classes = useStyles();
@@ -156,6 +154,7 @@ const NavBar = () => {
             <div className={classes.closeMenu} onClick={toggle}></div>
           )}
 
+          <div id={mapIcon}></div>
           <Link to="/search">
             <IconButton className={classes.search}>
               <Search fontSize="large" />

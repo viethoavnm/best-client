@@ -67,6 +67,20 @@ const useStyles = makeStyles(theme =>
     divider: {
       backgroundColor: '#E5E5E5',
       margin: '40px 0'
+    },
+    download: {
+      marginTop: 16,
+      textAlign: 'center',
+      fontSize: 16,
+      fontWeight: 500,
+      '& a': {
+        color: '#92BF1F',
+        display: 'inline-flex',
+        alignItems: 'center',
+        '&:hover': {
+          textDecoration: 'none'
+        }
+      }
     }
   })
 );
