@@ -156,6 +156,14 @@ const useStyles = makeStyles(theme => ({
     color: '#818181',
     fontWeight: 500,
     fontSize: 16
+  },
+  description: {
+    fontSize: 14,
+    color: '#000000',
+    marginBottom: 32,
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: 20
+    }
   }
 }));
 

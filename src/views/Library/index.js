@@ -1,19 +1,16 @@
 import { Box, CardActionArea, Divider, Grid } from '@material-ui/core';
-import { LibraryCard, Title, Container } from 'components';
-import { Fragment, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import NewsEvent from '../Search/component/news-event';
-import useStyles from './style';
+import { Container, LibraryCard, Title } from 'components';
+import RightNews from 'components/RightNews';
+import Lodash from 'lodash';
+import { Fragment, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import { getLibraryArticle } from 'services/articles';
 import { getSafeValue, getTransObj } from 'utils';
-import Lodash from 'lodash';
-import { TYPE_ARTICLE, DATE_FORMAT } from 'utils/constant';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import moment from 'moment';
-import RightNews from 'components/RightNews';
-import { useTranslation } from 'react-i18next';
+import { TYPE_ARTICLE } from 'utils/constant';
+import useStyles from './style';
 
 const Library = props => {
   const classes = useStyles();
@@ -106,9 +103,8 @@ const Library = props => {
     const data = getSafeValue(sectionObj, 'data', []);
     const isHasNext = data.length > 3;
     const newData = data.slice(0, 3);
-
     return (
-      <Fragment>
+      <div key={sectionObj?.type}>
         <div className={classes.typeBox}>
           <div className={classes.type}>{t(title)}</div>
           <Link to={`/library/${type}`} className={classes.readMore}>
@@ -116,7 +112,7 @@ const Library = props => {
           </Link>
         </div>
 
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
           {newData.map(obj => {
             const urlImg = getSafeValue(obj, 'urlImg', '');
             const title = getSafeValue(obj, 'title', '');
@@ -124,7 +120,7 @@ const Library = props => {
             const date = getSafeValue(obj, 'publishedAt', '');
             // const date = moment(publishedAt).format(DATE_FORMAT);
             return (
-              <Grid item xs={12} sm={6} lg={4}>
+              <Grid item xs={12} sm={6} lg={4} key={obj?._id}>
                 <CardActionArea onClick={() => handleClickArticle(obj)}>
                   <LibraryCard
                     image={urlImg}
@@ -139,7 +135,7 @@ const Library = props => {
         </Grid>
 
         <Divider className={classes.divider} />
-      </Fragment>
+      </div>
     );
   };
   return (

@@ -1,6 +1,7 @@
 import { vsprintf } from 'sprintf-js';
 import Lodash from 'lodash';
 import { VI_LANG, SubTypeArticle, TYPE_ARTICLE } from '../utils/constant';
+import moment from 'moment';
 
 export const replaceStrUrl = (baseUrl, arrStr) => {
   var path = vsprintf(baseUrl, arrStr);
@@ -111,4 +112,32 @@ export const formatDateLang = month => {
     default:
       return;
   }
+};
+
+// {
+//   translations: [{ lang: 'vi' }]
+// };
+// =>
+// {
+//   translations: [{ lang: 'vi' }],
+//   vi: { lang: 'vi' }
+// };
+export const convertTranslations = object => {
+  if (typeof object === 'object' && object !== null) {
+    let { translations } = object;
+    if (Array.isArray(translations)) {
+      for (let i = 0; i < translations.length; i++) {
+        let lang = object.translations[i];
+        object[lang?.lang] = lang;
+      }
+    }
+  }
+  return object;
+};
+
+export const formatDate = date => {
+  if (typeof date === 'string') {
+    return moment(date.trim()).format('DD/MM/YYYY');
+  }
+  return '';
 };

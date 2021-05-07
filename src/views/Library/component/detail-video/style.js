@@ -2,17 +2,23 @@ import { createStyles, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme =>
   createStyles({
+    container: {
+      padding: '48px 0',
+      [theme.breakpoints.down('sm')]: {
+        padding: '24px 0'
+      }
+    },
     title: {
       color: '#3A3A3A',
       fontSize: 36,
       fontWeight: 'bold',
       marginBottom: 35,
       [theme.breakpoints.down('sm')]: {
-        fontSize: 24
+        fontSize: 24,
+        marginBottom: 15
       },
       [theme.breakpoints.down('xs')]: {
-        fontSize: 18,
-        marginBottom: 15
+        fontSize: 18
       }
     },
     libraryBtn: {
@@ -20,6 +26,7 @@ const useStyles = makeStyles(theme =>
       color: '#ffffff',
       height: 24,
       whiteSpace: 'nowrap',
+      marginRight: 26,
       '&:hover': {
         backgroundColor: '#92BF1F',
         color: '#ffffff'
@@ -29,12 +36,20 @@ const useStyles = makeStyles(theme =>
       display: 'flex',
       flexWrap: 'wrap',
       alignItems: 'center',
-      marginBottom: 30,
+      marginBottom: 12,
       '& > *': {
-        marginBottom: 10
+        marginBottom: 12
       },
-      [theme.breakpoints.down('xs')]: {
-        marginBottom: 15
+      [theme.breakpoints.down('sm')]: {
+        marginBottom: 0
+      }
+    },
+    description: {
+      fontSize: 14,
+      color: '#000000',
+      marginBottom: 32,
+      [theme.breakpoints.down('sm')]: {
+        marginBottom: 20
       }
     },
     time: {

@@ -43,5 +43,7 @@
   "titleImage": "Image",
   "titleDocument": "Document",
   "PressRelease": "Press Release",
-  "matchingResults": "matching results"
+  "matchingResults": "matching results",
+  "clickHereTo": "Click here to",
+  "download": "Download"
 }

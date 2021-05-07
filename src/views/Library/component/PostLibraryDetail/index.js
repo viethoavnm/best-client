@@ -1,31 +1,34 @@
-import { Container, Title } from 'components';
+import { Button, Hidden } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import React, { useRef, Fragment, useEffect, useState } from 'react';
 import CardMedia from '@material-ui/core/CardMedia';
-import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
-import { VI_LANG } from 'utils/constant';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
+import Typography from '@material-ui/core/Typography';
+import { AccessTime } from '@material-ui/icons';
+import { Container } from 'components';
+import RightNews from 'components/RightNews';
+import ShareSocial from 'components/ShareSocial';
 import Lodash from 'lodash';
 import moment from 'moment';
-import { useHistory, useLocation } from 'react-router-dom';
-import useStyles from './styles';
 import 'moment/locale/vi';
-import { getArticleDetail } from 'services/articles';
-import renderHTML from 'react-render-html';
-import NewsEvent from 'views/Search/component/news-event';
-import { Hidden } from '@material-ui/core';
-import ShareSocial from 'components/ShareSocial';
-import './img-html.css';
-import { useSelector } from 'react-redux';
-import { getSafeValue, getTransObj, formatDateLang } from 'utils';
-import RightNews from 'components/RightNews';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { libraryPath } from 'routes';
+import { getArticleDetail } from 'services/articles';
+import {
+  convertTranslations, formatDate, formatDateLang, getSafeValue,
+  getTransObj
+} from 'utils';
+import { TYPE_MENU } from 'utils/constant';
+import useStylesDetailVideo from '../detail-video/style';
+import './img-html.css';
+import useStyles from './styles';
 
 const events = [
   {
@@ -59,18 +62,23 @@ const DATE_FORMAT_2 = 'DD/MM/YYYY';
 const PostLibraryDetail = props => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const pageLayout = useRef(null);
-  const history = useHistory();
-  const location = useLocation();
+  const classesDetailVideo = useStylesDetailVideo();
   const [data, setData] = useState({});
+  const menuData = useSelector(state => state.setup.menu);
   const lang = useSelector(state => state.multiLang.lang);
+  const [libraryMenu, setLibraryMenu] = useState();
+  useEffect(() => {
+    if (Array.isArray(menuData)) {
+      let libraryMenu = menuData.find(menu => menu?.type === TYPE_MENU.LIBRARY);
+      setLibraryMenu(convertTranslations({ ...libraryMenu }));
+    }
+  }, [menuData]);
   const [loading, setLoading] = useState(true);
   const image = Lodash.get(data, 'urlImg', '');
   const name = Lodash.get(data, 'name', '');
   const address = Lodash.get(data, 'address', '');
   const startTime = Lodash.get(data, 'startDate', '');
   const date = new Date(startTime);
-  const formatDate = moment(date).format(DATE_FORMAT);
   const month = moment(date).month() + 1; // Moment base month on 0
   const day = moment(date).date();
   const dayStr = moment(date).format('dddd');
@@ -87,9 +95,7 @@ const PostLibraryDetail = props => {
     setLoading(true);
     getArticleDetail(id)
       .then(res => {
-        const dataRes = Lodash.get(res, 'data', {});
-        const newData = transformData(dataRes);
-        setData(newData);
+        setData(convertTranslations(res.data));
       })
       .catch(err => {})
       .finally(() => {
@@ -104,79 +110,6 @@ const PostLibraryDetail = props => {
     }
   }, [lang]);
 
-  const _renderInfoEvent = () => {
-    return (
-      <>
-        <Box
-          display="flex"
-          flexDirection="row"
-          marginTop="25px"
-          marginBottom="35px">
-          <Box bgcolor="#FFFFFF" marginLeft="20px" marginRight="20px">
-            <Paper elevation={1}>
-              <Box
-                bgcolor="#92BF1F"
-                paddingTop="5px"
-                paddingBottom="5px"
-                justifyContent="center"
-                alignItems="center"
-                marginBottom="13px"
-                display="flex"
-                paddingRight="30px"
-                paddingLeft="30px">
-                <Typography
-                  align="center"
-                  noWrap
-                  className={classes.monthEvent}>
-                  {t(`${formatDateLang(`Tháng ${month}`)}`)}
-                </Typography>
-              </Box>
-
-              <Typography align="center" className={classes.dayEvent}>
-                {day}
-              </Typography>
-
-              <Typography align="center" className={classes.dateEvent}>
-                {dayStr}
-              </Typography>
-
-              <Box height="10px" />
-            </Paper>
-          </Box>
-
-          <Box>
-            <Typography className={classes.titleItem}>{name}</Typography>
-
-            <Box
-              display="flex"
-              alignItems="center"
-              flexDirection="row"
-              marginBottom="15px">
-              <CardMedia
-                className={classes.media}
-                image="/images/ic-location.svg"
-                alt="location"
-              />
-              <Typography className={classes.addressItem}>{address}</Typography>
-            </Box>
-
-            <Box display="flex" alignItems="center" flexDirection="row">
-              <CardMedia
-                className={classes.media}
-                image="/images/ic-clock.svg"
-                alt="location"
-              />
-              <Typography className={classes.addressItem}>
-                {formatDate}
-              </Typography>
-            </Box>
-          </Box>
-        </Box>
-
-        <Divider className={classes.divider} />
-      </>
-    );
-  };
 
   const _renderTitle = title => {
     return (
@@ -242,56 +175,33 @@ const PostLibraryDetail = props => {
     );
   };
 
-  const renderSubHeader = () => {
-    return (
-      <Box
-        display="flex"
-        flexDirection="row"
-        justifyContent="space-between"
-        marginBottom="30px"
-        alignItems="center">
-        <Box
-          display="flex"
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="center">
-          <CardMedia
-            className={classes.smallClock}
-            image="/images/ic-small-clock.svg"
-            alt="small-clock"
-          />
-
-          <Typography className={classes.timeSuggest}>30/12/2020</Typography>
-        </Box>
-
-        <ShareSocial />
-      </Box>
-    );
-  };
-
   const _renderContentEvent = () => {
-    const content = Lodash.get(data, 'content', '');
-    // console.log('content', content);
-    // const htmlContent = `<figure class="media"><div data-oembed-url="https://www.youtube.com/watch?v=Rbi52ZYtVKM&amp;ab_channel=PatrickM"><div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;"><iframe src="https://www.youtube.com/embed/Rbi52ZYtVKM" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe></div></div></figure>
-    // `;
-    // const escape = Lodash.escape(htmlContent);
-    // const unescape = Lodash.unescape(escape);
-    // console.log('escape', escape);
-    // console.log('unescape', unescape);
-    const htmlContent = Lodash.unescape(content);
-
+    const htmlContent = Lodash.unescape(data?.[lang]?.content);
     return (
       <Box>
-        {renderSubHeader()}
+        <div className={classesDetailVideo.shareBox}>
+          <Button
+            component={Link}
+            to={libraryPath}
+            className={classesDetailVideo.libraryBtn}>
+            {libraryMenu?.[lang]?.name}
+          </Button>
+          <div className={classesDetailVideo.time}>
+            <AccessTime className={classesDetailVideo.timeIcon} />
+            <div>{formatDate(data?.publishedAt)}</div>
+          </div>
 
+          <ShareSocial />
+        </div>
+        <div className={classesDetailVideo.description}>
+          {data?.[lang]?.description}
+        </div>
         <div
-          // style={{ minHeight: '90vh' }}
           className="dynamic-content-div"
           dangerouslySetInnerHTML={{
             __html: htmlContent
           }}
         />
-
         <Divider className={classes.divider} />
       </Box>
     );
@@ -299,15 +209,6 @@ const PostLibraryDetail = props => {
 
   return (
     <Container bgcolor="#FDFDFD">
-      <div className={classes.header}>
-        <Title size="large">
-          <div className={classes.titleSection}>{t('titleArticles')}</div>
-          <div className={classes.breadcrumb}>
-            {t('txtHome')} / {t('titleArticles')}
-          </div>
-        </Title>
-      </div>
-
       {loading ? (
         <div
           style={{
@@ -320,9 +221,11 @@ const PostLibraryDetail = props => {
         </div>
       ) : (
         <Fragment>
-          <Grid container spacing={4}>
+          <Grid container spacing={4} className={classesDetailVideo.container}>
             <Grid item xs={12} md={8}>
-              {/* <CardMedia className={classes.thumbnail} alt="" image={image} /> */}
+              <div className={classesDetailVideo.title}>
+                {data?.[lang]?.title}
+              </div>
               {_renderContentEvent()}
             </Grid>
 
