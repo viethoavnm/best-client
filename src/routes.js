@@ -15,6 +15,8 @@ import DefaultLayout from './layouts/Default';
 import ErrorLayout from './layouts/Error';
 import Event from './views/Event';
 
+export const libraryPath = '/library';
+
 const routes = [
   {
     path: '/',
@@ -46,37 +48,37 @@ const routes = [
         component: lazy(() => import('./views/News'))
       },
       {
-        path: '/library',
+        path: libraryPath,
         exact: true,
         component: Library
       },
       {
-        path: '/library/:type',
+        path: `${libraryPath}/:type`,
         exact: true,
         component: LibrarySubCate
       },
       {
-        path: '/library/news/:id',
+        path: `${libraryPath}/news/:id`,
         exact: true,
         component: PostLibraryDetail
       },
       {
-        path: '/library/video/:id',
+        path: `${libraryPath}/video/:id`,
         exact: true,
         component: PostLibraryDetail
       },
       {
-        path: '/library/image/:id',
+        path: `${libraryPath}/image/:id`,
         exact: true,
         component: AlbumLibrary
       },
       {
-        path: '/library/file/:id',
+        path: `${libraryPath}/file/:id`,
         exact: true,
         component: FileLibrary
       },
       {
-        path: '/library/file/:id/:indexUrl',
+        path: `${libraryPath}/file/:id/:indexUrl`,
         exact: true,
         component: FileLibraryDetail
       },

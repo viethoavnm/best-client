@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme =>
   })
 );
 
-const CarouselImg = ({ open, onClose, listImg }) => {
+const CarouselImg = ({ open, onClose, listImg, selectedItem }) => {
   const classes = useStyles();
 
   const onClickModal = () => {
@@ -42,23 +42,25 @@ const CarouselImg = ({ open, onClose, listImg }) => {
     <Modal open={open} className={classes.modal} onClose={onClickModal}>
       <Box className={classes.content}>
         <Carousel
+          selectedItem={selectedItem}
           autoFocus={false}
           showThumbs={false}
           showStatus={false}
           useKeyboardArrows
           className="presentation-mode">
-          {listImg.map(img => {
-            return (
-              <Box>
-                <CardMedia
-                  className={classes.img}
-                  component="img"
-                  image={img}
-                  title=""
-                />
-              </Box>
-            );
-          })}
+          {Array.isArray(listImg) &&
+            listImg.map((img, index) => {
+              return (
+                <Box key={index}>
+                  <CardMedia
+                    className={classes.img}
+                    component="img"
+                    image={img}
+                    title=""
+                  />
+                </Box>
+              );
+            })}
         </Carousel>
       </Box>
     </Modal>,

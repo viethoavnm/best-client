@@ -1,4 +1,10 @@
-import { CircularProgress, Divider, Grid, Link } from '@material-ui/core';
+import {
+  Button,
+  CircularProgress,
+  Divider,
+  Grid,
+  Link
+} from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { AccessTime } from '@material-ui/icons';
@@ -8,20 +14,21 @@ import ShareSocial from 'components/ShareSocial';
 import Lodash from 'lodash';
 import moment from 'moment';
 import { Fragment, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { getArticleDetail } from 'services/articles';
-import { getSafeValue, getTransObj } from 'utils';
-import { DATE_FORMAT } from 'utils/constant';
+import { convertTranslations, getSafeValue, getTransObj } from 'utils';
+import { DATE_FORMAT, TYPE_MENU } from 'utils/constant';
 import useStylesLibrary from 'views/Library/style';
 import { ReactComponent as DownloadIcon } from '../../../../assets/img/download.svg';
 import useStylesDetailVideo from '../detail-video/style';
+import PdfViewer from './pdf-viewer';
 
 const DetailDocument = props => {
   const classesDetailVideo = useStylesDetailVideo();
   const classesLibrary = useStylesLibrary();
   const refPdf = useRef(null);
   const [heightPdf, setHeightPdf] = useState(null);
-  const lang = useSelector(state => state.multiLang.lang);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({});
   const image = Lodash.get(data, 'urlImg', '');
@@ -36,6 +43,17 @@ const DetailDocument = props => {
   const [pdf, setPdf] = useState('');
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
+  const { t } = useTranslation();
+  const menuData = useSelector(state => state.setup.menu);
+  const lang = useSelector(state => state.multiLang.lang);
+  const [libraryMenu, setLibraryMenu] = useState();
+
+  useEffect(() => {
+    if (Array.isArray(menuData)) {
+      let libraryMenu = menuData.find(menu => menu?.type === TYPE_MENU.LIBRARY);
+      setLibraryMenu(convertTranslations({ ...libraryMenu }));
+    }
+  }, [menuData]);
 
   useEffect(() => {
     let rect = refPdf?.current?.getBoundingClientRect();
@@ -90,7 +108,9 @@ const DetailDocument = props => {
           <Fragment>
             <div className={classesDetailVideo.title}>{title}</div>
             <div className={classesDetailVideo.shareBox}>
-              {/* <Button className={classesDetailVideo.libraryBtn}>THƯ VIỆN</Button> */}
+              <Button className={classesDetailVideo.libraryBtn}>
+                {libraryMenu?.[lang]?.name}
+              </Button>
               <div className={classesDetailVideo.time}>
                 <AccessTime className={classesDetailVideo.timeIcon} />
                 <div>{formatDate}</div>
@@ -99,19 +119,12 @@ const DetailDocument = props => {
             </div>
 
             <div ref={refPdf}>
-              {heightPdf && (
-                <iframe
-                  src={`https://drive.google.com/viewerng/viewer?embedded=true&url=${pdf}#toolbar=0&scrollbar=0`}
-                  frameBorder="0"
-                  scrolling="auto"
-                  height={heightPdf}
-                  width="100%"></iframe>
-              )}
+              <PdfViewer height={heightPdf} url={pdf} />
             </div>
             <div className={classesDetailVideo.download}>
-              Nhấn vào đây để tải:&nbsp;
+              {t('clickHereTo')}&nbsp;
               <Link href={pdf} target="_blank">
-                Tải xuống&nbsp;
+                {t('download')}&nbsp;
                 <DownloadIcon />
               </Link>
             </div>
