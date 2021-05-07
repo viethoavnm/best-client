@@ -117,7 +117,7 @@ const LibrarySection = props => {
           const date = moment(publishedAt).format(DATE_FORMAT);
 
           return (
-            <Grid item xs={6} md={4}>
+            <Grid item xs={6} md={4} key={obj?._id}>
               <FeaturedItem
                 handleClick={() => handleClickArticle(obj)}
                 classImg={classes.imgBottom}
@@ -151,7 +151,7 @@ const LibrarySection = props => {
           </div>
         </Title>
 
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
             {renderFirstArticle()}
           </Grid>

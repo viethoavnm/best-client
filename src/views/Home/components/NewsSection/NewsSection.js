@@ -134,7 +134,7 @@ const NewsSection = props => {
           const date = moment(publishedAt).format(DATE_FORMAT);
 
           return (
-            <Grid item xs={6} md={12}>
+            <Grid item xs={6} md={12} key={obj?._id}>
               <CardActionArea onClick={() => handleClickArticle(obj)}>
                 <NewsItem
                   type={obj.nameCate}
@@ -163,7 +163,7 @@ const NewsSection = props => {
           </div>
         </Title>
 
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
             {renderFirstArticle()}
           </Grid>

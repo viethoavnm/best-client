@@ -8,7 +8,8 @@ const useStyles = makeStyles(theme => ({
   },
   img: {
     height: 0,
-    paddingBottom: '59%'
+    paddingBottom: '59%',
+    borderRadius: 8
   },
   content: {
     padding: 0

@@ -133,7 +133,7 @@ const FeaturedSection = props => {
           <h2 className={classes.title}>{isNews ? t('newTitle') : cateName}</h2>
         </Title>
 
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
             {renderFirstArticle()}
           </Grid>
