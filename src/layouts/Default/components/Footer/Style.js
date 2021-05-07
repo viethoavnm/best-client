@@ -13,9 +13,9 @@ export const CustomColor = withStyles(theme => ({
 }))(Typography);
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
-    paddingLeft: 150,
-    paddingRight: 150
+    paddingTop: 52,
+    paddingBottom: 24,
+    backgroundColor: '#FAFCF4'
   },
   paper: {
     padding: theme.spacing(2),
@@ -23,7 +23,6 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.text.secondary
   },
   titleFooter: {
-    fontFamily: 'Montserrat',
     fontSize: '24px',
     fontWeight: '700',
     color: '#3E2C1F',
@@ -48,124 +47,118 @@ const useStyles = makeStyles(theme => ({
     paddingRight: 15
   },
   textBtnEmail: {
-    fontFamily: 'Montserrat',
     fontSize: '14px',
     fontWeight: '500',
     color: '#572F12',
     lineHeight: '16px'
   },
   textFooter: {
-    fontSize: '9px',
-    [theme.breakpoints.up('lg')]: {
-      paddingRight: '200px'
+    fontSize: 10,
+    [theme.breakpoints.down('xs')]: {
+      textAlign: 'center',
+      order: 2
     }
   },
   secondFooterBlock: {
-    padding: theme.spacing(3),
-    [theme.breakpoints.up('lg')]: {
-      justifyContent: 'center'
-    },
-    [theme.breakpoints.down('md')]: {
-      borderTop: '1px solid #D3D3D3',
-      marginTop: 24,
-      textAlign: 'center'
-    }
-  },
-  secondFooterItem: {
-    // [theme.breakpoints.down('md')]: {
-    //   '&:first-child': {
-    //     order: 2
-    //   },
-    //   '&:nth-child(2)': {
-    //     order: 1
-    //   },
-    //   '&:nth-child(2) p': {
-    //     fontSize: 16
-    //   }
-    // }
+    marginTop: 16
   },
   inforRow: {
-    pading: theme.spacing(1)
+    padding: '13px 0',
+    display: 'flex'
   },
   footerIcon: {
     width: 20,
     height: 20,
-    marginRight: theme.spacing(1)
+    marginRight: 12
   },
   footerColumnTitle: {
-    fontFamily: 'Montserrat',
-    fontWeight: '600',
-    color: '#3A3A3A'
+    fontWeight: 600,
+    fontSize: 16,
+    color: '#3A3A3A',
+    marginTop: 8
   },
   footerColumnDes: {
-    fontFamily: 'Montserrat',
     fontWeight: '400',
     color: '#3A3A3A'
   },
   footerInfoDownload: {
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
   footerInfoDownloadSX: {
     display: 'none',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'flex',
-      margin: 16,
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      alignItems: 'baseline',
+      flexWrap: 'wrap'
     }
   },
   downloadAppTitle: {
-    fontFamily: 'Montserrat',
     fontWeight: '600',
     color: '#7FAB0F',
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
+    fontSize: 16
   },
   blockDownload: {
     marginTop: theme.spacing(2)
   },
-  columnContent: {
-    fontFamily: 'Montserrat'
-  },
   eachRowItem: {
-    ffontFamily: 'Montserrat',
-    fontWeight: '400',
-    color: '#3A3A3A',
-    marginTop: theme.spacing(1),
-    display: 'block'
-  },
-  footerItem: {
-    [theme.breakpoints.down('md')]: {
-      '&:first-child': {
-        order: 1,
-        textAlign: 'center'
-      },
-      '&:nth-child(2)': {
-        order: '3 !important'
-      },
-      '&:nth-child(3)': {
-        order: '2 !important'
-      },
-      '&:nth-child(4)': {
-        order: 4
-      },
-      '&:nth-child(5)': {
-        order: 5
-      }
-    },
-    [theme.breakpoints.down('sm')]: {
-      '&:nth-child(2)': {
-        order: 2
-      },
-      '&:nth-child(3)': {
-        order: 3
-      }
+    color: '#2C2C2C',
+    marginTop: theme.spacing(2),
+    display: 'block',
+    '&:hover': {
+      textDecoration: 'underline'
     }
   },
   smTitle: {
-    marginTop: theme.spacing(1),
-    fontSize: 13,
+    fontSize: 14,
     color: '#2C2C2C'
+  },
+  title: {
+    fontSize: 14,
+    fontWeight: 600,
+    color: '#3A3A3A',
+    marginTop: 8
+  },
+  description: {
+    fontSize: 14,
+    color: '#3A3A3A',
+    marginTop: 8
+  },
+  teso: {
+    textAlign: 'right',
+    color: '#0B0B0B',
+    fontSize: 14,
+    fontWeight: 500,
+    [theme.breakpoints.down('xs')]: {
+      textAlign: 'center',
+      order: 1,
+      marginTop: 14,
+      marginBottom: 7
+    }
+  },
+  scrollToTop: {
+    marginTop: 16
+  },
+  downloadBox: {
+    display: 'inline-flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 16,
+    marginRight: 12,
+    flexBasis: '50%',
+    [theme.breakpoints.down('sm')]: {
+      marginTop: 0
+    }
+  },
+  sponsorBox: {
+    marginTop: 24,
+    flexGrow: 1,
+    [theme.breakpoints.down('sm')]: {
+      marginTop: 0
+    }
   }
 }));
 
