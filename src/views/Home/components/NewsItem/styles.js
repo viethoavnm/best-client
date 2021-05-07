@@ -9,6 +9,7 @@ const useStyles = makeStyles(theme => ({
   img: {
     height: 0,
     paddingBottom: '68%',
+    borderRadius: 8,
     [theme.breakpoints.down('sm')]: {
       paddingBottom: '62%'
     }

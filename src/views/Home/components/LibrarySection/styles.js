@@ -2,8 +2,8 @@ import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
   titleBox: {
-    marginTop: 40,
-    marginBottom: 25
+    marginTop: 48,
+    marginBottom: 24
   },
   title: {
     flexGrow: 1,

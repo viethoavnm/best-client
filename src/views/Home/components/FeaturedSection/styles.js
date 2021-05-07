@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
   titleBox: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(4),
     marginBottom: theme.spacing(3)
   },
   title: {
@@ -47,11 +47,13 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#0AACC2'
   },
   rightImgTop: {
+    borderRadius: 8,
     [theme.breakpoints.up('sm')]: {
       paddingBottom: '95%'
     }
   },
   rightImgBottom: {
+    borderRadius: 8,
     [theme.breakpoints.up('sm')]: {
       paddingBottom: '58%'
     }
