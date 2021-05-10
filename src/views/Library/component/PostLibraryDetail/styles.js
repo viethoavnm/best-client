@@ -15,19 +15,18 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: 150,
     paddingRight: 150
   },
-  gridSuggest: {
-    marginBottom: 91
-  },
-  cardSuggest: {
-    boxShadow: 'none'
-  },
   thumbnailSuggest: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-    // width: `${(272 * 100) / 1440}vw`,
-    // height: 160,
+    // width: `${(272 * 100) / 1920}vw`,
+    height: 160,
     borderRadius: 10,
-    marginBottom: 8
+    marginBottom: 8,
+    [theme.breakpoints.down('767')]: {
+      width: `${(272 * 100) / 767}vw`
+    },
+    [theme.breakpoints.down('601')]: {
+      width: `${(272 * 100) / 600}vw`,
+      marginBottom: 0
+    }
   },
   thumbnail: {
     height: 0,
@@ -58,7 +57,34 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'row',
     padding: 0,
-    marginBottom: 44
+    marginBottom: 44,
+    [theme.breakpoints.down('960')]: {
+      width: '100%'
+    },
+    [theme.breakpoints.down('767')]: {
+      flexWrap: 'wrap'
+    }
+  },
+  gridSuggest: {
+    '& > li': {
+      [theme.breakpoints.down('601')]: {
+        borderBottom: '1px solid #E5E5E5',
+        paddingTop: 20,
+        paddingBottom: 20
+      }
+    },
+    '&:last-child > li': {
+      [theme.breakpoints.down('601')]: {
+        borderBottom: 'none !important'
+      }
+    }
+  },
+  boxSuggest: {
+    [theme.breakpoints.down('600')]: {
+      display: 'grid',
+      gridTemplateColumns: `${(272 * 100) / 600}vw auto`,
+      gridColumnGap: 12
+    }
   },
   titleItem: {
     marginTop: 3,

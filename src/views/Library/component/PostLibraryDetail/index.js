@@ -144,39 +144,48 @@ const PostLibraryDetail = props => {
     const formatDateItem = moment(dateItem).format(DATE_FORMAT_2);
 
     return (
-      <Grid item xs={12} md={3}>
-        <Card
-          key={index}
-          onClick={() => handleClickItem(item)}
-          className={classes.cardSuggest}>
-          <CardActionArea>
-            <CardMedia
-              image={imageItem}
-              title={'title'}
-              className={classes.thumbnailSuggest}
-            />
-          </CardActionArea>
-          <Typography className={classes.titleItemSuggest}>
-            {nameItem}
-          </Typography>
-
-          <Box display="flex" flexDirection="row">
-            <CardMedia
-              className={classes.smallClock}
-              image="/images/ic-small-clock.svg"
-              alt="small-clock"
-            />
-            <Typography className={classes.timeSuggest}>
-              {formatDateItem}
+      <ListItem
+        onClick={() => handleClickItem(item)}
+        className={classes.itemSuggest}>
+        <Box className={classes.boxSuggest}>
+          <CardMedia
+            className={classes.thumbnailSuggest}
+            alt=""
+            image={imageItem}
+          />
+          <div>
+            <Typography className={classes.titleItemSuggest}>
+              {nameItem}
             </Typography>
-          </Box>
-        </Card>
-      </Grid>
+
+            <Box display="flex" flexDirection="row">
+              <CardMedia
+                className={classes.smallClock}
+                image="/images/ic-small-clock.svg"
+                alt="small-clock"
+              />
+              <Typography className={classes.timeSuggest}>
+                {formatDateItem}
+              </Typography>
+            </Box>
+          </div>
+        </Box>
+      </ListItem>
     );
   };
 
   const _renderSuggestEvents = () => {
-    return events.map((item, index) => _renderItem(item, index));
+    return (
+      <List className={classes.listSuggest}>
+        {events.map(item => {
+          return (
+            <Grid item xs={12} sm={6} md={4} className={classes.gridSuggest}>
+              {_renderItem(item)}
+            </Grid>
+          );
+        })}
+      </List>
+    );
   };
 
   const _renderContentEvent = () => {
