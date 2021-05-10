@@ -110,7 +110,7 @@ const PostLibraryDetail = props => {
 
   const _renderTitle = title => {
     return (
-      <Grid xs={12} md={12}>
+      <Grid item xs={12} md={12}>
         <Box
           display="flex"
           flexDirection="row"
