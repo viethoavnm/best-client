@@ -15,9 +15,17 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: 150,
     paddingRight: 150
   },
+  gridSuggest: {
+    marginBottom: 91
+  },
+  cardSuggest: {
+    boxShadow: 'none'
+  },
   thumbnailSuggest: {
-    width: `${(272 * 100) / 1440}vw`,
-    height: 160,
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+    // width: `${(272 * 100) / 1440}vw`,
+    // height: 160,
     borderRadius: 10,
     marginBottom: 8
   },

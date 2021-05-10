@@ -1,4 +1,4 @@
-import { Button, Hidden } from '@material-ui/core';
+import { Button, Card, CardActionArea, Hidden } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import CardMedia from '@material-ui/core/CardMedia';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -115,19 +115,20 @@ const PostLibraryDetail = props => {
 
   const _renderTitle = title => {
     return (
-      <Box
-        display="flex"
-        flexDirection="row"
-        alignItems="center"
-        marginBottom="30px">
-        <CardMedia
-          className={classes.icSlash}
-          image="/images/ic-slash-title.svg"
-          alt="slash"
-        />
-
-        <Typography className={classes.title}>{title}</Typography>
-      </Box>
+      <Grid xs={12} md={12}>
+        <Box
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          marginBottom="30px">
+          <CardMedia
+            className={classes.icSlash}
+            image="/images/ic-slash-title.svg"
+            alt="slash"
+          />
+          <Typography className={classes.title}>{title}</Typography>
+        </Box>
+      </Grid>
     );
   };
 
@@ -143,13 +144,18 @@ const PostLibraryDetail = props => {
     const formatDateItem = moment(dateItem).format(DATE_FORMAT_2);
 
     return (
-      <ListItem key={index} onClick={() => handleClickItem(item)}>
-        <Box>
-          <CardMedia
-            className={classes.thumbnailSuggest}
-            alt=""
-            image={imageItem}
-          />
+      <Grid item xs={12} md={3}>
+        <Card
+          key={index}
+          onClick={() => handleClickItem(item)}
+          className={classes.cardSuggest}>
+          <CardActionArea>
+            <CardMedia
+              image={imageItem}
+              title={'title'}
+              className={classes.thumbnailSuggest}
+            />
+          </CardActionArea>
           <Typography className={classes.titleItemSuggest}>
             {nameItem}
           </Typography>
@@ -164,17 +170,13 @@ const PostLibraryDetail = props => {
               {formatDateItem}
             </Typography>
           </Box>
-        </Box>
-      </ListItem>
+        </Card>
+      </Grid>
     );
   };
 
   const _renderSuggestEvents = () => {
-    return (
-      <List className={classes.listSuggest}>
-        {events.map((item, index) => _renderItem(item, index))}
-      </List>
-    );
+    return events.map((item, index) => _renderItem(item, index));
   };
 
   const _renderContentEvent = () => {
@@ -237,8 +239,8 @@ const PostLibraryDetail = props => {
               </Grid>
             </Hidden>
           </Grid>
-          <Grid>
-            {_renderTitle(`${t('titleArticlesRelate')}`)}
+          {_renderTitle(`${t('titleArticlesRelate')}`)}
+          <Grid container spacing={3} className={classes.gridSuggest}>
             {_renderSuggestEvents()}
           </Grid>
         </Fragment>
