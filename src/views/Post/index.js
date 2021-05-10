@@ -1,43 +1,30 @@
 import { Container, Title } from 'components';
 import Box from '@material-ui/core/Box';
-import React, { useRef, Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
-import ListItem from '@material-ui/core/ListItem';
-import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
-import { DATE_FORMAT, VI_LANG } from 'utils/constant';
+import { DATE_FORMAT } from 'utils/constant';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import RightNews from 'components/RightNews';
 
 import Lodash from 'lodash';
 import moment from 'moment';
-import { useHistory, useLocation } from 'react-router-dom';
 import useStyles from './styles';
 import 'moment/locale/vi';
 import { getArticleDetail, getArticle } from 'services/articles';
-import renderHTML from 'react-render-html';
-import NewsEvent from 'views/Search/component/news-event';
 import { Hidden } from '@material-ui/core';
 import ShareSocial from '../../components/ShareSocial';
+import RelatedPost from '../../components/RelatedPost';
 import './img-html.css';
 import { useSelector } from 'react-redux';
-import {
-  getLinkFromArticle,
-  getSafeValue,
-  getTransObj,
-  formatDateLang
-} from 'utils';
+import { getSafeValue, getTransObj, formatDateLang } from 'utils';
 import { useTranslation } from 'react-i18next';
 
 const PostDetail = props => {
   const limitSuggest = 4;
   const classes = useStyles();
-  const pageLayout = useRef(null);
-  const history = useHistory();
-  const location = useLocation();
   const [data, setData] = useState({});
   const [dataSuggest, setDataSuggest] = useState([]);
   // const [lang, setLang] = useState(VI_LANG);
@@ -195,65 +182,6 @@ const PostDetail = props => {
     );
   };
 
-  const handleClickItem = item => {
-    const linkDirect = getLinkFromArticle(item);
-    history.push(linkDirect);
-  };
-
-  const _renderItem = item => {
-    const imageItem = Lodash.get(item, 'urlImg', '');
-    const nameItem = Lodash.get(item, 'title', '');
-    const startTimeItem = Lodash.get(item, 'publishedAt', '');
-    const dateItem = new Date(startTimeItem);
-    const formatDateItem = moment(dateItem).format(DATE_FORMAT);
-
-    return (
-      <ListItem
-        onClick={() => handleClickItem(item)}
-        className={classes.itemSuggest}>
-        <Box className={classes.boxSuggest}>
-          <CardMedia
-            className={classes.thumbnailSuggest}
-            alt=""
-            image={imageItem}
-          />
-          <div>
-            <Typography className={classes.titleItemSuggest}>
-              {nameItem}
-            </Typography>
-
-            <Box display="flex" flexDirection="row">
-              <CardMedia
-                className={classes.smallClock}
-                image="/images/ic-small-clock.svg"
-                alt="small-clock"
-              />
-              <Typography className={classes.timeSuggest}>
-                {formatDateItem}
-              </Typography>
-            </Box>
-          </div>
-        </Box>
-      </ListItem>
-    );
-  };
-
-  const _renderSuggestEvents = () => {
-    const listSuggest = dataSuggest.slice(0, limitSuggest);
-
-    return (
-      <List className={classes.listSuggest}>
-        {listSuggest.map(item => {
-          return (
-            <Grid item xs={12} sm={6} md={4} className={classes.gridSuggest}>
-              {_renderItem(item)}
-            </Grid>
-          );
-        })}
-      </List>
-    );
-  };
-
   const renderSubHeader = () => {
     return (
       <Box
@@ -339,7 +267,10 @@ const PostDetail = props => {
           <Grid>
             {dataSuggest.length > 0 &&
               _renderTitle(`${t('titleArticlesRelate')}`)}
-            {_renderSuggestEvents()}
+            <RelatedPost
+              data={dataSuggest.slice(0, limitSuggest)}
+              mode="post"
+            />
           </Grid>
         </Fragment>
       )}

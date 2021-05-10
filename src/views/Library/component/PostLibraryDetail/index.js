@@ -1,15 +1,13 @@
-import { Button, Card, CardActionArea, Hidden } from '@material-ui/core';
+import { Button, Hidden } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import CardMedia from '@material-ui/core/CardMedia';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { AccessTime } from '@material-ui/icons';
 import { Container } from 'components';
+import RelatedPost from 'components/RelatedPost';
 import RightNews from 'components/RightNews';
 import ShareSocial from 'components/ShareSocial';
 import Lodash from 'lodash';
@@ -24,7 +22,6 @@ import { getArticleDetail } from 'services/articles';
 import {
   convertTranslations,
   formatDate,
-  formatDateLang,
   getSafeValue,
   getTransObj
 } from 'utils';
@@ -60,8 +57,6 @@ const events = [
   }
 ];
 
-const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
-const DATE_FORMAT_2 = 'DD/MM/YYYY';
 const PostLibraryDetail = props => {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -136,58 +131,6 @@ const PostLibraryDetail = props => {
     //
   };
 
-  const _renderItem = (item, index) => {
-    const imageItem = Lodash.get(item, 'image', '');
-    const nameItem = Lodash.get(item, 'name', '');
-    const startTimeItem = Lodash.get(item, 'startTime', '');
-    const dateItem = new Date(startTimeItem);
-    const formatDateItem = moment(dateItem).format(DATE_FORMAT_2);
-
-    return (
-      <ListItem
-        onClick={() => handleClickItem(item)}
-        className={classes.itemSuggest}>
-        <Box className={classes.boxSuggest}>
-          <CardMedia
-            className={classes.thumbnailSuggest}
-            alt=""
-            image={imageItem}
-          />
-          <div>
-            <Typography className={classes.titleItemSuggest}>
-              {nameItem}
-            </Typography>
-
-            <Box display="flex" flexDirection="row">
-              <CardMedia
-                className={classes.smallClock}
-                image="/images/ic-small-clock.svg"
-                alt="small-clock"
-              />
-              <Typography className={classes.timeSuggest}>
-                {formatDateItem}
-              </Typography>
-            </Box>
-          </div>
-        </Box>
-      </ListItem>
-    );
-  };
-
-  const _renderSuggestEvents = () => {
-    return (
-      <List className={classes.listSuggest}>
-        {events.map(item => {
-          return (
-            <Grid item xs={12} sm={6} md={4} className={classes.gridSuggest}>
-              {_renderItem(item)}
-            </Grid>
-          );
-        })}
-      </List>
-    );
-  };
-
   const _renderContentEvent = () => {
     const htmlContent = Lodash.unescape(data?.[lang]?.content);
     return (
@@ -250,7 +193,7 @@ const PostLibraryDetail = props => {
           </Grid>
           {_renderTitle(`${t('titleArticlesRelate')}`)}
           <Grid container spacing={3} className={classes.gridSuggest}>
-            {_renderSuggestEvents()}
+            <RelatedPost data={events} mode="event" />
           </Grid>
         </Fragment>
       )}
