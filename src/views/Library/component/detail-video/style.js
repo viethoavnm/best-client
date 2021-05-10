@@ -50,7 +50,8 @@ const useStyles = makeStyles(theme =>
       marginBottom: 32,
       [theme.breakpoints.down('sm')]: {
         marginBottom: 20
-      }
+      },
+      wordBreak: 'break-word'
     },
     time: {
       flexGrow: 1,
