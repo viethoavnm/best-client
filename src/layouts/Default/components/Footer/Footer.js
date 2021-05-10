@@ -124,7 +124,7 @@ function DefaultLayoutFooter(props) {
                 <Typography
                   color="inherit"
                   component={Link}
-                  to="/events"
+                  to="/event"
                   className={clsx(classes.eachRowItem)}>
                   Sự kiện sắp tới
                 </Typography>
