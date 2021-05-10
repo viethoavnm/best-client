@@ -194,7 +194,7 @@ const EventDetail = props => {
     history.push(`/event/${item._id}`);
   };
 
-  const _renderItem = (item, index) => {
+  const _renderItem = item => {
     const imageItem = Lodash.get(item, 'urlImg', '');
     const nameItem = Lodash.get(item, 'name', '');
     const startTimeItem = Lodash.get(item, 'startDate', '');
@@ -203,7 +203,6 @@ const EventDetail = props => {
 
     return (
       <ListItem
-        key={index}
         onClick={() => handleClickItem(item)}
         className={classes.itemSuggest}>
         <Box className={classes.boxSuggest}>
@@ -238,7 +237,13 @@ const EventDetail = props => {
       <List className={classes.listSuggest}>
         {suggestEvent.map((item, index) => {
           return (
-            <Grid item xs={12} sm={6} md={4} className={classes.gridSuggest}>
+            <Grid
+              item
+              key={index}
+              xs={12}
+              sm={6}
+              md={4}
+              className={classes.gridSuggest}>
               {_renderItem(item)}
             </Grid>
           );
