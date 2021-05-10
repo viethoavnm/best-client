@@ -94,7 +94,11 @@ const Library = props => {
     const type = getSafeValue(obj, 'type', '');
     const id = getSafeValue(obj, '_id', '');
     const linkDirect = `/library/${type}/${id}`;
-    history.push(linkDirect);
+    if (type !== "news") {
+      history.push(linkDirect);
+    } else {
+      window.open(linkDirect, "_blank");
+    }
   };
 
   const renderSection = sectionObj => {

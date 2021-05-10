@@ -22,7 +22,10 @@ import { Link } from 'react-router-dom';
 import { libraryPath } from 'routes';
 import { getArticleDetail } from 'services/articles';
 import {
-  convertTranslations, formatDate, formatDateLang, getSafeValue,
+  convertTranslations,
+  formatDate,
+  formatDateLang,
+  getSafeValue,
   getTransObj
 } from 'utils';
 import { TYPE_MENU } from 'utils/constant';
@@ -110,7 +113,6 @@ const PostLibraryDetail = props => {
     }
   }, [lang]);
 
-
   const _renderTitle = title => {
     return (
       <Box
@@ -133,7 +135,7 @@ const PostLibraryDetail = props => {
     //
   };
 
-  const _renderItem = item => {
+  const _renderItem = (item, index) => {
     const imageItem = Lodash.get(item, 'image', '');
     const nameItem = Lodash.get(item, 'name', '');
     const startTimeItem = Lodash.get(item, 'startTime', '');
@@ -141,7 +143,7 @@ const PostLibraryDetail = props => {
     const formatDateItem = moment(dateItem).format(DATE_FORMAT_2);
 
     return (
-      <ListItem onClick={() => handleClickItem(item)}>
+      <ListItem key={index} onClick={() => handleClickItem(item)}>
         <Box>
           <CardMedia
             className={classes.thumbnailSuggest}
@@ -170,7 +172,7 @@ const PostLibraryDetail = props => {
   const _renderSuggestEvents = () => {
     return (
       <List className={classes.listSuggest}>
-        {events.map(item => _renderItem(item))}
+        {events.map((item, index) => _renderItem(item, index))}
       </List>
     );
   };
