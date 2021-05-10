@@ -28,7 +28,7 @@ import { useTranslation } from 'react-i18next';
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 const DATE_FORMAT_2 = 'DD/MM/YYYY';
 const EventDetail = props => {
-  // moment.locale('vi');
+  moment.locale('vi');
   const classes = useStyles();
   const pageLayout = useRef(null);
   const history = useHistory();
