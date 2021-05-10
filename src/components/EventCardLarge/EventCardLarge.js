@@ -84,60 +84,6 @@ const useStyles = makeStyles(theme =>
       '-webkit-line-clamp': 2,
       '-webkit-box-orient': 'vertical',
       textOverflow: 'ellipsis'
-    },
-    datetime: {
-      width: '50%',
-      borderRadius: 10,
-      backgroundColor: '#92BF1F',
-      position: 'absolute',
-      bottom: -16,
-      right: -16
-    },
-    datetimeContainer: {
-      position: 'relative',
-      paddingBottom: '100%',
-      height: 0
-    },
-    datetimeBlock: {
-      textAlign: 'center',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexShrink: 0,
-      position: 'absolute',
-      width: '100%',
-      height: '100%'
-    },
-    month: {
-      color: '#ffffff',
-      [theme.breakpoints.down('sm')]: {
-        fontSize: 12
-      },
-      [theme.breakpoints.between('sm', 'md')]: {
-        fontSize: 18
-      },
-      [theme.breakpoints.up('lg')]: {
-        fontSize: 22
-      },
-      fontWeight: 500,
-      whiteSpace: 'nowrap'
-    },
-    day: {
-      color: '#ffffff',
-      [theme.breakpoints.down('sm')]: {
-        fontSize: 33,
-        marginTop: 2
-      },
-      [theme.breakpoints.between('sm', 'md')]: {
-        fontSize: 60,
-        marginTop: 27
-      },
-      [theme.breakpoints.up('md')]: {
-        fontSize: 60,
-        marginTop: 20
-      },
-      fontWeight: 'bold',
-      fontSize: 60
     }
   })
 );
@@ -164,26 +110,7 @@ const EventCardLarge = ({ item, onClick }) => {
         <Grid container spacing={0}>
           <Grid item xs={5} md={4} className={classes.mediaGrid}>
             <CardActionArea>
-              <CardMedia
-                className={`${classes.media}`}
-                image={image}
-                // title={name}
-              />
-
-              <div className={classes.datetime}>
-                <div className={classes.datetimeContainer}>
-                  <CardContent className={classes.datetimeBlock}>
-                    <Typography component="div">
-                      <Typography component="div" className={classes.month}>
-                        {t(`${formatDateLang(`Tháng ${month}`)}`)}
-                      </Typography>
-                      <Typography component="div" className={classes.day}>
-                        {day}
-                      </Typography>
-                    </Typography>
-                  </CardContent>
-                </div>
-              </div>
+              <CardMedia className={`${classes.media}`} image={image} />
             </CardActionArea>
           </Grid>
 
@@ -211,7 +138,6 @@ const EventCardLarge = ({ item, onClick }) => {
                     <AccessTimeIcon />
                   </Box>
                   <Typography variant="div" className={classes.textGrid}>
-                    {/* {hourminute} - {day}/{month}/{year} */}
                     {formatDate}
                   </Typography>
                 </Box>
