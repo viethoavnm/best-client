@@ -45,5 +45,15 @@
   "PressRelease": "Press Release",
   "matchingResults": "matching results",
   "clickHereTo": "Click here to",
-  "download": "Download"
+  "download": "Download",
+  "inputEmpty": "Please fill in all required fields",
+  "inputNotEmail": "Please enter a valid email address",
+  "submitButton": "Submit",
+  "contactFormTitle": "Contact form",
+  "contactFormInputName": "Your name",
+  "contactFormInputTitle": "Title",
+  "contactFormInputEmail": "Your email",
+  "contactFormInputContent": "Your message",
+  "contactFormSuccess": "Thanks for filling out our form.<br/>We’ll get back to you as soon as possible.",
+  "contactFormFail": "Something went wrong while submitting the form. Please try again later!"
 }

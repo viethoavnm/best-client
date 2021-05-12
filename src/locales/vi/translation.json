@@ -45,5 +45,15 @@
   "PressRelease": "Thông tin báo chí",
   "matchingResults": "kết quả phù hợp",
   "clickHereTo": "Nhấn vào đây để",
-  "download": "Tải xuống"
+  "download": "Tải xuống",
+  "inputEmpty": "Vui lòng nhập vào các ô bắt buộc",
+  "inputNotEmail": "Vui lòng nhập địa chỉ email hợp lệ",
+  "submitButton": "Gửi",
+  "contactFormTitle": "Liên hệ với chúng tôi",
+  "contactFormInputName": "Họ và tên",
+  "contactFormInputTitle": "Tiêu đề",
+  "contactFormInputEmail": "Email",
+  "contactFormInputContent": "Nội dung",
+  "contactFormSuccess": "Cảm ơn bạn đã liên hệ với chúng tôi. Chúng tôi sẽ trả lời sớm nhất có thể.",
+  "contactFormFail": "Đã có lỗi xảy ra khi gửi biểu mẫu liên hệ. Vui lòng thử lại sau!"
 }
