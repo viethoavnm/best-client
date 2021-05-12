@@ -25,7 +25,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchMenuWeb } from '../../reducers/setupSlice.js';
 import RightNews from 'components/RightNews';
 import { useTranslation } from 'react-i18next';
-import './day-picker.css';
 import 'moment/locale/vi';
 import { getEventByYear } from 'services/event';
 import { getTransObj } from 'utils';
