@@ -25,10 +25,6 @@ function DefaultLayoutFooter(props) {
   const lang = useSelector(state => state.multiLang.lang);
 
   useEffect(() => {
-    console.log(menuData);
-  }, [menuData]);
-
-  useEffect(() => {
     getSetupByKey('FOOTER_CONFIG')
       .then(res => {
         setConfigFooter(res.data?.data);

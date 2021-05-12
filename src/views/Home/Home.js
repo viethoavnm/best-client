@@ -1,22 +1,18 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { getSafeValue } from 'utils';
+import { TYPE_HOME_DATA, UI_TYPE_HOME_DATA } from 'utils/constant';
 import {
+  ContactForm,
+  DownloadAppSection,
   EventSsection,
   FeaturedSection as UiSection1,
   LibrarySection as UiSection3,
   MapSection,
-  NewsSection as UiSection2,
-  DownloadAppSection,
-  ContactForm
+  NewsSection as UiSection2
 } from './components';
-import { urlGetHomeData } from 'services/urlAPI';
-import axios from 'utils/axios';
-import { object } from 'prop-types';
-import { useHistory } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateLang } from '../../reducers/multiLangSlice';
-import { getSafeValue } from 'utils';
-import { TYPE_HOME_DATA, UI_TYPE_HOME_DATA } from 'utils/constant';
+import './day-picker.css';
 
 const Home = () => {
   const history = useHistory();
@@ -36,24 +32,24 @@ const Home = () => {
   //   }
   // }, [homeData]);
 
-  const handleRenderHome = obj => {
+  const handleRenderHome = (obj, index) => {
     const type = getSafeValue(obj, 'type', '');
     const uiType = getSafeValue(obj, 'uiType', '');
 
     if (type === TYPE_HOME_DATA.NEWS) {
-      return <UiSection1 data={obj} isNews={true} />;
+      return <UiSection1 data={obj} isNews={true} key={index} />;
     } else if (type === TYPE_HOME_DATA.EVENT) {
-      return <EventSsection data={obj} />;
+      return <EventSsection data={obj} key={index} />;
     } else if (type === TYPE_HOME_DATA.COMPANY_LOCATION) {
-      return <MapSection data={obj} />;
+      return <MapSection data={obj} key={index} />;
     } else {
       // We need to sub check that type is library or category.
       if (uiType === UI_TYPE_HOME_DATA.ONE) {
-        return <UiSection1 data={obj} isNews={false} />;
+        return <UiSection1 data={obj} isNews={false} key={index} />;
       } else if (uiType === UI_TYPE_HOME_DATA.TWO) {
-        return <UiSection2 data={obj} />;
+        return <UiSection2 data={obj} key={index} />;
       } else if (uiType === UI_TYPE_HOME_DATA.THREE) {
-        return <UiSection3 data={obj} />;
+        return <UiSection3 data={obj} key={index} />;
       } else {
         return <></>;
       }
@@ -70,12 +66,12 @@ const Home = () => {
         Default
       </Button> */}
 
-      {homeDataDynamic.map(obj => {
-        return handleRenderHome(obj);
+      {homeDataDynamic.map((obj, index) => {
+        return handleRenderHome(obj, index);
       })}
 
       <DownloadAppSection />
-      <ContactForm/>
+      <ContactForm />
     </Fragment>
   );
 };

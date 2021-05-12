@@ -39,21 +39,30 @@ const useStyles = makeStyles(theme => ({
     }
   },
   rootCard: {
-    height: '100%',
-    backgroundColor: '#FFFFFF',
     boxShadow: `0px 4px 60px 0px rgba(150, 150, 150, 0.24)`,
     borderRadius: 16
   },
   eventLeft: {
-    backgroundColor: '#92BF1F'
+    backgroundColor: '#92BF1F',
+    borderRadius: '16px 0 0 16px',
+    [theme.breakpoints.down('sm')]: {
+      borderRadius: '16px 16px 0 0'
+    }
   },
   eventRight: {
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflowY: 'auto',
+    borderRadius: 16,
+    [theme.breakpoints.down('xs')]: {
+      display: 'block'
+    }
   },
   eventDetailCard: {
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#92BF1F'
+    alignItems: 'center'
   },
   imgNoEvent: {
     // width: '100%'
@@ -70,13 +79,15 @@ const useStyles = makeStyles(theme => ({
     color: 'white',
     marginBottom: theme.spacing(2),
     fontWeight: 700,
-    fontSize: '24px'
+    fontSize: '24px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 16
+    }
   },
   root: {
     marginTop: theme.spacing(5)
   },
   dayDate: {
-    fontFamily: 'Montserrat',
     fontSize: '24px',
     fontWeight: '500',
     color: '#3A3A3A',
@@ -86,11 +97,13 @@ const useStyles = makeStyles(theme => ({
     // right: 0
   },
   thumbnailEvent: {
-    width: '100%',
-    height: 232
+    paddingBottom: '46%',
+    borderRadius: '16px 0 0 0',
+    [theme.breakpoints.down('sm')]: {
+      borderRadius: '16px 16px 0 0'
+    }
   },
   noEvent: {
-    fontFamily: 'Montserrat',
     fontSize: '20px',
     fontWeight: '700',
     color: 'black',
@@ -103,14 +116,12 @@ const useStyles = makeStyles(theme => ({
     transform: 'translate(-50%,-50%)'
   },
   dayEvent: {
-    fontFamily: 'Montserrat',
     fontSize: '72px',
     fontWeight: '700',
     color: '#ffffff',
     lineHeight: '87px'
   },
   weekday: {
-    fontFamily: 'Montserrat',
     fontSize: '24px',
     fontWeight: '700',
     color: '#ffffff',
@@ -169,44 +180,39 @@ const useStyles = makeStyles(theme => ({
   },
   media: { width: 24, height: 24, marginRight: 10 },
   addressItem: {
-    fontFamily: 'Montserrat',
     fontSize: '14px',
-    fontWeight: '500',
-    color: '#FFFFFF',
-    lineHeight: '17px'
+    fontWeight: '600',
+    color: '#FFFFFF'
   },
   eventDes: {
-    backgroundColor: '#92BF1F',
-    height: '50%',
-    paddingLeft: 100,
-    paddingRight: 100,
-    paddingTop: 30,
-    paddingBottom: 30
+    padding: '24px 40px',
+    [theme.breakpoints.down('sm')]: {
+      padding: 16
+    }
   },
   title1: {
-    fontFamily: 'Montserrat',
     fontWeight: '700',
     color: '#3A3A3A'
   },
   title2: {
-    fontFamily: 'Montserrat',
     fontWeight: '700',
     color: '#92BF1F',
     marginBottom: theme.spacing(2)
   },
   smTitle: {
-    fontFamily: 'Montserrat',
     fontWeight: '700',
     color: '#3A3A3A',
     marginLeft: theme.spacing(2)
   },
   lgTitle: {
-    fontFamily: 'Montserrat',
     fontWeight: '700',
     color: '#92BF1F',
     marginBottom: theme.spacing(2)
   },
-  calanderView: {}
+  calanderView: {},
+  borderRadius: {
+    borderRadius: 16
+  }
 }));
 
 export default useStyles;
