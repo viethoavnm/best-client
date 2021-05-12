@@ -10,7 +10,7 @@ import clsx from 'clsx';
 import { Container, MarkerMap, Title } from 'components';
 import GoogleMapReact from 'google-map-react';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as MapIcon } from '../../../../assets/img/map.svg';
@@ -19,16 +19,20 @@ import useStyles from './styles';
 export const mapIcon = 'map-icon';
 
 const MapSection = props => {
+  const refTitle = useRef();
   const { className, ...rest } = props;
   const { t } = useTranslation();
   const classes = useStyles();
 
+  const scrollIntoView = () => {
+    refTitle?.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const _renderTitle = title => {
     return (
       <Title size="large" className={classes.titleBox}>
-        <div className={classes.titleContent}>
+        <div className={classes.titleContent} ref={refTitle}>
           <h2 className={classes.title}>{title}</h2>
-          {/* <Link to="/" className={classes.readMore}>Xem thêm <ChevronRight/></Link> */}
         </div>
       </Title>
     );
@@ -83,7 +87,10 @@ const MapSection = props => {
     const refMapIcon = document.getElementById(mapIcon);
     if (refMapIcon) {
       return createPortal(
-        <Button component={LinkUi} className={classes.mapIcon} href="#map">
+        <Button
+          component={LinkUi}
+          className={classes.mapIcon}
+          onClick={scrollIntoView}>
           <MapIcon />
           <span>Bản đồ</span>
         </Button>,
@@ -94,7 +101,7 @@ const MapSection = props => {
   };
 
   return (
-    <section id="map">
+    <section>
       {renderMapIcon()}
       <Container>
         {_renderTitle(t('titleLocationCompany'))}

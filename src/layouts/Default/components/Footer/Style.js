@@ -99,7 +99,8 @@ const useStyles = makeStyles(theme => ({
     fontWeight: '600',
     color: '#7FAB0F',
     marginRight: theme.spacing(1),
-    fontSize: 16
+    fontSize: 16,
+    textTransform: 'uppercase'
   },
   blockDownload: {
     marginTop: theme.spacing(2)

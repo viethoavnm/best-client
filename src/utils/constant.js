@@ -12,6 +12,14 @@ export const TYPE_MENU = {
   LIBRARY: 'library'
 };
 
+export const TYPE_MENU_LINK = {
+  [TYPE_MENU.HOME]: '/home',
+  [TYPE_MENU.CATEGORY]: '/catelory',
+  [TYPE_MENU.POST]: '/post',
+  [TYPE_MENU.EVENT]: '/event',
+  [TYPE_MENU.LIBRARY]: '/library'
+};
+
 export const TYPE_ARTICLE = {
   image: 'image',
   video: 'video',

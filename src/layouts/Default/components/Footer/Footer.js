@@ -6,10 +6,13 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import clsx from 'clsx';
+import { isEmpty } from 'lodash';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { animateScroll as scroll } from 'react-scroll';
+import { convertTranslations } from 'utils';
+import { TYPE_MENU, TYPE_MENU_LINK } from 'utils/constant';
 import { getSetupByKey } from '../../../../services/setup';
 import Subscribe from '../Subscribe';
 import useStyles from './Style';
@@ -18,6 +21,13 @@ function DefaultLayoutFooter(props) {
   const classes = useStyles();
   const { t } = useTranslation();
   const [configFooter, setConfigFooter] = useState();
+  const menuData = useSelector(state => state.setup.menuData);
+  const lang = useSelector(state => state.multiLang.lang);
+
+  useEffect(() => {
+    console.log(menuData);
+  }, [menuData]);
+
   useEffect(() => {
     getSetupByKey('FOOTER_CONFIG')
       .then(res => {
@@ -29,8 +39,23 @@ function DefaultLayoutFooter(props) {
   }, []);
 
   const scrollToTop = () => {
-    scroll.scrollToTop();
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
   };
+
+  const renderMenu = () => {
+    return menuData.map((menu, index) => (
+      <li key={index}>
+        <Link to={TYPE_MENU_LINK[menu?.type]} className={classes.eachRowItem}>
+          {menu?.[lang]?.name}
+        </Link>
+      </li>
+    ));
+  };
+
   const renderfooter = () => {
     return (
       <Fragment>
@@ -38,7 +63,7 @@ function DefaultLayoutFooter(props) {
           <Typography
             color="inherit"
             className={clsx(classes.downloadAppTitle)}>
-            TẢI APP TẠI ĐÂY
+            {t('downloadAppInHere')}
           </Typography>
           <img src="/images/ic-download.svg" alt="download" />
         </Box>
@@ -46,7 +71,7 @@ function DefaultLayoutFooter(props) {
           <Typography
             color="inherit"
             className={clsx(classes.footerColumnTitle)}>
-            Nhà tài trợ
+            {t('sponsor')}
           </Typography>
           <a
             href="https://www.switch-asia.eu/"
@@ -71,11 +96,8 @@ function DefaultLayoutFooter(props) {
                 src="/images/logo-best.svg"
                 alt="logo"
               />
-              <p className={classes.title}>Công nghệ khí hóa sinh khối</p>
-              <p className={clsx(classes.description)}>
-                Giải pháp năng lượng bền vững cho chế biến nông sản và quản lý
-                chất thải ở nông thôn Việt Nam.
-              </p>
+              <p className={classes.title}>{t('nameProject')}</p>
+              <p className={clsx(classes.description)}>{t('sloganFull')}</p>
               <div className={clsx(classes.footerInfoDownload)}>
                 {renderfooter()}
               </div>
@@ -88,55 +110,7 @@ function DefaultLayoutFooter(props) {
                 {t('aboutUs')}
               </Typography>
 
-              <div>
-                <Typography
-                  color="inherit"
-                  component={Link}
-                  to="/home"
-                  className={clsx(classes.eachRowItem)}>
-                  Trang chủ
-                </Typography>
-
-                <Typography
-                  color="inherit"
-                  component={Link}
-                  to="/about-us"
-                  className={clsx(classes.eachRowItem)}>
-                  Giới thiệu
-                </Typography>
-
-                <Typography
-                  color="inherit"
-                  component={Link}
-                  to="/vcbg-technology"
-                  className={clsx(classes.eachRowItem)}>
-                  Công nghệ VCBG
-                </Typography>
-
-                <Typography
-                  color="inherit"
-                  component={Link}
-                  to="/news"
-                  className={clsx(classes.eachRowItem)}>
-                  Bản tin
-                </Typography>
-
-                <Typography
-                  color="inherit"
-                  component={Link}
-                  to="/event"
-                  className={clsx(classes.eachRowItem)}>
-                  Sự kiện sắp tới
-                </Typography>
-
-                <Typography
-                  color="inherit"
-                  component={Link}
-                  to="/library"
-                  className={clsx(classes.eachRowItem)}>
-                  Thư viện
-                </Typography>
-              </div>
+              <ul style={{ listStyle: 'none' }}>{renderMenu()}</ul>
             </Grid>
 
             <Grid item xs={12} sm={6} md={3}>
@@ -157,7 +131,7 @@ function DefaultLayoutFooter(props) {
                   }}>
                   <img src="/images/oxfam.png" alt="oxfam-logo" />
                 </a>
-                <Typography color="inherit">Oxfam tại Việt Nam</Typography>
+                <Typography color="inherit">{t('Oxfam')}</Typography>
                 <a
                   href="http://www.ccspin.org/"
                   target="_blank"
@@ -168,10 +142,7 @@ function DefaultLayoutFooter(props) {
                   }}>
                   <img src="/images/ccs.png" alt="ccs-logo" />
                 </a>
-                <Typography color="inherit">
-                  CCS - Trung tâm Nghiên cứu, Tư vấn Sáng tạo và Phát triển Bền
-                  vững
-                </Typography>
+                <Typography color="inherit">{t('CCS')}</Typography>
               </div>
             </Grid>
 
@@ -235,11 +206,7 @@ function DefaultLayoutFooter(props) {
           <div className={clsx(classes.secondFooterBlock)}>
             <Grid container direction="row" alignItems="center">
               <Grid item xs={12} sm={9} md={9} className={classes.textFooter}>
-                Trang web này được thiết lập và duy trì với sự hỗ trợ tài chính
-                của Liên minh Châu Âu. Các nội dung trong trang này thuộc trách
-                nhiệm của tổ chức Oxfam tại Việt Nam và Trung tâm Nghiên cứu, Tư
-                vấn Sáng tạo và Phát triển Bền vững (CCS), và không nhất thiết
-                phản ánh quan điểm của Liên minh Châu Âu.
+                {t('footerDes')}
               </Grid>
 
               <Grid item xs={12} sm={3} md={3} className={classes.teso}>
