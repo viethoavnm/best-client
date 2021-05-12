@@ -54,7 +54,7 @@
   "contactFormInputTitle": "Title",
   "contactFormInputEmail": "Your email",
   "contactFormInputContent": "Your message",
-  "contactFormSuccess": "Thanks for filling out our form.<br/>We’ll get back to you as soon as possible.",
+  "contactFormSuccess": "Thanks for filling out our form. We’ll get back to you as soon as possible.",
   "contactFormFail": "Something went wrong while submitting the form. Please try again later!",
   "downloadAppInHere": "Download app in here",
   "sponsor": "Sponsor",
