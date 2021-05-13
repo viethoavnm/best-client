@@ -13,7 +13,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { TYPE_MENU_LINK } from 'utils/constant';
+import { TYPE_MENU, TYPE_MENU_LINK } from 'utils/constant';
 import { getSetupByKey } from '../../../../services/setup';
 import Subscribe from '../Subscribe';
 import useStyles from './Style';
