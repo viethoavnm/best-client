@@ -15,7 +15,7 @@ import { ScrollReset, CookiesNotification } from './components';
 import './mixins/moment';
 import './mixins/validate';
 // import './mock';
-import './assets/scss/index.scss';
+// import './assets/scss/index.scss';
 import Home from 'views/Home';
 import Event from 'views/Event';
 
