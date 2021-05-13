@@ -6,6 +6,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 24
   },
   title: {
+    margin: 0,
     flexGrow: 1,
     fontSize: 24,
     fontWeight: 'bold',
