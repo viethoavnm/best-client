@@ -171,26 +171,18 @@ const PostDetail = props => {
 
   const _renderTitle = title => {
     return (
-      <Box
-        display="flex"
-        flexDirection="row"
-        alignItems="center"
-        marginBottom="30px">
-        <CardMedia
-          className={classes.icSlash}
-          image="/images/ic-slash-title.svg"
-          alt="slash"
-        />
-
-        <Typography className={classes.title}>{title}</Typography>
-      </Box>
+      <div className={classes.header}>
+        <Title size="large">
+          <div className={classes.titleSection}>{title}</div>
+        </Title>
+      </div>
     );
   };
 
   const renderSubHeader = () => {
     return (
       <Fragment>
-        <h2 className={classes.title2}>{data?.[lang]?.title}</h2>
+        <h2 className={classes.titlePost}>{data?.[lang]?.title}</h2>
         <Box
           display="flex"
           flexDirection="row"
@@ -234,6 +226,7 @@ const PostDetail = props => {
             __html: htmlContent
           }}
         />
+        <div className={classes.author}>{data?.authorName}</div>
         <Divider className={classes.divider} />
       </Box>
     );
@@ -267,12 +260,11 @@ const PostDetail = props => {
               {/* <CardMedia className={classes.thumbnail} alt="" image={image} /> */}
               {_renderContentEvent()}
             </Grid>
-
-            <Hidden mdDown>
-              <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4}>
+              <Hidden smDown>
                 <RightNews />
-              </Grid>
-            </Hidden>
+              </Hidden>
+            </Grid>
           </Grid>
           <Grid>
             {dataSuggest.length > 0 &&

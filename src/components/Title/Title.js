@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme =>
       marginBottom: 20,
       '&::after': {
         position: 'absolute',
-        right: -8,
+        right: -7,
         content: '" "',
         marginLeft: '100%',
         width: 12,

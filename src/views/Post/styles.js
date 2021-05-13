@@ -38,8 +38,8 @@ const useStyles = makeStyles(theme => ({
     marginRight: 30
   },
   divider: {
-    marginTop: 30,
-    marginBottom: 30
+    marginTop: 24,
+    marginBottom: 12
   },
   listItem: {
     padding: 0,
@@ -142,26 +142,28 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '32px',
     marginBottom: 50
   },
-  title: {
-    fontFamily: 'Montserrat',
-    fontSize: '24px',
-    fontWeight: '700',
-    color: '#3A3A3A',
-    lineHeight: '29px',
-    textTransform: 'uppercase'
-  },
-  title2: {
+  titlePost: {
     fontSize: 36,
     fontWeight: 'bold',
     color: '#3A3A3A',
-    lineHeight: 1.25,
+    marginTop: 0,
     marginBottom: 32,
+    lineHeight: 1.25,
     [theme.breakpoints.down('sm')]: {
-      fontSize: 24
+      fontSize: 24,
+      marginBottom: 24
     },
     [theme.breakpoints.down('xs')]: {
-      fontSize: 18
+      fontSize: 18,
+      marginBottom: 12
     }
+  },
+  author: {
+    fontSize: 14,
+    fontWeight: 500,
+    color: '#000000',
+    textAlign: 'right',
+    marginTop: 32
   },
   icSlash: { width: 16, height: 40, marginRight: 16 },
   media: { width: 24, height: 24, marginRight: 10 },
@@ -206,7 +208,16 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '20px'
   },
   header: {
-    padding: '30px 0'
+    marginTop: 48,
+    marginBottom: 32,
+    [theme.breakpoints.down('sm')]: {
+      marginTop: 36,
+      marginBottom: 18
+    },
+    [theme.breakpoints.down('xs')]: {
+      marginTop: 24,
+      marginBottom: 12
+    }
   },
   titleSection: {
     flexGrow: 1,
