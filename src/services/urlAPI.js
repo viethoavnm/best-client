@@ -1,4 +1,7 @@
-export const urlBase = 'http://api.khihoasinhkhoi.com/v1/';
+export const urlBase =
+  process.env.NODE_ENV === 'production'
+    ? process.env.REACT_APP_URL_BASE
+    : process.env.REACT_APP_URL_BASE_DEV;
 
 export const urlGetMenuConfig = 'setup/%s';
 export const urlGetHomeData = 'setup/home-data';
