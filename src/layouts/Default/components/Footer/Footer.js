@@ -147,7 +147,7 @@ function DefaultLayoutFooter(props) {
                 <Typography
                   color="inherit"
                   className={clsx(classes.footerColumnTitle)}>
-                  Liên hệ
+                  {t('contact')}
                 </Typography>
 
                 <ul style={{ listStyle: 'none' }}>

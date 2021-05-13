@@ -26,6 +26,7 @@ const useStyles = makeStyles(theme => ({
     color: '#92BF1F',
     fontWeight: 500,
     display: 'flex',
+    textDecoration: 'none',
     '&:hover': {
       textDecoration: 'underline'
     },

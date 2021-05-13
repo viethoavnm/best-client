@@ -150,6 +150,19 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '29px',
     textTransform: 'uppercase'
   },
+  title2: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: '#3A3A3A',
+    lineHeight: 1.25,
+    marginBottom: 32,
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 24
+    },
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 18
+    }
+  },
   icSlash: { width: 16, height: 40, marginRight: 16 },
   media: { width: 24, height: 24, marginRight: 10 },
   addressItem: {

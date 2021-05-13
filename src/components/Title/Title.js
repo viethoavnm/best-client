@@ -1,8 +1,18 @@
 import { createStyles, makeStyles } from '@material-ui/styles';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(theme =>
   createStyles({
+    large: {
+      height: 48,
+      '&::after': {
+        right: -6
+      },
+      '& >:first-child': {
+        width: 14
+      }
+    },
     root: {
       position: 'relative',
       display: 'flex',
@@ -27,15 +37,6 @@ const useStyles = makeStyles(theme =>
       [theme.breakpoints.down('sm')]: {
         backgroundColor: 'transparent',
         height: 'auto'
-      }
-    },
-    large: {
-      height: 48,
-      '&::after': {
-        right: -6
-      },
-      '& >:first-child': {
-        width: 14
       }
     },
     small: {
@@ -82,7 +83,7 @@ const useStyles = makeStyles(theme =>
 const Title = ({ className, children, size = 'small', transform }) => {
   const classes = useStyles();
   return (
-    <div className={[classes.root, classes[size], className].join(' ')}>
+    <div className={clsx(classes.root, classes[size], className)}>
       <div className={classes.decoration}></div>
       <div
         className={classes.title}
