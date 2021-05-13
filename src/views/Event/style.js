@@ -12,6 +12,7 @@ const useStyles = makeStyles(theme =>
       // padding: '40px 0'
     },
     title: {
+      margin: 0,
       flexGrow: 1,
       color: '#3A3A3A',
       fontSize: 24,

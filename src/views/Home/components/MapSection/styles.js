@@ -6,6 +6,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 24
   },
   title: {
+    margin: 0,
     flexGrow: 1,
     fontSize: 24,
     fontWeight: 'bold',
@@ -26,6 +27,7 @@ const useStyles = makeStyles(theme => ({
     color: '#92BF1F',
     fontWeight: 500,
     display: 'flex',
+    textDecoration: 'none',
     '&:hover': {
       textDecoration: 'underline'
     },

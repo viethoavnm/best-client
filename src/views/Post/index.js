@@ -19,7 +19,12 @@ import ShareSocial from '../../components/ShareSocial';
 import RelatedPost from '../../components/RelatedPost';
 import './img-html.css';
 import { useSelector } from 'react-redux';
-import { getSafeValue, getTransObj, formatDateLang } from 'utils';
+import {
+  getSafeValue,
+  getTransObj,
+  formatDateLang,
+  convertTranslations
+} from 'utils';
 import { useTranslation } from 'react-i18next';
 
 const PostDetail = props => {
@@ -54,7 +59,7 @@ const PostDetail = props => {
       .then(res => {
         const dataRes = Lodash.get(res, 'data', {});
         const newData = transformData(dataRes);
-        setData(newData);
+        setData(convertTranslations(newData));
       })
       .catch(err => {})
       .finally(() => {
@@ -166,46 +171,43 @@ const PostDetail = props => {
 
   const _renderTitle = title => {
     return (
-      <Box
-        display="flex"
-        flexDirection="row"
-        alignItems="center"
-        marginBottom="30px">
-        <CardMedia
-          className={classes.icSlash}
-          image="/images/ic-slash-title.svg"
-          alt="slash"
-        />
-
-        <Typography className={classes.title}>{title}</Typography>
-      </Box>
+      <div className={classes.header}>
+        <Title size="large">
+          <div className={classes.titleSection}>{title}</div>
+        </Title>
+      </div>
     );
   };
 
   const renderSubHeader = () => {
     return (
-      <Box
-        display="flex"
-        flexDirection="row"
-        justifyContent="space-between"
-        marginBottom="30px"
-        alignItems="center">
+      <Fragment>
+        <h2 className={classes.titlePost}>{data?.[lang]?.title}</h2>
         <Box
           display="flex"
           flexDirection="row"
-          alignItems="center"
-          justifyContent="center">
-          <CardMedia
-            className={classes.smallClock}
-            image="/images/ic-small-clock.svg"
-            alt="small-clock"
-          />
+          justifyContent="space-between"
+          marginBottom="30px"
+          alignItems="center">
+          <Box
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="center">
+            <CardMedia
+              className={classes.smallClock}
+              image="/images/ic-small-clock.svg"
+              alt="small-clock"
+            />
 
-          <Typography className={classes.timeSuggest}>{formatDate}</Typography>
+            <Typography className={classes.timeSuggest}>
+              {formatDate}
+            </Typography>
+          </Box>
+
+          <ShareSocial />
         </Box>
-
-        <ShareSocial />
-      </Box>
+      </Fragment>
     );
   };
 
@@ -224,6 +226,7 @@ const PostDetail = props => {
             __html: htmlContent
           }}
         />
+        <div className={classes.author}>{data?.authorName}</div>
         <Divider className={classes.divider} />
       </Box>
     );
@@ -257,12 +260,11 @@ const PostDetail = props => {
               {/* <CardMedia className={classes.thumbnail} alt="" image={image} /> */}
               {_renderContentEvent()}
             </Grid>
-
-            <Hidden mdDown>
-              <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4}>
+              <Hidden smDown>
                 <RightNews />
-              </Grid>
-            </Hidden>
+              </Hidden>
+            </Grid>
           </Grid>
           <Grid>
             {dataSuggest.length > 0 &&

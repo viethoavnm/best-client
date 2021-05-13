@@ -62,6 +62,7 @@ const useStyles = makeStyles(theme => ({
     color: '#ffffff',
     whiteSpace: 'nowrap',
     textTransform: 'uppercase',
+    textDecoration: 'none',
     '&:hover': {
       backgroundColor: 'rgba(255, 255, 255, 0.1)'
     },

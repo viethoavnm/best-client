@@ -106,6 +106,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(2)
   },
   eachRowItem: {
+    textDecoration: 'none',
     color: '#2C2C2C',
     marginTop: theme.spacing(2),
     display: 'block',
@@ -160,6 +161,11 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('sm')]: {
       marginTop: 0
     }
+  },
+  ul: {
+    listStyle: 'none',
+    margin: 0,
+    padding: 0
   }
 }));
 
