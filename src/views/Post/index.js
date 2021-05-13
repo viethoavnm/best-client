@@ -59,7 +59,7 @@ const PostDetail = props => {
       .then(res => {
         const dataRes = Lodash.get(res, 'data', {});
         const newData = transformData(dataRes);
-        setData(convertTranslations(dataRes));
+        setData(convertTranslations(newData));
       })
       .catch(err => {})
       .finally(() => {
