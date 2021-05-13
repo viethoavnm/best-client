@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
     padding: 0
   },
   title: {
+    margin: 0,
     color: '#92BF1F',
     fontSize: 24,
     fontWeight: 'bold',

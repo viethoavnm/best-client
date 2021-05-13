@@ -2,10 +2,12 @@ import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
   titleBox: {
+    margin: 0,
     marginTop: 48,
     marginBottom: 24
   },
   title: {
+    margin: 0,
     flexGrow: 1,
     fontSize: 24,
     fontWeight: 'bold',
@@ -77,6 +79,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: '24px'
   },
   eventTitle: {
+    lineHeight: 1.25,
     color: 'white',
     marginBottom: theme.spacing(2),
     fontWeight: 700,
@@ -181,6 +184,7 @@ const useStyles = makeStyles(theme => ({
   },
   media: { width: 24, height: 24, marginRight: 10 },
   addressItem: {
+    margin: 0,
     fontSize: '14px',
     fontWeight: '600',
     color: '#FFFFFF'

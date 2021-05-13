@@ -5,14 +5,15 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ccsLogo from 'assets/img/ccs.png';
+import oxfamLogo from 'assets/img/oxfam.png';
+import switchAsiaLogo from 'assets/img/switch-asia.png';
 import clsx from 'clsx';
-import { isEmpty } from 'lodash';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { convertTranslations } from 'utils';
-import { TYPE_MENU, TYPE_MENU_LINK } from 'utils/constant';
+import { TYPE_MENU_LINK } from 'utils/constant';
 import { getSetupByKey } from '../../../../services/setup';
 import Subscribe from '../Subscribe';
 import useStyles from './Style';
@@ -73,7 +74,7 @@ function DefaultLayoutFooter(props) {
             href="https://www.switch-asia.eu/"
             target="_blank"
             style={{ display: 'inline-block' }}>
-            <img src="/images/sponsor.png" alt="switchasia-logo" />
+            <img src={switchAsiaLogo} alt="switchasia-logo" />
           </a>
         </Box>
       </Fragment>
@@ -106,7 +107,7 @@ function DefaultLayoutFooter(props) {
                 {t('aboutUs')}
               </Typography>
 
-              <ul style={{ listStyle: 'none' }}>{renderMenu()}</ul>
+              <ul className={classes.ul}>{renderMenu()}</ul>
             </Grid>
 
             <Grid item xs={12} sm={6} md={3}>
@@ -125,7 +126,7 @@ function DefaultLayoutFooter(props) {
                     marginBottom: 8,
                     display: 'inline-block'
                   }}>
-                  <img src="/images/oxfam.png" alt="oxfam-logo" />
+                  <img src={oxfamLogo} alt="oxfam-logo" />
                 </a>
                 <Typography color="inherit">{t('Oxfam')}</Typography>
                 <a
@@ -136,7 +137,7 @@ function DefaultLayoutFooter(props) {
                     marginBottom: 8,
                     display: 'inline-block'
                   }}>
-                  <img src="/images/ccs.png" alt="ccs-logo" />
+                  <img src={ccsLogo} alt="ccs-logo" />
                 </a>
                 <Typography color="inherit">{t('CCS')}</Typography>
               </div>
@@ -150,7 +151,7 @@ function DefaultLayoutFooter(props) {
                   {t('contact')}
                 </Typography>
 
-                <ul style={{ listStyle: 'none' }}>
+                <ul className={classes.ul}>
                   <li className={classes.inforRow}>
                     <img
                       className={clsx(classes.footerIcon)}

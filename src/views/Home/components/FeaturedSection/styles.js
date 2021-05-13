@@ -6,6 +6,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(3)
   },
   title: {
+    margin: 0,
     fontSize: 24,
     fontWeight: 'bold',
     color: '#3A3A3A',
