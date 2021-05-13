@@ -19,7 +19,12 @@ import ShareSocial from '../../components/ShareSocial';
 import RelatedPost from '../../components/RelatedPost';
 import './img-html.css';
 import { useSelector } from 'react-redux';
-import { getSafeValue, getTransObj, formatDateLang } from 'utils';
+import {
+  getSafeValue,
+  getTransObj,
+  formatDateLang,
+  convertTranslations
+} from 'utils';
 import { useTranslation } from 'react-i18next';
 
 const PostDetail = props => {
@@ -54,7 +59,7 @@ const PostDetail = props => {
       .then(res => {
         const dataRes = Lodash.get(res, 'data', {});
         const newData = transformData(dataRes);
-        setData(newData);
+        setData(convertTranslations(dataRes));
       })
       .catch(err => {})
       .finally(() => {
@@ -184,28 +189,33 @@ const PostDetail = props => {
 
   const renderSubHeader = () => {
     return (
-      <Box
-        display="flex"
-        flexDirection="row"
-        justifyContent="space-between"
-        marginBottom="30px"
-        alignItems="center">
+      <Fragment>
+        <h2 className={classes.title2}>{data?.[lang]?.title}</h2>
         <Box
           display="flex"
           flexDirection="row"
-          alignItems="center"
-          justifyContent="center">
-          <CardMedia
-            className={classes.smallClock}
-            image="/images/ic-small-clock.svg"
-            alt="small-clock"
-          />
+          justifyContent="space-between"
+          marginBottom="30px"
+          alignItems="center">
+          <Box
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="center">
+            <CardMedia
+              className={classes.smallClock}
+              image="/images/ic-small-clock.svg"
+              alt="small-clock"
+            />
 
-          <Typography className={classes.timeSuggest}>{formatDate}</Typography>
+            <Typography className={classes.timeSuggest}>
+              {formatDate}
+            </Typography>
+          </Box>
+
+          <ShareSocial />
         </Box>
-
-        <ShareSocial />
-      </Box>
+      </Fragment>
     );
   };
 
