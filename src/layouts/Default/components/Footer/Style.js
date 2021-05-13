@@ -161,6 +161,11 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('sm')]: {
       marginTop: 0
     }
+  },
+  ul: {
+    listStyle: 'none',
+    margin: 0,
+    padding: 0
   }
 }));
 

@@ -11,7 +11,8 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { convertTranslations } from 'utils';
+import oxfamLogo from 'assets/img/oxfam.png';
+import ccsLogo from 'assets/img/ccs.png';
 import { TYPE_MENU, TYPE_MENU_LINK } from 'utils/constant';
 import { getSetupByKey } from '../../../../services/setup';
 import Subscribe from '../Subscribe';
@@ -106,7 +107,7 @@ function DefaultLayoutFooter(props) {
                 {t('aboutUs')}
               </Typography>
 
-              <ul style={{ listStyle: 'none' }}>{renderMenu()}</ul>
+              <ul className={classes.ul}>{renderMenu()}</ul>
             </Grid>
 
             <Grid item xs={12} sm={6} md={3}>
@@ -125,7 +126,7 @@ function DefaultLayoutFooter(props) {
                     marginBottom: 8,
                     display: 'inline-block'
                   }}>
-                  <img src="/images/oxfam.png" alt="oxfam-logo" />
+                  <img src={oxfamLogo} alt="oxfam-logo" />
                 </a>
                 <Typography color="inherit">{t('Oxfam')}</Typography>
                 <a
@@ -136,7 +137,7 @@ function DefaultLayoutFooter(props) {
                     marginBottom: 8,
                     display: 'inline-block'
                   }}>
-                  <img src="/images/ccs.png" alt="ccs-logo" />
+                  <img src={ccsLogo} alt="ccs-logo" />
                 </a>
                 <Typography color="inherit">{t('CCS')}</Typography>
               </div>
@@ -150,7 +151,7 @@ function DefaultLayoutFooter(props) {
                   {t('contact')}
                 </Typography>
 
-                <ul style={{ listStyle: 'none' }}>
+                <ul className={classes.ul}>
                   <li className={classes.inforRow}>
                     <img
                       className={clsx(classes.footerIcon)}
