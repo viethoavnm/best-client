@@ -15,11 +15,13 @@ import Lodash from 'lodash';
 import { useSelector } from 'react-redux';
 import RightNews from 'components/RightNews';
 import { useTranslation } from 'react-i18next';
+import Error404 from 'views/Error404';
 
 const LibrarySubCate = props => {
   const history = useHistory();
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(0);
   const [page, setPage] = useState(1);
   const [hasNext, setHasNext] = useState(false);
   const [articles, setArticles] = useState([]);
@@ -72,21 +74,31 @@ const LibrarySubCate = props => {
   }, [lang]);
 
   useEffect(() => {
-    setLoading(true);
-    const params = { page, limit, type: typeLibrary, subType: 'library' };
-    getArticle(params)
-      .then(res => {
-        const results = getSafeValue(res, 'data.results', []);
-        const dataHasNext = getSafeValue(res, 'data.hasNext', false);
-        const newList = transformMenu(results, lang);
-        setArticles(newList);
-        setHasNext(dataHasNext);
-        window.scrollTo(0, 0);
-      })
-      .catch()
-      .finally(() => {
-        setLoading(false);
-      });
+    if (
+      typeLibrary === TYPE_ARTICLE.image ||
+      typeLibrary === TYPE_ARTICLE.video ||
+      typeLibrary === TYPE_ARTICLE.file ||
+      typeLibrary === TYPE_ARTICLE.news
+    ) {
+      setLoading(true);
+      const params = { page, limit, type: typeLibrary, subType: 'library' };
+      getArticle(params)
+        .then(res => {
+          const results = getSafeValue(res, 'data.results', []);
+          const dataHasNext = getSafeValue(res, 'data.hasNext', false);
+          const newList = transformMenu(results, lang);
+          setArticles(newList);
+          setHasNext(dataHasNext);
+          window.scrollTo(0, 0);
+        })
+        .catch(err => setLoadError(err.response.status))
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+      setLoadError(404);
+    }
   }, [page]);
 
   const onChangePage = (e, page) => {
@@ -101,72 +113,76 @@ const LibrarySubCate = props => {
   return (
     <Fragment>
       <Container>
-        <div className={classes.header}>
-          <Title size="large">
-            <div className={classes.title}>{t(titleHeader)}</div>
-            <div className={classes.breadcrumb}>
-              {t('txtHome')} / {t(titleHeader)}
+        {loadError !== 404 && loadError !== 500 && (
+          <>
+            <div className={classes.header}>
+              <Title size="large">
+                <div className={classes.title}>{t(titleHeader)}</div>
+                <div className={classes.breadcrumb}>
+                  {t('txtHome')} / {t(titleHeader)}
+                </div>
+              </Title>
             </div>
-          </Title>
-        </div>
+            <section className={clsx(classes.secondSection)}>
+              {loading && (
+                <div
+                  style={{
+                    height: 80,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                  <CircularProgress size={30} style={{ color: '#A0BE37' }} />
+                </div>
+              )}
 
-        <section className={clsx(classes.secondSection)}>
-          {loading && (
-            <div
-              style={{
-                height: 80,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-              <CircularProgress size={30} style={{ color: '#A0BE37' }} />
-            </div>
-          )}
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={8}>
+                  <div className={clsx(classes.cardSection)}>
+                    <Grid container spacing={2}>
+                      {articles.map((item, index) => {
+                        return (
+                          <Grid
+                            item
+                            xs={12}
+                            sm={6}
+                            md={4}
+                            key={index}
+                            className={classes.cardBox}>
+                            <CardActionArea
+                              onClick={() => handleClickPost(item)}>
+                              <LibraryCard
+                                className={classes.cardItem}
+                                image={item.urlImg}
+                                title={item.title}
+                                date={item.publishedAt}
+                                author={item.authorName}
+                                description={item.description}
+                              />
+                            </CardActionArea>
+                          </Grid>
+                        );
+                      })}
+                    </Grid>
 
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={8}>
-              <div className={clsx(classes.cardSection)}>
-                <Grid container spacing={2}>
-                  {articles.map((item, index) => {
-                    return (
-                      <Grid
-                        item
-                        xs={12}
-                        sm={6}
-                        md={4}
-                        key={index}
-                        className={classes.cardBox}>
-                        <CardActionArea onClick={() => handleClickPost(item)}>
-                          <LibraryCard
-                            className={classes.cardItem}
-                            image={item.urlImg}
-                            title={item.title}
-                            date={item.publishedAt}
-                            author={item.authorName}
-                            description={item.description}
-                          />
-                        </CardActionArea>
-                      </Grid>
-                    );
-                  })}
-                </Grid>
-
-                {/* <div className={classes.btnMore}>
+                    {/* <div className={classes.btnMore}>
                   <Button className={classes.more}>xem thêm</Button>
                 </div> */}
-              </div>
+                  </div>
 
-              <Pagination
-                count={hasNext && !loading ? page + 1 : page}
-                onChange={onChangePage}
-              />
-            </Grid>
+                  <Pagination
+                    count={hasNext && !loading ? page + 1 : page}
+                    onChange={onChangePage}
+                  />
+                </Grid>
 
-            <Grid item xs={12} md={4} className={classes.rightSidebar}>
-              <RightNews />
-            </Grid>
-          </Grid>
-        </section>
+                <Grid item xs={12} md={4} className={classes.rightSidebar}>
+                  <RightNews />
+                </Grid>
+              </Grid>
+            </section>
+          </>
+        )}
       </Container>
     </Fragment>
   );

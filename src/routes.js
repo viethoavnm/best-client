@@ -82,6 +82,11 @@ const routes = [
         exact: true,
         component: FileLibraryDetail
       },
+      {
+        path: `${libraryPath}/*`,
+        component: lazy(() => import('./views/Error404'))
+      },
+
       // {
       //   path: '/library/video/:id',
       //   exact: true,

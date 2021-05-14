@@ -30,6 +30,7 @@ const DetailDocument = props => {
   const refPdf = useRef(null);
   const [heightPdf, setHeightPdf] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [loadError, setLoadError] = useState(0);
   const [data, setData] = useState({});
   const image = Lodash.get(data, 'urlImg', '');
   const title = Lodash.get(data, 'title', '');
@@ -83,7 +84,9 @@ const DetailDocument = props => {
         setPdf(pdfFile);
         setData(newData);
       })
-      .catch(err => {})
+      .catch(err => {
+        setLoadError(err.response.status);
+      })
       .finally(() => {
         setLoading(false);
       });
@@ -91,52 +94,57 @@ const DetailDocument = props => {
 
   return (
     <Container>
-      <Grid container spacing={4} style={{ padding: '25px 0' }}>
-        <Grid item xs={12} md={8}>
-          {loading && (
-            <div
-              style={{
-                height: 80,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-              <CircularProgress size={30} style={{ color: '#A0BE37' }} />
-            </div>
-          )}
-
-          <Fragment>
-            <div className={classesDetailVideo.title}>{title}</div>
-            <div className={classesDetailVideo.shareBox}>
-              <Button className={classesDetailVideo.libraryBtn}>
-                {libraryMenu?.[lang]?.name}
-              </Button>
-              <div className={classesDetailVideo.time}>
-                <AccessTime className={classesDetailVideo.timeIcon} />
-                <div>{formatDate}</div>
+      {loadError === 404 ? (
+        <Error404 />
+      ) : loadError === 500 ? (
+        <Error500 />
+      ) : (
+        <Grid container spacing={4} style={{ padding: '25px 0' }}>
+          <Grid item xs={12} md={8}>
+            {loading && (
+              <div
+                style={{
+                  height: 80,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                <CircularProgress size={30} style={{ color: '#A0BE37' }} />
               </div>
-              <ShareSocial />
-            </div>
+            )}
+            <Fragment>
+              <div className={classesDetailVideo.title}>{title}</div>
+              <div className={classesDetailVideo.shareBox}>
+                <Button className={classesDetailVideo.libraryBtn}>
+                  {libraryMenu?.[lang]?.name}
+                </Button>
+                <div className={classesDetailVideo.time}>
+                  <AccessTime className={classesDetailVideo.timeIcon} />
+                  <div>{formatDate}</div>
+                </div>
+                <ShareSocial />
+              </div>
 
-            <div ref={refPdf}>
-              <PdfViewer height={heightPdf} url={pdf} />
-            </div>
-            <div className={classesDetailVideo.download}>
-              {t('clickHereTo')}&nbsp;
-              <Link href={pdf} target="_blank">
-                {t('download')}&nbsp;
-                <DownloadIcon />
-              </Link>
-            </div>
-            <div className={classesDetailVideo.author}>{authorName}</div>
-            <Divider className={classesDetailVideo.divider} />
-          </Fragment>
-        </Grid>
+              <div ref={refPdf}>
+                <PdfViewer height={heightPdf} url={pdf} />
+              </div>
+              <div className={classesDetailVideo.download}>
+                {t('clickHereTo')}&nbsp;
+                <Link href={pdf} target="_blank">
+                  {t('download')}&nbsp;
+                  <DownloadIcon />
+                </Link>
+              </div>
+              <div className={classesDetailVideo.author}>{authorName}</div>
+              <Divider className={classesDetailVideo.divider} />
+            </Fragment>
+          </Grid>
 
-        <Grid item xs={12} md={4} className={classesLibrary.rightSidebar}>
-          <RightNews />
+          <Grid item xs={12} md={4} className={classesLibrary.rightSidebar}>
+            <RightNews />
+          </Grid>
         </Grid>
-      </Grid>
+      )}
     </Container>
   );
 };

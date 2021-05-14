@@ -19,6 +19,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { getArticleDetail } from 'services/articles';
 import { convertTranslations, getSafeValue } from 'utils';
 import { DATE_FORMAT, TYPE_MENU } from 'utils/constant';
+import Error500 from 'views/Error500';
 import useStylesLibrary from 'views/Library/style';
 import useStylesDetailVideo from '../detail-video/style';
 
@@ -48,6 +49,7 @@ const FileLibrary = props => {
   const classesLibrary = useStylesLibrary();
   const [openCarousel, setOpenCarousel] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(0);
   const [data, setData] = useState({});
   const [listImg, setListImg] = useState([]); // list image.
   const image = getSafeValue(data, 'urlImg', '');
@@ -69,12 +71,14 @@ const FileLibrary = props => {
   }, [menuData]);
 
   useEffect(() => {
-    setLoading(true); 
+    setLoading(true);
     getArticleDetail(id)
       .then(res => {
         setData(convertTranslations(res.data));
       })
-      .catch(err => {})
+      .catch(err => {
+        setLoadError(err.response.status);
+      })
       .finally(() => {
         setLoading(false);
       });
@@ -82,62 +86,75 @@ const FileLibrary = props => {
 
   return (
     <Container>
-      <Grid container spacing={4} className={classesDetailVideo.container}>
-        <Grid item xs={12} md={8}>
-          <div className={classesDetailVideo.title}>{data?.[lang]?.title}</div>
-          <div className={classesDetailVideo.shareBox}>
-            <Button className={classesDetailVideo.libraryBtn}>THƯ VIỆN</Button>
-            <div className={classesDetailVideo.time}>
-              <AccessTime className={classesDetailVideo.timeIcon} />
-              <div>{formatDate}</div>
-            </div>
-            <ShareSocial />
-          </div>
-          <div className={classesDetailVideo.description}>{data?.[lang]?.description}</div>
-          <Grid container spacing={3}>
-            {loading ? (
-              <div
-                style={{
-                  height: 80,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
-                <CircularProgress size={30} style={{ color: '#A0BE37' }} />
+      {loadError === 404 ? (
+        <Error404 />
+      ) : loadError === 500 ? (
+        <Error500 />
+      ) : (
+        <>
+          <Grid container spacing={4} className={classesDetailVideo.container}>
+            <Grid item xs={12} md={8}>
+              <div className={classesDetailVideo.title}>
+                {data?.[lang]?.title}
               </div>
-            ) : (
-              <Fragment>
-                {Array.isArray(data?.sources) &&
-                  data?.sources.map((url, index) => {
-                    return (
-                      <Grid item xs={12} sm={6} md={4} key={index}>
-                        <CardActionArea
-                          component={Link}
-                          to={`/library/file/${id}/${index}`}
-                          // className={classes.imageBox}
-                        >
-                          <CardMedia
-                            className={classes.image}
-                            // component="img"
-                            image={'/images/ic_pdf.svg'}
-                            title=""
-                          />
-                        </CardActionArea>
-                      </Grid>
-                    );
-                  })}
-              </Fragment>
-            )}
+              <div className={classesDetailVideo.shareBox}>
+                <Button className={classesDetailVideo.libraryBtn}>
+                  THƯ VIỆN
+                </Button>
+                <div className={classesDetailVideo.time}>
+                  <AccessTime className={classesDetailVideo.timeIcon} />
+                  <div>{formatDate}</div>
+                </div>
+                <ShareSocial />
+              </div>
+              <div className={classesDetailVideo.description}>
+                {data?.[lang]?.description}
+              </div>
+              <Grid container spacing={3}>
+                {loading ? (
+                  <div
+                    style={{
+                      height: 80,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                    <CircularProgress size={30} style={{ color: '#A0BE37' }} />
+                  </div>
+                ) : (
+                  <Fragment>
+                    {Array.isArray(data?.sources) &&
+                      data?.sources.map((url, index) => {
+                        return (
+                          <Grid item xs={12} sm={6} md={4} key={index}>
+                            <CardActionArea
+                              component={Link}
+                              to={`/library/file/${id}/${index}`}
+                              // className={classes.imageBox}
+                            >
+                              <CardMedia
+                                className={classes.image}
+                                // component="img"
+                                image={'/images/ic_pdf.svg'}
+                                title=""
+                              />
+                            </CardActionArea>
+                          </Grid>
+                        );
+                      })}
+                  </Fragment>
+                )}
+              </Grid>
+
+              <div className={classesDetailVideo.author}>{authorName}</div>
+              <Divider className={classesDetailVideo.divider} />
+            </Grid>
+            <Grid item xs={12} md={4} className={classesLibrary.rightSidebar}>
+              <RightNews />
+            </Grid>
           </Grid>
-
-          <div className={classesDetailVideo.author}>{authorName}</div>
-          <Divider className={classesDetailVideo.divider} />
-        </Grid>
-
-        <Grid item xs={12} md={4} className={classesLibrary.rightSidebar}>
-          <RightNews />
-        </Grid>
-      </Grid>
+        </>
+      )}
     </Container>
   );
 };

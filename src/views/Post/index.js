@@ -236,14 +236,16 @@ const PostDetail = props => {
 
   return (
     <Container bgcolor="#FDFDFD">
-      <div className={classes.header}>
-        <Title size="large">
-          <div className={classes.titleSection}>{t('titleArticles')}</div>
-          <div className={classes.breadcrumb}>
-            {t('txtHome')} / {t('titleArticles')}
-          </div>
-        </Title>
-      </div>
+      {loadError !== 404 && loadError !== 500 && (
+        <div className={classes.header}>
+          <Title size="large">
+            <div className={classes.titleSection}>{t('titleArticles')}</div>
+            <div className={classes.breadcrumb}>
+              {t('txtHome')} / {t('titleArticles')}
+            </div>
+          </Title>
+        </div>
+      )}
 
       {loading ? (
         <div
@@ -257,7 +259,7 @@ const PostDetail = props => {
         </div>
       ) : loadError === 404 ? (
         <Error404 />
-      ) : loadError !== 404 && loadError !== 0 ? (
+      ) : loadError === 500 ? (
         <Error500 />
       ) : (
         <Fragment>

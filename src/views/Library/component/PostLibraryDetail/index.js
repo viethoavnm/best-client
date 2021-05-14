@@ -26,6 +26,8 @@ import {
   getTransObj
 } from 'utils';
 import { TYPE_MENU } from 'utils/constant';
+import Error404 from 'views/Error404';
+import Error500 from 'views/Error500';
 import useStylesDetailVideo from '../detail-video/style';
 import useStyles from './styles';
 
@@ -71,6 +73,7 @@ const PostLibraryDetail = props => {
     }
   }, [menuData]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(0);
   const image = Lodash.get(data, 'urlImg', '');
   const name = Lodash.get(data, 'name', '');
   const address = Lodash.get(data, 'address', '');
@@ -94,7 +97,9 @@ const PostLibraryDetail = props => {
       .then(res => {
         setData(convertTranslations(res.data));
       })
-      .catch(err => {})
+      .catch(err => {
+        setLoadError(err.response.status);
+      })
       .finally(() => {
         setLoading(false);
       });
@@ -170,6 +175,10 @@ const PostLibraryDetail = props => {
           }}>
           <CircularProgress size={30} style={{ color: '#A0BE37' }} />
         </div>
+      ) : loadError === 404 ? (
+        <Error404 />
+      ) : loadError !== 404 && loadError !== 0 ? (
+        <Error500 />
       ) : (
         <Fragment>
           <Grid container spacing={4} className={classesDetailVideo.container}>
