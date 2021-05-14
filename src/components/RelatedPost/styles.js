@@ -107,6 +107,9 @@ const useStyles = makeStyles(theme => ({
     color: '#979797',
     lineHeight: '17px'
   },
+  itemSuggest: {
+    display: 'block'
+  },
   titleItemSuggest: {
     fontFamily: 'Montserrat',
     fontSize: '16px',
