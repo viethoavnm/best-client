@@ -20,17 +20,17 @@ const useStyles = makeStyles(theme => ({
     borderRadius: 10,
     marginBottom: 8
   },
-  rightItem: {
-    // paddingTop: 20,
-    // paddingBottom: 20
-  },
-  dynamicContentDiv: {
-    overflowX: 'hidden'
+  divider: {
+    marginTop: 24,
+    marginBottom: 12
   },
   gridSuggest: {
-    marginBottom: 120,
-    [theme.breakpoints.down('600')]: {
-      marginBottom: 44
+    marginBottom: 80,
+    [theme.breakpoints.down('md')]: {
+      marginBottom: 40
+    },
+    [theme.breakpoints.down('xs')]: {
+      marginBottom: 24
     }
   },
   content: {
@@ -129,6 +129,16 @@ const useStyles = makeStyles(theme => ({
     color: '#818181',
     fontWeight: 500,
     fontSize: 16
+  },
+  smallClock: {
+    width: 16,
+    height: 16,
+    marginRight: 4
+  },
+  timeSuggest: {
+    fontSize: '14px',
+    fontWeight: '500',
+    color: '#979797'
   }
 }));
 
