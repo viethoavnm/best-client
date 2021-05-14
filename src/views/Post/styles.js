@@ -16,123 +16,22 @@ const useStyles = makeStyles(theme => ({
     paddingRight: 150
   },
   thumbnailSuggest: {
-    // width: `${(272 * 100) / 1920}vw`,
     height: 160,
     borderRadius: 10,
-    marginBottom: 8,
-    [theme.breakpoints.down('767')]: {
-      width: `${(272 * 100) / 767}vw`
-    },
-    [theme.breakpoints.down('601')]: {
-      width: `${(272 * 100) / 600}vw`,
-      marginBottom: 0
-    }
-  },
-  thumbnail: {
-    height: 0,
-    paddingTop: '51.6%',
-
-    // width: `${(752 * 100) / 1440}vw`,
-    // height: 388,
-    borderRadius: 8,
-    marginRight: 30
-  },
-  divider: {
-    marginTop: 24,
-    marginBottom: 12
-  },
-  listItem: {
-    padding: 0,
-    marginBottom: 40,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    boxShadow: '0px 4px 60px rgba(150, 150, 150, 0.13);'
+    marginBottom: 8
   },
   rightItem: {
     // paddingTop: 20,
     // paddingBottom: 20
   },
-  listSuggest: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    padding: 0,
-    marginBottom: 44,
-    [theme.breakpoints.down('960')]: {
-      width: '100%'
-    },
-    [theme.breakpoints.down('767')]: {
-      flexWrap: 'wrap'
-    }
-  },
-  itemSuggest: {
-    cursor: 'pointer',
-    '& > div': {
-      width: '100%'
-    },
-    [theme.breakpoints.down('768')]: {
-      justifyContent: 'center'
-    },
-    [theme.breakpoints.down('601')]: {
-      justifyContent: 'initial'
-    }
+  dynamicContentDiv: {
+    overflowX: 'hidden'
   },
   gridSuggest: {
-    '& > li': {
-      [theme.breakpoints.down('601')]: {
-        borderBottom: '1px solid #E5E5E5',
-        paddingTop: 20,
-        paddingBottom: 20
-      }
-    },
-    '&:last-child > li': {
-      [theme.breakpoints.down('601')]: {
-        borderBottom: 'none !important'
-      }
-    }
-  },
-  boxSuggest: {
+    marginBottom: 120,
     [theme.breakpoints.down('600')]: {
-      display: 'grid',
-      gridTemplateColumns: `${(272 * 100) / 600}vw auto`,
-      gridColumnGap: 12
+      marginBottom: 44
     }
-  },
-  titleItem: {
-    marginTop: 3,
-    fontFamily: 'Montserrat',
-    fontSize: '24px',
-    fontWeight: '700',
-    color: '#3A3A3A',
-    lineHeight: '29px',
-    marginBottom: 30
-  },
-  smallClock: {
-    width: 16,
-    height: 16,
-    marginRight: 4
-  },
-  timeSuggest: {
-    fontFamily: 'Montserrat',
-    fontSize: '14px',
-    fontWeight: '500',
-    color: '#979797',
-    lineHeight: '17px',
-    [theme.breakpoints.down('sm')]: {
-      // marginBottom: theme.spacing(2)
-    }
-  },
-  titleItemSuggest: {
-    fontFamily: 'Montserrat',
-    fontSize: '16px',
-    fontWeight: '600',
-    color: '#000000',
-    lineHeight: '20px',
-    marginBottom: 8,
-    height: 37,
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    wordWrap: 'break-word'
   },
   content: {
     fontFamily: 'Montserrat',

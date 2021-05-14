@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Grid,
-  CardMedia,
-  Typography,
-  Box,
-  List,
-  ListItem
-} from '@material-ui/core';
+import { Grid, CardMedia, Typography, Box } from '@material-ui/core';
 import { DATE_FORMAT } from 'utils/constant';
 import moment from 'moment';
 import Lodash from 'lodash';
@@ -37,53 +30,46 @@ const RelatedPost = ({ data, mode }) => {
     let formatDateItem = moment(dateItem).format(DATE_FORMAT);
 
     return (
-      <ListItem
-        onClick={() => handleClickItem(item)}
-        className={classes.itemSuggest}>
-        <Box className={classes.boxSuggest}>
-          <CardMedia
-            className={classes.thumbnailSuggest}
-            alt=""
-            image={imageItem}
-          />
-          <div>
-            <Typography className={classes.titleItemSuggest}>
-              {nameItem}
+      <Box className={classes.boxSuggest} onClick={() => handleClickItem(item)}>
+        <CardMedia
+          className={classes.thumbnailSuggest}
+          alt=""
+          image={imageItem}
+        />
+        <div>
+          <Typography className={classes.titleItemSuggest}>
+            {nameItem}
+          </Typography>
+          <Box display="flex" flexDirection="row">
+            <CardMedia
+              className={classes.smallClock}
+              image="/images/ic-small-clock.svg"
+              alt="small-clock"
+            />
+            <Typography className={classes.timeSuggest}>
+              {formatDateItem}
             </Typography>
-
-            <Box display="flex" flexDirection="row">
-              <CardMedia
-                className={classes.smallClock}
-                image="/images/ic-small-clock.svg"
-                alt="small-clock"
-              />
-              <Typography className={classes.timeSuggest}>
-                {formatDateItem}
-              </Typography>
-            </Box>
-          </div>
-        </Box>
-      </ListItem>
+          </Box>
+        </div>
+      </Box>
     );
   };
 
   return (
-    <List className={classes.listSuggest}>
-      {Array.isArray(data) &&
-        data.map((item, index) => {
-          return (
-            <Grid
-              item
-              key={index}
-              xs={12}
-              sm={6}
-              md={4}
-              className={classes.gridSuggest}>
-              {renderPost(item)}
-            </Grid>
-          );
-        })}
-    </List>
+    Array.isArray(data) &&
+    data.map((item, index) => {
+      return (
+        <Grid
+          item
+          key={index}
+          xs={12}
+          sm={6}
+          md={3}
+          className={classes.gridSuggest}>
+          {renderPost(item)}
+        </Grid>
+      );
+    })
   );
 };
 

@@ -126,10 +126,6 @@ const PostLibraryDetail = props => {
     );
   };
 
-  const handleClickItem = item => {
-    //
-  };
-
   const _renderContentEvent = () => {
     const htmlContent = Lodash.unescape(data?.[lang]?.content);
     return (
@@ -191,7 +187,7 @@ const PostLibraryDetail = props => {
             </Hidden>
           </Grid>
           {_renderTitle(`${t('titleArticlesRelate')}`)}
-          <Grid container spacing={3} className={classes.gridSuggest}>
+          <Grid container spacing={3} mb={3} className={classes.gridSuggest}>
             <RelatedPost data={events} mode="event" />
           </Grid>
         </Fragment>

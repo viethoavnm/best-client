@@ -219,7 +219,6 @@ const PostDetail = props => {
         {renderSubHeader()}
 
         <div
-          // style={{ minHeight: '90vh' }}
           className="ck-content"
           dangerouslySetInnerHTML={{
             __html: htmlContent
@@ -265,9 +264,9 @@ const PostDetail = props => {
               </Hidden>
             </Grid>
           </Grid>
-          <Grid>
-            {dataSuggest.length > 0 &&
-              _renderTitle(`${t('titleArticlesRelate')}`)}
+          {dataSuggest.length > 0 &&
+            _renderTitle(`${t('titleArticlesRelate')}`)}
+          <Grid container spacing={3} className={classes.gridSuggest}>
             <RelatedPost
               data={dataSuggest.slice(0, limitSuggest)}
               mode="post"
