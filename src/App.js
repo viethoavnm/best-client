@@ -21,6 +21,7 @@ import Event from 'views/Event';
 
 const history = createBrowserHistory();
 // const store = configureStore();
+import './App.css';
 
 const App = () => {
   return (

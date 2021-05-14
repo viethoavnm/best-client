@@ -261,7 +261,7 @@ const EventDetail = props => {
         {_renderTitle(`${t('txtIntroduce')}`)}
         {/* {renderHTML(htmlContent)} */}
         <div
-          className="dynamic-content-div"
+          className="ck-content"
           dangerouslySetInnerHTML={{
             __html: htmlContent
           }}></div>
