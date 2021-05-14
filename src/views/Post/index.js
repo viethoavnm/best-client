@@ -1,6 +1,6 @@
 import { Container, Title } from 'components';
 import Box from '@material-ui/core/Box';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, lazy } from 'react';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import { DATE_FORMAT } from 'utils/constant';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import RightNews from 'components/RightNews';
-
 import Lodash from 'lodash';
 import moment from 'moment';
 import useStyles from './styles';
@@ -25,6 +24,8 @@ import {
   convertTranslations
 } from 'utils';
 import { useTranslation } from 'react-i18next';
+import Error404 from '../../views/Error404';
+import Error500 from '../../views/Error500';
 
 const PostDetail = props => {
   const limitSuggest = 4;
@@ -34,6 +35,7 @@ const PostDetail = props => {
   // const [lang, setLang] = useState(VI_LANG);
   const lang = useSelector(state => state.multiLang.lang);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(0);
   const { t } = useTranslation();
 
   const image = Lodash.get(data, 'urlImg', '');
@@ -60,7 +62,9 @@ const PostDetail = props => {
         const newData = transformData(dataRes);
         setData(convertTranslations(newData));
       })
-      .catch(err => {})
+      .catch(err => {
+        setLoadError(err.response.status);
+      })
       .finally(() => {
         setLoading(false);
       });
@@ -251,6 +255,10 @@ const PostDetail = props => {
           }}>
           <CircularProgress size={30} style={{ color: '#A0BE37' }} />
         </div>
+      ) : loadError === 404 ? (
+        <Error404 />
+      ) : loadError !== 404 && loadError !== 0 ? (
+        <Error500 />
       ) : (
         <Fragment>
           <Grid container spacing={4}>

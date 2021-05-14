@@ -9,9 +9,18 @@ export const getArticle = (params = {}) => {
 };
 
 export const getLibraryArticle = (params = {}) => {
-  return axios.get(`${urlArticle}/library`, { params });
+  return axios.get(`${urlArticle}/library`, {
+    params,
+    validateStatus: status => {
+      return 200 <= status && status < 500;
+    }
+  });
 };
 
 export const getArticleDetail = id => {
-  return axios.get(`${urlArticle}/${id}`);
+  return axios.get(`${urlArticle}/${id}`, {
+    validateStatus: status => {
+      return 200 <= status && status < 500;
+    }
+  });
 };

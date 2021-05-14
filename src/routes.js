@@ -106,6 +106,10 @@ const routes = [
         path: '/news',
         exact: true,
         component: React.lazy(() => import('./views/News'))
+      },
+      {
+        path: '*',
+        component: lazy(() => import('./views/Error404'))
       }
     ]
   },
