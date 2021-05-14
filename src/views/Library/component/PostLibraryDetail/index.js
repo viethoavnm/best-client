@@ -27,7 +27,6 @@ import {
 } from 'utils';
 import { TYPE_MENU } from 'utils/constant';
 import useStylesDetailVideo from '../detail-video/style';
-import './img-html.css';
 import useStyles from './styles';
 
 const events = [
@@ -153,7 +152,7 @@ const PostLibraryDetail = props => {
           {data?.[lang]?.description}
         </div>
         <div
-          className="dynamic-content-div"
+          className="ck-content"
           dangerouslySetInnerHTML={{
             __html: htmlContent
           }}

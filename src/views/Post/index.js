@@ -17,7 +17,6 @@ import { getArticleDetail, getArticle } from 'services/articles';
 import { Hidden } from '@material-ui/core';
 import ShareSocial from '../../components/ShareSocial';
 import RelatedPost from '../../components/RelatedPost';
-import './img-html.css';
 import { useSelector } from 'react-redux';
 import {
   getSafeValue,
@@ -221,7 +220,7 @@ const PostDetail = props => {
 
         <div
           // style={{ minHeight: '90vh' }}
-          className="dynamic-content-div"
+          className="ck-content"
           dangerouslySetInnerHTML={{
             __html: htmlContent
           }}
