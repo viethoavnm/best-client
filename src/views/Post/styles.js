@@ -77,6 +77,9 @@ const useStyles = makeStyles(theme => ({
       justifyContent: 'initial'
     }
   },
+  dynamicContentDiv: {
+    overflowX: 'hidden'
+  },
   gridSuggest: {
     '& > li': {
       [theme.breakpoints.down('601')]: {

@@ -221,7 +221,7 @@ const PostDetail = props => {
 
         <div
           // style={{ minHeight: '90vh' }}
-          className="dynamic-content-div"
+          className={classes.dynamicContentDiv}
           dangerouslySetInnerHTML={{
             __html: htmlContent
           }}
