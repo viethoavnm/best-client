@@ -151,7 +151,7 @@ const LibrarySection = props => {
           </div>
         </Title>
 
-        <Grid container spacing={3}>
+        <Grid container spacing={3} style={{ paddingBottom: 24 }}>
           <Grid item xs={12} md={4}>
             {renderFirstArticle()}
           </Grid>

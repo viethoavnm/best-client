@@ -107,7 +107,7 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '20px'
   },
   header: {
-    marginTop: 48,
+    marginTop: 32,
     marginBottom: 32,
     [theme.breakpoints.down('sm')]: {
       marginTop: 36,
