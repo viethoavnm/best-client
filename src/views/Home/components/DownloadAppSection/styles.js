@@ -63,6 +63,9 @@ const useStyles = makeStyles(theme => ({
       paddingBottom: '29%'
     },
     [theme.breakpoints.between('sm', 'md')]: {
+      paddingBottom: '29%'
+    },
+    [theme.breakpoints.only('sm')]: {
       paddingBottom: '17%'
     }
   },
