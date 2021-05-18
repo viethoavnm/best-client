@@ -6,8 +6,8 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
     height: '100%',
-    paddingTop: '10%',
-    paddingBottom: '10%',
+    paddingTop: '6%',
+    paddingBottom: '6%',
     marginTop: theme.spacing(5),
     backgroundColor: '#EDF5F8',
     backgroundImage: `url(${DownloadAppDevice})`,
@@ -15,10 +15,13 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: 'contain',
     backgroundPosition: '0%',
     [theme.breakpoints.down('xs')]: {
-      backgroundPosition: '-110%'
+      backgroundPosition: '-80%'
     },
     [theme.breakpoints.between('sm', 'md')]: {
-      backgroundPosition: '-1900%'
+      backgroundPosition: '0%'
+    },
+    [theme.breakpoints.only('sm')]: {
+      backgroundPosition: '-600%'
     }
   },
   media: {
@@ -78,7 +81,8 @@ const useStyles = makeStyles(theme => ({
     borderRadius: 8,
     [theme.breakpoints.down('sm')]: {
       padding: '13px 42px 13px 42px',
-      color: '#92BF1F'
+      color: '#92BF1F',
+      marginBottom: '30px'
     }
   },
   googleplay: {
