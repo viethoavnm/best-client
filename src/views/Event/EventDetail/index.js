@@ -24,6 +24,7 @@ import RightNews from 'components/RightNews';
 import { formatDateLang, getSafeValue } from 'utils';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import Error500 from 'views/Error500';
 
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 const DATE_FORMAT_2 = 'DD/MM/YYYY';
@@ -36,6 +37,7 @@ const EventDetail = props => {
   const [event, setEvent] = useState({});
   const lang = useSelector(state => state.multiLang.lang);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(0);
   const [suggestEvent, setSuggestEvent] = useState([]);
   const { t } = useTranslation();
   const image = Lodash.get(event, 'urlImg', '');
@@ -63,7 +65,9 @@ const EventDetail = props => {
         const newData = transformData(data);
         setEvent(newData);
       })
-      .catch(err => {})
+      .catch(err => {
+        setLoadError(err.response.status);
+      })
       .finally(() => {
         setLoading(false);
       });
@@ -80,7 +84,9 @@ const EventDetail = props => {
         });
         setSuggestEvent(newList);
       })
-      .catch(err => {});
+      .catch(err => {
+        setLoadError(err.response.status);
+      });
   }, []);
 
   useEffect(() => {
@@ -273,39 +279,51 @@ const EventDetail = props => {
 
   return (
     <Container bgcolor="#FDFDFD">
-      {loading ? (
-        <div
-          style={{
-            height: 80,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-          <CircularProgress size={30} style={{ color: '#A0BE37' }} />
-        </div>
+      {loadError === 404 ? (
+        <Error404 />
+      ) : loadError === 500 ? (
+        <Error500 />
       ) : (
-        <Fragment>
-          <Box marginTop="40px" />
+        <>
+          {loading ? (
+            <div
+              style={{
+                height: 80,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+              <CircularProgress size={30} style={{ color: '#A0BE37' }} />
+            </div>
+          ) : (
+            <Fragment>
+              <Box marginTop="40px" />
 
-          <Grid container spacing={4}>
-            <Grid item xs={12} md={8}>
-              <CardMedia className={classes.thumbnail} alt="" image={image} />
+              <Grid container spacing={4}>
+                <Grid item xs={12} md={8}>
+                  <CardMedia
+                    className={classes.thumbnail}
+                    alt=""
+                    image={image}
+                  />
 
-              {_renderInfoEvent()}
-              {_renderContentEvent()}
-            </Grid>
+                  {_renderInfoEvent()}
+                  {_renderContentEvent()}
+                </Grid>
 
-            <Hidden mdDown>
-              <Grid item xs={12} md={4}>
-                <RightNews />
+                <Hidden mdDown>
+                  <Grid item xs={12} md={4}>
+                    <RightNews />
+                  </Grid>
+                </Hidden>
               </Grid>
-            </Hidden>
-          </Grid>
-          <Grid>
-            {suggestEvent.length > 0 && _renderTitle(`${t('otherEvents')}`)}
-            {_renderSuggestEvents()}
-          </Grid>
-        </Fragment>
+              <Grid>
+                {suggestEvent.length > 0 && _renderTitle(`${t('otherEvents')}`)}
+                {_renderSuggestEvents()}
+              </Grid>
+            </Fragment>
+          )}
+        </>
       )}
     </Container>
   );

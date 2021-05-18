@@ -16,6 +16,7 @@ const Library = props => {
   const classes = useStyles();
   const history = useHistory();
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(0);
   const [data, setData] = useState([]);
   const [dataTranform, setDataTranform] = useState([]);
   const lang = useSelector(state => state.multiLang.lang);
@@ -76,7 +77,9 @@ const Library = props => {
         setData(sectionData);
         setDataTranform(newData);
       })
-      .catch(err => {})
+      .catch(err => {
+        setLoadError(err.response.status);
+      })
       .finally(() => {
         setLoading(false);
       });
@@ -94,10 +97,10 @@ const Library = props => {
     const type = getSafeValue(obj, 'type', '');
     const id = getSafeValue(obj, '_id', '');
     const linkDirect = `/library/${type}/${id}`;
-    if (type !== "news") {
+    if (type !== 'news') {
       history.push(linkDirect);
     } else {
-      window.open(linkDirect, "_blank");
+      window.open(linkDirect, '_blank');
     }
   };
 
@@ -145,40 +148,48 @@ const Library = props => {
   return (
     <Fragment>
       <Container>
-        <div className={classes.header}>
-          <Title size="large">
-            <div className={classes.title}>{t('titleLibrary')}</div>
-            <div className={classes.breadcrumb}>
-              {t('txtHome')} / {t('titleLibrary')}
-            </div>
-          </Title>
-        </div>
-
-        {loading ? (
-          <div
-            style={{
-              height: 80,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-            <CircularProgress size={30} style={{ color: '#A0BE37' }} />
-          </div>
+        {loadError === 404 ? (
+          <Error404 />
+        ) : loadError === 500 ? (
+          <Error500 />
         ) : (
-          <Grid container spacing={4}>
-            <Grid item xs={12} md={8}>
-              {data.map(sectionObj => {
-                return renderSection(sectionObj);
-              })}
-            </Grid>
+          <>
+            <div className={classes.header}>
+              <Title size="large">
+                <div className={classes.title}>{t('titleLibrary')}</div>
+                <div className={classes.breadcrumb}>
+                  {t('txtHome')} / {t('titleLibrary')}
+                </div>
+              </Title>
+            </div>
 
-            <Grid item xs={12} md={4} className={classes.rightSidebar}>
-              <RightNews />
-            </Grid>
-          </Grid>
+            {loading ? (
+              <div
+                style={{
+                  height: 80,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                <CircularProgress size={30} style={{ color: '#A0BE37' }} />
+              </div>
+            ) : (
+              <Grid container spacing={4}>
+                <Grid item xs={12} md={8}>
+                  {data.map(sectionObj => {
+                    return renderSection(sectionObj);
+                  })}
+                </Grid>
+
+                <Grid item xs={12} md={4} className={classes.rightSidebar}>
+                  <RightNews />
+                </Grid>
+              </Grid>
+            )}
+
+            <Box height="50px" />
+          </>
         )}
-
-        <Box height="50px" />
       </Container>
     </Fragment>
   );

@@ -61,5 +61,12 @@
   "footerDes": "Trang web này được thiết lập và duy trì với sự hỗ trợ tài chính của Liên minh Châu Âu. Các nội dung trong trang này thuộc trách nhiệm của tổ chức Oxfam tại Việt Nam và Trung tâm Nghiên cứu, Tư vấn Sáng tạo và Phát triển Bền vững (CCS), và không nhất thiết phản ánh quan điểm của Liên minh Châu Âu.",
   "contact": "Liên hệ",
   "Oxfam": "Oxfam tại Việt Nam",
-  "CCS": "CCS - Trung tâm Nghiên cứu, Tư vấn Sáng tạo và Phát triển Bền vững"
+  "CCS": "CCS - Trung tâm Nghiên cứu, Tư vấn Sáng tạo và Phát triển Bền vững",
+  "errorPage": {
+    "404Title": "Không tìm thấy trang",
+    "404Description": "Chúng tôi không tìm thấy trang mà bạn đang truy cập. Vui lòng kiểm tra lại địa chỉ và thử lại",
+    "backButton": "Quay về trang chủ",
+    "500Title": "Đã có lỗi xảy ra",
+    "500Description": "Chúng tôi vô cùng xin lỗi vì sự bất tiện này. Xin vui lòng thử lại sau."
+  }
 }

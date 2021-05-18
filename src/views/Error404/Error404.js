@@ -2,7 +2,7 @@ import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import { Typography, Button, useTheme, useMediaQuery } from '@material-ui/core';
-
+import { useTranslation } from 'react-i18next';
 import { Page } from 'components';
 
 const useStyles = makeStyles(theme => ({
@@ -33,26 +33,17 @@ const useStyles = makeStyles(theme => ({
 
 const Error404 = () => {
   const classes = useStyles();
+  const { t } = useTranslation();
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <Page
-      className={classes.root}
-      title="Error 404"
-    >
-      <Typography
-        align="center"
-        variant={mobileDevice ? 'h4' : 'h1'}
-      >
-        404: The page you are looking for isn’t here
+    <Page className={classes.root} title="Error 404">
+      <Typography align="center" variant={mobileDevice ? 'h4' : 'h1'}>
+        {t('errorPage.404Title')}
       </Typography>
-      <Typography
-        align="center"
-        variant="subtitle2"
-      >
-        You either tried some shady route or you came here by mistake. Whichever
-        it is, try using the navigation
+      <Typography align="center" variant="subtitle2">
+        {t('errorPage.404Description')}
       </Typography>
       <div className={classes.imageContainer}>
         <img
@@ -66,9 +57,8 @@ const Error404 = () => {
           color="primary"
           component={RouterLink}
           to="/"
-          variant="outlined"
-        >
-          Back to home
+          variant="outlined">
+          {t('errorPage.backButton')}
         </Button>
       </div>
     </Page>

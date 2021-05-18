@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux';
 import RightNews from 'components/RightNews';
 import { useTranslation } from 'react-i18next';
 import Error404 from 'views/Error404';
+import Error500 from 'views/Error500';
 
 const LibrarySubCate = props => {
   const history = useHistory();
@@ -113,7 +114,11 @@ const LibrarySubCate = props => {
   return (
     <Fragment>
       <Container>
-        {loadError !== 404 && loadError !== 500 && (
+        {loadError === 404 ? (
+          <Error404 />
+        ) : loadError === 500 ? (
+          <Error500 />
+        ) : (
           <>
             <div className={classes.header}>
               <Title size="large">

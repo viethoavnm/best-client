@@ -61,5 +61,12 @@
   "footerDes": "This website is established and maintained with the financial assistance of the European Union. The contents of this site are the responsibility of Oxfam in Vietnam and the Center for Sustainable Innovation and Development (CCS) Research and Consultancy (CCS), and do not necessarily reflect the views of the European Union.",
   "contact": "Contact",
   "Oxfam": "Oxfam in VietNam",
-  "CCS": "CCS - Center for Creativity and Sustainability Study and Consultancy"
+  "CCS": "CCS - Center for Creativity and Sustainability Study and Consultancy",
+  "errorPage": {
+    "404Title": "The page you are looking for isn’t here",
+    "404Description": "You either tried some shady route or you came here by mistake. Whichever it is, try using the navigation",
+    "backButton": "Back to home",
+    "500Title": "Something went wrong",
+    "500Description": "We're sorry for the inconvenience. Please try again later."
+  }
 }
