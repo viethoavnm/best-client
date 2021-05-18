@@ -70,9 +70,9 @@
     "500Description": "We're sorry for the inconvenience. Please try again later."
   },
   "downloadApp": {
-    "title": "DOWNLOAD OUR APP",
+    "title": "DOWNLOAD APP",
     "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-    "instructionTitle": "INSTRUCTIONS",
-    "instructionButton": "Learn more"
+    "instructionTitle": "USER GUIDE",
+    "instructionButton": "SEE MORE"
   }
 }
