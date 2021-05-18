@@ -21,11 +21,13 @@ const DownloadAppSection = () => {
               <Grid container spacing={3}>
                 <Grid item md={6} xs={6}>
                   <Link
+                    to="#"
                     className={clsx(classes.downloadButton, classes.appstore)}
                     onClick={() => alert('Download')}></Link>
                 </Grid>
                 <Grid item md={6} xs={6}>
                   <Link
+                    to="#"
                     className={clsx(classes.downloadButton, classes.googleplay)}
                     onClick={() => alert('Download')}></Link>
                 </Grid>
