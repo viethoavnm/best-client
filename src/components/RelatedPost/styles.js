@@ -2,9 +2,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   thumbnailSuggest: {
-    height: 160,
-    borderRadius: 10,
-    marginBottom: 8
+    paddingBottom: '59%',
+    borderRadius: 8
   },
   gridSuggest: {
     '& > div': {
@@ -21,6 +20,8 @@ const useStyles = makeStyles(theme => ({
     }
   },
   boxSuggest: {
+    display: 'block',
+    textDecoration: 'none',
     [theme.breakpoints.down('600')]: {
       display: 'grid',
       gridTemplateColumns: `${(272 * 100) / 600}vw auto`,
@@ -49,16 +50,20 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '17px'
   },
   titleItemSuggest: {
-    fontFamily: 'Montserrat',
     fontSize: '16px',
     fontWeight: '600',
     color: '#000000',
-    lineHeight: '20px',
+    lineHeight: 1.5,
     marginBottom: 8,
-    height: 37,
+    display: '-webkit-box',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    wordWrap: 'break-word'
+    wordWrap: 'break-word',
+    '-webkit-box-orient': 'vertical',
+    '-webkit-line-clamp': 2,
+    [theme.breakpoints.down('sm')]: {
+      '-webkit-line-clamp': 3
+    }
   }
 }));
 

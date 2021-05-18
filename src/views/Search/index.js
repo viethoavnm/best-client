@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme =>
     },
     divider: {
       margin: '15px 0',
-      backgroundColor: '#C4C4C4'
+      backgroundColor: '#E5E5E5'
     },
     skeleton: {
       height: '100%'

@@ -159,7 +159,7 @@ function DefaultLayoutFooter(props) {
                       alt="icEmail"
                     />
                     <Typography color="inherit" className={classes.smTitle}>
-                      {configFooter?.email}
+                      {configFooter?.[lang]?.email}
                     </Typography>
                   </li>
 
@@ -170,7 +170,7 @@ function DefaultLayoutFooter(props) {
                       alt="icPhone"
                     />
                     <Typography color="inherit" className={classes.smTitle}>
-                      {configFooter?.phone_number}
+                      {configFooter?.[lang]?.phone_number}
                     </Typography>
                   </li>
 
@@ -181,7 +181,7 @@ function DefaultLayoutFooter(props) {
                       alt="icLocation"
                     />
                     <Typography color="inherit" className={classes.smTitle}>
-                      {configFooter?.address}
+                      {configFooter?.[lang]?.address}
                     </Typography>
                   </li>
                 </ul>

@@ -1,15 +1,13 @@
-import React from 'react';
-import {
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Typography
-} from '@material-ui/core';
+import { Card, CardContent, CardMedia, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
 const useStyles = makeStyles(theme => ({
+  root: {
+    boxShadow: '0px 32px 64px -24px rgba(0, 0, 0, 0.16)'
+  },
   media: {
     height: 0,
     paddingBottom: '60%'
@@ -70,7 +68,7 @@ const LibraryCard = ({
   const classes = useStyles();
   const dateFormat = moment(date).format('DD/MM/YYYY');
   return (
-    <Card className={className}>
+    <Card className={clsx(classes.root, className)}>
       {/* <CardActionArea> */}
       <CardMedia className={classes.media} image={image} title={title} />
       {/* </CardActionArea> */}

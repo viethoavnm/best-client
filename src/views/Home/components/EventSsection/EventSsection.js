@@ -244,7 +244,7 @@ const EventSsection = props => {
 
   return (
     <section>
-      <Container>
+      <Container style={{ paddingBottom: 24 }}>
         {_renderTitle(t('titleEvent'))}
 
         {/* <Card className={clsx(classes.rootCard)} > */}

@@ -190,7 +190,7 @@ const PostDetail = props => {
           display="flex"
           flexDirection="row"
           justifyContent="space-between"
-          marginBottom="30px"
+          marginBottom="24px"
           alignItems="center">
           <Box
             display="flex"
