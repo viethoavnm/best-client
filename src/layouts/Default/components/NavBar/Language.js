@@ -1,11 +1,12 @@
 import { makeStyles } from '@material-ui/styles';
 import { Box, IconButton, Menu, MenuItem } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ReactComponent as VnFlag } from '../../../../assets/img/vn-flag.svg';
 import { updateLang, updateLanguage } from 'reducers/multiLangSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { EN_LANG, VI_LANG } from 'utils/constant';
+import Cookies from 'js-cookie';
 const useStyles = makeStyles(() => ({
   language: {
     display: 'flex',
@@ -24,9 +25,19 @@ const useStyles = makeStyles(() => ({
 
 const Language = () => {
   const classes = useStyles();
-  const lang = useSelector(state => state.multiLang.lang);
+  const languageCookie = Cookies.get('language');
+  const lang = languageCookie ? languageCookie : VI_LANG;
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
+
+  useEffect(() => {
+    if (!languageCookie) {
+      Cookies.set('language', VI_LANG, {
+        expires: 365
+      });
+    }
+  }, []);
+
   const onOpen = event => {
     setAnchorEl(event?.currentTarget);
   };
