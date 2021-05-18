@@ -6,17 +6,18 @@ import useStyles from './styles';
 import { Grid, Hidden } from '@material-ui/core';
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const DownloadAppSection = () => {
   const classes = useStyles();
-
+  const { t } = useTranslation();
   return (
     <Fragment>
       <Hidden smUp>
         <section>
           <Container>
             <Title size="large" className={classes.titleBox}>
-              <h2 className={classes.title}>TẢI APP CỦA CHÚNG TÔI</h2>
+              <h2 className={classes.title}>{t('downloadApp.  ')}</h2>
               <Grid container spacing={3}>
                 <Grid item md={6} xs={6}>
                   <a
@@ -33,17 +34,16 @@ const DownloadAppSection = () => {
           </Container>
         </section>
       </Hidden>
-      <section className={classes.rootCard}>
+      <section className={classes.root}>
         <Container>
           <Grid container spacing={3}>
             <Grid item md={7} xs={12}></Grid>
             <Grid item md={5} xs={12} style={{ textAlign: 'center' }}>
               <div className={classes.downloadContainer}>
                 <div className={classes.hideOnMobile}>
-                  <h2 className={classes.title}>TẢI APP CỦA CHÚNG TÔI</h2>
+                  <h2 className={classes.title}>{t('downloadApp.title')}</h2>
                   <p className={classes.description}>
-                    Tải ứng dụng để có thêm thông tin về nguồn cung cấp sinh
-                    khối và dịch vụ bếp khí hóa sinh khối
+                    {t('downloadApp.description')}
                   </p>
                   <Grid container spacing={3}>
                     <Grid item md={6} sm={6} xs={12}>
@@ -63,16 +63,24 @@ const DownloadAppSection = () => {
                         onClick={() => alert('Download')}></a>
                     </Grid>
                   </Grid>
-                  <h2 className={classes.title}>HƯỚNG DẪN SỬ DỤNG APP</h2>
-                  <Link className={classes.instructionButton}>XEM NGAY</Link>
+                  <h2 className={classes.title}>
+                    {t('downloadApp.instructionTitle')}
+                  </h2>
+                  <Link className={classes.instructionButton}>
+                    {t('downloadApp.instructionButton')}
+                  </Link>
                 </div>
                 <Hidden smUp>
                   <Grid
                     container
                     spacing={3}
                     style={{ textAlign: 'right', display: 'inline-block' }}>
-                    <h2 className={classes.title}>HƯỚNG DẪN SỬ DỤNG APP</h2>
-                    <Link className={classes.instructionButton}>XEM NGAY</Link>
+                    <h2 className={classes.title}>
+                      {t('downloadApp.instructionTitle')}
+                    </h2>
+                    <Link className={classes.instructionButton}>
+                      {t('downloadApp.instructionButton')}
+                    </Link>
                   </Grid>
                 </Hidden>
               </div>

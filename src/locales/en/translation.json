@@ -68,5 +68,11 @@
     "backButton": "Back to home",
     "500Title": "Something went wrong",
     "500Description": "We're sorry for the inconvenience. Please try again later."
+  },
+  "downloadApp": {
+    "title": "DOWNLOAD OUR APP",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+    "instructionTitle": "INSTRUCTIONS",
+    "instructionButton": "Learn more"
   }
 }

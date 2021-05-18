@@ -1,20 +1,24 @@
 import { makeStyles } from '@material-ui/styles';
 import AppstoreBadge from 'assets/img/appstore-badge.svg';
 import GooglePlayBadge from 'assets/img/googleplay-badge.svg';
-import DownloadAppBg from 'assets/img/download-app-bg.svg';
+import DownloadAppDevice from 'assets/img/download-app-device.png';
 const useStyles = makeStyles(theme => ({
-  rootCard: {
+  root: {
     width: '100%',
     height: '100%',
     paddingTop: '10%',
     paddingBottom: '10%',
     marginTop: theme.spacing(5),
-    backgroundImage: `url(${DownloadAppBg})`,
+    backgroundColor: '#EDF5F8',
+    backgroundImage: `url(${DownloadAppDevice})`,
     backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center center',
+    backgroundSize: 'contain',
+    backgroundPosition: '0%',
     [theme.breakpoints.down('xs')]: {
-      backgroundPosition: '70%'
+      backgroundPosition: '-110%'
+    },
+    [theme.breakpoints.between('sm', 'md')]: {
+      backgroundPosition: '-1900%'
     }
   },
   media: {

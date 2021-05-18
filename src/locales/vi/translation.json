@@ -68,5 +68,11 @@
     "backButton": "Quay về trang chủ",
     "500Title": "Đã có lỗi xảy ra",
     "500Description": "Chúng tôi vô cùng xin lỗi vì sự bất tiện này. Xin vui lòng thử lại sau."
+  },
+  "downloadApp": {
+    "title": "TẢI APP CỦA CHÚNG TÔI",
+    "description": "Tải ứng dụng để có thêm thông tin về nguồn cung cấp sinh khối và dịch vụ bếp khí hóa sinh khối",
+    "instructionTitle": "HƯỚNG DẪN SỬ DỤNG APP",
+    "instructionButton": "XEM NGAY"
   }
 }
