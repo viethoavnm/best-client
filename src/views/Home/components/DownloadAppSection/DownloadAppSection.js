@@ -17,7 +17,7 @@ const DownloadAppSection = () => {
         <section>
           <Container>
             <Title size="large" className={classes.titleBox}>
-              <h2 className={classes.title}>{t('downloadApp.  ')}</h2>
+              <h2 className={classes.title}>{t('downloadApp.title')}</h2>
               <Grid container spacing={3}>
                 <Grid item md={6} xs={6}>
                   <Link
