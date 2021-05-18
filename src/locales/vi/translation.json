@@ -74,5 +74,10 @@
     "description": "Tải ứng dụng để có thêm thông tin về nguồn cung cấp sinh khối và dịch vụ bếp khí hóa sinh khối",
     "instructionTitle": "HƯỚNG DẪN SỬ DỤNG APP",
     "instructionButton": "XEM NGAY"
+  },
+  "cookieConsent": {
+    "message": "Chúng tôi sử dụng cookies để cải thiện trải nghiệm của bạn khi sử dụng trang web này. Xin hãy đọc",
+    "policy": "Điều khoản Về Quyền riêng tư",
+    "argee": "Đồng ý"
   }
 }
