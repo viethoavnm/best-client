@@ -20,14 +20,14 @@ const DownloadAppSection = () => {
               <h2 className={classes.title}>{t('downloadApp.  ')}</h2>
               <Grid container spacing={3}>
                 <Grid item md={6} xs={6}>
-                  <a
+                  <Link
                     className={clsx(classes.downloadButton, classes.appstore)}
-                    onClick={() => alert('Download')}></a>
+                    onClick={() => alert('Download')}></Link>
                 </Grid>
                 <Grid item md={6} xs={6}>
-                  <a
+                  <Link
                     className={clsx(classes.downloadButton, classes.googleplay)}
-                    onClick={() => alert('Download')}></a>
+                    onClick={() => alert('Download')}></Link>
                 </Grid>
               </Grid>
             </Title>
@@ -47,26 +47,28 @@ const DownloadAppSection = () => {
                   </p>
                   <Grid container spacing={3}>
                     <Grid item md={6} sm={6} xs={12}>
-                      <a
+                      <Link
+                        to="#"
                         className={clsx(
                           classes.downloadButton,
                           classes.appstore
                         )}
-                        onClick={() => alert('Download')}></a>
+                        onClick={() => alert('Download')}></Link>
                     </Grid>
                     <Grid item md={6} sm={6} xs={12}>
-                      <a
+                      <Link
+                        to="#"
                         className={clsx(
                           classes.downloadButton,
                           classes.googleplay
                         )}
-                        onClick={() => alert('Download')}></a>
+                        onClick={() => alert('Download')}></Link>
                     </Grid>
                   </Grid>
                   <h2 className={classes.title}>
                     {t('downloadApp.instructionTitle')}
                   </h2>
-                  <Link className={classes.instructionButton}>
+                  <Link to="#" className={classes.instructionButton}>
                     {t('downloadApp.instructionButton')}
                   </Link>
                 </div>
@@ -78,7 +80,7 @@ const DownloadAppSection = () => {
                     <h2 className={classes.title}>
                       {t('downloadApp.instructionTitle')}
                     </h2>
-                    <Link className={classes.instructionButton}>
+                    <Link to="#" className={classes.instructionButton}>
                       {t('downloadApp.instructionButton')}
                     </Link>
                   </Grid>
