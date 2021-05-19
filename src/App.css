@@ -84,3 +84,7 @@
 .ck.ck-editor__editable .image > figcaption.ck-placeholder::before {
   position: static;
 }
+
+.modal-open {
+  overflow: hidden;
+}

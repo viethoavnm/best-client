@@ -108,10 +108,15 @@ const NavBar = () => {
 
   const toggle = () => {
     setOpenMenu(!openMenu);
+    if (!openMenu) {
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.classList.remove('modal-open');
+    }
   };
 
   return (
-    <nav className={clsx(classes.root, openMenu && classes.menuOpenRoot)}>
+    <nav className={classes.root}>
       <Container>
         <div className={classes.container}>
           <IconButton className={classes.pushmenu} onClick={toggle}>
@@ -124,9 +129,9 @@ const NavBar = () => {
 
           <div
             className={clsx(classes.menuMobile, openMenu && classes.menuOpen)}>
-            {/* <div className={classes.imgTopBox}>
+            <div className={classes.imgTopBox}>
               <img className={classes.imgTop} src={logo} alt="logo" />
-            </div> */}
+            </div>
 
             <ul className={classes.ul}>
               {listMenu.map((obj, key) => {
