@@ -126,7 +126,6 @@ const ContactForm = () => {
                   </label>
                   <input
                     className={classes.input}
-                    fullWidth
                     type="text"
                     required
                     value={name}
@@ -141,7 +140,6 @@ const ContactForm = () => {
                   </label>
                   <input
                     className={classes.input}
-                    fullWidth
                     type="text"
                     required
                     value={title}
@@ -156,7 +154,6 @@ const ContactForm = () => {
                   </label>
                   <input
                     className={classes.input}
-                    fullWidth
                     type="email"
                     required
                     value={email}
