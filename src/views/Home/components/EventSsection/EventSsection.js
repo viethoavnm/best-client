@@ -1,9 +1,5 @@
-import { CardActionArea } from '@material-ui/core';
+import { Card, CardActionArea, CardMedia } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import {
-  default as Card,
-  default as CardMedia
-} from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { ChevronRight } from '@material-ui/icons';
@@ -103,31 +99,9 @@ const EventSsection = props => {
     const isMatchEvent = !Lodash.isEmpty(dayEvent);
 
     return (
-      <Box
-        display="flex"
-        flexDirection="column"
-        width="50px"
-        height="50px"
-        justifyContent="center"
-        alignItems="center"
-        position="relative"
-        // bgcolor={isSelectedDate ? '#92BF1F' : 'transaprent'}
-      >
-        <Typography className={classes.dayDate}>{dateData}</Typography>
-
-        {isMatchEvent && (
-          <Box
-            width="8px"
-            position="absolute"
-            left="21px"
-            bottom="0px"
-            height="8px"
-            borderRadius="4px"
-            bgcolor="#92BF1F"
-            alignSelf="center"
-          />
-        )}
-      </Box>
+      <div className={clsx('DayPicker-Day---box', isMatchEvent && 'has-event')}>
+        <p className={classes.dayDate}>{dateData}</p>
+      </div>
     );
   };
 
@@ -182,8 +156,8 @@ const EventSsection = props => {
       );
     }
     return (
-      <Card className={clsx(classes.eventDetailCard)}>
-        <CardActionArea component={Link} to={`/event/${currentEvent._id}`}>
+      <Card className={clsx(classes.eventDetailCard)} elevation={0}>
+        <CardActionArea component={Link} to={`/event/${currentEvent?._id}`}>
           <Box position="relative" textAlign="center">
             <CardMedia
               className={classes.thumbnailEvent}
@@ -196,10 +170,10 @@ const EventSsection = props => {
               left="50%"
               className={classes.wrapperDayEvent}>
               <Typography className={classes.dayEvent}>
-                {moment(currentEvent.startDate).date()}
+                {moment(currentEvent?.startDate).date()}
               </Typography>
               <Typography className={classes.weekday}>
-                {moment(currentEvent.startDate).format('dddd')}
+                {moment(currentEvent?.startDate).format('dddd')}
               </Typography>
             </Box>
           </Box>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Divider, Grid } from '@material-ui/core';
+import { CardActionArea, Divider, Grid } from '@material-ui/core';
 import { Container, Title } from 'components';
 import EventCardLarge from '../../components/EventCardLarge';
 import { Fragment } from 'react';
@@ -114,31 +114,9 @@ const Event = () => {
     const isMatchEvent = !Lodash.isEmpty(dayEvent);
 
     return (
-      <Box
-        display="flex"
-        flexDirection="column"
-        width="50px"
-        height="50px"
-        justifyContent="center"
-        alignItems="center"
-        position="relative"
-        // bgcolor={isSelectedDate ? '#92BF1F' : 'transaprent'}
-      >
-        <Typography className={classes.dayDate}>{dateData}</Typography>
-
-        {isMatchEvent && (
-          <Box
-            width="8px"
-            position="absolute"
-            left="21px"
-            bottom="0px"
-            height="8px"
-            borderRadius="4px"
-            bgcolor="#92BF1F"
-            alignSelf="center"
-          />
-        )}
-      </Box>
+      <div className={clsx('DayPicker-Day---box', isMatchEvent && 'has-event')}>
+        <p className={classes.dayDate}>{dateData}</p>
+      </div>
     );
   };
 
@@ -158,195 +136,130 @@ const Event = () => {
   };
 
   const _renderEventDetail = () => {
-    const image = Lodash.get(currentEvent, 'urlImg', '');
-    const name = Lodash.get(currentEvent, 'name', '');
-    const address = Lodash.get(currentEvent, 'address', '');
-    const startDate = Lodash.get(currentEvent, 'startDate', '');
+    if (Lodash.isEmpty(currentEvent)) {
+      return (
+        <Box
+          style={{
+            paddingTop: '50px',
+            paddingBottom: '50px'
+          }}>
+          <CardMedia
+            alt="img_no_event"
+            className={classes.imgNoEvent}
+            image="images/img_no_event.svg"
+          />
+          <Typography className={classes.noEventLable} align="center">
+            {t('noEvent')}
+          </Typography>
+        </Box>
+      );
+    }
 
     return (
-      <Grid
-        item
-        container
-        // direction="column"
-        justifyContent="center"
-        justify="center"
-        alignItems="center">
-        {Lodash.isEmpty(currentEvent) ? (
-          // <Card className={classes.eventDetailCard} elevation={0}>
-          //   <CardMedia
-          //     alt="img_no_event"
-          //     className={classes.imgNoEvent}
-          //     image="images/img_no_event.svg"
-          //   />
-
-          //   <Typography className={classes.noEventLable} align="center">
-          //     Hiện đang không có sự kiện nào
-          //   </Typography>
-          // </Card>
-          <Box
-            style={{
-              paddingTop: '50px',
-              paddingBottom: '50px'
-            }}>
+      <Card className={clsx(classes.eventDetailCard)} elevation={0}>
+        <CardActionArea component={Link} to={`/event/${currentEvent?._id}`}>
+          <Box position="relative" textAlign="center">
             <CardMedia
-              alt="img_no_event"
-              className={classes.imgNoEvent}
-              image="images/img_no_event.svg"
+              className={classes.thumbnailEvent}
+              image={currentEvent?.urlImg}
+              alt="image-event"
             />
-            <Typography className={classes.noEventLable} align="center">
-              {t('noEvent')}
-            </Typography>
+            <Box
+              position="absolute"
+              top="50%"
+              left="50%"
+              className={classes.wrapperDayEvent}>
+              <Typography className={classes.dayEvent}>
+                {moment(currentEvent?.startDate).date()}
+              </Typography>
+              <Typography className={classes.weekday}>
+                {moment(currentEvent?.startDate).format('dddd')}
+              </Typography>
+            </Box>
           </Box>
-        ) : (
-          // <Box>
-          //   <CardMedia
-          //     alt="img_no_event"
-          //     className={classes.imgNoEvent}
-          //     image="images/img_no_event.svg"
-          //   />
 
-          //   <Typography className={classes.noEventLable} align="center">
-          //     Hiện đang không có sự kiện nào
-          //   </Typography>
-          // </Box>
-          <Card className={clsx(classes.eventDetailCard)} elevation={0}>
-            <Box position="relative" textAlign="center">
-              <CardMedia
-                className={classes.thumbnailEvent}
-                image={image}
-                alt="image-event"
-              />
+          <Box className={classes.eventDes}>
+            <Box display="flex" alignItems="center" flexDirection="column">
+              <h2 className={classes.eventTitle} align="center">
+                {currentEvent?.name}
+              </h2>
 
               <Box
-                position="absolute"
-                top="50%"
-                left="50%"
-                className={classes.wrapperDayEvent}>
-                <Typography className={classes.dayEvent}>
-                  {moment(currentEvent.startDate).date()}
-                </Typography>
-                <Typography className={classes.weekday}>
-                  {moment(currentEvent.startDate).format('dddd')}
-                </Typography>
+                display="flex"
+                alignItems="center"
+                flexDirection="row"
+                marginBottom="16px">
+                <CardMedia
+                  className={classes.media}
+                  image="images/ic-location-white.svg"
+                  alt="location"
+                />
+                <p className={classes.addressItem}>{currentEvent?.address}</p>
+              </Box>
+
+              <Box display="flex" alignItems="center" flexDirection="row">
+                <CardMedia
+                  className={classes.media}
+                  image="images/ic-clock-white.svg"
+                  alt="location"
+                />
+                <p className={classes.addressItem}>
+                  {moment(currentEvent?.startDate).format(DATE_FORMAT)}
+                </p>
               </Box>
             </Box>
-
-            <Box className={classes.eventDes}>
-              <Box display="flex" alignItems="center" flexDirection="column">
-                <Typography className={classes.eventTitle} align="center">
-                  {currentEvent.name}
-                </Typography>
-
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  flexDirection="row"
-                  marginBottom="16px">
-                  <CardMedia
-                    className={classes.media}
-                    image="images/ic-location-white.svg"
-                    alt="location"
-                  />
-                  <Typography className={classes.addressItem}>
-                    {currentEvent.address}
-                  </Typography>
-                </Box>
-
-                <Box display="flex" alignItems="center" flexDirection="row">
-                  <CardMedia
-                    className={classes.media}
-                    image="images/ic-clock-white.svg"
-                    alt="location"
-                  />
-                  <Typography className={classes.addressItem}>
-                    {moment(currentEvent.startDate).format(DATE_FORMAT)}
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-          </Card>
-        )}
-      </Grid>
+          </Box>
+        </CardActionArea>
+      </Card>
     );
   };
 
-  const handleClickItem = item => {
-    history.push({
-      pathname: `/event/${item._id}`
-    });
-  };
   return (
     <Fragment>
       {/* {renderHTML(htmlUnescape)} */}
       <Container>
-        <Box marginTop="48px" />
-
-        {/* <Button onClick={() => dispatch(fetchMenuWeb())}>sadsds</Button> */}
         <section>
-          <Title size="large">
+          <Title size="large" className={classes.titleBox}>
             <div className={classes.title}>{t('eventsTitle')}</div>
             <div className={classes.breadcrumb}>
               {t('txtHome')} / {t('titleEvent')}
             </div>
           </Title>
 
-          <Card className={clsx(classes.eventCard)} elevation={0}>
-            <Grid container>
-              <Grid
-                item
-                container
-                sm={12}
-                md={6}
-                xs={12}
-                className={clsx(classes.eventLeft)}>
-                {_renderEventDetail()}
-              </Grid>
-
-              <Grid
-                item
-                container
-                sm={12}
-                md={6}
-                xs={12}
-                justify="center"
-                className={clsx(classes.eventRight)}>
-                {_renderDayPicker()}
-              </Grid>
+          <Grid container className={classes.rootCard}>
+            <Grid item xs={12} md={6} className={clsx(classes.eventLeft)}>
+              {_renderEventDetail()}
             </Grid>
-          </Card>
+
+            <Grid item xs={12} md={6} className={clsx(classes.eventRight)}>
+              {_renderDayPicker()}
+            </Grid>
+          </Grid>
         </section>
 
         <section className={clsx(classes.secondSection)}>
-          <Grid container spacing={2}>
+          <Grid container spacing={4}>
             <Grid item xs={12} md={8}>
-              <Title size="large">
+              <Title size="large" style={{ marginBottom: 24 }}>
                 <div className={classes.title}>{t('upcomingEvents')}</div>
               </Title>
 
               {!loading ? (
-                <Grid container spacing={2} className={classes.eventList}>
+                <div className={classes.eventList}>
                   {listEvent.map(item => {
                     return (
-                      <Grid item xs={12} sm={12} lg={12}>
-                        {/* <ListItem onClick={() => handleClickItem(item)}> */}
-                        <EventCardLarge
-                          item={item}
-                          onClick={() => handleClickItem(item)}
-                          // title={item.title}
-                          // image={item.image}
-                          // startTime={item.startTime}
-                          // day={item.day}
-                          // month={item.month}
-                          // year={item.year}
-                          // hourminute={item.hourminute}
-                          // location={item.location}
-                        />
+                      <Fragment key={item?._id}>
+                        <CardActionArea
+                          component={Link}
+                          to={`/event/${item._id}`}
+                          style={{ textDecoration: 'none' }}>
+                          <EventCardLarge item={item} />
+                        </CardActionArea>
                         <Divider className={classes.divider} />
-                        {/* </ListItem> */}
-                      </Grid>
+                      </Fragment>
                     );
                   })}
-                </Grid>
+                </div>
               ) : (
                 <div
                   style={{

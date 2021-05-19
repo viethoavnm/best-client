@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   },
   label: {
     fontWeight: 500,
-    flexBasis: 100,
+    flexBasis: 110,
     flexShrink: 0
   },
   input: {
