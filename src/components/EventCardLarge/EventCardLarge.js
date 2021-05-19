@@ -25,13 +25,10 @@ const useStyles = makeStyles(theme =>
       display: 'flex',
       overflow: 'visible',
       borderRadius: 10,
-      boxShadow: '0px 4px 60px rgba(150, 150, 150, 0.13)'
-    },
-    details: {
-      flexDirection: 'column'
+      boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.16)'
     },
     content: {
-      padding: 15
+      padding: '24px 32px'
     },
     media: {
       height: 0,
@@ -45,11 +42,11 @@ const useStyles = makeStyles(theme =>
       // 'object-fit': 'contain'
     },
     title: {
-      marginTop: 24,
-      marginBottom: 42,
+      margin: 0,
       color: '#3A3A3A',
+      fontSize: 24,
       fontWeight: 600,
-      lineHeight: '30px',
+      lineHeight: 1.5,
       overflow: 'hidden',
       display: '-webkit-box',
       '-webkit-line-clamp': 2,
@@ -60,25 +57,13 @@ const useStyles = makeStyles(theme =>
       display: 'flex',
       alignItems: 'center',
       justifyItems: 'center',
-      marginBottom: 23,
+      marginTop: 20,
       color: '#92BF1F'
     },
-    mediaGrid: {
-      display: 'flex',
-      alignItems: 'center'
-    },
-    detailGrid: {
-      paddingLeft: 20,
-      [theme.breakpoints.up('sm')]: {
-        paddingTop: 12
-      }
-    },
-    iconGrid: {
-      marginRight: 10,
-      marginTop: 5,
-      flexShrink: 0
-    },
     textGrid: {
+      marginLeft: 10,
+      fontSize: 14,
+      fontWeight: 500,
       overflow: 'hidden',
       display: '-webkit-box',
       '-webkit-line-clamp': 2,
@@ -106,47 +91,26 @@ const EventCardLarge = ({ item, onClick }) => {
 
   return (
     <Card className={classes.root}>
-      <CardActionArea onClick={onClick}>
-        <Grid container spacing={0}>
-          <Grid item xs={5} md={4} className={classes.mediaGrid}>
-            <CardActionArea>
-              <CardMedia className={`${classes.media}`} image={image} />
-            </CardActionArea>
-          </Grid>
-
-          <Grid item xs={7} md={8} className={classes.detailGrid}>
-            <div className={classes.details}>
-              <CardContent className={classes.content}>
-                <Typography
-                  variant="h4"
-                  color="textPrimary"
-                  className={classes.title}>
-                  {name}
-                </Typography>
-
-                <Box className={classes.grid}>
-                  <Box className={classes.iconGrid}>
-                    <LocationOnOutlinedIcon />
-                  </Box>
-                  <Typography variant="div" className={classes.textGrid}>
-                    {address}
-                  </Typography>
-                </Box>
-
-                <Box className={classes.grid}>
-                  <Box className={classes.iconGrid}>
-                    <AccessTimeIcon />
-                  </Box>
-                  <Typography variant="div" className={classes.textGrid}>
-                    {formatDate}
-                  </Typography>
-                </Box>
-              </CardContent>
-              <div className={classes.controls}></div>
-            </div>
-          </Grid>
+      <Grid container spacing={0}>
+        <Grid item xs={5} md={4}>
+          <CardMedia className={`${classes.media}`} image={image} />
         </Grid>
-      </CardActionArea>
+
+        <Grid item xs={7} md={8}>
+          <CardContent className={classes.content}>
+            <h4 className={classes.title}>{name}</h4>
+            <Box className={classes.grid}>
+              <LocationOnOutlinedIcon />
+              <div className={classes.textGrid}>{address}</div>
+            </Box>
+
+            <Box className={classes.grid}>
+              <AccessTimeIcon />
+              <div className={classes.textGrid}>{formatDate}</div>
+            </Box>
+          </CardContent>
+        </Grid>
+      </Grid>
     </Card>
   );
 };

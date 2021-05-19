@@ -20,7 +20,14 @@ const useStyles = makeStyles(theme =>
       textTransform: 'uppercase'
     },
     eventList: {
-      marginTop: '24px'
+      marginTop: 24,
+      '& hr:last-child': {
+        backgroundColor: '#ffffff',
+        marginBottom: 40,
+        [theme.breakpoints.down('md')]: {
+          marginBottom: 24
+        }
+      }
     },
     event: {
       paddingTop: '0px',
@@ -47,25 +54,26 @@ const useStyles = makeStyles(theme =>
       fontSize: 19
     },
     divider: {
-      [theme.breakpoints.up('md')]: {
-        marginTop: '40px',
-        marginBottom: '32px'
-      },
+      marginTop: '40px',
+      marginBottom: '32px',
+      backgroundColor: '#E5E5E5',
       [theme.breakpoints.down('md')]: {
-        marginTop: '33px',
-        marginBottom: '21px'
-      },
-      backgroundColor: '1px solid #E5E5E5'
+        marginTop: '24px',
+        marginBottom: '24px'
+      }
     },
     firstSection: {
       marginTop: theme.spacing(2)
     },
     thumbnailEvent: {
-      width: '100%',
-      height: 232
+      paddingBottom: '46%',
+      borderRadius: '16px 0 0 0',
+      [theme.breakpoints.down('sm')]: {
+        borderRadius: '16px 16px 0 0'
+      }
     },
     secondSection: {
-      marginTop: theme.spacing(2)
+      paddingTop: theme.spacing(6)
     },
     eventCard: {
       height: '100%',
@@ -75,17 +83,25 @@ const useStyles = makeStyles(theme =>
       marginTop: theme.spacing(2)
     },
     eventLeft: {
-      backgroundColor: '#92BF1F'
+      backgroundColor: '#92BF1F',
+      borderRadius: '16px 0 0 16px',
+      [theme.breakpoints.down('sm')]: {
+        borderRadius: '16px 16px 0 0'
+      }
     },
     eventRight: {
-      backgroundColor: '#FFFFFF'
-    },
-    eventDetailCard: {
-      position: 'relative',
+      backgroundColor: '#FFFFFF',
+      display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
+      overflowY: 'auto',
+      borderRadius: 16,
+      [theme.breakpoints.down('xs')]: {
+        display: 'block'
+      }
+    },
+    eventDetailCard: {
       backgroundColor: '#92BF1F'
-      // maxWidth: 500
     },
     imgNoEvent: {
       // width: '100%',
@@ -108,8 +124,8 @@ const useStyles = makeStyles(theme =>
     },
 
     titleBox: {
-      marginTop: 40,
-      marginBottom: 25
+      marginTop: 32,
+      marginBottom: 32
     },
     titleContent: {
       flexGrow: 1,
@@ -119,23 +135,19 @@ const useStyles = makeStyles(theme =>
       flexWrap: 'wrap'
     },
     rootCard: {
-      height: '100%',
-      backgroundColor: '#FFFFFF',
       boxShadow: `0px 4px 60px 0px rgba(150, 150, 150, 0.24)`,
       borderRadius: 16
     },
 
     eventTitle: {
+      lineHeight: 1.25,
       color: 'white',
+      marginTop: 0,
       marginBottom: theme.spacing(2),
       fontWeight: 700,
       fontSize: '24px',
-      lineHeight: '30px',
       [theme.breakpoints.down('sm')]: {
-        paddingLeft: 20,
-        paddingRight: 20,
-        fontSize: '18px',
-        lineHeight: '22px'
+        fontSize: 16
       }
     },
     root: {
@@ -165,22 +177,16 @@ const useStyles = makeStyles(theme =>
       transform: 'translate(-50%,-50%)'
     },
     dayEvent: {
-      fontFamily: 'Montserrat',
       fontSize: '72px',
       fontWeight: '700',
       color: '#ffffff',
       lineHeight: '87px'
     },
     weekday: {
-      fontFamily: 'Montserrat',
       fontSize: '24px',
       fontWeight: '700',
       color: '#ffffff',
       lineHeight: '29px'
-    },
-    dayWrapper: {
-      justifyContent: 'center',
-      alignItems: 'center'
     },
     notInThisMonthDayPaper: {
       width: '35px',
@@ -231,26 +237,17 @@ const useStyles = makeStyles(theme =>
     },
     media: { width: 24, height: 24, marginRight: 10 },
     addressItem: {
-      fontFamily: 'Montserrat',
+      margin: 0,
       fontSize: '14px',
-      fontWeight: '500',
-      color: '#FFFFFF',
-      lineHeight: '17px',
-      [theme.breakpoints.down('sm')]: {
-        fontSize: '12px'
-      }
+      fontWeight: '600',
+      color: '#FFFFFF'
     },
     eventDes: {
+      padding: '24px 40px',
       backgroundColor: '#92BF1F',
-      height: '50%',
-      paddingLeft: 50,
-      paddingRight: 50,
       [theme.breakpoints.down('sm')]: {
-        paddingLeft: 20,
-        paddingRight: 20
-      },
-      paddingTop: 30,
-      paddingBottom: 30
+        padding: 16
+      }
     },
     title1: {
       fontFamily: 'Montserrat',

@@ -7,25 +7,18 @@ import {
 } from '@material-ui/core';
 import { AccessTime, ChevronRight } from '@material-ui/icons';
 import { Container, Title } from 'components';
-import React, { useState, useEffect, Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import useStylesLibrarySection from '../LibrarySection/styles';
-import NewsItem from '../NewsItem';
-import useStyles from './styles';
-import useStylesNewsItem from '../NewsItem/styles';
-import { useSelector, useDispatch } from 'react-redux';
-import { getSafeValue, getTransObj, getLinkFromArticle } from 'utils';
 import Lodash from 'lodash';
 import moment from 'moment';
-import {
-  TYPE_HOME_DATA,
-  UI_TYPE_HOME_DATA,
-  SubTypeArticle,
-  DATE_FORMAT
-} from 'utils/constant';
-import { useHistory } from 'react-router-dom';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { getLinkFromArticle, getSafeValue, getTransObj } from 'utils';
+import { DATE_FORMAT, TYPE_HOME_DATA } from 'utils/constant';
+import useStylesLibrarySection from '../LibrarySection/styles';
+import NewsItem from '../NewsItem';
+import useStylesNewsItem from '../NewsItem/styles';
+import useStyles from './styles';
 
 const NewsSection = props => {
   const { data } = props;
@@ -135,14 +128,16 @@ const NewsSection = props => {
 
           return (
             <Grid item xs={6} md={12} key={obj?._id}>
-              <CardActionArea onClick={() => handleClickArticle(obj)}>
+              <Link
+                to={getLinkFromArticle(obj)}
+                style={{ textDecoration: 'none' }}>
                 <NewsItem
                   type={obj.nameCate}
                   title={obj.title}
                   image={obj.urlImg}
                   time={date}
                 />
-              </CardActionArea>
+              </Link>
             </Grid>
           );
         })}
