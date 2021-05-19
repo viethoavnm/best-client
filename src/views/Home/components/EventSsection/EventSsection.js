@@ -1,6 +1,4 @@
-import { Card, CardActionArea, CardMedia } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
+import { Box, Card, CardActionArea, CardMedia, Grid } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { ChevronRight } from '@material-ui/icons';
 import clsx from 'clsx';
@@ -156,7 +154,7 @@ const EventSsection = props => {
       );
     }
     return (
-      <Card className={clsx(classes.eventDetailCard)} elevation={0}>
+      <Card elevation={0}>
         <CardActionArea component={Link} to={`/event/${currentEvent?._id}`}>
           <Box position="relative" textAlign="center">
             <CardMedia

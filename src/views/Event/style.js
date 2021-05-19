@@ -100,9 +100,6 @@ const useStyles = makeStyles(theme =>
         display: 'block'
       }
     },
-    eventDetailCard: {
-      backgroundColor: '#92BF1F'
-    },
     imgNoEvent: {
       // width: '100%',
       // height: 250

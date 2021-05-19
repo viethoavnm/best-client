@@ -1,33 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { CardActionArea, Divider, Grid } from '@material-ui/core';
-import { Container, Title } from 'components';
-import EventCardLarge from '../../components/EventCardLarge';
-import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import NewsEvent from '../Search/component/news-event';
-import useStyles from './style';
+import { Card, CardActionArea, CardMedia, Divider } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
+import { Container, Title } from 'components';
+import RightNews from 'components/RightNews';
 import Lodash from 'lodash';
 import moment from 'moment';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import ListItem from '@material-ui/core/ListItem';
+import 'moment/locale/vi';
+import React, { Fragment, useEffect, useState } from 'react';
 import DayPicker from 'react-day-picker';
 import MomentLocaleUtils from 'react-day-picker/moment';
-import Card from '@material-ui/core/CardMedia';
-import CardMedia from '@material-ui/core/CardMedia';
-import Box from '@material-ui/core/Box';
-import { VI_LANG } from 'utils/constant';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { useHistory } from 'react-router-dom';
-import renderHTML from 'react-render-html';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchMenuWeb } from '../../reducers/setupSlice.js';
-import RightNews from 'components/RightNews';
 import { useTranslation } from 'react-i18next';
-import 'moment/locale/vi';
+import { useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import { getEventByYear } from 'services/event';
 import { getTransObj } from 'utils';
+import EventCardLarge from '../../components/EventCardLarge';
+import useStyles from './style';
 
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 
@@ -156,7 +147,7 @@ const Event = () => {
     }
 
     return (
-      <Card className={clsx(classes.eventDetailCard)} elevation={0}>
+      <Card elevation={0}>
         <CardActionArea component={Link} to={`/event/${currentEvent?._id}`}>
           <Box position="relative" textAlign="center">
             <CardMedia

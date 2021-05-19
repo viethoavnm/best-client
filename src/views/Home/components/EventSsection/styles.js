@@ -62,11 +62,6 @@ const useStyles = makeStyles(theme => ({
       display: 'block'
     }
   },
-  eventDetailCard: {
-    borderRadius: 0,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
   imgNoEvent: {
     // width: '100%'
     height: 0,
