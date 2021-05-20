@@ -106,20 +106,27 @@ const NavBar = () => {
     setlistMenu(newListMenu);
   }, [menuData, lang]);
 
-  const toggle = () => {
-    setOpenMenu(!openMenu);
-    if (!openMenu) {
+  useEffect(() => {
+    if (openMenu) {
       document.body.classList.add('modal-open');
     } else {
       document.body.classList.remove('modal-open');
     }
+  }, [openMenu]);
+
+  const handleOpenMenu = () => {
+    setOpenMenu(true);
+  };
+
+  const handleCloseMenu = () => {
+    setOpenMenu(false);
   };
 
   return (
     <nav className={classes.root}>
       <Container>
         <div className={classes.container}>
-          <IconButton className={classes.pushmenu} onClick={toggle}>
+          <IconButton className={classes.pushmenu} onClick={handleOpenMenu}>
             <MenuIcon fontSize="large" />
           </IconButton>
 
@@ -142,10 +149,8 @@ const NavBar = () => {
                   <li className={classes.li} key={key}>
                     <Link
                       to={obj.link}
-                      onClick={toggle}
-                      className={[classes.a, isSamePath && classes.active].join(
-                        ' '
-                      )}>
+                      onClick={handleCloseMenu}
+                      className={clsx(classes.a, isSamePath && classes.active)}>
                       {/* <Home className={classes.icon} /> */}
                       <span className={classes.span}>{obj.name}</span>
                     </Link>
@@ -156,7 +161,7 @@ const NavBar = () => {
           </div>
 
           {openMenu && (
-            <div className={classes.closeMenu} onClick={toggle}></div>
+            <div className={classes.closeMenu} onClick={handleCloseMenu}></div>
           )}
 
           <div id={mapIcon}></div>
