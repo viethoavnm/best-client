@@ -26,6 +26,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import Error404 from '../../views/Error404';
 import Error500 from '../../views/Error500';
+import { Helmet } from 'react-helmet';
 
 const PostDetail = props => {
   const limitSuggest = 4;
@@ -235,56 +236,73 @@ const PostDetail = props => {
   };
 
   return (
-    <Container bgcolor="#FDFDFD">
-      {loadError !== 404 && loadError !== 500 && (
-        <div className={classes.header}>
-          <Title size="large">
-            <div className={classes.titleSection}>{t('titleArticles')}</div>
-            <div className={classes.breadcrumb}>
-              {t('txtHome')} / {t('titleArticles')}
-            </div>
-          </Title>
-        </div>
-      )}
+    <>
+      <Helmet>
+        <title>
+          {data?.[lang]?.title ? data?.[lang]?.title : 'Bài viết'} - BEST
+        </title>
+        <meta name="description" content={Lodash.get(data, 'content', '')} />
+        <meta
+          property="og:title"
+          content="BEST - Dự án công nghệ khí hóa sinh khối"
+        />
+        <meta
+          property="og:description"
+          content="BEST là dự án công nghệ khí hoá sinh khối - Giải pháp năng lượng bền vững cho chế biến nông sản và quản lý chất thải ở nông thôn Việt Nam"
+        />
+        <meta property="og:image" content="" />
+      </Helmet>
+      <Container bgcolor="#FDFDFD">
+        {loadError !== 404 && loadError !== 500 && (
+          <div className={classes.header}>
+            <Title size="large">
+              <div className={classes.titleSection}>{t('titleArticles')}</div>
+              <div className={classes.breadcrumb}>
+                {t('txtHome')} / {t('titleArticles')}
+              </div>
+            </Title>
+          </div>
+        )}
 
-      {loading ? (
-        <div
-          style={{
-            height: 80,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-          <CircularProgress size={30} style={{ color: '#A0BE37' }} />
-        </div>
-      ) : loadError === 404 ? (
-        <Error404 />
-      ) : loadError === 500 ? (
-        <Error500 />
-      ) : (
-        <Fragment>
-          <Grid container spacing={4}>
-            <Grid item xs={12} md={8}>
-              {/* <CardMedia className={classes.thumbnail} alt="" image={image} /> */}
-              {_renderContentEvent()}
+        {loading ? (
+          <div
+            style={{
+              height: 80,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+            <CircularProgress size={30} style={{ color: '#A0BE37' }} />
+          </div>
+        ) : loadError === 404 ? (
+          <Error404 />
+        ) : loadError === 500 ? (
+          <Error500 />
+        ) : (
+          <Fragment>
+            <Grid container spacing={4}>
+              <Grid item xs={12} md={8}>
+                {/* <CardMedia className={classes.thumbnail} alt="" image={image} /> */}
+                {_renderContentEvent()}
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Hidden smDown>
+                  <RightNews />
+                </Hidden>
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={4}>
-              <Hidden smDown>
-                <RightNews />
-              </Hidden>
+            {dataSuggest.length > 0 &&
+              _renderTitle(`${t('titleArticlesRelate')}`)}
+            <Grid container spacing={3} className={classes.gridSuggest}>
+              <RelatedPost
+                data={dataSuggest.slice(0, limitSuggest)}
+                mode="post"
+              />
             </Grid>
-          </Grid>
-          {dataSuggest.length > 0 &&
-            _renderTitle(`${t('titleArticlesRelate')}`)}
-          <Grid container spacing={3} className={classes.gridSuggest}>
-            <RelatedPost
-              data={dataSuggest.slice(0, limitSuggest)}
-              mode="post"
-            />
-          </Grid>
-        </Fragment>
-      )}
-    </Container>
+          </Fragment>
+        )}
+      </Container>
+    </>
   );
 };
 

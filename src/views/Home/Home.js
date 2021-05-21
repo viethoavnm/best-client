@@ -59,18 +59,6 @@ const Home = () => {
 
   return (
     <Fragment>
-      <Helmet>
-        <title>BEST - Dự án công nghệ khí hóa sinh khối</title>
-        <meta
-          name="description"
-          content="BEST là dự án công nghệ khí hoá sinh khối - Giải pháp năng lượng bền vững cho chế biến nông sản và quản lý chất thải ở nông thôn Việt Nam"
-        />
-        <meta
-          property="og:title"
-          content="BEST - Dự án công nghệ khí hóa sinh khối"
-        />
-        <meta property="og:image" content={LogoBEST} />
-      </Helmet>
       {/* <Button
         variant="contained"
         onClick={() => {
