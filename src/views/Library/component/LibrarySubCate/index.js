@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Button, CardActionArea, Grid } from '@material-ui/core';
+import { CardActionArea, Grid } from '@material-ui/core';
 import { Container, Title, Pagination, LibraryCard } from 'components';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Fragment } from 'react';
 import clsx from 'clsx';
-import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import useStyles from './styles';
-import NewsEvent from 'components/RightNews';
 import { getArticle } from 'services/articles';
 import { TYPE_ARTICLE } from 'utils/constant';
 import { getSafeValue, getTransObj } from 'utils';
@@ -17,6 +15,7 @@ import RightNews from 'components/RightNews';
 import { useTranslation } from 'react-i18next';
 import Error404 from 'views/Error404';
 import Error500 from 'views/Error500';
+import { Helmet } from 'react-helmet';
 
 const LibrarySubCate = props => {
   const history = useHistory();
@@ -110,9 +109,23 @@ const LibrarySubCate = props => {
     const id = getSafeValue(obj, '_id', '');
     history.push(`/library/${typeLibrary}/${id}`);
   };
-
+  const metaTitle = `${
+    typeLibrary === TYPE_ARTICLE.file
+      ? t('titleDocument')
+      : typeLibrary === TYPE_ARTICLE.news
+      ? t('PressRelease')
+      : typeLibrary === TYPE_ARTICLE.video
+      ? 'Video'
+      : typeLibrary === TYPE_ARTICLE.image
+      ? t('titleImage')
+      : ''
+  } - BEST`;
   return (
     <Fragment>
+      <Helmet>
+        <title>{metaTitle}</title>
+        <meta property="og:title" content={metaTitle} />
+      </Helmet>
       <Container>
         {loadError === 404 ? (
           <Error404 />

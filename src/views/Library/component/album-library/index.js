@@ -12,6 +12,7 @@ import { AccessTime } from '@material-ui/icons';
 import { Container } from 'components';
 import RightNews from 'components/RightNews';
 import ShareSocial from 'components/ShareSocial';
+import { removeHTMLTag, truncateString } from 'helpers';
 import { Fragment, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -24,7 +25,8 @@ import Error500 from 'views/Error500';
 import useStylesLibrary from 'views/Library/style';
 import useStylesDetailVideo from '../detail-video/style';
 import CarouselImg from './component/carousel-img';
-
+import { unescape } from 'lodash';
+import { Helmet } from 'react-helmet';
 const useStyles = makeStyles(() =>
   createStyles({
     imageBox: {
@@ -79,94 +81,113 @@ const AlbumLibrary = props => {
         setLoading(false);
       });
   }, []);
-
+  const metaDescription = truncateString(
+    removeHTMLTag(unescape(data?.[lang]?.description))
+  );
+  const metaTitle = `${
+    data?.[lang]?.title ? data?.[lang]?.title : 'Album'
+  } - BEST`;
   return (
-    <Container>
-      {loadError === 404 ? (
-        <Error404 />
-      ) : loadError === 500 ? (
-        <Error500 />
-      ) : (
-        <>
-          <Grid container spacing={4} className={classesDetailVideo.container}>
-            <Grid item xs={12} md={8}>
-              <div className={classesDetailVideo.title}>
-                {data?.[lang]?.title}
-              </div>
-
-              <div className={classesDetailVideo.shareBox}>
-                <Button
-                  component={Link}
-                  to={libraryPath}
-                  className={classesDetailVideo.libraryBtn}>
-                  {libraryMenu?.[lang]?.name}
-                </Button>
-                <div className={classesDetailVideo.time}>
-                  <AccessTime className={classesDetailVideo.timeIcon} />
-                  <div>{formatDate(data?.publishedAt)}</div>
+    <Fragment>
+      <Helmet>
+        <title>{metaTitle}</title>
+        <meta name="description" content={metaDescription} />
+        <meta property="og:title" content={metaTitle} />
+        <meta property="og:description" content={metaDescription} />
+      </Helmet>
+      <Container>
+        {loadError === 404 ? (
+          <Error404 />
+        ) : loadError === 500 ? (
+          <Error500 />
+        ) : (
+          <>
+            <Grid
+              container
+              spacing={4}
+              className={classesDetailVideo.container}>
+              <Grid item xs={12} md={8}>
+                <div className={classesDetailVideo.title}>
+                  {data?.[lang]?.title}
                 </div>
 
-                <ShareSocial />
-              </div>
-
-              <div className={classesDetailVideo.description}>
-                {data?.[lang]?.description}
-              </div>
-
-              <CarouselImg
-                listImg={data?.sources}
-                open={selectedItem > -1}
-                onClose={() => setSelectedItem(-1)}
-                selectedItem={selectedItem}
-              />
-
-              <Grid container spacing={3}>
-                {loading ? (
-                  <div
-                    style={{
-                      height: 80,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}>
-                    <CircularProgress size={30} style={{ color: '#A0BE37' }} />
+                <div className={classesDetailVideo.shareBox}>
+                  <Button
+                    component={Link}
+                    to={libraryPath}
+                    className={classesDetailVideo.libraryBtn}>
+                    {libraryMenu?.[lang]?.name}
+                  </Button>
+                  <div className={classesDetailVideo.time}>
+                    <AccessTime className={classesDetailVideo.timeIcon} />
+                    <div>{formatDate(data?.publishedAt)}</div>
                   </div>
-                ) : (
-                  <Fragment>
-                    {Array.isArray(data?.sources) &&
-                      data.sources.map((url, index) => {
-                        return (
-                          <Grid item xs={12} sm={6} md={4} key={index}>
-                            <CardActionArea
-                              // className={classes.imageBox}
-                              onClick={() => setSelectedItem(index)}>
-                              <CardMedia
-                                className={classes.image}
-                                // component="img"
-                                image={url}
-                                title=""
-                              />
-                            </CardActionArea>
-                          </Grid>
-                        );
-                      })}
-                  </Fragment>
-                )}
+
+                  <ShareSocial />
+                </div>
+
+                <div className={classesDetailVideo.description}>
+                  {data?.[lang]?.description}
+                </div>
+
+                <CarouselImg
+                  listImg={data?.sources}
+                  open={selectedItem > -1}
+                  onClose={() => setSelectedItem(-1)}
+                  selectedItem={selectedItem}
+                />
+
+                <Grid container spacing={3}>
+                  {loading ? (
+                    <div
+                      style={{
+                        height: 80,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}>
+                      <CircularProgress
+                        size={30}
+                        style={{ color: '#A0BE37' }}
+                      />
+                    </div>
+                  ) : (
+                    <Fragment>
+                      {Array.isArray(data?.sources) &&
+                        data.sources.map((url, index) => {
+                          return (
+                            <Grid item xs={12} sm={6} md={4} key={index}>
+                              <CardActionArea
+                                // className={classes.imageBox}
+                                onClick={() => setSelectedItem(index)}>
+                                <CardMedia
+                                  className={classes.image}
+                                  // component="img"
+                                  image={url}
+                                  title=""
+                                />
+                              </CardActionArea>
+                            </Grid>
+                          );
+                        })}
+                    </Fragment>
+                  )}
+                </Grid>
+
+                <div className={classesDetailVideo.author}>
+                  {data?.authorName}
+                </div>
+                <Divider className={classesDetailVideo.divider} />
               </Grid>
 
-              <div className={classesDetailVideo.author}>
-                {data?.authorName}
-              </div>
-              <Divider className={classesDetailVideo.divider} />
+              <Grid item xs={12} md={4} className={classesLibrary.rightSidebar}>
+                <RightNews />
+              </Grid>
             </Grid>
-
-            <Grid item xs={12} md={4} className={classesLibrary.rightSidebar}>
-              <RightNews />
-            </Grid>
-          </Grid>
-        </>
-      )}
-    </Container>
+          </>
+        )}
+      </Container>
+    </Fragment>
   );
 };
 

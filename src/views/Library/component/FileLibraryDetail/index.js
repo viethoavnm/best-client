@@ -14,6 +14,7 @@ import ShareSocial from 'components/ShareSocial';
 import Lodash from 'lodash';
 import moment from 'moment';
 import { Fragment, useEffect, useRef, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { getArticleDetail } from 'services/articles';
@@ -32,15 +33,11 @@ const DetailDocument = props => {
   const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState(0);
   const [data, setData] = useState({});
-  const image = Lodash.get(data, 'urlImg', '');
   const title = Lodash.get(data, 'title', '');
   const authorName = getSafeValue(data, 'authorName', '');
   const startTime = Lodash.get(data, 'publishedAt', '');
   const date = new Date(startTime);
   const formatDate = moment(date).format(DATE_FORMAT);
-  const month = moment(date).month() + 1; // Moment base month on 0
-  const day = moment(date).date();
-  const dayStr = moment(date).format('dddd');
   const [pdf, setPdf] = useState('');
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
@@ -91,61 +88,67 @@ const DetailDocument = props => {
         setLoading(false);
       });
   }, []);
-
+  const metaTitle = `${title ? title : 'File'} - BEST`;
   return (
-    <Container>
-      {loadError === 404 ? (
-        <Error404 />
-      ) : loadError === 500 ? (
-        <Error500 />
-      ) : (
-        <Grid container spacing={4} style={{ padding: '25px 0' }}>
-          <Grid item xs={12} md={8}>
-            {loading && (
-              <div
-                style={{
-                  height: 80,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
-                <CircularProgress size={30} style={{ color: '#A0BE37' }} />
-              </div>
-            )}
-            <Fragment>
-              <div className={classesDetailVideo.title}>{title}</div>
-              <div className={classesDetailVideo.shareBox}>
-                <Button className={classesDetailVideo.libraryBtn}>
-                  {libraryMenu?.[lang]?.name}
-                </Button>
-                <div className={classesDetailVideo.time}>
-                  <AccessTime className={classesDetailVideo.timeIcon} />
-                  <div>{formatDate}</div>
+    <Fragment>
+      <Helmet>
+        <title>{metaTitle}</title>
+        <meta property="og:title" content={metaTitle} />
+      </Helmet>
+      <Container>
+        {loadError === 404 ? (
+          <Error404 />
+        ) : loadError === 500 ? (
+          <Error500 />
+        ) : (
+          <Grid container spacing={4} style={{ padding: '25px 0' }}>
+            <Grid item xs={12} md={8}>
+              {loading && (
+                <div
+                  style={{
+                    height: 80,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                  <CircularProgress size={30} style={{ color: '#A0BE37' }} />
                 </div>
-                <ShareSocial />
-              </div>
+              )}
+              <Fragment>
+                <div className={classesDetailVideo.title}>{title}</div>
+                <div className={classesDetailVideo.shareBox}>
+                  <Button className={classesDetailVideo.libraryBtn}>
+                    {libraryMenu?.[lang]?.name}
+                  </Button>
+                  <div className={classesDetailVideo.time}>
+                    <AccessTime className={classesDetailVideo.timeIcon} />
+                    <div>{formatDate}</div>
+                  </div>
+                  <ShareSocial />
+                </div>
 
-              <div ref={refPdf}>
-                <PdfViewer height={heightPdf} url={pdf} />
-              </div>
-              <div className={classesDetailVideo.download}>
-                {t('clickHereTo')}&nbsp;
-                <Link href={pdf} target="_blank">
-                  {t('download')}&nbsp;
-                  <DownloadIcon />
-                </Link>
-              </div>
-              <div className={classesDetailVideo.author}>{authorName}</div>
-              <Divider className={classesDetailVideo.divider} />
-            </Fragment>
-          </Grid>
+                <div ref={refPdf}>
+                  <PdfViewer height={heightPdf} url={pdf} />
+                </div>
+                <div className={classesDetailVideo.download}>
+                  {t('clickHereTo')}&nbsp;
+                  <Link href={pdf} target="_blank">
+                    {t('download')}&nbsp;
+                    <DownloadIcon />
+                  </Link>
+                </div>
+                <div className={classesDetailVideo.author}>{authorName}</div>
+                <Divider className={classesDetailVideo.divider} />
+              </Fragment>
+            </Grid>
 
-          <Grid item xs={12} md={4} className={classesLibrary.rightSidebar}>
-            <RightNews />
+            <Grid item xs={12} md={4} className={classesLibrary.rightSidebar}>
+              <RightNews />
+            </Grid>
           </Grid>
-        </Grid>
-      )}
-    </Container>
+        )}
+      </Container>
+    </Fragment>
   );
 };
 
