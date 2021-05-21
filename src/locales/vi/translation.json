@@ -20,6 +20,7 @@
   "txtHome": "Trang chủ",
   "titleNews": "Bản tin",
   "txtIntroduce": "Giới thiệu",
+  "mapSection": "Bản đồ",
   "otherEvents": "Sự kiện khác",
   "txtMonth": "Tháng",
   "eventsTitle": "Sự kiện",
@@ -71,7 +72,7 @@
   },
   "downloadApp": {
     "title": "TẢI APP CỦA CHÚNG TÔI",
-    "description": "Tải ứng dụng để có thêm thông tin về nguồn cung cấp sinh khối và dịch vụ bếp khí hóa sinh khối",
+    "description": "Tải ứng dụng để có thêm thông tin về nguồn cung cấp sinh khối và dịch vụ bếp khí hóa sinh khối.",
     "instructionTitle": "HƯỚNG DẪN SỬ DỤNG APP",
     "instructionButton": "XEM NGAY"
   },

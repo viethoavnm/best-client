@@ -92,7 +92,7 @@ const MapSection = props => {
           className={classes.mapIcon}
           onClick={scrollIntoView}>
           <MapIcon />
-          <span>Bản đồ</span>
+          <span>{t('mapSection')}</span>
         </Button>,
         refMapIcon
       );
