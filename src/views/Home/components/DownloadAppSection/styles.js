@@ -56,11 +56,11 @@ const useStyles = makeStyles(theme => ({
   downloadButton: {
     width: '100%',
     display: 'block',
-    paddingBottom: '29%',
+    paddingBottom: '32%',
     backgroundSize: 'contain',
     backgroundRepeat: 'no-repeat',
     [theme.breakpoints.down('sm')]: {
-      paddingBottom: '29%'
+      paddingBottom: '27%'
     },
     [theme.breakpoints.between('sm', 'md')]: {
       paddingBottom: '29%'
@@ -78,7 +78,7 @@ const useStyles = makeStyles(theme => ({
     background: '#FFFFFF',
     border: '1px solid #92BF1F',
     boxSizing: 'border-box',
-    boxShadow: '0px 32px 64px -24px rgba(44, 44, 44, 0.16)',
+    boxShadow: '0px 32px 64px -20px rgb(44 44 44 / 64%)',
     textDecoration: 'none',
     color: '#426B2F',
     borderRadius: 8,
