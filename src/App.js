@@ -1,7 +1,7 @@
 import MomentUtils from '@date-io/moment';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { ThemeProvider } from '@material-ui/styles';
-import 'firebase/analytics';
+// import 'firebase/analytics';
 import React from 'react';
 import { Provider as StoreProvider } from 'react-redux';
 import { renderRoutes } from 'react-router-config';
