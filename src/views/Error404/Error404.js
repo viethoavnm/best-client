@@ -38,7 +38,11 @@ const Error404 = () => {
   const mobileDevice = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <Page className={classes.root} title="Error 404">
+    <Page className={classes.root}>
+      <Helmet>
+        <title>{t('errorPage.404Title')}</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <Typography align="center" variant={mobileDevice ? 'h4' : 'h1'}>
         {t('errorPage.404Title')}
       </Typography>
