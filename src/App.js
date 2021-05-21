@@ -1,35 +1,24 @@
-import React from 'react';
-import {
-  Switch,
-  Route,
-  useLocation,
-  BrowserRouter as Router
-} from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 import MomentUtils from '@date-io/moment';
-import { Provider as StoreProvider } from 'react-redux';
-
-import { ThemeProvider } from '@material-ui/styles';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { ThemeProvider } from '@material-ui/styles';
+import 'firebase/analytics';
+import { createBrowserHistory } from 'history';
+import React from 'react';
+import { Provider as StoreProvider } from 'react-redux';
 import { renderRoutes } from 'react-router-config';
-
-import store from './store/configureStore';
-import theme from './theme';
-import routes from './routes';
-import { ScrollReset, CookiesNotification } from './components';
-import './mixins/moment';
-import './mixins/validate';
-// import './mock';
-// import './assets/scss/index.scss';
-import Home from 'views/Home';
-import Event from 'views/Event';
-
-const history = createBrowserHistory();
+import { BrowserRouter as Router } from 'react-router-dom';
 // const store = configureStore();
 import './App.css';
-import { useTranslation } from 'react-i18next';
-import { Helmet } from 'react-helmet';
-import LogoBEST from 'assets/img/logo-best.svg';
+import { CookiesNotification, ScrollReset } from './components';
+import firebase from './firebase';
+import './mixins/moment';
+import './mixins/validate';
+import routes from './routes';
+import store from './store/configureStore';
+import theme from './theme';
+
+firebase.analytics();
+const history = createBrowserHistory();
 
 const App = () => {
   return (
