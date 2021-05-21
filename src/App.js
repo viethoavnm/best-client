@@ -16,7 +16,7 @@ import './mixins/validate';
 import routes from './routes';
 import store from './store/configureStore';
 import theme from './theme';
-
+import { Helmet } from 'react-helmet';
 firebase.analytics();
 const history = createBrowserHistory();
 
@@ -25,6 +25,24 @@ const App = () => {
     <StoreProvider store={store}>
       <ThemeProvider theme={theme}>
         <MuiPickersUtilsProvider utils={MomentUtils}>
+          <Helmet>
+            <title>BEST - Công nghệ khí hóa sinh khối</title>
+            <meta
+              name="description"
+              content="BEST là dự án công nghệ khí hoá sinh khối - Giải pháp năng lượng bền vững cho chế biến nông sản và quản lý chất thải ở nông thôn Việt Nam"
+            />
+            <meta
+              property="og:title"
+              content="BEST - Công nghệ khí hóa sinh khối"
+            />
+            <meta
+              property="og:description"
+              content="BEST là dự án công nghệ khí hoá sinh khối - Giải pháp năng lượng bền vững cho chế biến nông sản và quản lý chất thải ở nông thôn Việt Nam"
+            />
+            <meta property="og:site_name" content="BEST" />
+            <meta name="twitter:card" content="summary_large_image" />
+          </Helmet>
+
           <Router>
             <ScrollReset />
             <CookiesNotification />

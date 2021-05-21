@@ -27,7 +27,7 @@ import { useTranslation } from 'react-i18next';
 import Error404 from '../../views/Error404';
 import Error500 from '../../views/Error500';
 import { Helmet } from 'react-helmet';
-
+import { truncateString, removeHTMLTag } from '../../helpers';
 const PostDetail = props => {
   const limitSuggest = 4;
   const classes = useStyles();
@@ -234,23 +234,21 @@ const PostDetail = props => {
       </Box>
     );
   };
+  const metaDescription = truncateString(
+    removeHTMLTag(Lodash.unescape(Lodash.get(data, 'content')))
+  );
+  const metaTitle = `${
+    data?.[lang]?.title ? data?.[lang]?.title : 'Bài viết'
+  } - BEST`;
 
   return (
     <>
       <Helmet>
-        <title>
-          {data?.[lang]?.title ? data?.[lang]?.title : 'Bài viết'} - BEST
-        </title>
-        <meta name="description" content={Lodash.get(data, 'content', '')} />
-        <meta
-          property="og:title"
-          content="BEST - Dự án công nghệ khí hóa sinh khối"
-        />
-        <meta
-          property="og:description"
-          content="BEST là dự án công nghệ khí hoá sinh khối - Giải pháp năng lượng bền vững cho chế biến nông sản và quản lý chất thải ở nông thôn Việt Nam"
-        />
-        <meta property="og:image" content="" />
+        <title>{metaTitle}</title>
+        <meta name="description" content={metaDescription} />
+        <meta property="og:title" content={metaTitle} />
+        <meta property="og:description" content={metaDescription} />
+        <meta property="og:image" content={Lodash.get(data, 'urlImg')} />
       </Helmet>
       <Container bgcolor="#FDFDFD">
         {loadError !== 404 && loadError !== 500 && (
