@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
   border: {
     backgroundImage: 'linear-gradient(to right, #E2A813, #84AF0B)',
     borderRadius: 16,
-    padding: 1,
+    padding: 2,
     marginBottom: 60,
     [theme.breakpoints.down('sm')]: {
       marginBottom: 24

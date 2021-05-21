@@ -20,6 +20,12 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.between('sm', 'md')]: {
       backgroundPosition: '0%'
     },
+    [theme.breakpoints.between('md', 'xl')]: {
+      backgroundPosition: '10%'
+    },
+    [theme.breakpoints.up('xl')]: {
+      backgroundPosition: '21%'
+    },
     [theme.breakpoints.only('sm')]: {
       backgroundPosition: '-600%'
     }
