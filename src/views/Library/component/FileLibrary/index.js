@@ -23,7 +23,7 @@ import { DATE_FORMAT, TYPE_MENU } from 'utils/constant';
 import Error500 from 'views/Error500';
 import useStylesLibrary from 'views/Library/style';
 import useStylesDetailVideo from '../detail-video/style';
-import { escape } from 'lodash';
+import { unescape } from 'lodash';
 import { Helmet } from 'react-helmet';
 const useStyles = makeStyles(() =>
   createStyles({
