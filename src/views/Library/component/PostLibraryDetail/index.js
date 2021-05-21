@@ -10,10 +10,12 @@ import { Container } from 'components';
 import RelatedPost from 'components/RelatedPost';
 import RightNews from 'components/RightNews';
 import ShareSocial from 'components/ShareSocial';
+import { removeHTMLTag, truncateString } from 'helpers';
 import Lodash from 'lodash';
 import moment from 'moment';
 import 'moment/locale/vi';
 import React, { Fragment, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -162,46 +164,63 @@ const PostLibraryDetail = props => {
       </Box>
     );
   };
-
+  const metaDescription = truncateString(
+    removeHTMLTag(Lodash.unescape(data?.[lang]?.description))
+  );
+  const metaTitle = `${
+    data?.[lang]?.title ? data?.[lang]?.title : t('titleLibrary')
+  } - BEST`;
   return (
-    <Container bgcolor="#FDFDFD">
-      {loading ? (
-        <div
-          style={{
-            height: 80,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-          <CircularProgress size={30} style={{ color: '#A0BE37' }} />
-        </div>
-      ) : loadError === 404 ? (
-        <Error404 />
-      ) : loadError !== 404 && loadError !== 0 ? (
-        <Error500 />
-      ) : (
-        <Fragment>
-          <Grid container spacing={4} className={classesDetailVideo.container}>
-            <Grid item xs={12} md={8}>
-              <div className={classesDetailVideo.title}>
-                {data?.[lang]?.title}
-              </div>
-              {_renderContentEvent()}
-            </Grid>
-
-            <Hidden mdDown>
-              <Grid item xs={12} md={4}>
-                <RightNews />
+    <Fragment>
+      <Helmet>
+        <title>{metaTitle}</title>
+        <meta name="description" content={metaDescription} />
+        <meta property="og:title" content={metaTitle} />
+        <meta property="og:description" content={metaDescription} />
+        <meta property="og:image" content={Lodash.get(data, 'urlImg')} />
+      </Helmet>
+      <Container bgcolor="#FDFDFD">
+        {loading ? (
+          <div
+            style={{
+              height: 80,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+            <CircularProgress size={30} style={{ color: '#A0BE37' }} />
+          </div>
+        ) : loadError === 404 ? (
+          <Error404 />
+        ) : loadError !== 404 && loadError !== 0 ? (
+          <Error500 />
+        ) : (
+          <Fragment>
+            <Grid
+              container
+              spacing={4}
+              className={classesDetailVideo.container}>
+              <Grid item xs={12} md={8}>
+                <div className={classesDetailVideo.title}>
+                  {data?.[lang]?.title}
+                </div>
+                {_renderContentEvent()}
               </Grid>
-            </Hidden>
-          </Grid>
-          {_renderTitle(`${t('titleArticlesRelate')}`)}
-          <Grid container spacing={3} mb={3} className={classes.gridSuggest}>
-            <RelatedPost data={events} mode="event" />
-          </Grid>
-        </Fragment>
-      )}
-    </Container>
+
+              <Hidden mdDown>
+                <Grid item xs={12} md={4}>
+                  <RightNews />
+                </Grid>
+              </Hidden>
+            </Grid>
+            {_renderTitle(`${t('titleArticlesRelate')}`)}
+            <Grid container spacing={3} mb={3} className={classes.gridSuggest}>
+              <RelatedPost data={events} mode="event" />
+            </Grid>
+          </Fragment>
+        )}
+      </Container>
+    </Fragment>
   );
 };
 

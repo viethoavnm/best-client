@@ -17,6 +17,7 @@ import RightNews from 'components/RightNews';
 import { useTranslation } from 'react-i18next';
 import Error404 from 'views/Error404';
 import Error500 from 'views/Error500';
+import { Helmet } from 'react-helmet';
 
 const News = () => {
   const history = useHistory();
@@ -77,6 +78,9 @@ const News = () => {
 
   return (
     <Fragment>
+      <Helmet>
+        <title>{t('titleNews')} - BEST</title>
+      </Helmet>
       <Container>
         {loadError === 404 ? (
           <Error404 />

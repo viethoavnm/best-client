@@ -4,6 +4,7 @@ import { Container, LibraryCard, Title } from 'components';
 import RightNews from 'components/RightNews';
 import Lodash from 'lodash';
 import { Fragment, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
@@ -147,6 +148,9 @@ const Library = props => {
   };
   return (
     <Fragment>
+      <Helmet>
+        <title>{t('titleLibrary')} - BEST</title>
+      </Helmet>
       <Container>
         {loadError === 404 ? (
           <Error404 />

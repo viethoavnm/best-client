@@ -235,14 +235,14 @@ const PostDetail = props => {
     );
   };
   const metaDescription = truncateString(
-    removeHTMLTag(Lodash.unescape(Lodash.get(data, 'content')))
+    removeHTMLTag(Lodash.unescape(Lodash.get(data, 'description')))
   );
   const metaTitle = `${
-    data?.[lang]?.title ? data?.[lang]?.title : 'Bài viết'
+    data?.[lang]?.title ? data?.[lang]?.title : t('titleArticles')
   } - BEST`;
 
   return (
-    <>
+    <Fragment>
       <Helmet>
         <title>{metaTitle}</title>
         <meta name="description" content={metaDescription} />
@@ -300,7 +300,7 @@ const PostDetail = props => {
           </Fragment>
         )}
       </Container>
-    </>
+    </Fragment>
   );
 };
 

@@ -20,7 +20,7 @@ import { getEventByYear } from 'services/event';
 import { getTransObj } from 'utils';
 import EventCardLarge from '../../components/EventCardLarge';
 import useStyles from './style';
-
+import '../Home/day-picker.css';
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 
 const Event = () => {
@@ -208,6 +208,9 @@ const Event = () => {
 
   return (
     <Fragment>
+      <Helmet>
+        <title>{t('titleEvent')} - BEST</title>
+      </Helmet>
       {/* {renderHTML(htmlUnescape)} */}
       <Container>
         <section>
