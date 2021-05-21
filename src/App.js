@@ -1,16 +1,14 @@
 import MomentUtils from '@date-io/moment';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { ThemeProvider } from '@material-ui/styles';
-import 'firebase/analytics';
-import { createBrowserHistory } from 'history';
+// import 'firebase/analytics';
 import React from 'react';
 import { Provider as StoreProvider } from 'react-redux';
 import { renderRoutes } from 'react-router-config';
 import { BrowserRouter as Router } from 'react-router-dom';
-// const store = configureStore();
 import './App.css';
 import { CookiesNotification, ScrollReset } from './components';
-import firebase from './firebase';
+// import firebase from './firebase';
 import './mixins/moment';
 import './mixins/validate';
 import routes from './routes';
@@ -18,8 +16,7 @@ import store from './store/configureStore';
 import theme from './theme';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
-firebase.analytics();
-const history = createBrowserHistory();
+// firebase.analytics();
 
 const App = () => {
   const { t } = useTranslation();
