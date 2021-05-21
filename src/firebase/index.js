@@ -1,6 +1,11 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import firebaseConfig from './firebaseConfig.js';
+import 'firebase/analytics';
 
-var app = firebase.initializeApp(firebaseConfig);
+const setup = () => {
+  var app = firebase.initializeApp(firebaseConfig);
+  app.analytics();
+  return app;
+};
 
-export default app;
+export default setup;
