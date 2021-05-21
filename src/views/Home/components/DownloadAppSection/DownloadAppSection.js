@@ -16,23 +16,23 @@ const DownloadAppSection = () => {
       <Hidden smUp>
         <section>
           <Container>
-            <Title size="large" className={classes.titleBox}>
+            <div className={classes.titleBox}>
               <h2 className={classes.title}>{t('downloadApp.title')}</h2>
-              <Grid container spacing={3}>
-                <Grid item md={6} xs={6}>
-                  <Link
-                    to="#"
-                    className={clsx(classes.downloadButton, classes.appstore)}
-                    onClick={() => alert('Download')}></Link>
-                </Grid>
-                <Grid item md={6} xs={6}>
-                  <Link
-                    to="#"
-                    className={clsx(classes.downloadButton, classes.googleplay)}
-                    onClick={() => alert('Download')}></Link>
-                </Grid>
+            </div>
+            <Grid container>
+              <Grid item md={6} xs={6}>
+                <Link
+                  to="#"
+                  className={clsx(classes.downloadButton, classes.appstore)}
+                  onClick={() => alert('Download')}></Link>
               </Grid>
-            </Title>
+              <Grid item md={6} xs={6}>
+                <Link
+                  to="#"
+                  className={clsx(classes.downloadButton, classes.googleplay)}
+                  onClick={() => alert('Download')}></Link>
+              </Grid>
+            </Grid>
           </Container>
         </section>
       </Hidden>
