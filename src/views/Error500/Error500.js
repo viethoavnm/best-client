@@ -40,7 +40,7 @@ const Error500 = () => {
   return (
     <Page className={classes.root}>
       <Helmet>
-        <title>{t('errorPage.500Title')}</title>
+        <title>500 - {t('errorPage.500Title')}</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       <Typography align="center" variant={mobileDevice ? 'h4' : 'h1'}>

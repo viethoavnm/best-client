@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/styles';
 import { Typography, Button, useTheme, useMediaQuery } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Page } from 'components';
+import { Helmet } from 'react-helmet';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,7 +41,7 @@ const Error404 = () => {
   return (
     <Page className={classes.root}>
       <Helmet>
-        <title>{t('errorPage.404Title')}</title>
+        <title>404 - {t('errorPage.404Title')}</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       <Typography align="center" variant={mobileDevice ? 'h4' : 'h1'}>
