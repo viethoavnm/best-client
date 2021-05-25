@@ -143,8 +143,8 @@ const FileLibrary = props => {
                     </div>
                   ) : (
                     <Fragment>
-                      {Array.isArray(data?.sources) &&
-                        data?.sources.map((url, index) => {
+                      {Array.isArray(data?.medias) &&
+                        data?.medias.map((media, index) => {
                           return (
                             <Grid item xs={12} sm={6} md={4} key={index}>
                               <CardActionArea
