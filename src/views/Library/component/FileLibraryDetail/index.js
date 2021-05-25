@@ -74,11 +74,7 @@ const DetailDocument = props => {
       .then(res => {
         const dataRes = getSafeValue(res, 'data', {});
         const newData = transformData(dataRes);
-        // const sourceFile = getSafeValue(dataRes, 'sources', []);
-        const pdfFile = getSafeValue(dataRes, `sources[${indexUrl}]`, '');
-        // console.log('pdfFile', pdfFile);
-        // const pdfFile = sourceFile.length > 0 ? sourceFile[0] : '';
-        setPdf(pdfFile);
+        setPdf(dataRes?.medias?.[indexUrl]);
         setData(newData);
       })
       .catch(err => {
@@ -115,7 +111,7 @@ const DetailDocument = props => {
                 </div>
               )}
               <Fragment>
-                <div className={classesDetailVideo.title}>{title}</div>
+                <div className={classesDetailVideo.title}>{pdf?.name}</div>
                 <div className={classesDetailVideo.shareBox}>
                   <Button className={classesDetailVideo.libraryBtn}>
                     {libraryMenu?.[lang]?.name}
@@ -128,7 +124,7 @@ const DetailDocument = props => {
                 </div>
 
                 <div ref={refPdf}>
-                  <PdfViewer height={heightPdf} url={pdf} />
+                  <PdfViewer height={heightPdf} url={pdf?.url} />
                 </div>
                 <div className={classesDetailVideo.download}>
                   {t('clickHereTo')}&nbsp;
