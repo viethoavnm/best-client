@@ -1,12 +1,10 @@
 import { Divider, Grid } from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
 import { createStyles, makeStyles } from '@material-ui/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { SearchBar2, Container } from 'components';
 import { debounce } from 'lodash';
-import { Fragment, useEffect, useRef, useState, useCallback } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { AutoSizer, List, WindowScroller } from 'react-virtualized';
-import NewsEvent from './component/news-event';
 import PostCard from './component/post-card';
 import { getArticle } from 'services/search';
 import Lodash from 'lodash';
@@ -55,7 +53,6 @@ const useStyles = makeStyles(theme =>
   })
 );
 
-const DATA_LOADING = [1, 2, 3, 4, 5];
 const Search = () => {
   const classes = useStyles();
   const refCard = useRef(null);
@@ -69,7 +66,7 @@ const Search = () => {
   const [heightCard, setHeightCard] = useState(204);
   const [loading, setLoading] = useState(false);
   const [loadmore, setLoadmore] = useState(false);
-  const [searchResults, setSearchResults] = useState(DATA_LOADING);
+  const [searchResults, setSearchResults] = useState([]);
   const { t } = useTranslation();
   // const [data, setData] = useState(() => {
   //   let a = [];
@@ -91,29 +88,8 @@ const Search = () => {
   };
 
   useEffect(() => {
-    let params = { page, limit };
-    setLoading(true);
-    getArticle(params)
-      .then(res => {
-        const data = Lodash.get(res, 'data', {});
-        const results = Lodash.get(data, 'results', []);
-        const hasNextData = Lodash.get(data, 'hasNext', false);
-        const newList = transformData(results);
-        setSearchResults(newList);
-        setHasNext(hasNextData);
-      })
-      .catch(err => {
-        setSearchResults([]);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
-
-  useEffect(() => {
     if (query === '') return;
     let params = { page: 1, limit, q: query };
-
     setLoading(true);
     getArticle(params)
       .then(res => {
@@ -234,7 +210,10 @@ const Search = () => {
       <Container>
         <Grid container spacing={4}>
           <Grid item xs={12} md={8} className={classes.search}>
-            <SearchBar2 onSubmit={txt => setQuery(txt)} />
+            <SearchBar2
+              placeholder="Nhập từ khóa tìm kiếm"
+              onSubmit={txt => setQuery(txt)}
+            />
           </Grid>
         </Grid>
 
@@ -249,11 +228,12 @@ const Search = () => {
               />
               <Divider className={classes.divider} />
             </div>
-
-            <div className={classes.result}>
-              <span className={classes.total}>{searchResults.length} </span>
-              {t('matchingResults')}
-            </div>
+            {query !== '' && (
+              <div className={classes.result}>
+                <span className={classes.total}>{searchResults.length} </span>
+                {t('matchingResults')}
+              </div>
+            )}
 
             <Divider className={classes.divider} />
 
