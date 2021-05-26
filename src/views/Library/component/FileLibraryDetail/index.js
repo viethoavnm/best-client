@@ -128,7 +128,7 @@ const DetailDocument = props => {
                 </div>
                 <div className={classesDetailVideo.download}>
                   {t('clickHereTo')}&nbsp;
-                  <Link href={pdf} target="_blank">
+                  <Link href={pdf?.url} target="_blank">
                     {t('download')}&nbsp;
                     <DownloadIcon />
                   </Link>
