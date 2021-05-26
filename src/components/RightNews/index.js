@@ -88,27 +88,33 @@ const RightNews = () => {
   return (
     <Fragment>
       {articles.length > 0 && (
-        <Title className={classes.titleNews}>{t('newTitle')}</Title>
+        <Title className={classes.titleNews}>{t('newestNews')}</Title>
       )}
-      {articles.map((article, key) => {
-        const cateName = getSafeValue(article, 'cateName', '');
-        const publishedAt = getSafeValue(article, 'publishedAt', '');
-        const date = moment(publishedAt).format(DATE_FORMAT);
+      {articles
+        .sort(
+          (a, b) =>
+            new Date(b.publishedAt).getTime() -
+            new Date(a.publishedAt).getTime()
+        )
+        .map((article, key) => {
+          const cateName = getSafeValue(article, 'cateName', '');
+          const publishedAt = getSafeValue(article, 'publishedAt', '');
+          const date = moment(publishedAt).format(DATE_FORMAT);
 
-        return (
-          <CardActionArea
-            key={key}
-            onClick={() => handleClickArticle(article)}
-            style={{ marginBottom: 16 }}>
-            <NewsCard
-              image={article.urlImg}
-              type={cateName}
-              title={article.title}
-              date={date}
-            />
-          </CardActionArea>
-        );
-      })}
+          return (
+            <CardActionArea
+              key={key}
+              onClick={() => handleClickArticle(article)}
+              style={{ marginBottom: 16 }}>
+              <NewsCard
+                image={article.urlImg}
+                type={cateName}
+                title={article.title}
+                date={date}
+              />
+            </CardActionArea>
+          );
+        })}
 
       {articles.length > 0 && <Divider className={classes.divider} />}
 

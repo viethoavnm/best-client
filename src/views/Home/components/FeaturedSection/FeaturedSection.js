@@ -130,7 +130,9 @@ const FeaturedSection = props => {
     <section>
       <Container>
         <Title size="large" className={classes.titleBox}>
-          <h2 className={classes.title}>{isNews ? t('newTitle') : cateName}</h2>
+          <h2 className={classes.title}>
+            {isNews ? t('featuredNews') : cateName}
+          </h2>
         </Title>
 
         <Grid container spacing={3} style={{ paddingBottom: 24 }}>

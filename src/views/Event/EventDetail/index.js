@@ -82,6 +82,7 @@ const EventDetail = props => {
         const newList = Lodash.map(data, obj => {
           return transformData(obj);
         });
+        console.log(newList);
         setSuggestEvent(newList);
       })
       .catch(err => {
@@ -98,6 +99,7 @@ const EventDetail = props => {
       const newList = Lodash.map(suggestEvent, obj => {
         return transformData(obj);
       });
+      console.log(newList);
       setSuggestEvent(newList);
     }
   }, [lang]);
@@ -241,19 +243,24 @@ const EventDetail = props => {
   const _renderSuggestEvents = () => {
     return (
       <List className={classes.listSuggest}>
-        {suggestEvent.map((item, index) => {
-          return (
-            <Grid
-              item
-              key={index}
-              xs={12}
-              sm={6}
-              md={4}
-              className={classes.gridSuggest}>
-              {_renderItem(item)}
-            </Grid>
-          );
-        })}
+        {suggestEvent
+          .sort(
+            (a, b) =>
+              new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
+          )
+          .map((item, index) => {
+            return (
+              <Grid
+                item
+                key={index}
+                xs={12}
+                sm={6}
+                md={4}
+                className={classes.gridSuggest}>
+                {_renderItem(item)}
+              </Grid>
+            );
+          })}
       </List>
     );
   };
