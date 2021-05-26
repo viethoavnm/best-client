@@ -6,7 +6,7 @@ import { Provider as StoreProvider } from 'react-redux';
 import { renderRoutes } from 'react-router-config';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
-import { CookiesNotification, ScrollReset } from './components';
+import { ScrollReset } from './components';
 import firebase from './firebase';
 import './mixins/moment';
 import './mixins/validate';
@@ -38,7 +38,6 @@ const App = () => {
 
           <Router>
             <ScrollReset />
-            <CookiesNotification />
             {renderRoutes(routes)}
 
             {/* <Switch>
