@@ -118,7 +118,7 @@ const RightNews = () => {
 
       {articles.length > 0 && <Divider className={classes.divider} />}
 
-      {events.length && (
+      {events?.length > 0 && (
         <Title className={classes.titleEvent} transform="uppercase">
           {t('titleEvent')}
         </Title>
