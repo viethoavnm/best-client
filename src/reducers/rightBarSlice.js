@@ -1,6 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import moment from 'moment';
-import { getSafeValue } from 'utils';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { convertTranslations, getSafeValue } from 'utils';
 import { getArticle } from '../services/articles';
 import { getEvent } from '../services/event';
 
@@ -30,10 +29,22 @@ export const rightBarSlice = createSlice({
   reducers: {},
   extraReducers: {
     [fetchNewArticle.fulfilled]: (state, action) => {
-      state.newsData = action.payload;
+      let newsData = action.payload;
+      if (Array.isArray(newsData)) {
+        newsData.forEach(item => {
+          convertTranslations(item);
+        });
+      }
+      state.newsData = newsData;
     },
     [fetNewEvent.fulfilled]: (state, action) => {
-      state.eventData = action.payload;
+      let eventData = action.payload;
+      if (Array.isArray(eventData)) {
+        eventData.forEach(item => {
+          convertTranslations(item);
+        });
+      }
+      state.eventData = eventData;
     }
   }
 });

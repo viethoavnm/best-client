@@ -1,39 +1,35 @@
-import { Container, Title } from 'components';
+import { Hidden } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import React, { useRef, Fragment, useEffect, useState } from 'react';
 import CardMedia from '@material-ui/core/CardMedia';
-import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
-import { VI_LANG } from 'utils/constant';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
+import Typography from '@material-ui/core/Typography';
+import { Container } from 'components';
+import RightNews from 'components/RightNews';
 import Lodash from 'lodash';
 import moment from 'moment';
-import { useHistory, useLocation } from 'react-router-dom';
-import useStyles from './styles';
 import 'moment/locale/vi';
-import { getEvent, getEventDetail } from 'services/event';
-import renderHTML from 'react-render-html';
-import NewsEvent from 'views/Search/component/news-event';
-import { Hidden } from '@material-ui/core';
-import RightNews from 'components/RightNews';
-import { formatDateLang, getSafeValue } from 'utils';
-import { useSelector } from 'react-redux';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
+import { getEvent, getEventDetail } from 'services/event';
+import { convertTranslations, formatDateLang, getSafeValue } from 'utils';
+import Error404 from 'views/Error404';
 import Error500 from 'views/Error500';
+import useStyles from './styles';
 
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 const DATE_FORMAT_2 = 'DD/MM/YYYY';
 const EventDetail = props => {
   moment.locale('vi');
   const classes = useStyles();
-  const pageLayout = useRef(null);
+  const { slug } = useParams();
   const history = useHistory();
-  const location = useLocation();
   const [event, setEvent] = useState({});
   const lang = useSelector(state => state.multiLang.lang);
   const [loading, setLoading] = useState(true);
@@ -41,15 +37,12 @@ const EventDetail = props => {
   const [suggestEvent, setSuggestEvent] = useState([]);
   const { t } = useTranslation();
   const image = Lodash.get(event, 'urlImg', '');
-  // const name = Lodash.get(event, 'name', '');
-  // const address = Lodash.get(event, 'address', '');
   const startTime = Lodash.get(event, 'startDate', '');
   const date = new Date(startTime);
   const formatDate = moment(date).format(DATE_FORMAT);
   const month = moment(date).month() + 1; // Moment base month on 0
   const day = moment(date).date();
   const dayStr = moment(date).format('dddd');
-  const idEvent = props.match.params.id;
   const transformData = obj => {
     const transArr = Lodash.get(obj, 'translations', []);
     const objTrans = Lodash.find(transArr, obj => obj.lang === lang);
@@ -58,20 +51,26 @@ const EventDetail = props => {
   };
 
   useEffect(() => {
+    if (event?._id) {
+      history.replace({ pathname: `${event?.[lang]?.slug}` });
+    }
+  }, [lang, event]);
+
+  useEffect(() => {
     setLoading(true);
-    getEventDetail(idEvent)
+    getEventDetail(slug)
       .then(res => {
         const data = getSafeValue(res, 'data', {});
         const newData = transformData(data);
-        setEvent(newData);
+        setEvent(convertTranslations(newData));
       })
       .catch(err => {
-        setLoadError(err.response.status);
+        setLoadError(err.response?.status || 404);
       })
       .finally(() => {
         setLoading(false);
       });
-  }, [idEvent]);
+  }, []);
 
   useEffect(() => {
     const params = { limit: 4, isPublish: 1 };
@@ -86,7 +85,7 @@ const EventDetail = props => {
         setSuggestEvent(newList);
       })
       .catch(err => {
-        setLoadError(err.response.status);
+        setLoadError(err.response?.status || 404);
       });
   }, []);
 

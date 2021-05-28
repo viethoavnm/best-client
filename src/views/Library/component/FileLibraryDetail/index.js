@@ -17,6 +17,7 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 import { getArticleDetail } from 'services/articles';
 import { convertTranslations, getSafeValue, getTransObj } from 'utils';
 import { DATE_FORMAT, TYPE_MENU } from 'utils/constant';
@@ -29,6 +30,7 @@ const DetailDocument = props => {
   const classesDetailVideo = useStylesDetailVideo();
   const classesLibrary = useStylesLibrary();
   const refPdf = useRef(null);
+  const { slug, indexUrl } = useParams();
   const [heightPdf, setHeightPdf] = useState(null);
   const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState(0);
@@ -66,11 +68,8 @@ const DetailDocument = props => {
   };
 
   useEffect(() => {
-    const id = props.match.params.id;
-    const indexUrl = props.match.params.indexUrl;
-
     setLoading(true);
-    getArticleDetail(id)
+    getArticleDetail(slug)
       .then(res => {
         const dataRes = getSafeValue(res, 'data', {});
         const newData = transformData(dataRes);
@@ -83,7 +82,8 @@ const DetailDocument = props => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [slug]);
+
   const metaTitle = `${title ? title : 'File'} - BEST`;
   return (
     <Fragment>

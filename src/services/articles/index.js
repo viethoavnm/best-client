@@ -17,8 +17,8 @@ export const getLibraryArticle = (params = {}) => {
   });
 };
 
-export const getArticleDetail = id => {
-  return axios.get(`${urlArticle}/${id}`, {
+export const getArticleDetail = slug => {
+  return axios.get(`${urlArticle}/slug/${slug}`, {
     validateStatus: status => {
       return 200 <= status && status < 500;
     }

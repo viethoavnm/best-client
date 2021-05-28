@@ -1,19 +1,19 @@
-import React from 'react';
-import { Grid, CardMedia, Typography, Box } from '@material-ui/core';
-import { DATE_FORMAT } from 'utils/constant';
-import moment from 'moment';
+import { Box, CardMedia, Grid, Typography } from '@material-ui/core';
 import Lodash from 'lodash';
+import moment from 'moment';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getLinkFromArticle } from 'utils';
+import { DATE_FORMAT } from 'utils/constant';
 import useStyles from './styles';
-import { useHistory, Link } from 'react-router-dom';
 
 const RelatedPost = ({ data, mode }) => {
   const classes = useStyles();
-  const history = useHistory();
-
+  const lang = useSelector(state => state.multiLang.lang);
   const handleClickItem = item => {
     if (mode === 'event') return '#';
-    return getLinkFromArticle(item);
+    return getLinkFromArticle(item, lang);
   };
 
   const renderPost = item => {
@@ -27,7 +27,6 @@ const RelatedPost = ({ data, mode }) => {
     }
     let dateItem = new Date(startTimeItem);
     let formatDateItem = moment(dateItem).format(DATE_FORMAT);
-
     return (
       <Box
         component={Link}

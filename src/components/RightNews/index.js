@@ -6,7 +6,7 @@ import moment from 'moment';
 import { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   formatDateLang,
   getLinkFromArticle,
@@ -38,7 +38,6 @@ const RightNews = () => {
   const classes = useStyles();
   const [articles, setArticles] = useState([]);
   const [events, setEvents] = useState([]);
-  const history = useHistory();
   const { t } = useTranslation();
   const transformArticle = (listMenu, lang) => {
     const newList = Lodash.map(listMenu, obj => {
@@ -72,19 +71,6 @@ const RightNews = () => {
     setArticles(newList);
   }, [lang, newArticle, newEvent]);
 
-  const handleClickArticle = obj => {
-    const linkDirect = getLinkFromArticle(obj);
-    history.push({
-      pathname: linkDirect
-    });
-  };
-
-  const handleClickEvent = event => {
-    history.push({
-      pathname: `/event/${event._id}`
-    });
-  };
-
   return (
     <Fragment>
       {articles.length > 0 && (
@@ -103,8 +89,9 @@ const RightNews = () => {
 
           return (
             <CardActionArea
+              component={Link}
+              to={getLinkFromArticle(article, lang)}
               key={key}
-              onClick={() => handleClickArticle(article)}
               style={{ marginBottom: 16 }}>
               <NewsCard
                 image={article.urlImg}
@@ -131,8 +118,9 @@ const RightNews = () => {
 
         return (
           <CardActionArea
+            component={Link}
+            to={`/event/${event?.[lang]?.slug}`}
             key={key}
-            onClick={() => handleClickEvent(event)}
             style={{ marginBottom: 24 }}>
             <EventCard
               day={t(`${formatDateLang(`Tháng ${month}`)}`)}

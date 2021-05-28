@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { getLibraryArticle } from 'services/articles';
-import { getSafeValue, getTransObj } from 'utils';
+import { convertTranslations, getSafeValue, getTransObj } from 'utils';
 import { TYPE_ARTICLE } from 'utils/constant';
 import useStyles from './style';
 
@@ -73,13 +73,18 @@ const Library = props => {
     getLibraryArticle()
       .then(res => {
         const dataRes = getSafeValue(res, 'data', []);
+        if (Array.isArray(dataRes)) {
+          dataRes.forEach(item => {
+            convertTranslations(item);
+          });
+        }
         const newData = transformData(dataRes, lang);
         const sectionData = createSectionData(newData);
         setData(sectionData);
         setDataTranform(newData);
       })
       .catch(err => {
-        setLoadError(err.response.status);
+        setLoadError(err.response?.status || 404);
       })
       .finally(() => {
         setLoading(false);
@@ -93,17 +98,6 @@ const Library = props => {
       setData(sectionData);
     }
   }, [lang]);
-
-  const handleClickArticle = obj => {
-    const type = getSafeValue(obj, 'type', '');
-    const id = getSafeValue(obj, '_id', '');
-    const linkDirect = `/library/${type}/${id}`;
-    if (type !== 'news') {
-      history.push(linkDirect);
-    } else {
-      window.open(linkDirect, '_blank');
-    }
-  };
 
   const renderSection = sectionObj => {
     const title = getSafeValue(sectionObj, 'title', '');
@@ -129,7 +123,10 @@ const Library = props => {
             // const date = moment(publishedAt).format(DATE_FORMAT);
             return (
               <Grid item xs={12} sm={6} lg={4} key={obj?._id}>
-                <CardActionArea onClick={() => handleClickArticle(obj)}>
+                <CardActionArea
+                  component={Link}
+                  to={`/library/${obj?.type}/${obj?.[lang]?.slug}`}
+                  target={obj?.type === 'news' ? '_blank' : '_self'}>
                   <LibraryCard
                     image={urlImg}
                     title={title}

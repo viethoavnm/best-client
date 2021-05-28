@@ -89,7 +89,7 @@ const NewsSection = props => {
 
     return (
       <Card className={classes.rootCard} elevation={0}>
-        <CardActionArea onClick={() => handleClickArticle(obj)}>
+        <CardActionArea component={Link} to={`/post/${obj?.[lang]?.slug}`}>
           <CardMedia image={urlImg} title={title} className={classes.img} />
         </CardActionArea>
 
@@ -128,9 +128,7 @@ const NewsSection = props => {
 
           return (
             <Grid item xs={6} md={12} key={obj?._id}>
-              <Link
-                to={getLinkFromArticle(obj)}
-                style={{ textDecoration: 'none' }}>
+              <Link to={`/post/${obj?.[lang]?.slug}`} className={classes.link}>
                 <NewsItem
                   type={obj.nameCate}
                   title={obj.title}

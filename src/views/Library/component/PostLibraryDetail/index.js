@@ -18,7 +18,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { libraryPath } from 'routes';
 import { getArticleDetail } from 'services/articles';
 import {
@@ -62,6 +62,7 @@ const events = [
 
 const PostLibraryDetail = props => {
   const { t } = useTranslation();
+  const { slug } = useParams();
   const classes = useStyles();
   const classesDetailVideo = useStylesDetailVideo();
   const [data, setData] = useState({});
@@ -76,15 +77,7 @@ const PostLibraryDetail = props => {
   }, [menuData]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(0);
-  const image = Lodash.get(data, 'urlImg', '');
-  const name = Lodash.get(data, 'name', '');
-  const address = Lodash.get(data, 'address', '');
   const startTime = Lodash.get(data, 'startDate', '');
-  const date = new Date(startTime);
-  const month = moment(date).month() + 1; // Moment base month on 0
-  const day = moment(date).date();
-  const dayStr = moment(date).format('dddd');
-  const id = props.match.params.id;
 
   const transformData = obj => {
     const transArr = getSafeValue(obj, 'translations', []);
@@ -95,17 +88,17 @@ const PostLibraryDetail = props => {
 
   useEffect(() => {
     setLoading(true);
-    getArticleDetail(id)
+    getArticleDetail(slug)
       .then(res => {
         setData(convertTranslations(res.data));
       })
       .catch(err => {
-        setLoadError(err.response.status);
+        setLoadError(err.response?.status || 404);
       })
       .finally(() => {
         setLoading(false);
       });
-  }, [id]);
+  }, [slug]);
 
   useEffect(() => {
     if (data?._id) {

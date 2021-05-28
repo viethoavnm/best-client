@@ -1,5 +1,6 @@
 import {
   Button,
+  Card,
   CardActionArea,
   CardMedia,
   createStyles,
@@ -15,7 +16,7 @@ import ShareSocial from 'components/ShareSocial';
 import { removeHTMLTag, truncateString } from 'helpers';
 import { Fragment, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { libraryPath } from 'routes';
 import { getArticleDetail } from 'services/articles';
 import { convertTranslations, formatDate } from 'utils';
@@ -51,6 +52,7 @@ const useStyles = makeStyles(() =>
 
 const AlbumLibrary = props => {
   const classes = useStyles();
+  const { slug } = useParams();
   const classesDetailVideo = useStylesDetailVideo();
   const classesLibrary = useStylesLibrary();
   const [selectedItem, setSelectedItem] = useState(-1);
@@ -68,25 +70,29 @@ const AlbumLibrary = props => {
   }, [menuData]);
 
   useEffect(() => {
-    const id = props.match.params.id;
     setLoading(true);
-    getArticleDetail(id)
+    getArticleDetail(slug)
       .then(res => {
         setData(convertTranslations(res?.data));
       })
       .catch(err => {
-        setLoadError(err.response.status);
+        setLoadError(err.response?.status || 404);
       })
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [slug]);
   const metaDescription = truncateString(
     removeHTMLTag(unescape(data?.[lang]?.description))
   );
   const metaTitle = `${
     data?.[lang]?.title ? data?.[lang]?.title : 'Album'
   } - BEST`;
+
+  let urlList = [];
+  if (Array.isArray(data?.medias)) {
+    urlList = data.medias.map(media => media?.url);
+  }
   return (
     <Fragment>
       <Helmet>
@@ -131,7 +137,7 @@ const AlbumLibrary = props => {
                 </div>
 
                 <CarouselImg
-                  listImg={data?.sources}
+                  listImg={urlList}
                   open={selectedItem > -1}
                   onClose={() => setSelectedItem(-1)}
                   selectedItem={selectedItem}
@@ -153,23 +159,22 @@ const AlbumLibrary = props => {
                     </div>
                   ) : (
                     <Fragment>
-                      {Array.isArray(data?.medias) &&
-                        data.medias.map((media, index) => {
-                          return (
-                            <Grid item xs={12} sm={6} md={4} key={index}>
+                      {urlList.map((item, index) => {
+                        return (
+                          <Grid item xs={12} sm={6} md={4} key={index}>
+                            <Card>
                               <CardActionArea
-                                // className={classes.imageBox}
                                 onClick={() => setSelectedItem(index)}>
                                 <CardMedia
                                   className={classes.image}
-                                  // component="img"
-                                  image={media?.url}
+                                  image={item}
                                   title=""
                                 />
                               </CardActionArea>
-                            </Grid>
-                          );
-                        })}
+                            </Card>
+                          </Grid>
+                        );
+                      })}
                     </Fragment>
                   )}
                 </Grid>

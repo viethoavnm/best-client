@@ -91,7 +91,7 @@ const LibrarySubCate = props => {
           setHasNext(dataHasNext);
           window.scrollTo(0, 0);
         })
-        .catch(err => setLoadError(err.response.status))
+        .catch(err => setLoadError(err.response?.status || 404))
         .finally(() => {
           setLoading(false);
         });

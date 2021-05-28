@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { Button, CardActionArea, Grid } from '@material-ui/core';
-import { Container, Title, Pagination, LibraryCard } from 'components';
+import { Card, CardActionArea, Grid } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { Fragment } from 'react';
 import clsx from 'clsx';
-import moment from 'moment';
-import { useHistory } from 'react-router-dom';
-import useStyles from './style';
-import NewsEvent from '../Search/component/news-event';
-import { getArticle } from '../../services/articles';
-import { LIST_LOADING } from 'utils/constant';
-import { getSafeValue, getTransObj } from 'utils';
-import Lodash from 'lodash';
-import { useSelector } from 'react-redux';
+import { Container, LibraryCard, Pagination, Title } from 'components';
 import RightNews from 'components/RightNews';
+import Lodash from 'lodash';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { convertTranslations, getSafeValue, getTransObj } from 'utils';
 import Error404 from 'views/Error404';
 import Error500 from 'views/Error500';
-import { Helmet } from 'react-helmet';
+import { getArticle } from '../../services/articles';
+import useStyles from './style';
 
 const News = () => {
   const history = useHistory();
@@ -55,12 +51,17 @@ const News = () => {
         const results = getSafeValue(res, 'data.results', []);
         const dataHasNext = getSafeValue(res, 'data.hasNext', false);
         const newList = transformMenu(results, lang);
+        if (Array.isArray(newList)) {
+          newList.forEach(element => {
+            convertTranslations(element);
+          });
+        }
         setArticles(newList);
         setHasNext(dataHasNext);
         window.scrollTo(0, 0);
       })
       .catch(err => {
-        setLoadError(err.response.status);
+        setLoadError(err.response?.status || 404);
       })
       .finally(() => {
         setLoading(false);
@@ -69,11 +70,6 @@ const News = () => {
 
   const onChangePage = (e, page) => {
     setPage(page);
-  };
-
-  const handleClickPost = obj => {
-    const id = getSafeValue(obj, '_id', '');
-    history.push(`/post/${id}`);
   };
 
   return (
@@ -123,17 +119,20 @@ const News = () => {
                             md={4}
                             key={index}
                             className={classes.cardBox}>
-                            <CardActionArea
-                              onClick={() => handleClickPost(item)}>
-                              <LibraryCard
-                                className={classes.cardItem}
-                                image={item.urlImg}
-                                title={item.title}
-                                date={item.publishedAt}
-                                author={item.authorName}
-                                description={item.description}
-                              />
-                            </CardActionArea>
+                            <Card>
+                              <CardActionArea
+                                component={Link}
+                                to={`/post/${item?.[lang]?.slug}`}>
+                                <LibraryCard
+                                  className={classes.cardItem}
+                                  image={item.urlImg}
+                                  title={item.title}
+                                  date={item.publishedAt}
+                                  author={item.authorName}
+                                  description={item.description}
+                                />
+                              </CardActionArea>
+                            </Card>
                           </Grid>
                         );
                       })}

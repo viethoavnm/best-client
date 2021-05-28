@@ -16,7 +16,7 @@ import { removeHTMLTag, truncateString } from 'helpers';
 import moment from 'moment';
 import { Fragment, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { getArticleDetail } from 'services/articles';
 import { convertTranslations, getSafeValue } from 'utils';
 import { DATE_FORMAT, TYPE_MENU } from 'utils/constant';
@@ -45,8 +45,7 @@ const useStyles = makeStyles(() =>
 
 const FileLibrary = props => {
   const classes = useStyles();
-  const history = useHistory();
-  const id = props.match.params.id;
+  const { slug } = useParams();
   const classesDetailVideo = useStylesDetailVideo();
   const classesLibrary = useStylesLibrary();
   const [openCarousel, setOpenCarousel] = useState(false);
@@ -74,17 +73,17 @@ const FileLibrary = props => {
 
   useEffect(() => {
     setLoading(true);
-    getArticleDetail(id)
+    getArticleDetail(slug)
       .then(res => {
         setData(convertTranslations(res.data));
       })
       .catch(err => {
-        setLoadError(err.response.status);
+        setLoadError(err.response?.status || 404);
       })
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [slug]);
   const metaDescription = truncateString(
     removeHTMLTag(unescape(data?.[lang]?.description))
   );
@@ -149,7 +148,7 @@ const FileLibrary = props => {
                             <Grid item xs={12} sm={6} md={4} key={index}>
                               <CardActionArea
                                 component={Link}
-                                to={`/library/file/${id}/${index}`}
+                                to={`/library/file/${data?.[lang]?.slug}/${index}`}
                                 // className={classes.imageBox}
                               >
                                 <CardMedia

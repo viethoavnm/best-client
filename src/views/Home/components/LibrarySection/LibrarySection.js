@@ -1,22 +1,16 @@
 import { Grid } from '@material-ui/core';
 import { ChevronRight } from '@material-ui/icons';
 import { Container, Title } from 'components';
-import React, { useState, useEffect, Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import FeaturedItem from '../FeaturedItem';
-import useStyles from './styles';
-import { useSelector, useDispatch } from 'react-redux';
-import { getSafeValue, getTransObj, getLinkFromArticle } from 'utils';
 import Lodash from 'lodash';
 import moment from 'moment';
-import {
-  TYPE_HOME_DATA,
-  UI_TYPE_HOME_DATA,
-  SubTypeArticle,
-  DATE_FORMAT
-} from 'utils/constant';
-import { useHistory } from 'react-router-dom';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { getLinkFromArticle, getSafeValue, getTransObj } from 'utils';
+import { DATE_FORMAT, TYPE_HOME_DATA } from 'utils/constant';
+import FeaturedItem from '../FeaturedItem';
+import useStyles from './styles';
 
 const LibrarySection = props => {
   const classes = useStyles();
@@ -66,11 +60,6 @@ const LibrarySection = props => {
     setLinkDirect(link);
   }, [lang, data]);
 
-  const handleClickArticle = obj => {
-    const linkRedirect = getLinkFromArticle(obj);
-    history.push(linkRedirect);
-  };
-
   const renderFirstArticle = () => {
     if (listData.length === 0) {
       return <></>;
@@ -81,20 +70,19 @@ const LibrarySection = props => {
     const date = moment(publishedAt).format(DATE_FORMAT);
     const urlImg = getSafeValue(obj, 'urlImg', '');
     const title = getSafeValue(obj, 'title', '');
-
     return (
       <Fragment>
-        <FeaturedItem
-          handleClick={() => handleClickArticle(obj)}
-          classImg={classes.img}
-          classContent={classes.content}
-          classType={classes.type}
-          classTitle={classes.titleCard}
-          title={title}
-          image={urlImg}
-          time={date}
-        />
-
+        <Link to={getLinkFromArticle(obj, lang)} className={classes.link}>
+          <FeaturedItem
+            classImg={classes.img}
+            classContent={classes.content}
+            classType={classes.type}
+            classTitle={classes.titleCard}
+            title={title}
+            image={urlImg}
+            time={date}
+          />
+        </Link>
         <div className={classes.titleMobile}>
           <span className={classes.time}>{date} - </span>
           <span>{title}</span>
@@ -118,16 +106,17 @@ const LibrarySection = props => {
 
           return (
             <Grid item xs={6} md={4} key={obj?._id}>
-              <FeaturedItem
-                handleClick={() => handleClickArticle(obj)}
-                classImg={classes.imgBottom}
-                classContent={classes.content}
-                classType={classes.type}
-                classTitle={classes.titleCard}
-                title={obj.title}
-                image={obj.urlImg}
-                time={date}
-              />
+              <Link to={getLinkFromArticle(obj, lang)} className={classes.link}>
+                <FeaturedItem
+                  classImg={classes.imgBottom}
+                  classContent={classes.content}
+                  classType={classes.type}
+                  classTitle={classes.titleCard}
+                  title={obj.title}
+                  image={obj.urlImg}
+                  time={date}
+                />
+              </Link>
               <div className={classes.titleMobile}>
                 <span className={classes.time}>{date} - </span>
                 <span>{obj.title}</span>

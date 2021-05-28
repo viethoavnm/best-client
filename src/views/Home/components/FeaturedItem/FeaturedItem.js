@@ -24,10 +24,12 @@ const FeaturedItem = ({
   handleClick
 }) => {
   const classes = useStyles();
-
+  const onClick = () => {
+    handleClick instanceof Function && handleClick();
+  };
   return (
     <Card className={clsx(classes.root, classRoot && classRoot)} elevation={0}>
-      <CardActionArea onClick={handleClick}>
+      <CardActionArea onClick={onClick}>
         <CardMedia
           image={image}
           title={title}

@@ -58,6 +58,10 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('sm')]: {
       paddingBottom: '58%'
     }
+  },
+  link: {
+    display: 'block',
+    textDecoration: 'none'
   }
 }));
 

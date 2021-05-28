@@ -44,34 +44,33 @@ export const getTransObj = (listTrans, lang = VI_LANG) => {
   }
 };
 
-export const getLinkFromArticle = article => {
+export const getLinkFromArticle = (article, lang) => {
   const type = getSafeValue(article, 'type', '');
   const subType = getSafeValue(article, 'subType', '');
-  const id = getSafeValue(article, '_id', '');
   let linkUrl = '/';
   if (subType === SubTypeArticle.single) {
     // If subtype is single, this is a post.
-    linkUrl = `/post/${id}`;
+    linkUrl = `/post/${article?.[lang]?.slug}`;
   } else {
     // Library have 4 type, we need to check it to navigate
     switch (type) {
       case TYPE_ARTICLE.file: {
-        linkUrl = `/library/file/${id}`;
+        linkUrl = `/library/file/${article?.[lang]?.slug}`;
         break;
       }
 
       case TYPE_ARTICLE.news: {
-        linkUrl = `/library/news/${id}`;
+        linkUrl = `/library/news/${article?.[lang]?.slug}`;
         break;
       }
 
       case TYPE_ARTICLE.video: {
-        linkUrl = `/library/video/${id}`;
+        linkUrl = `/library/video/${article?.[lang]?.slug}`;
         break;
       }
 
       case TYPE_ARTICLE.image: {
-        linkUrl = `/library/image/${id}`;
+        linkUrl = `/library/image/${article?.[lang]?.slug}`;
         break;
       }
 

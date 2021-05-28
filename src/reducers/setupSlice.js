@@ -2,7 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { isEmpty } from 'lodash';
 import { convertTranslations, getSafeValue } from 'utils';
 import { getHomeData, getSetupByKey } from '../services/setup';
-import { MENU_WEB_CONFIG, TYPE_MENU, TYPE_MENU_LINK } from '../utils/constant';
+import {
+  MENU_WEB_CONFIG,
+  TYPE_HOME_DATA,
+  TYPE_MENU,
+  TYPE_MENU_LINK
+} from '../utils/constant';
 
 export const fetchMenuWeb = createAsyncThunk('setup/fetchMenuWeb', async () => {
   const response = await getSetupByKey(MENU_WEB_CONFIG);
@@ -54,7 +59,23 @@ export const setupSlice = createSlice({
       }
     },
     [fetchHomeData.fulfilled]: (state, action) => {
-      state.homeData = action.payload;
+      let homeData = action.payload;
+      if (Array.isArray(homeData)) {
+        homeData.forEach(item => {
+          switch (item?.type) {
+            case TYPE_HOME_DATA.NEWS:
+            case TYPE_HOME_DATA.CATEGORY:
+            case TYPE_HOME_DATA.LIBRARY:
+            case TYPE_HOME_DATA.EVENT:
+              if (Array.isArray(item?.data)) {
+                item.data.forEach(element => {
+                  convertTranslations(element);
+                });
+              }
+          }
+        });
+      }
+      state.homeData = homeData;
     }
   }
 });

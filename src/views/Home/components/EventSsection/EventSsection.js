@@ -12,15 +12,14 @@ import DayPicker from 'react-day-picker';
 import MomentLocaleUtils from 'react-day-picker/moment';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { getEventByYear } from 'services/event';
-import { getTransObj } from 'utils';
+import { convertTranslations, getTransObj } from 'utils';
 import useStyles from './styles';
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
 
 const EventSsection = props => {
   const { eventsData, classRoot, data, ...rest } = props;
-  const history = useHistory();
   const classes = useStyles();
   const { t } = useTranslation();
   const [dateSelected, changeDateSelected] = useState(new Date());
@@ -51,6 +50,11 @@ const EventSsection = props => {
       .then(res => {
         const data = Lodash.get(res, 'data', []);
         const newList = transformData(data);
+        if (Array.isArray(newList)) {
+          newList.forEach(item => {
+            convertTranslations(item);
+          });
+        }
         setEvents(newList);
       })
       .catch(err => {})
@@ -66,13 +70,8 @@ const EventSsection = props => {
   }, [lang]);
 
   useEffect(() => {
-    // const eventData = Lodash.find(events, event =>
-    //   compareDate(event.startDate, dateSelected)
-    // );
-
-    // changeCurrentEvent(eventData);
     setCurrentEvent();
-  }, [dateSelected]);
+  }, [events, dateSelected]);
 
   const setCurrentEvent = data => {
     let res = events;
@@ -155,7 +154,9 @@ const EventSsection = props => {
     }
     return (
       <Card elevation={0}>
-        <CardActionArea component={Link} to={`/event/${currentEvent?._id}`}>
+        <CardActionArea
+          component={Link}
+          to={`/event/${currentEvent?.[lang]?.slug}`}>
           <Box position="relative" textAlign="center">
             <CardMedia
               className={classes.thumbnailEvent}

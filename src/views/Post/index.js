@@ -1,54 +1,42 @@
-import { Container, Title } from 'components';
+import { Hidden } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import React, { Fragment, useEffect, useState, lazy } from 'react';
 import CardMedia from '@material-ui/core/CardMedia';
-import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
-import { DATE_FORMAT } from 'utils/constant';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { Container, Title } from 'components';
 import RightNews from 'components/RightNews';
 import Lodash from 'lodash';
 import moment from 'moment';
-import useStyles from './styles';
 import 'moment/locale/vi';
-import { getArticleDetail, getArticle } from 'services/articles';
-import { Hidden } from '@material-ui/core';
-import ShareSocial from '../../components/ShareSocial';
-import RelatedPost from '../../components/RelatedPost';
-import { useSelector } from 'react-redux';
-import {
-  getSafeValue,
-  getTransObj,
-  formatDateLang,
-  convertTranslations
-} from 'utils';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router';
+import { getArticle, getArticleDetail } from 'services/articles';
+import { convertTranslations, getSafeValue, getTransObj } from 'utils';
+import { DATE_FORMAT } from 'utils/constant';
+import RelatedPost from '../../components/RelatedPost';
+import ShareSocial from '../../components/ShareSocial';
+import { removeHTMLTag, truncateString } from '../../helpers';
 import Error404 from '../../views/Error404';
 import Error500 from '../../views/Error500';
-import { Helmet } from 'react-helmet';
-import { truncateString, removeHTMLTag } from '../../helpers';
+import useStyles from './styles';
 const PostDetail = props => {
+  const { slug } = useParams();
+  const history = useHistory();
   const limitSuggest = 4;
   const classes = useStyles();
   const [data, setData] = useState({});
   const [dataSuggest, setDataSuggest] = useState([]);
-  // const [lang, setLang] = useState(VI_LANG);
   const lang = useSelector(state => state.multiLang.lang);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(0);
   const { t } = useTranslation();
-
-  const image = Lodash.get(data, 'urlImg', '');
-  const name = Lodash.get(data, 'name', '');
-  const address = Lodash.get(data, 'address', '');
   const startTime = Lodash.get(data, 'publishedAt', '');
-  const date = new Date(startTime);
   const formatDate = moment(startTime).format(DATE_FORMAT);
-  const month = moment(date).month() + 1; // Moment base month on 0
-  const day = moment(date).date();
-  const dayStr = moment(date).format('dddd');
-  const id = props.match.params.id;
   const transformData = obj => {
     const transArr = getSafeValue(obj, 'translations', []);
     const objTrans = getTransObj(transArr, lang);
@@ -56,20 +44,32 @@ const PostDetail = props => {
   };
 
   useEffect(() => {
+    if (data?._id) {
+      history.replace({ pathname: `${data?.[lang]?.slug}` });
+    }
+  }, [lang, data]);
+
+  useEffect(() => {
+    if (data?.[lang]?.slug === slug) return;
     setLoading(true);
-    getArticleDetail(id)
+    getArticleDetail(slug)
       .then(res => {
-        const dataRes = Lodash.get(res, 'data', {});
-        const newData = transformData(dataRes);
-        setData(convertTranslations(newData));
+        if (res.data?._id) {
+          const dataRes = Lodash.get(res, 'data', {});
+          const newData = transformData(dataRes);
+          setData(convertTranslations(newData));
+          setLoadError(0);
+        } else {
+          setLoadError(404);
+        }
       })
       .catch(err => {
-        setLoadError(err.response.status);
+        setLoadError(err.response?.status || 404);
       })
       .finally(() => {
         setLoading(false);
       });
-  }, [id]);
+  }, [slug]);
 
   useEffect(() => {
     const { category } = data;
@@ -81,7 +81,13 @@ const PostDetail = props => {
             const newData = transformData(cur);
             return [...arr, newData];
           }, []);
+          if (Array.isArray(dataGet)) {
+            dataGet.forEach(item => {
+              convertTranslations(item);
+            });
+          }
           setDataSuggest(dataGet);
+          console.log(dataGet)
         })
         .catch(err => {});
     }
@@ -99,79 +105,6 @@ const PostDetail = props => {
       setDataSuggest(dataGet);
     }
   }, [lang]);
-  const _renderInfoEvent = () => {
-    return (
-      <>
-        <Box
-          display="flex"
-          flexDirection="row"
-          marginTop="25px"
-          marginBottom="35px">
-          <Box bgcolor="#FFFFFF" marginLeft="20px" marginRight="20px">
-            <Paper elevation={1}>
-              <Box
-                bgcolor="#92BF1F"
-                paddingTop="5px"
-                paddingBottom="5px"
-                justifyContent="center"
-                alignItems="center"
-                marginBottom="13px"
-                display="flex"
-                paddingRight="30px"
-                paddingLeft="30px">
-                <Typography
-                  align="center"
-                  noWrap
-                  className={classes.monthEvent}>
-                  {t(`${formatDateLang(`Tháng ${month}`)}`)}
-                </Typography>
-              </Box>
-
-              <Typography align="center" className={classes.dayEvent}>
-                {day}
-              </Typography>
-
-              <Typography align="center" className={classes.dateEvent}>
-                {dayStr}
-              </Typography>
-
-              <Box height="10px" />
-            </Paper>
-          </Box>
-
-          <Box>
-            <Typography className={classes.titleItem}>{name}</Typography>
-
-            <Box
-              display="flex"
-              alignItems="center"
-              flexDirection="row"
-              marginBottom="15px">
-              <CardMedia
-                className={classes.media}
-                image="/images/ic-location.svg"
-                alt="location"
-              />
-              <Typography className={classes.addressItem}>{address}</Typography>
-            </Box>
-
-            <Box display="flex" alignItems="center" flexDirection="row">
-              <CardMedia
-                className={classes.media}
-                image="/images/ic-clock.svg"
-                alt="location"
-              />
-              <Typography className={classes.addressItem}>
-                {formatDate}
-              </Typography>
-            </Box>
-          </Box>
-        </Box>
-
-        <Divider className={classes.divider} />
-      </>
-    );
-  };
 
   const _renderTitle = title => {
     return (

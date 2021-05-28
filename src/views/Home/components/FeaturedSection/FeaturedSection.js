@@ -1,17 +1,16 @@
 import { Grid } from '@material-ui/core';
 import { Container, Title } from 'components';
-import React, { useState, useEffect, Fragment } from 'react';
-import FeaturedItem from '../FeaturedItem';
-import useStyles from './styles';
-import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-import { produce } from 'immer'; // from tool kit
 import Lodash from 'lodash';
 import moment from 'moment';
-import { DATE_FORMAT, SubTypeArticle } from 'utils/constant';
-import { useHistory } from 'react-router-dom';
-import { getLinkFromArticle, getSafeValue, getTransObj } from 'utils';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { getLinkFromArticle, getSafeValue, getTransObj } from 'utils';
+import { DATE_FORMAT } from 'utils/constant';
+import FeaturedItem from '../FeaturedItem';
+import useStyles from './styles';
 
 const FeaturedSection = props => {
   const { data, isNews } = props;
@@ -49,12 +48,6 @@ const FeaturedSection = props => {
     setListData(newList);
   }, [lang, data]);
 
-  const handleClickArticle = obj => {
-    const linkRedirect = getLinkFromArticle(obj);
-    history.push(linkRedirect);
-    // console.log('linkRedirect', linkRedirect);
-  };
-
   const renderFirstArticle = () => {
     if (listData.length === 0) {
       return <></>;
@@ -66,13 +59,14 @@ const FeaturedSection = props => {
     const date = moment(publishedAt).format(DATE_FORMAT);
 
     return (
-      <FeaturedItem
-        handleClick={() => handleClickArticle(obj)}
-        type={nameCate}
-        title={obj.title}
-        image={obj.urlImg}
-        time={date}
-      />
+      <Link to={getLinkFromArticle(obj, lang)} className={classes.link}>
+        <FeaturedItem
+          type={nameCate}
+          title={obj.title}
+          image={obj.urlImg}
+          time={date}
+        />
+      </Link>
     );
   };
 
@@ -85,17 +79,18 @@ const FeaturedSection = props => {
     const nameCate = getSafeValue(obj, 'nameCate', '');
 
     return (
-      <FeaturedItem
-        handleClick={() => handleClickArticle(obj)}
-        classImg={classes.rightImgTop}
-        classContent={classes.rightContent}
-        classType={classes.rightTypeTop}
-        classTitle={classes.rightTitle}
-        classTime={classes.rightTime}
-        type={nameCate}
-        title={obj.title}
-        image={obj.urlImg}
-      />
+      <Link to={getLinkFromArticle(obj, lang)} className={classes.link}>
+        <FeaturedItem
+          classImg={classes.rightImgTop}
+          classContent={classes.rightContent}
+          classType={classes.rightTypeTop}
+          classTitle={classes.rightTitle}
+          classTime={classes.rightTime}
+          type={nameCate}
+          title={obj.title}
+          image={obj.urlImg}
+        />
+      </Link>
     );
   };
 
@@ -108,17 +103,18 @@ const FeaturedSection = props => {
     const nameCate = getSafeValue(obj, 'nameCate', '');
 
     return (
-      <FeaturedItem
-        handleClick={() => handleClickArticle(obj)}
-        classImg={classes.rightImgBottom}
-        classContent={classes.rightContent}
-        classType={classes.rightTypeBottom}
-        classTitle={classes.rightTitle}
-        classTime={classes.rightTime}
-        type={nameCate}
-        title={obj.title}
-        image={obj.urlImg}
-      />
+      <Link to={getLinkFromArticle(obj, lang)} className={classes.link}>
+        <FeaturedItem
+          classImg={classes.rightImgBottom}
+          classContent={classes.rightContent}
+          classType={classes.rightTypeBottom}
+          classTitle={classes.rightTitle}
+          classTime={classes.rightTime}
+          type={nameCate}
+          title={obj.title}
+          image={obj.urlImg}
+        />
+      </Link>
     );
   };
 
