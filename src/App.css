@@ -1,5 +1,5 @@
 .ck-content {
-  overflow-x: hidden;
+  overflow-wrap: break-word;
 }
 
 :root {

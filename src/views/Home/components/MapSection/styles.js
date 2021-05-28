@@ -46,27 +46,14 @@ const useStyles = makeStyles(theme => ({
       order: 1
     }
   },
-  detailCard: {
-    height: '100%',
-    backgroundColor: '#FFFFFF',
-    boxShadow: `0px 4px 60px 0px rgba(150, 150, 150, 0.24)`,
-    borderRadius: 10,
-    border: `1px solid #E5E5E5`,
-    margin: theme.spacing(1)
-  },
-  detailContent: {
-    padding: theme.spacing(3)
-  },
   mapView: {
     order: 1,
     [theme.breakpoints.up('sm')]: {
       order: 2
     }
   },
-  mapContent: {
-    padding: theme.spacing(3)
-  },
   googleMapFrame: {
+    position: 'relative',
     height: '100%',
     overflow: 'hidden',
     borderRadius: 10
