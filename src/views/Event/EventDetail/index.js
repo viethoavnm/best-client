@@ -1,11 +1,9 @@
-import { Hidden } from '@material-ui/core';
+import { CardActionArea, Hidden } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import CardMedia from '@material-ui/core/CardMedia';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { Container } from 'components';
@@ -16,7 +14,7 @@ import 'moment/locale/vi';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useHistory, useParams, Link } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { getEvent, getEventDetail } from 'services/event';
 import { convertTranslations, formatDateLang, getSafeValue } from 'utils';
 import Error404 from 'views/Error404';
@@ -57,6 +55,7 @@ const EventDetail = props => {
   }, [lang, event]);
 
   useEffect(() => {
+    if (event?.[lang]?.slug === slug) return;
     setLoading(true);
     getEventDetail(slug)
       .then(res => {
@@ -70,20 +69,29 @@ const EventDetail = props => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [slug]);
 
   useEffect(() => {
-    const params = { limit: 4, isPublish: 1 };
+    const params = { limit: 5, isPublish: 1 };
     getEvent(params)
       .then(res => {
         const data = getSafeValue(res, 'data.results', []);
-        const newList = Lodash.map(data, obj => {
+        let newList = Lodash.map(data, obj => {
           return transformData(obj);
         });
         if (Array.isArray(newList)) {
           newList.forEach(item => {
             convertTranslations(item);
           });
+          newList.sort((a, b) => {
+            let timeA = new Date(a?.startDate);
+            let timeB = new Date(b?.startDate);
+            if (isNaN(timeA)) return 1;
+            if (isNaN(timeB)) return -1;
+            return timeB - timeA;
+          });
+          newList = newList.filter(item => item?.[lang]?.slug !== slug);
+          if (newList.length > 4) newList.length = 4;
         }
         setSuggestEvent(newList);
       })
@@ -207,10 +215,7 @@ const EventDetail = props => {
     const formatDateItem = moment(dateItem).format(DATE_FORMAT_2);
 
     return (
-      <ListItem
-        component={Link}
-        to={`/event/${item?.[lang]?.slug}`}
-        className={classes.itemSuggest}>
+      <CardActionArea component={Link} to={`/event/${item?.[lang]?.slug}`}>
         <Box className={classes.boxSuggest}>
           <CardMedia
             className={classes.thumbnailSuggest}
@@ -222,44 +227,37 @@ const EventDetail = props => {
               {nameItem}
             </Typography>
 
-            <Box display="flex" flexDirection="row">
+            <Box className={classes.timeSuggest}>
               <CardMedia
                 className={classes.smallClock}
                 image="/images/ic-small-clock.svg"
                 alt="small-clock"
               />
-              <Typography className={classes.timeSuggest}>
-                {formatDateItem}
-              </Typography>
+              {formatDateItem}
             </Box>
           </div>
         </Box>
-      </ListItem>
+      </CardActionArea>
     );
   };
 
   const _renderSuggestEvents = () => {
     return (
-      <List className={classes.listSuggest}>
-        {suggestEvent
-          .sort(
-            (a, b) =>
-              new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
-          )
-          .map((item, index) => {
-            return (
-              <Grid
-                item
-                key={index}
-                xs={12}
-                sm={6}
-                md={4}
-                className={classes.gridSuggest}>
-                {_renderItem(item)}
-              </Grid>
-            );
-          })}
-      </List>
+      <Grid container spacing={3} className={classes.listSuggest}>
+        {suggestEvent.map((item, index) => {
+          return (
+            <Grid
+              item
+              key={index}
+              xs={12}
+              sm={6}
+              md={3}
+              className={classes.gridSuggest}>
+              {_renderItem(item)}
+            </Grid>
+          );
+        })}
+      </Grid>
     );
   };
 

@@ -16,17 +16,9 @@ const useStyles = makeStyles(theme => ({
     paddingRight: 150
   },
   thumbnailSuggest: {
-    // width: `${(272 * 100) / 1440}vw`,
-    height: 160,
-    borderRadius: 10,
-    marginBottom: 8,
-    [theme.breakpoints.down('767')]: {
-      width: `${(272 * 100) / 767}vw`
-    },
-    [theme.breakpoints.down('601')]: {
-      width: `${(272 * 100) / 600}vw`,
-      marginBottom: 0
-    }
+    height: 0,
+    paddingBottom: '59%',
+    borderRadius: 10
   },
   thumbnail: {
     height: 0,
@@ -106,14 +98,12 @@ const useStyles = makeStyles(theme => ({
     marginRight: 4
   },
   timeSuggest: {
-    fontFamily: 'Montserrat',
-    fontSize: '14px',
-    fontWeight: '500',
     color: '#979797',
-    lineHeight: '17px',
-    [theme.breakpoints.down('sm')]: {
-      marginBottom: theme.spacing(2)
-    }
+    fontSize: 14,
+    fontWeight: 500,
+    marginBottom: 10,
+    display: 'flex',
+    alignItems: 'center'
   },
   boxSuggest: {
     [theme.breakpoints.down('600')]: {
@@ -123,15 +113,17 @@ const useStyles = makeStyles(theme => ({
     }
   },
   titleItemSuggest: {
-    fontFamily: 'Montserrat',
-    fontSize: '16px',
-    fontWeight: '600',
     color: '#000000',
-    lineHeight: '20px',
-    marginBottom: 8,
-    height: 37,
+    display: '-webkit-box',
     overflow: 'hidden',
+    fontSize: 16,
+    fontWeight: 600,
+    lineHeight: 1.5,
     textOverflow: 'ellipsis',
+    '-webkit-box-orient': 'vertical',
+    '-webkit-line-clamp': 2,
+    marginBottom: 8,
+    marginTop: 10,
     wordWrap: 'break-word'
   },
   content: {

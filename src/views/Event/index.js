@@ -41,6 +41,13 @@ const Event = () => {
           data.forEach(element => {
             convertTranslations(element);
           });
+          data.sort((a, b) => {
+            let timeA = new Date(a?.startDate);
+            let timeB = new Date(b?.startDate);
+            if (isNaN(timeA)) return 1;
+            if (isNaN(timeB)) return -1;
+            return timeB - timeA;
+          });
         }
         setListEvent(data);
       })
@@ -222,11 +229,6 @@ const Event = () => {
                       event =>
                         new Date(event.startDate) <=
                         new Date().setMonth(new Date().getMonth() + 3)
-                    )
-                    .sort(
-                      (a, b) =>
-                        new Date(b.startDate).getTime() -
-                        new Date(a.startDate).getTime()
                     )
                     .map(item => {
                       return (
