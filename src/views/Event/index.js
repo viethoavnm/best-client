@@ -218,7 +218,7 @@ const Event = () => {
             <Grid item xs={12} md={8}>
               <Title size="large" style={{ marginBottom: 24 }}>
                 <div className={classes.title}>
-                  {t('eventIn') + new Date().getFullYear()}
+                  {t('eventIn') + year}
                 </div>
               </Title>
 
