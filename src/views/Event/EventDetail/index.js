@@ -16,7 +16,7 @@ import 'moment/locale/vi';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Link } from 'react-router-dom';
 import { getEvent, getEventDetail } from 'services/event';
 import { convertTranslations, formatDateLang, getSafeValue } from 'utils';
 import Error404 from 'views/Error404';
@@ -76,12 +76,15 @@ const EventDetail = props => {
     const params = { limit: 4, isPublish: 1 };
     getEvent(params)
       .then(res => {
-        console.log(res);
         const data = getSafeValue(res, 'data.results', []);
         const newList = Lodash.map(data, obj => {
           return transformData(obj);
         });
-        console.log(newList);
+        if (Array.isArray(newList)) {
+          newList.forEach(item => {
+            convertTranslations(item);
+          });
+        }
         setSuggestEvent(newList);
       })
       .catch(err => {
@@ -98,7 +101,6 @@ const EventDetail = props => {
       const newList = Lodash.map(suggestEvent, obj => {
         return transformData(obj);
       });
-      console.log(newList);
       setSuggestEvent(newList);
     }
   }, [lang]);
@@ -197,10 +199,6 @@ const EventDetail = props => {
     );
   };
 
-  const handleClickItem = item => {
-    history.push(`/event/${item._id}`);
-  };
-
   const _renderItem = item => {
     const imageItem = Lodash.get(item, 'urlImg', '');
     const nameItem = Lodash.get(item, 'name', '');
@@ -210,7 +208,8 @@ const EventDetail = props => {
 
     return (
       <ListItem
-        onClick={() => handleClickItem(item)}
+        component={Link}
+        to={`/event/${item?.[lang]?.slug}`}
         className={classes.itemSuggest}>
         <Box className={classes.boxSuggest}>
           <CardMedia

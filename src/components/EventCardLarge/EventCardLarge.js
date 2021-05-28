@@ -1,23 +1,10 @@
-import React, { useState } from 'react';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
-import {
-  Card,
-  Grid,
-  CardContent,
-  CardMedia,
-  CardActionArea,
-  Typography,
-  Box
-} from '@material-ui/core';
-import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import { Box, Card, CardContent, CardMedia, Grid } from '@material-ui/core';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import { useTheme } from '@material-ui/core/styles';
+import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import PropTypes from 'prop-types';
-import { VI_LANG } from 'utils/constant';
-import moment from 'moment';
-import Lodash from 'lodash';
-import { formatDateLang } from 'utils';
-import { useTranslation } from 'react-i18next';
+import React from 'react';
+import { formatDateTime } from 'utils';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -74,39 +61,29 @@ const useStyles = makeStyles(theme =>
 );
 
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
-const EventCardLarge = ({ item, onClick }) => {
-  const { t } = useTranslation();
-  const [lang, setLang] = useState(VI_LANG);
+const EventCardLarge = ({ item, lang }) => {
   const classes = useStyles();
-  const theme = useTheme();
-
-  const image = Lodash.get(item, 'urlImg', '');
-  const name = Lodash.get(item, 'name', '');
-  const address = Lodash.get(item, 'address', '');
-  const startDate = Lodash.get(item, 'startDate', '');
-  const date = new Date(startDate);
-  const formatDate = moment(date).format(DATE_FORMAT);
-  const month = moment(date).month() + 1; // Moment base month on 0
-  const day = moment(date).date();
 
   return (
     <Card className={classes.root}>
       <Grid container spacing={0}>
         <Grid item xs={5} md={4}>
-          <CardMedia className={`${classes.media}`} image={image} />
+          <CardMedia className={`${classes.media}`} image={item?.urlImg} />
         </Grid>
 
         <Grid item xs={7} md={8}>
           <CardContent className={classes.content}>
-            <h4 className={classes.title}>{name}</h4>
+            <h4 className={classes.title}>{item?.[lang]?.name}</h4>
             <Box className={classes.grid}>
               <LocationOnOutlinedIcon />
-              <div className={classes.textGrid}>{address}</div>
+              <div className={classes.textGrid}>{item?.[lang]?.address}</div>
             </Box>
 
             <Box className={classes.grid}>
               <AccessTimeIcon />
-              <div className={classes.textGrid}>{formatDate}</div>
+              <div className={classes.textGrid}>
+                {formatDateTime(item?.startDate)}
+              </div>
             </Box>
           </CardContent>
         </Grid>

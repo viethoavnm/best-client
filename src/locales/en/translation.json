@@ -26,6 +26,7 @@
   "txtMonth": "Month",
   "eventsTitle": "Events",
   "upcomingEvents": "Upcoming events",
+  "eventIn": "Events in ",
   "month": {
     "January": "January",
     "February": "February",

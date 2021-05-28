@@ -140,3 +140,10 @@ export const formatDate = date => {
   }
   return '';
 };
+
+export const formatDateTime = date => {
+  if (typeof date === 'string') {
+    return moment(date.trim()).format('hh:mm A - DD/MM/YYYY');
+  }
+  return '';
+};

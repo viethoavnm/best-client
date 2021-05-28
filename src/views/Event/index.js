@@ -15,59 +15,34 @@ import MomentLocaleUtils from 'react-day-picker/moment';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import { getEventByYear, getEvent } from 'services/event';
-import { getTransObj } from 'utils';
+import { Link } from 'react-router-dom';
+import { getEventByYear } from 'services/event';
+import { convertTranslations, formatDateTime } from 'utils';
 import EventCardLarge from '../../components/EventCardLarge';
-import useStyles from './style';
 import '../Home/day-picker.css';
-const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
+import useStyles from './style';
 
 const Event = () => {
-  const history = useHistory();
   const classes = useStyles();
   const [dateSelected, changeDateSelected] = useState(new Date());
   const [currentEvent, changeCurrentEvent] = useState({});
-  const [events, setEvents] = useState({});
   const [listEvent, setListEvent] = useState([]);
   const [year, setYear] = useState(new Date().getFullYear());
   const lang = useSelector(state => state.multiLang.lang);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
 
-  // const dispatch = useDispatch();
-
-  const transformData = list => {
-    const newList = list.map(obj => {
-      const transArr = Lodash.get(obj, 'translations', []);
-      const objTrans = getTransObj(transArr, lang);
-      const { _id, ...res } = objTrans;
-      return { ...obj, ...res };
-    });
-
-    return newList;
-  };
-
-  // useEffect(() => {
-  //   const newList = transformData(listEvent);
-  //   setListEvent(newList);
-  // }, [lang, listEvent]);
-
   useEffect(() => {
     setLoading(true);
     getEventByYear(year)
       .then(res => {
-        const data = Lodash.get(res, 'data', []);
-        const newList = transformData(data);
-        let newListNext = [];
-        if (new Date().getMonth() + 1 >= 10) {
-          getEventByYear(year + 1).then(res => {
-            newListNext = transformData(Lodash.get(res, 'data', []));
-            setListEvent([...newList, ...newListNext]);
+        let data = res.data;
+        if (Array.isArray(data)) {
+          data.forEach(element => {
+            convertTranslations(element);
           });
-        } else {
-          setListEvent(newList);
         }
+        setListEvent(data);
       })
       .catch(err => {})
       .finally(() => {
@@ -77,16 +52,7 @@ const Event = () => {
 
   useEffect(() => {
     setCurrentEvent();
-    // }
-  }, [dateSelected]);
-
-  useEffect(() => {
-    if (listEvent.length) {
-      const dataNews = transformData(listEvent);
-      setListEvent(dataNews);
-      setCurrentEvent(dataNews);
-    }
-  }, [lang]);
+  }, [dateSelected, listEvent]);
 
   const compareDate = (firstDate, secondDate) => {
     return moment(firstDate).isSame(secondDate, 'day');
@@ -100,9 +66,6 @@ const Event = () => {
     const eventData = Lodash.find(res, event =>
       compareDate(event.startDate, dateSelected)
     );
-
-    // console.log('object', eventData);
-    // if (!Lodash.isEmpty(eventData)) {
     changeCurrentEvent(eventData);
   };
 
@@ -157,7 +120,9 @@ const Event = () => {
 
     return (
       <Card elevation={0}>
-        <CardActionArea component={Link} to={`/event/${currentEvent?._id}`}>
+        <CardActionArea
+          component={Link}
+          to={`/event/${currentEvent?.[lang]?.slug}`}>
           <Box position="relative" textAlign="center">
             <CardMedia
               className={classes.thumbnailEvent}
@@ -181,7 +146,7 @@ const Event = () => {
           <Box className={classes.eventDes}>
             <Box display="flex" alignItems="center" flexDirection="column">
               <h2 className={classes.eventTitle} align="center">
-                {currentEvent?.name}
+                {currentEvent?.[lang]?.name}
               </h2>
 
               <Box
@@ -194,7 +159,9 @@ const Event = () => {
                   image="images/ic-location-white.svg"
                   alt="location"
                 />
-                <p className={classes.addressItem}>{currentEvent?.address}</p>
+                <p className={classes.addressItem}>
+                  {currentEvent?.[lang]?.address}
+                </p>
               </Box>
 
               <Box display="flex" alignItems="center" flexDirection="row">
@@ -204,7 +171,7 @@ const Event = () => {
                   alt="location"
                 />
                 <p className={classes.addressItem}>
-                  {moment(currentEvent?.startDate).format(DATE_FORMAT)}
+                  {formatDateTime(currentEvent?.startDate)}
                 </p>
               </Box>
             </Box>
@@ -219,7 +186,6 @@ const Event = () => {
       <Helmet>
         <title>{t('titleEvent')} - BEST</title>
       </Helmet>
-      {/* {renderHTML(htmlUnescape)} */}
       <Container>
         <section>
           <Title size="large" className={classes.titleBox}>
@@ -244,7 +210,9 @@ const Event = () => {
           <Grid container spacing={4}>
             <Grid item xs={12} md={8}>
               <Title size="large" style={{ marginBottom: 24 }}>
-                <div className={classes.title}>{t('upcomingEvents')}</div>
+                <div className={classes.title}>
+                  {t('eventIn') + new Date().getFullYear()}
+                </div>
               </Title>
 
               {!loading ? (
@@ -265,9 +233,9 @@ const Event = () => {
                         <Fragment key={item?._id}>
                           <CardActionArea
                             component={Link}
-                            to={`/event/${item._id}`}
+                            to={`/event/${item?.[lang]?.slug}`}
                             style={{ textDecoration: 'none' }}>
-                            <EventCardLarge item={item} />
+                            <EventCardLarge item={item} lang={lang} />
                           </CardActionArea>
                           <Divider className={classes.divider} />
                         </Fragment>
