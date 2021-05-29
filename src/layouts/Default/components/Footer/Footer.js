@@ -1,4 +1,4 @@
-import { Divider, Hidden } from '@material-ui/core';
+import { Divider, Fab, Hidden } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
@@ -10,6 +10,7 @@ import oxfamLogo from 'assets/img/oxfam.png';
 import switchAsiaLogo from 'assets/img/switch-asia.png';
 import clsx from 'clsx';
 import React, { Fragment, useEffect, useState } from 'react';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -18,12 +19,16 @@ import { getSetupByKey } from '../../../../services/setup';
 import Subscribe from '../Subscribe';
 import useStyles from './Style';
 
+const { innerHeight } = window;
 function DefaultLayoutFooter(props) {
   const classes = useStyles();
   const { t } = useTranslation();
   const [configFooter, setConfigFooter] = useState();
   const menuData = useSelector(state => state.setup.menuData);
   const lang = useSelector(state => state.multiLang.lang);
+  const prevScrollY = useRef(0);
+  const [goingUp, setGoingUp] = useState(false);
+  const [showFloatBtn, setShowFloatBtn] = useState(false);
 
   useEffect(() => {
     getSetupByKey('FOOTER_CONFIG')
@@ -34,6 +39,37 @@ function DefaultLayoutFooter(props) {
         console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      // if (prevScrollY.current < currentScrollY && goingUp) {
+      //   setGoingUp(false);
+      // }
+      // if (prevScrollY.current > currentScrollY && !goingUp) {
+      //   setGoingUp(true);
+      // }
+
+      if (currentScrollY > innerHeight) {
+        setShowFloatBtn(true);
+      } else {
+        setShowFloatBtn(false);
+      }
+
+      prevScrollY.current = currentScrollY;
+    };
+
+    // register event scroll
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const handleScroll = () => {
+    //
+  };
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -222,12 +258,14 @@ function DefaultLayoutFooter(props) {
           {/*==================== End of Footer 2 ====================*/}
 
           {/*====================  Scroll top ====================*/}
-          <Button
-            className={classes.scrollToTop}
-            variant="contained"
-            onClick={scrollToTop}>
-            <ArrowUpwardIcon />
-          </Button>
+          {showFloatBtn && (
+            <Button
+              className={classes.scrollToTop}
+              variant="contained"
+              onClick={scrollToTop}>
+              <ArrowUpwardIcon />
+            </Button>
+          )}
           {/*====================  End of scroll top  ====================*/}
         </Container>
       </footer>
