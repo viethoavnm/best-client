@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
 import { Container, Title } from 'components';
+import AppEventPickers from 'components/AppEventPickers';
 import RightNews from 'components/RightNews';
 import Lodash from 'lodash';
 import moment from 'moment';
@@ -57,137 +58,6 @@ const Event = () => {
       });
   }, [year]);
 
-  useEffect(() => {
-    setCurrentEvent();
-  }, [dateSelected, listEvent]);
-
-  const compareDate = (firstDate, secondDate) => {
-    return moment(firstDate).isSame(secondDate, 'day');
-  };
-
-  const setCurrentEvent = data => {
-    let res = listEvent;
-    if (data?.length) {
-      res = data;
-    }
-    const eventData = Lodash.find(res, event =>
-      compareDate(event.startDate, dateSelected)
-    );
-    changeCurrentEvent(eventData);
-  };
-
-  const _renderDay = day => {
-    const dateData = day.getDate();
-    const dayEvent = Lodash.find(listEvent, event =>
-      compareDate(event.startDate, day)
-    );
-    const isMatchEvent = !Lodash.isEmpty(dayEvent);
-
-    return (
-      <div className={clsx('DayPicker-Day---box', isMatchEvent && 'has-event')}>
-        <p className={classes.dayDate}>{dateData}</p>
-      </div>
-    );
-  };
-
-  const _renderDayPicker = () => {
-    return (
-      <DayPicker
-        locale={lang}
-        localeUtils={MomentLocaleUtils}
-        renderDay={_renderDay}
-        onDayClick={day => changeDateSelected(day)}
-        selectedDays={[dateSelected]}
-        onMonthChange={date => {
-          setYear(date.getFullYear());
-        }}
-      />
-    );
-  };
-
-  const _renderEventDetail = () => {
-    if (Lodash.isEmpty(currentEvent)) {
-      return (
-        <Box
-          style={{
-            paddingTop: '50px',
-            paddingBottom: '50px'
-          }}>
-          <CardMedia
-            alt="img_no_event"
-            className={classes.imgNoEvent}
-            image="images/img_no_event.svg"
-          />
-          <Typography className={classes.noEventLable} align="center">
-            {t('noEvent')}
-          </Typography>
-        </Box>
-      );
-    }
-
-    return (
-      <Card elevation={0}>
-        <CardActionArea
-          component={Link}
-          to={`/event/${currentEvent?.[lang]?.slug}`}>
-          <Box position="relative" textAlign="center">
-            <CardMedia
-              className={classes.thumbnailEvent}
-              image={currentEvent?.urlImg}
-              alt="image-event"
-            />
-            <Box
-              position="absolute"
-              top="50%"
-              left="50%"
-              className={classes.wrapperDayEvent}>
-              <Typography className={classes.dayEvent}>
-                {moment(currentEvent?.startDate).date()}
-              </Typography>
-              <Typography className={classes.weekday}>
-                {moment(currentEvent?.startDate).format('dddd')}
-              </Typography>
-            </Box>
-          </Box>
-
-          <Box className={classes.eventDes}>
-            <Box display="flex" alignItems="center" flexDirection="column">
-              <h2 className={classes.eventTitle} align="center">
-                {currentEvent?.[lang]?.name}
-              </h2>
-
-              <Box
-                display="flex"
-                alignItems="center"
-                flexDirection="row"
-                marginBottom="16px">
-                <CardMedia
-                  className={classes.media}
-                  image="images/ic-location-white.svg"
-                  alt="location"
-                />
-                <p className={classes.addressItem}>
-                  {currentEvent?.[lang]?.address}
-                </p>
-              </Box>
-
-              <Box display="flex" alignItems="center" flexDirection="row">
-                <CardMedia
-                  className={classes.media}
-                  image="images/ic-clock-white.svg"
-                  alt="location"
-                />
-                <p className={classes.addressItem}>
-                  {formatDateTime(currentEvent?.startDate)}
-                </p>
-              </Box>
-            </Box>
-          </Box>
-        </CardActionArea>
-      </Card>
-    );
-  };
-
   return (
     <Fragment>
       <Helmet>
@@ -202,7 +72,7 @@ const Event = () => {
             </div>
           </Title>
 
-          <Grid container className={classes.rootCard}>
+          {/* <Grid container className={classes.rootCard}>
             <Grid item xs={12} md={6} className={clsx(classes.eventLeft)}>
               {_renderEventDetail()}
             </Grid>
@@ -210,16 +80,16 @@ const Event = () => {
             <Grid item xs={12} md={6} className={clsx(classes.eventRight)}>
               {_renderDayPicker()}
             </Grid>
-          </Grid>
+          </Grid> */}
+
+          <AppEventPickers changeYear={year => setYear(year)} />
         </section>
 
         <section className={clsx(classes.secondSection)}>
           <Grid container spacing={4}>
             <Grid item xs={12} md={8}>
               <Title size="large" style={{ marginBottom: 24 }}>
-                <div className={classes.title}>
-                  {t('eventIn') + year}
-                </div>
+                <div className={classes.title}>{t('eventIn') + year}</div>
               </Title>
 
               {!loading ? (
