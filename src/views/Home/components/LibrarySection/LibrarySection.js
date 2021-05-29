@@ -49,9 +49,18 @@ const LibrarySection = props => {
     // Handle link direction
     const type = getSafeValue(data, 'type', '');
     const id = getSafeValue(data, 'id', '');
+
+    // Server is not return slug yet, so we have to go to first post and get slug of category.
+    const cateTranslation = getSafeValue(
+      data,
+      'data[0].category.translations',
+      []
+    );
+    const objCate = Lodash.find(cateTranslation, obj => obj.lang === lang);
+
     let link = '/';
     if (type === TYPE_HOME_DATA.CATEGORY) {
-      link = `/category/${id}`;
+      link = objCate?.slug ? `/category/${objCate?.slug}` : '/category';
     } else if (type === TYPE_HOME_DATA.LIBRARY) {
       link = `/library`;
     }
@@ -127,6 +136,10 @@ const LibrarySection = props => {
       </Fragment>
     );
   };
+
+  if (listData.length === 0) {
+    return <></>;
+  }
 
   return (
     <section>

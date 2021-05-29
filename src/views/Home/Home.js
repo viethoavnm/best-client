@@ -15,6 +15,7 @@ import {
 import './day-picker.css';
 import { Helmet } from 'react-helmet';
 import LogoBEST from 'assets/img/logo-best.svg';
+
 const Home = () => {
   const history = useHistory();
   const [homeData, setHomeData] = useState([]);
@@ -23,8 +24,6 @@ const Home = () => {
   const [eventsData, setEventsData] = useState([]);
   const dispatch = useDispatch();
   const homeDataDynamic = useSelector(state => state.setup.homeData);
-
-  // console.log('homeDataDynamic', homeDataDynamic);
 
   // useEffect(() => {
   //   const event = homeData.find(object => object.type === 'event');
@@ -44,7 +43,7 @@ const Home = () => {
     } else if (type === TYPE_HOME_DATA.COMPANY_LOCATION) {
       return <MapSection data={obj} key={index} />;
     } else {
-      // We need to sub check that type is library or category.
+      // News type, We need to sub check that typeUi is.
       if (uiType === UI_TYPE_HOME_DATA.ONE) {
         return <UiSection1 data={obj} isNews={false} key={index} />;
       } else if (uiType === UI_TYPE_HOME_DATA.TWO) {

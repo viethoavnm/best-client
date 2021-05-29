@@ -48,6 +48,11 @@ const routes = [
         component: lazy(() => import('./views/News'))
       },
       {
+        path: '/category/:slugCate/post/:slug',
+        exact: true,
+        component: lazy(() => import('./views/Post'))
+      },
+      {
         path: libraryPath,
         exact: true,
         component: Library

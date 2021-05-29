@@ -44,13 +44,21 @@ function DefaultLayoutFooter(props) {
   };
 
   const renderMenu = () => {
-    return menuData.map((menu, index) => (
-      <li key={index}>
-        <Link to={TYPE_MENU_LINK[menu?.type]} className={classes.eachRowItem}>
-          {menu?.[lang]?.name}
-        </Link>
-      </li>
-    ));
+    return menuData.map((menu, index) => {
+      // If menu have slug, we will navigate to this route
+      const slugExist = menu?.[lang]?.slug;
+      const link = slugExist
+        ? `${TYPE_MENU_LINK[menu?.type]}/${slugExist}`
+        : TYPE_MENU_LINK[menu?.type];
+
+      return (
+        <li key={index}>
+          <Link to={link} className={classes.eachRowItem}>
+            {menu?.[lang]?.name}
+          </Link>
+        </li>
+      );
+    });
   };
 
   const renderfooter = () => {

@@ -14,15 +14,19 @@ import Error404 from 'views/Error404';
 import Error500 from 'views/Error500';
 import { getArticle } from '../../services/articles';
 import useStyles from './style';
+import { useParams } from 'react-router';
+import { getCategoryDetail } from 'services/category';
 
 const News = () => {
   const history = useHistory();
   const classes = useStyles();
+  const { slug } = useParams();
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(0);
   const [page, setPage] = useState(1);
   const [hasNext, setHasNext] = useState(false);
   const [articles, setArticles] = useState([]);
+  const [cateName, setCateName] = useState('');
   const limit = 12;
   const lang = useSelector(state => state.multiLang.lang);
   const { t } = useTranslation();
@@ -44,29 +48,72 @@ const News = () => {
   }, [lang]);
 
   useEffect(() => {
+    if (slug) {
+      getDataCategory(page, slug);
+    }
+  }, [page, slug]);
+
+  const getDataCategory = async (page, slug) => {
     setLoading(true);
-    const params = { page, limit };
-    getArticle(params)
-      .then(res => {
-        const results = getSafeValue(res, 'data.results', []);
-        const dataHasNext = getSafeValue(res, 'data.hasNext', false);
-        const newList = transformMenu(results, lang);
-        if (Array.isArray(newList)) {
-          newList.forEach(element => {
-            convertTranslations(element);
-          });
-        }
-        setArticles(newList);
-        setHasNext(dataHasNext);
-        window.scrollTo(0, 0);
-      })
-      .catch(err => {
-        setLoadError(err.response?.status || 404);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [page]);
+    try {
+      // Get category
+      const resCategory = await getCategoryDetail(slug);
+      const dataCate = getSafeValue(resCategory, 'data', {});
+      const idCate = getSafeValue(dataCate, '_id', '');
+      const cateTrans = getSafeValue(dataCate, 'translations', []);
+      const cateObj = Lodash.find(cateTrans, cate => cate.slug === slug);
+      const cateName = cateObj?.name;
+
+      setCateName(cateName);
+      // Get article base on category.
+      const params = {
+        page,
+        limit,
+        subType: 'single',
+        type: 'news',
+        category: idCate
+      };
+      const resArticle = await getArticle(params);
+
+      const results = getSafeValue(resArticle, 'data.results', []);
+      const dataHasNext = getSafeValue(resArticle, 'data.hasNext', false);
+      const newList = transformMenu(results, lang);
+      if (Array.isArray(newList)) {
+        newList.forEach(element => {
+          convertTranslations(element);
+        });
+      }
+      setArticles(newList);
+      setHasNext(dataHasNext);
+      window.scrollTo(0, 0);
+    } catch (err) {
+      // handle error here.
+      setLoadError(err.response?.status || 404);
+    } finally {
+      setLoading(false);
+    }
+
+    // getArticle(params)
+    //   .then(res => {
+    //     const results = getSafeValue(res, 'data.results', []);
+    //     const dataHasNext = getSafeValue(res, 'data.hasNext', false);
+    //     const newList = transformMenu(results, lang);
+    //     if (Array.isArray(newList)) {
+    //       newList.forEach(element => {
+    //         convertTranslations(element);
+    //       });
+    //     }
+    //     setArticles(newList);
+    //     setHasNext(dataHasNext);
+    //     window.scrollTo(0, 0);
+    //   })
+    //   .catch(err => {
+    //     setLoadError(err.response?.status || 404);
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
+  };
 
   const onChangePage = (e, page) => {
     setPage(page);
@@ -86,9 +133,9 @@ const News = () => {
           <>
             <div className={classes.header}>
               <Title size="large">
-                <div className={classes.title}>{t('titleNews')}</div>
+                <div className={classes.title}>{cateName}</div>
                 <div className={classes.breadcrumb}>
-                  {t('txtHome')} / {t('titleNews')}
+                  {t('txtHome')} / {cateName}
                 </div>
               </Title>
             </div>
@@ -111,6 +158,16 @@ const News = () => {
                   <div className={clsx(classes.cardSection)}>
                     <Grid container spacing={2}>
                       {articles.map((item, index) => {
+                        const categoryTrans = getSafeValue(
+                          item,
+                          'category.translations',
+                          []
+                        );
+                        const cateTransObj = Lodash.find(
+                          categoryTrans,
+                          obj => obj.lang === lang
+                        );
+
                         return (
                           <Grid
                             item
@@ -122,7 +179,7 @@ const News = () => {
                             <Card>
                               <CardActionArea
                                 component={Link}
-                                to={`/post/${item?.[lang]?.slug}`}>
+                                to={`${cateTransObj?.slug}/post/${item?.[lang]?.slug}`}>
                                 <LibraryCard
                                   className={classes.cardItem}
                                   image={item.urlImg}

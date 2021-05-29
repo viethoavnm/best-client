@@ -53,24 +53,25 @@ export const getLinkFromArticle = (article, lang) => {
     linkUrl = `/post/${article?.[lang]?.slug}`;
   } else {
     // Library have 4 type, we need to check it to navigate
+    const librarySlug = article?.[lang]?.slug;
     switch (type) {
       case TYPE_ARTICLE.file: {
-        linkUrl = `/library/file/${article?.[lang]?.slug}`;
+        linkUrl = `/library/file/${librarySlug}`;
         break;
       }
 
       case TYPE_ARTICLE.news: {
-        linkUrl = `/library/news/${article?.[lang]?.slug}`;
+        linkUrl = `/library/news/${librarySlug}`;
         break;
       }
 
       case TYPE_ARTICLE.video: {
-        linkUrl = `/library/video/${article?.[lang]?.slug}`;
+        linkUrl = `/library/video/${librarySlug}`;
         break;
       }
 
       case TYPE_ARTICLE.image: {
-        linkUrl = `/library/image/${article?.[lang]?.slug}`;
+        linkUrl = `/library/image/${librarySlug}`;
         break;
       }
 

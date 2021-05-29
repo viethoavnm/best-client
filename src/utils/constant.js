@@ -14,7 +14,7 @@ export const TYPE_MENU = {
 
 export const TYPE_MENU_LINK = {
   [TYPE_MENU.HOME]: '/home',
-  [TYPE_MENU.CATEGORY]: '/catelory',
+  [TYPE_MENU.CATEGORY]: '/category',
   [TYPE_MENU.POST]: '/post',
   [TYPE_MENU.EVENT]: '/event',
   [TYPE_MENU.LIBRARY]: '/library'

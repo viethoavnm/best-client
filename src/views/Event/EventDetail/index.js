@@ -72,6 +72,10 @@ const EventDetail = props => {
   }, [slug]);
 
   useEffect(() => {
+    if (Lodash.isEmpty(event)) {
+      return;
+    }
+
     const params = { limit: 5, isPublish: 1 };
     getEvent(params)
       .then(res => {
@@ -98,7 +102,7 @@ const EventDetail = props => {
       .catch(err => {
         setLoadError(err.response?.status || 404);
       });
-  }, []);
+  }, [event]);
 
   useEffect(() => {
     if (event._id) {

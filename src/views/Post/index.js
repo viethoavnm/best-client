@@ -72,26 +72,29 @@ const PostDetail = props => {
   }, [slug]);
 
   useEffect(() => {
-    const { category } = data;
+    const { category, _id } = data;
+
     if (category) {
       getArticle({ category: category._id, subType: 'single', type: 'news' })
         .then(res => {
           const data = Lodash.get(res, 'data.results', []);
-          const dataGet = data.reduce((arr, cur) => {
+          const suggestionData = Lodash.filter(data, post => post._id !== _id);
+          const dataGet = suggestionData.reduce((arr, cur) => {
             const newData = transformData(cur);
             return [...arr, newData];
           }, []);
+
           if (Array.isArray(dataGet)) {
             dataGet.forEach(item => {
               convertTranslations(item);
             });
           }
           setDataSuggest(dataGet);
-          console.log(dataGet)
         })
         .catch(err => {});
     }
   }, [data]);
+
   useEffect(() => {
     if (data?._id) {
       const newData = transformData(data);
