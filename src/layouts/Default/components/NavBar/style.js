@@ -6,7 +6,6 @@ const useStyles = makeStyles(theme => ({
     background: `linear-gradient(90deg, #92BF1F -18.89%, #F7B033 125.73%)`,
     lineHeight: 1.25,
     zIndex: 1100,
-    transition: 'padding-left 0.4s ease-out',
     [theme.breakpoints.down(BREAKPOINTS)]: {
       background: '#A1BD22'
     }
@@ -101,6 +100,7 @@ const useStyles = makeStyles(theme => ({
   },
   imgTopBox: {
     display: 'none',
+    boxShadow: '0 1px 1px rgb(0 0 0 / 4%)',
     [theme.breakpoints.down(BREAKPOINTS)]: {
       display: 'flex'
     }
@@ -127,18 +127,15 @@ const useStyles = makeStyles(theme => ({
       display: 'block'
     }
   },
-  menuOpenRoot: {
-    [theme.breakpoints.down(BREAKPOINTS)]: {
-      paddingLeft: '80%'
-    }
-  },
   menuOpen: {
     [theme.breakpoints.down(BREAKPOINTS)]: {
-      width: '80%'
+      width: 280,
+      maxWidth: '80%'
     }
   },
   closeMenu: {
     [theme.breakpoints.down(BREAKPOINTS)]: {
+      zIndex: 900,
       position: 'fixed',
       top: 0,
       bottom: 0,

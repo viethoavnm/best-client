@@ -1,36 +1,43 @@
-import React from 'react';
-import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 import MomentUtils from '@date-io/moment';
-import { Provider as StoreProvider } from 'react-redux';
-
-import { ThemeProvider } from '@material-ui/styles';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { ThemeProvider } from '@material-ui/styles';
+import React from 'react';
+import { Provider as StoreProvider } from 'react-redux';
 import { renderRoutes } from 'react-router-config';
-
-import store from './store/configureStore';
-import theme from './theme';
-import routes from './routes';
-import { ScrollReset, CookiesNotification } from './components';
+import { BrowserRouter as Router } from 'react-router-dom';
+import './App.css';
+import { ScrollReset } from './components';
+import firebase from './firebase';
 import './mixins/moment';
 import './mixins/validate';
-// import './mock';
-// import './assets/scss/index.scss';
-import Home from 'views/Home';
-import Event from 'views/Event';
+import routes from './routes';
+import store from './store/configureStore';
+import theme from './theme';
+import { Helmet } from 'react-helmet';
+import { useTranslation } from 'react-i18next';
 
-const history = createBrowserHistory();
-// const store = configureStore();
+firebase();
 
 const App = () => {
+  const { t } = useTranslation();
   return (
     <StoreProvider store={store}>
       <ThemeProvider theme={theme}>
         <MuiPickersUtilsProvider utils={MomentUtils}>
+          <Helmet>
+            <title>BEST - {t('nameProject')}</title>
+            <meta name="description" content={`BEST - ${t('sloganFull')}`} />
+            <meta property="og:title" content={`BEST - ${t('nameProject')}`} />
+            <meta
+              property="og:description"
+              content={`BEST - ${t('sloganFull')}`}
+            />
+            <meta property="og:site_name" content="BEST" />
+            <meta name="twitter:card" content="summary_large_image" />
+          </Helmet>
+
           <Router>
             <ScrollReset />
-            <CookiesNotification />
-
             {renderRoutes(routes)}
 
             {/* <Switch>

@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 const useStyles = makeStyles(theme => ({
   titleBox: {
     marginTop: theme.spacing(4),
-    marginBottom: theme.spacing(3)
+    marginBottom: theme.spacing(4)
   },
   title: {
     margin: 0,
@@ -58,6 +58,10 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('sm')]: {
       paddingBottom: '58%'
     }
+  },
+  link: {
+    display: 'block',
+    textDecoration: 'none'
   }
 }));
 

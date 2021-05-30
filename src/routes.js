@@ -43,9 +43,14 @@ const routes = [
         component: lazy(() => import('./views/Search'))
       },
       {
-        path: '/category/:id',
+        path: '/category/:slug',
         exact: true,
         component: lazy(() => import('./views/News'))
+      },
+      {
+        path: '/category/:slugCate/post/:slug',
+        exact: true,
+        component: lazy(() => import('./views/Post'))
       },
       {
         path: libraryPath,
@@ -58,30 +63,35 @@ const routes = [
         component: LibrarySubCate
       },
       {
-        path: `${libraryPath}/news/:id`,
+        path: `${libraryPath}/news/:slug`,
         exact: true,
         component: PostLibraryDetail
       },
       {
-        path: `${libraryPath}/video/:id`,
+        path: `${libraryPath}/video/:slug`,
         exact: true,
         component: PostLibraryDetail
       },
       {
-        path: `${libraryPath}/image/:id`,
+        path: `${libraryPath}/image/:slug`,
         exact: true,
         component: AlbumLibrary
       },
       {
-        path: `${libraryPath}/file/:id`,
+        path: `${libraryPath}/file/:slug`,
         exact: true,
         component: FileLibrary
       },
       {
-        path: `${libraryPath}/file/:id/:indexUrl`,
+        path: `${libraryPath}/file/:slug/:indexUrl`,
         exact: true,
         component: FileLibraryDetail
       },
+      {
+        path: `${libraryPath}/*`,
+        component: lazy(() => import('./views/Error404'))
+      },
+
       // {
       //   path: '/library/video/:id',
       //   exact: true,
@@ -93,12 +103,12 @@ const routes = [
         component: Event
       },
       {
-        path: '/event/:id',
+        path: '/event/:slug',
         exact: true,
         component: React.lazy(() => import('./views/Event/EventDetail'))
       },
       {
-        path: '/post/:id',
+        path: '/post/:slug',
         exact: true,
         component: React.lazy(() => import('./views/Post/index.js'))
       },
@@ -106,6 +116,10 @@ const routes = [
         path: '/news',
         exact: true,
         component: React.lazy(() => import('./views/News'))
+      },
+      {
+        path: '*',
+        component: lazy(() => import('./views/Error404'))
       }
     ]
   },

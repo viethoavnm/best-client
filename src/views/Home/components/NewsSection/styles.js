@@ -53,6 +53,10 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('md')]: {
       display: 'none'
     }
+  },
+  link: {
+    display: 'block',
+    textDecoration: 'none'
   }
 }));
 

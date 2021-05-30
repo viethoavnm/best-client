@@ -20,11 +20,12 @@ i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     resources,
-    lng: 'vi',
+    // lng: 'vi',
     fallbackLng: 'vi',
     detection: {
-      order: ['queryString', 'cookie'],
-      cache: ['cookie']
+      order: ['cookie'],
+      caches: ['cookie'],
+      lookupCookie: 'language'
     },
     // keySeparator: false, // we do not use keys in form messages.welcome
     interpolation: {

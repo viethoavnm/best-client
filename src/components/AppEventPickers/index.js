@@ -1,52 +1,110 @@
-import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import CardMedia from '@material-ui/core/CardMedia';
+import { Box, Card, CardActionArea, CardMedia, Grid } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import { ChevronRight } from '@material-ui/icons';
+import clsx from 'clsx';
+import { Container, Title } from 'components';
+import Lodash from 'lodash';
+import moment from 'moment';
+import 'moment/locale/vi';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState, useCallback } from 'react';
 import DayPicker from 'react-day-picker';
 import MomentLocaleUtils from 'react-day-picker/moment';
-import moment from 'moment';
-import Lodash from 'lodash';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { getEventByYear } from 'services/event';
+import { convertTranslations, getTransObj } from 'utils';
 import useStyles from './style';
-import { useSelector } from 'reac-redux';
-
-// import './calendar.scss';
-import './day-picker.css';
-import 'moment/locale/vi';
-
-const mockEvent = [
-  {
-    name: 'Sự kiện chào mừng công nghệ sinh khối mới',
-    content: 'Đột phát trong công nghệ phát triển sinh khối mới',
-    address: 'Số 168 đông triều, thanh xuân, hà nội',
-    startDate: '2021-03-30T13:48:00.000Z'
-  },
-  {
-    name: 'Sự kiện chào mừng nông thôn mới 2021',
-    content: 'Sự kiện nông thôn mới thường niên năm 2021',
-    address: 'Số 68 triều khúc, thanh xuân, hà nội',
-    startDate: '2021-03-24T10:00:00.000Z'
-  }
-];
-
 const DATE_FORMAT = 'hh:mm A - DD/MM/YYYY';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import Slider from 'react-slick';
+import Button from '@material-ui/core/Button';
+import { useHistory, useParams } from 'react-router-dom';
+
+var sliderSettings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1
+};
+
 const AppEventPickers = props => {
-  const classes = useStyles(props);
-  const lang = useSelector(state => state.multiLang.lang);
+  const { eventsData, classRoot, data, ...rest } = props;
+  const classes = useStyles();
+  const { t } = useTranslation();
+  const history = useHistory();
   const [dateSelected, changeDateSelected] = useState(new Date());
-  const [currentEvent, changeCurrentEvent] = useState(mockEvent[0]);
-  // eslint-disable-next-line no-unused-vars
-  const [events, setEvents] = useState(mockEvent);
+  const [currentEvent, changeCurrentEvent] = useState({});
+  const [year, setYear] = useState(new Date().getFullYear());
+  const [events, setEvents] = useState([]);
+  const lang = useSelector(state => state.multiLang.lang);
+  const [dayEvents, setDayEvents] = useState([]);
+  const [dragging, setDragging] = useState(false);
+
+  const transformData = list => {
+    const newList = list.map(obj => {
+      const transArr = Lodash.get(obj, 'translations', []);
+      const objTrans = getTransObj(transArr, lang);
+      const { _id, ...res } = objTrans;
+      return { ...obj, ...res };
+    });
+
+    return newList;
+  };
 
   useEffect(() => {
-    const eventData = Lodash.find(events, event =>
+    const listEvent = Lodash.get(data, 'data', []);
+    const newList = transformData(listEvent);
+    setEvents(newList);
+  }, [data]);
+
+  useEffect(() => {
+    getEventByYear(year)
+      .then(res => {
+        const data = Lodash.get(res, 'data', []);
+        const newList = transformData(data);
+        if (Array.isArray(newList)) {
+          newList.forEach(item => {
+            convertTranslations(item);
+          });
+        }
+
+        // console.log('newList', newList);
+        setEvents(newList);
+      })
+      .catch(err => {})
+      .finally(() => {});
+  }, [year]);
+
+  useEffect(() => {
+    if (events.length) {
+      const newList = transformData(events);
+      setEvents(newList);
+      // setCurrentEvent();
+    }
+  }, [lang]);
+
+  useEffect(() => {
+    setCurrentEvent();
+  }, [events, dateSelected]);
+
+  const setCurrentEvent = () => {
+    // let res = events;
+    // if (data?.length) {
+    //   res = data;
+    // }
+    const listEvents = Lodash.filter(events, event =>
       compareDate(event.startDate, dateSelected)
     );
-    // if (!Lodash.isEmpty(eventData)) {
-    changeCurrentEvent(eventData);
-    // }
-  }, [dateSelected]);
+
+    setDayEvents(listEvents);
+    // console.log('listEvents', listEvents);
+
+    // changeCurrentEvent(eventData);
+  };
 
   const compareDate = (firstDate, secondDate) => {
     return moment(firstDate).isSame(secondDate, 'day');
@@ -60,138 +118,158 @@ const AppEventPickers = props => {
     const isMatchEvent = !Lodash.isEmpty(dayEvent);
 
     return (
-      <Box
-        alignItems="center"
-        display="flex"
-        flexDirection="column"
-        height="50px"
-        justifyContent="center"
-        position="relative"
-        width="50px"
-        // bgcolor={isSelectedDate ? '#92BF1F' : 'transaprent'}
-      >
-        <Typography className={classes.dayDate}>{dateData}</Typography>
+      <div className={clsx('DayPicker-Day---box', isMatchEvent && 'has-event')}>
+        <p className={classes.dayDate}>{dateData}</p>
+      </div>
+    );
+  };
 
-        {isMatchEvent && (
-          <Box
-            alignSelf="center"
-            bgcolor="#92BF1F"
-            borderRadius="4px"
-            bottom="0px"
-            height="8px"
-            left="21px"
-            position="absolute"
-            width="8px"
-          />
-        )}
+  const _renderDayPicker = () => {
+    return (
+      <Box className={classes.eventRight}>
+        <DayPicker
+          locale={lang}
+          localeUtils={MomentLocaleUtils}
+          renderDay={_renderDay}
+          onDayClick={day => changeDateSelected(day)}
+          selectedDays={[dateSelected]}
+          onMonthChange={date => {
+            setYear(date.getFullYear());
+            props.changeYear && props.changeYear(date.getFullYear());
+          }}
+          // onMonthChange={month => console.log('month', month.getFullYear())}
+        />
       </Box>
     );
   };
 
-  return (
-    <Grid
-      alignItems="center"
-      container
-      direction="row"
-      justify="space-between"
-      {...props}>
-      <Grid item sm={6} xs={12}>
-        <Grid
-          alignItems="stretch"
-          container
-          direction="column"
-          justify="space-between">
-          {Lodash.isEmpty(currentEvent) ? (
-            <Box alignItems="center" display="flex" justifyContent="center">
-              <Typography className={classes.noEvent} color="red">
-                Không có sự kiện nào!
+  // Handle change slide
+  const handleBeforeChange = useCallback(() => {
+    setDragging(true);
+  }, [setDragging]);
+
+  const handleAfterChange = useCallback(() => {
+    setDragging(false);
+  }, [setDragging]);
+
+  const handleOnItemClick = useCallback(
+    eventItem => {
+      if (dragging) return;
+
+      history.push({ pathname: `/event/${eventItem?.[lang]?.slug}` });
+    },
+    [dragging]
+  );
+
+  const _renderEventItem = eventItem => {
+    return (
+      <Card elevation={0}>
+        {/* <CardActionArea
+          component={Link}
+          to={`/event/${eventItem?.[lang]?.slug}`}> */}
+        <Box onClick={() => handleOnItemClick(eventItem)}>
+          <Box position="relative" textAlign="center">
+            <CardMedia
+              className={classes.thumbnailEvent}
+              image={eventItem?.urlImg}
+              alt="image-event"
+            />
+            <Box
+              position="absolute"
+              top="50%"
+              left="50%"
+              className={classes.wrapperDayEvent}>
+              <Typography className={classes.dayEvent}>
+                {moment(eventItem?.startDate).date()}
+              </Typography>
+              <Typography className={classes.weekday}>
+                {moment(eventItem?.startDate).format('dddd')}
               </Typography>
             </Box>
-          ) : (
-            <>
-              <Grid item sm={12} xs={12}>
-                <Box position="relative" textAlign="center">
-                  <CardMedia
-                    alt="image-event"
-                    className={classes.thumbnailEvent}
-                    image="images/new-1.png"
-                  />
+          </Box>
 
-                  <Box
-                    className={classes.wrapperDayEvent}
-                    left="50%"
-                    position="absolute"
-                    top="50%">
-                    <Typography className={classes.dayEvent}>
-                      {moment(currentEvent.startDate).date()}
-                    </Typography>
-                    <Typography className={classes.weekday}>
-                      {moment(currentEvent.startDate).format('dddd')}
-                    </Typography>
-                  </Box>
-                </Box>
-              </Grid>
+          <Box className={classes.eventDes}>
+            <Box display="flex" alignItems="center" flexDirection="column">
+              <h2 className={classes.eventTitle} align="center">
+                {eventItem?.[lang]?.name}
+              </h2>
 
-              <Grid item sm={12} xs={12}>
-                <Box className={classes.eventDes}>
-                  <Box
-                    alignItems="center"
-                    display="flex"
-                    flexDirection="column">
-                    <Typography align="center" className={classes.title}>
-                      {currentEvent.name}
-                    </Typography>
+              <Box
+                display="flex"
+                alignItems="center"
+                flexDirection="row"
+                marginBottom="16px">
+                <CardMedia
+                  className={classes.media}
+                  image="images/ic-location-white.svg"
+                  alt="location"
+                />
+                <p className={classes.addressItem}>
+                  {eventItem?.[lang]?.address}
+                </p>
+              </Box>
 
-                    <Box
-                      alignItems="center"
-                      display="flex"
-                      flexDirection="row"
-                      marginBottom="16px">
-                      <CardMedia
-                        alt="location"
-                        className={classes.media}
-                        image="images/ic-location-white.svg"
-                      />
-                      <Typography className={classes.addressItem}>
-                        {currentEvent.address}
-                      </Typography>
-                    </Box>
+              <Box display="flex" alignItems="center" flexDirection="row">
+                <CardMedia
+                  className={classes.media}
+                  image="images/ic-clock-white.svg"
+                  alt="location"
+                />
+                <p className={classes.addressItem}>
+                  {moment(eventItem.startDate).format(DATE_FORMAT)}
+                </p>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+        {/* </CardActionArea> */}
+      </Card>
+    );
+  };
 
-                    <Box alignItems="center" display="flex" flexDirection="row">
-                      <CardMedia
-                        alt="location"
-                        className={classes.media}
-                        image="assets/images/ic-clock-white.svg"
-                      />
-                      <Typography className={classes.addressItem}>
-                        {moment(currentEvent.startDate).format(DATE_FORMAT)}
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Box>
-              </Grid>
-            </>
-          )}
-        </Grid>
+  const _renderEventDetail = () => {
+    if (dayEvents.length === 0) {
+      return (
+        <Box
+          style={{
+            paddingTop: '50px',
+            paddingBottom: '50px'
+          }}>
+          <CardMedia
+            alt="img_no_event"
+            className={classes.imgNoEvent}
+            image="images/img_no_event.svg"
+          />
+          <Typography className={classes.noEventLable} align="center">
+            {t('noEvent')}
+          </Typography>
+        </Box>
+      );
+    }
+
+    return (
+      <Slider
+        {...sliderSettings}
+        beforeChange={handleBeforeChange}
+        afterChange={handleAfterChange}>
+        {dayEvents.map((eventItem, key) => {
+          return <Box key={key}>{_renderEventItem(eventItem)}</Box>;
+        })}
+      </Slider>
+    );
+  };
+
+  return (
+    <Grid container className={classes.rootCard}>
+      <Grid item xs={12} md={6} className={classes.eventLeft}>
+        {_renderEventDetail()}
       </Grid>
 
-      <Grid item sm={6} xs={12}>
-        <DayPicker
-          locale={lang}
-          localeUtils={MomentLocaleUtils}
-          onDayClick={day => changeDateSelected(day)}
-          renderDay={_renderDay}
-          selectedDays={[dateSelected]}
-        />
+      <Grid item xs={12} md={6} className={clsx(classes.eventRight)}>
+        {_renderDayPicker()}
       </Grid>
     </Grid>
   );
 };
 
-AppEventPickers.propTypes = {
-  listEvent: PropTypes.array
-};
-
-AppEventPickers.defaultProps = {};
-
-export default React.memo(AppEventPickers);
+export default AppEventPickers;

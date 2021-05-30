@@ -1,22 +1,32 @@
 import { CardActionArea, createStyles, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { EventCard, NewsCard, Title } from 'components';
-import { Fragment, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import Lodash from 'lodash';
-import { getLinkFromArticle, getSafeValue, getTransObj } from 'utils';
-import { DATE_FORMAT } from 'utils/constant';
 import moment from 'moment';
-import { useHistory } from 'react-router-dom';
-import Box from '@material-ui/core/Box';
+import { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatDateLang } from 'utils';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import {
+  formatDateLang,
+  getLinkFromArticle,
+  getSafeValue,
+  getTransObj
+} from 'utils';
+import { DATE_FORMAT } from 'utils/constant';
 
 const useStyles = makeStyles(() =>
   createStyles({
     divider: {
-      marginTop: 35,
-      marginBottom: 25
+      marginTop: 32,
+      marginBottom: 32,
+      backgroundColor: '#E5E5E5'
+    },
+    titleNews: {
+      marginBottom: 24
+    },
+    titleEvent: {
+      marginBottom: 32
     }
   })
 );
@@ -28,7 +38,6 @@ const RightNews = () => {
   const classes = useStyles();
   const [articles, setArticles] = useState([]);
   const [events, setEvents] = useState([]);
-  const history = useHistory();
   const { t } = useTranslation();
   const transformArticle = (listMenu, lang) => {
     const newList = Lodash.map(listMenu, obj => {
@@ -62,45 +71,45 @@ const RightNews = () => {
     setArticles(newList);
   }, [lang, newArticle, newEvent]);
 
-  const handleClickArticle = obj => {
-    const linkDirect = getLinkFromArticle(obj);
-    history.push({
-      pathname: linkDirect
-    });
-  };
-
-  const handleClickEvent = event => {
-    history.push({
-      pathname: `/event/${event._id}`
-    });
-  };
-
   return (
     <Fragment>
-      {articles.length > 0 && <Title>{t('newTitle')}</Title>}
-      {articles.map((article, key) => {
-        const cateName = getSafeValue(article, 'cateName', '');
-        const publishedAt = getSafeValue(article, 'publishedAt', '');
-        const date = moment(publishedAt).format(DATE_FORMAT);
+      {articles.length > 0 && (
+        <Title className={classes.titleNews}>{t('newestNews')}</Title>
+      )}
+      {articles
+        .sort(
+          (a, b) =>
+            new Date(b.publishedAt).getTime() -
+            new Date(a.publishedAt).getTime()
+        )
+        .map((article, key) => {
+          const cateName = getSafeValue(article, 'cateName', '');
+          const publishedAt = getSafeValue(article, 'publishedAt', '');
+          const date = moment(publishedAt).format(DATE_FORMAT);
 
-        return (
-          <CardActionArea
-            key={key}
-            onClick={() => handleClickArticle(article)}
-            style={{ paddingTop: 10, paddingBottom: 10 }}>
-            <NewsCard
-              image={article.urlImg}
-              type={cateName}
-              title={article.title}
-              date={date}
-            />
-          </CardActionArea>
-        );
-      })}
+          return (
+            <CardActionArea
+              component={Link}
+              to={getLinkFromArticle(article, lang)}
+              key={key}
+              style={{ marginBottom: 16 }}>
+              <NewsCard
+                image={article.urlImg}
+                type={cateName}
+                title={article.title}
+                date={date}
+              />
+            </CardActionArea>
+          );
+        })}
 
       {articles.length > 0 && <Divider className={classes.divider} />}
 
-      {events.length && <Title transform="uppercase">{t('titleEvent')}</Title>}
+      {events?.length > 0 && (
+        <Title className={classes.titleEvent} transform="uppercase">
+          {t('titleEvent')}
+        </Title>
+      )}
       {events.map((event, key) => {
         const name = getSafeValue(event, 'name', '');
         const startDate = getSafeValue(event, 'startDate', '');
@@ -109,9 +118,10 @@ const RightNews = () => {
 
         return (
           <CardActionArea
+            component={Link}
+            to={`/event/${event?.[lang]?.slug}`}
             key={key}
-            onClick={() => handleClickEvent(event)}
-            style={{ paddingTop: 10, paddingBottom: 10 }}>
+            style={{ marginBottom: 24 }}>
             <EventCard
               day={t(`${formatDateLang(`Tháng ${month}`)}`)}
               month={day}

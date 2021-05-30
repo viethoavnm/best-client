@@ -1,22 +1,16 @@
 import { Grid } from '@material-ui/core';
 import { ChevronRight } from '@material-ui/icons';
 import { Container, Title } from 'components';
-import React, { useState, useEffect, Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import FeaturedItem from '../FeaturedItem';
-import useStyles from './styles';
-import { useSelector, useDispatch } from 'react-redux';
-import { getSafeValue, getTransObj, getLinkFromArticle } from 'utils';
 import Lodash from 'lodash';
 import moment from 'moment';
-import {
-  TYPE_HOME_DATA,
-  UI_TYPE_HOME_DATA,
-  SubTypeArticle,
-  DATE_FORMAT
-} from 'utils/constant';
-import { useHistory } from 'react-router-dom';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { getLinkFromArticle, getSafeValue, getTransObj } from 'utils';
+import { DATE_FORMAT, TYPE_HOME_DATA } from 'utils/constant';
+import FeaturedItem from '../FeaturedItem';
+import useStyles from './styles';
 
 const LibrarySection = props => {
   const classes = useStyles();
@@ -55,9 +49,18 @@ const LibrarySection = props => {
     // Handle link direction
     const type = getSafeValue(data, 'type', '');
     const id = getSafeValue(data, 'id', '');
+
+    // Server is not return slug yet, so we have to go to first post and get slug of category.
+    const cateTranslation = getSafeValue(
+      data,
+      'data[0].category.translations',
+      []
+    );
+    const objCate = Lodash.find(cateTranslation, obj => obj.lang === lang);
+
     let link = '/';
     if (type === TYPE_HOME_DATA.CATEGORY) {
-      link = `/category/${id}`;
+      link = objCate?.slug ? `/category/${objCate?.slug}` : '/category';
     } else if (type === TYPE_HOME_DATA.LIBRARY) {
       link = `/library`;
     }
@@ -65,11 +68,6 @@ const LibrarySection = props => {
     setListData(newList);
     setLinkDirect(link);
   }, [lang, data]);
-
-  const handleClickArticle = obj => {
-    const linkRedirect = getLinkFromArticle(obj);
-    history.push(linkRedirect);
-  };
 
   const renderFirstArticle = () => {
     if (listData.length === 0) {
@@ -81,20 +79,19 @@ const LibrarySection = props => {
     const date = moment(publishedAt).format(DATE_FORMAT);
     const urlImg = getSafeValue(obj, 'urlImg', '');
     const title = getSafeValue(obj, 'title', '');
-
     return (
       <Fragment>
-        <FeaturedItem
-          handleClick={() => handleClickArticle(obj)}
-          classImg={classes.img}
-          classContent={classes.content}
-          classType={classes.type}
-          classTitle={classes.titleCard}
-          title={title}
-          image={urlImg}
-          time={date}
-        />
-
+        <Link to={getLinkFromArticle(obj, lang)} className={classes.link}>
+          <FeaturedItem
+            classImg={classes.img}
+            classContent={classes.content}
+            classType={classes.type}
+            classTitle={classes.titleCard}
+            title={title}
+            image={urlImg}
+            time={date}
+          />
+        </Link>
         <div className={classes.titleMobile}>
           <span className={classes.time}>{date} - </span>
           <span>{title}</span>
@@ -118,16 +115,17 @@ const LibrarySection = props => {
 
           return (
             <Grid item xs={6} md={4} key={obj?._id}>
-              <FeaturedItem
-                handleClick={() => handleClickArticle(obj)}
-                classImg={classes.imgBottom}
-                classContent={classes.content}
-                classType={classes.type}
-                classTitle={classes.titleCard}
-                title={obj.title}
-                image={obj.urlImg}
-                time={date}
-              />
+              <Link to={getLinkFromArticle(obj, lang)} className={classes.link}>
+                <FeaturedItem
+                  classImg={classes.imgBottom}
+                  classContent={classes.content}
+                  classType={classes.type}
+                  classTitle={classes.titleCard}
+                  title={obj.title}
+                  image={obj.urlImg}
+                  time={date}
+                />
+              </Link>
               <div className={classes.titleMobile}>
                 <span className={classes.time}>{date} - </span>
                 <span>{obj.title}</span>
@@ -138,6 +136,10 @@ const LibrarySection = props => {
       </Fragment>
     );
   };
+
+  if (listData.length === 0) {
+    return <></>;
+  }
 
   return (
     <section>
@@ -151,7 +153,7 @@ const LibrarySection = props => {
           </div>
         </Title>
 
-        <Grid container spacing={3}>
+        <Grid container spacing={3} style={{ paddingBottom: 24 }}>
           <Grid item xs={12} md={4}>
             {renderFirstArticle()}
           </Grid>

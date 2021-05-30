@@ -2,8 +2,8 @@ import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
   titleBox: {
-    marginTop: 48,
-    marginBottom: 24
+    marginTop: 32,
+    marginBottom: 32
   },
   title: {
     margin: 0,
@@ -77,6 +77,10 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('md')]: {
       display: 'none'
     }
+  },
+  link: {
+    display: 'block',
+    textDecoration: 'none'
   }
 }));
 

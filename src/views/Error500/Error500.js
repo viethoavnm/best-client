@@ -2,8 +2,9 @@ import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import { Typography, Button, useTheme, useMediaQuery } from '@material-ui/core';
-
+import { useTranslation } from 'react-i18next';
 import { Page } from 'components';
+import { Helmet } from 'react-helmet';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -35,24 +36,18 @@ const Error500 = () => {
   const classes = useStyles();
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down('sm'));
-
+  const { t } = useTranslation();
   return (
-    <Page
-      className={classes.root}
-      title="Error 404"
-    >
-      <Typography
-        align="center"
-        variant={mobileDevice ? 'h4' : 'h1'}
-      >
-        500: Ooops, something went terribly wrong!
+    <Page className={classes.root}>
+      <Helmet>
+        <title>500 - {t('errorPage.500Title')}</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+      <Typography align="center" variant={mobileDevice ? 'h4' : 'h1'}>
+        {t('errorPage.500Title')}
       </Typography>
-      <Typography
-        align="center"
-        variant="subtitle2"
-      >
-        You either tried some shady route or you came here by mistake. Whichever
-        it is, try using the navigation
+      <Typography align="center" variant="subtitle2">
+        {t('errorPage.500Description')}
       </Typography>
       <div className={classes.imageContainer}>
         <img
@@ -66,9 +61,8 @@ const Error500 = () => {
           color="primary"
           component={RouterLink}
           to="/"
-          variant="outlined"
-        >
-          Back to home
+          variant="outlined">
+          {t('errorPage.backButton')}
         </Button>
       </div>
     </Page>

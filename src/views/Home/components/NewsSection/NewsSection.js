@@ -7,25 +7,18 @@ import {
 } from '@material-ui/core';
 import { AccessTime, ChevronRight } from '@material-ui/icons';
 import { Container, Title } from 'components';
-import React, { useState, useEffect, Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import useStylesLibrarySection from '../LibrarySection/styles';
-import NewsItem from '../NewsItem';
-import useStyles from './styles';
-import useStylesNewsItem from '../NewsItem/styles';
-import { useSelector, useDispatch } from 'react-redux';
-import { getSafeValue, getTransObj, getLinkFromArticle } from 'utils';
 import Lodash from 'lodash';
 import moment from 'moment';
-import {
-  TYPE_HOME_DATA,
-  UI_TYPE_HOME_DATA,
-  SubTypeArticle,
-  DATE_FORMAT
-} from 'utils/constant';
-import { useHistory } from 'react-router-dom';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { getLinkFromArticle, getSafeValue, getTransObj } from 'utils';
+import { DATE_FORMAT, TYPE_HOME_DATA } from 'utils/constant';
+import useStylesLibrarySection from '../LibrarySection/styles';
+import NewsItem from '../NewsItem';
+import useStylesNewsItem from '../NewsItem/styles';
+import useStyles from './styles';
 
 const NewsSection = props => {
   const { data } = props;
@@ -67,9 +60,18 @@ const NewsSection = props => {
     // Handle link direction
     const type = getSafeValue(data, 'type', '');
     const id = getSafeValue(data, 'id', '');
+
+    // Server is not return slug yet, so we have to go to first post and get slug of category.
+    const cateTranslation = getSafeValue(
+      data,
+      'data[0].category.translations',
+      []
+    );
+    const objCate = Lodash.find(cateTranslation, obj => obj.lang === lang);
+
     let link = '/';
     if (type === TYPE_HOME_DATA.CATEGORY) {
-      link = `/category/${id}`;
+      link = objCate?.slug ? `/category/${objCate?.slug}` : '/category';
     } else if (type === TYPE_HOME_DATA.LIBRARY) {
       link = `/library`;
     }
@@ -96,7 +98,7 @@ const NewsSection = props => {
 
     return (
       <Card className={classes.rootCard} elevation={0}>
-        <CardActionArea onClick={() => handleClickArticle(obj)}>
+        <CardActionArea component={Link} to={`/post/${obj?.[lang]?.slug}`}>
           <CardMedia image={urlImg} title={title} className={classes.img} />
         </CardActionArea>
 
@@ -135,20 +137,24 @@ const NewsSection = props => {
 
           return (
             <Grid item xs={6} md={12} key={obj?._id}>
-              <CardActionArea onClick={() => handleClickArticle(obj)}>
+              <Link to={`/post/${obj?.[lang]?.slug}`} className={classes.link}>
                 <NewsItem
                   type={obj.nameCate}
                   title={obj.title}
                   image={obj.urlImg}
                   time={date}
                 />
-              </CardActionArea>
+              </Link>
             </Grid>
           );
         })}
       </Fragment>
     );
   };
+
+  if (listData.length === 0) {
+    return <></>;
+  }
 
   return (
     <section>

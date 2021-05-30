@@ -9,7 +9,8 @@ const useStyles = makeStyles(theme =>
       }
     },
     header: {
-      padding: '40px 0'
+      marginTop: 32,
+      marginBottom: 32
     },
     title: {
       flexGrow: 1,

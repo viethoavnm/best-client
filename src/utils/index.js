@@ -44,34 +44,34 @@ export const getTransObj = (listTrans, lang = VI_LANG) => {
   }
 };
 
-export const getLinkFromArticle = article => {
+export const getLinkFromArticle = (article, lang) => {
   const type = getSafeValue(article, 'type', '');
   const subType = getSafeValue(article, 'subType', '');
-  const id = getSafeValue(article, '_id', '');
   let linkUrl = '/';
   if (subType === SubTypeArticle.single) {
     // If subtype is single, this is a post.
-    linkUrl = `/post/${id}`;
+    linkUrl = `/post/${article?.[lang]?.slug}`;
   } else {
     // Library have 4 type, we need to check it to navigate
+    const librarySlug = article?.[lang]?.slug;
     switch (type) {
       case TYPE_ARTICLE.file: {
-        linkUrl = `/library/file/${id}`;
+        linkUrl = `/library/file/${librarySlug}`;
         break;
       }
 
       case TYPE_ARTICLE.news: {
-        linkUrl = `/library/news/${id}`;
+        linkUrl = `/library/news/${librarySlug}`;
         break;
       }
 
       case TYPE_ARTICLE.video: {
-        linkUrl = `/library/video/${id}`;
+        linkUrl = `/library/video/${librarySlug}`;
         break;
       }
 
       case TYPE_ARTICLE.image: {
-        linkUrl = `/library/image/${id}`;
+        linkUrl = `/library/image/${librarySlug}`;
         break;
       }
 
@@ -138,6 +138,13 @@ export const convertTranslations = object => {
 export const formatDate = date => {
   if (typeof date === 'string') {
     return moment(date.trim()).format('DD/MM/YYYY');
+  }
+  return '';
+};
+
+export const formatDateTime = date => {
+  if (typeof date === 'string') {
+    return moment(date.trim()).format('hh:mm A - DD/MM/YYYY');
   }
   return '';
 };

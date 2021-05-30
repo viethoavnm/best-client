@@ -19,7 +19,8 @@ const Subscribe = () => {
   const { t } = useTranslation();
   // We will change to state to control alert fail/success later.
 
-  const submitEmailSub = () => {
+  const submitEmailSub = e => {
+    e.preventDefault();
     const body = {
       email: emailInput
     };
@@ -83,7 +84,11 @@ const Subscribe = () => {
       <Container>
         <div className={classes.content}>
           <div className={classes.label}>{t('titleEmailSub')}</div>
-          <Paper component="form" elevation={0} className={classes.form}>
+          <Paper
+            component="form"
+            elevation={0}
+            className={classes.form}
+            onSubmit={submitEmailSub}>
             <InputBase
               className={classes.input}
               placeholder={t('placeholderEmail')}

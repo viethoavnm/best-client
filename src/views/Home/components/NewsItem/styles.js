@@ -37,6 +37,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   title: {
+    marginTop: 0,
     marginBottom: 8,
     color: '#000000',
     fontWeight: 500,
@@ -53,8 +54,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: 14,
     fontWeight: 500,
     display: 'inline-flex',
-    alignItems: 'center',
-    margin: '0 4px'
+    alignItems: 'center'
   },
   icon: {
     marginRight: 6,

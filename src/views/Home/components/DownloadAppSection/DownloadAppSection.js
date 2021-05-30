@@ -1,22 +1,98 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-
+import { Container, Title } from 'components';
 import useStyles from './styles';
+import { Grid, Hidden } from '@material-ui/core';
+import { Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
-const DownloadAppSection = props => {
-  const { className, ...rest } = props;
-
+const DownloadAppSection = () => {
   const classes = useStyles();
-
+  const { t } = useTranslation();
   return (
-    <section>
-      <Card className={clsx(classes.rootCard)} elevation={0}>
-        <img src="images/dowload-app.svg" className={clsx(classes.media)} />
-      </Card>
-    </section>
+    <Fragment>
+      <Hidden smUp>
+        <section>
+          <Container>
+            <div className={classes.titleBox}>
+              <h2 className={classes.title}>{t('downloadApp.title')}</h2>
+            </div>
+            <Grid container>
+              <Grid item md={6} xs={6}>
+                <Link
+                  to="#"
+                  className={clsx(classes.downloadButton, classes.appstore)}
+                  onClick={() => alert('Download')}></Link>
+              </Grid>
+              <Grid item md={6} xs={6}>
+                <Link
+                  to="#"
+                  className={clsx(classes.downloadButton, classes.googleplay)}
+                  onClick={() => alert('Download')}></Link>
+              </Grid>
+            </Grid>
+          </Container>
+        </section>
+      </Hidden>
+      <section className={classes.root}>
+        <Container>
+          <Grid container spacing={3}>
+            <Grid item md={7} xs={12}></Grid>
+            <Grid item md={5} xs={12} style={{ textAlign: 'center' }}>
+              <div className={classes.downloadContainer}>
+                <div className={classes.hideOnMobile}>
+                  <h2 className={classes.title}>{t('downloadApp.title')}</h2>
+                  <p className={classes.description}>
+                    {t('downloadApp.description')}
+                  </p>
+                  <Grid container spacing={3}>
+                    <Grid item md={6} sm={6} xs={12}>
+                      <Link
+                        to="#"
+                        className={clsx(
+                          classes.downloadButton,
+                          classes.appstore
+                        )}
+                        onClick={() => alert('Download')}></Link>
+                    </Grid>
+                    <Grid item md={6} sm={6} xs={12}>
+                      <Link
+                        to="#"
+                        className={clsx(
+                          classes.downloadButton,
+                          classes.googleplay
+                        )}
+                        onClick={() => alert('Download')}></Link>
+                    </Grid>
+                  </Grid>
+                  <h2 className={classes.title}>
+                    {t('downloadApp.instructionTitle')}
+                  </h2>
+                  <Link to="#" className={classes.instructionButton}>
+                    {t('downloadApp.instructionButton')}
+                  </Link>
+                </div>
+                <Hidden smUp>
+                  <Grid
+                    container
+                    spacing={3}
+                    style={{ textAlign: 'right', display: 'inline-block' }}>
+                    <h2 className={classes.title}>
+                      {t('downloadApp.instructionTitle')}
+                    </h2>
+                    <Link to="#" className={classes.instructionButton}>
+                      {t('downloadApp.instructionButton')}
+                    </Link>
+                  </Grid>
+                </Hidden>
+              </div>
+            </Grid>
+          </Grid>
+        </Container>
+      </section>
+    </Fragment>
   );
 };
 

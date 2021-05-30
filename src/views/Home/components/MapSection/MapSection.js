@@ -1,19 +1,12 @@
-import {
-  Box,
-  Button,
-  Grid,
-  Link as LinkUi,
-  Typography
-} from '@material-ui/core';
-import Card from '@material-ui/core/CardMedia';
+import { Button, Grid, Link as LinkUi, Typography } from '@material-ui/core';
 import clsx from 'clsx';
-import { Container, MarkerMap, Title } from 'components';
-import GoogleMapReact from 'google-map-react';
+import { Container, Title } from 'components';
 import PropTypes from 'prop-types';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as MapIcon } from '../../../../assets/img/map.svg';
+import Map from './Map';
 import useStyles from './styles';
 
 export const mapIcon = 'map-icon';
@@ -28,58 +21,36 @@ const MapSection = props => {
     refTitle?.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const _renderTitle = title => {
-    return (
-      <Title size="large" className={classes.titleBox}>
-        <div className={classes.titleContent} ref={refTitle}>
-          <h2 className={classes.title}>{title}</h2>
-        </div>
-      </Title>
-    );
-  };
+  const [shop, setShop] = useState({});
 
   const _renderLocationDetail = () => {
+    if (!shop?._id) {
+      return (
+        <div className="map-box">
+          Nhấp chuột vào 1 địa điểm để xem thông tin chi tiết
+        </div>
+      );
+    }
     return (
-      <Box className={classes.detailContent}>
-        <Typography className={classes.titleProject}>
-          Hộ cơ khí Hiệp Phát
-        </Typography>
+      <div className="map-box">
+        <Typography className={classes.titleProject}>{shop?.name}</Typography>
         <Typography className={classes.contentProject}>
-          139 Trần Nhật Duật, P. Kim Tân, Tp Lào Cai
+          {shop?.address}
         </Typography>
-        <Typography className={classes.subTitle}>Giờ mở cửa</Typography>
+        <Typography className={classes.contentProject}>{shop?.type}</Typography>
+        {/* <Typography className={classes.subTitle}>Giờ mở cửa</Typography>
         <Typography className={classes.contentProject}>
           08:00 - 18:00
-        </Typography>
-        <Typography className={classes.subTitle}>Mặt hàng</Typography>
+        </Typography> */}
+        {/* <Typography className={classes.subTitle}>Mặt hàng</Typography>
         <Typography className={classes.contentProject}>
           Bếp khí hóa, sinh khối
         </Typography>
         <Typography className={classes.subTitle}>Dịch vụ về cơ khí</Typography>
         <Typography className={classes.contentProject}>
           Lắp đặt và sữa chữa
-        </Typography>
-      </Box>
-    );
-  };
-
-  const _renderMap = () => {
-    return (
-      <Box display="flex" justifyContent="center" height="328px" width="100%">
-        <Box height="100%" width="100%" className={clsx(classes.mapContent)}>
-          <div className={clsx(classes.googleMapFrame)}>
-            <GoogleMapReact
-              bootstrapURLKeys={{
-                key: 'AIzaSyApTCjw-LZYi0eZq47tvrm7gM_W1qQZQSg'
-              }}
-              yesIWantToUseGoogleMapApiInternals
-              defaultCenter={{ lat: 21.02, lng: 105.83416 }}
-              defaultZoom={19}>
-              <MarkerMap lat={21.02} lng={105.83416} text="My Marker" />
-            </GoogleMapReact>
-          </div>
-        </Box>
-      </Box>
+        </Typography> */}
+      </div>
     );
   };
 
@@ -104,23 +75,23 @@ const MapSection = props => {
     <section>
       {renderMapIcon()}
       <Container>
-        {_renderTitle(t('titleLocationCompany'))}
+        <Title size="large" className={classes.titleBox}>
+          <div className={classes.titleContent} ref={refTitle}>
+            <h2 className={classes.title}>{t('titleLocationCompany')}</h2>
+          </div>
+        </Title>
 
-        <Grid container>
+        <Grid container spacing={2}>
           <Grid
             item
             xs={12}
             sm={4}
             className={clsx(classes.detailLocationView)}>
-            <Card className={classes.detailCard} elevation={0}>
-              {_renderLocationDetail()}
-            </Card>
+            {_renderLocationDetail()}
           </Grid>
 
           <Grid item xs={12} sm={8} className={clsx(classes.mapView)}>
-            <Card className={classes.detailCard} elevation={0}>
-              {_renderMap()}
-            </Card>
+            <Map setShop={setShop} />
           </Grid>
         </Grid>
       </Container>

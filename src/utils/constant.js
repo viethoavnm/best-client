@@ -14,7 +14,7 @@ export const TYPE_MENU = {
 
 export const TYPE_MENU_LINK = {
   [TYPE_MENU.HOME]: '/home',
-  [TYPE_MENU.CATEGORY]: '/catelory',
+  [TYPE_MENU.CATEGORY]: '/category',
   [TYPE_MENU.POST]: '/post',
   [TYPE_MENU.EVENT]: '/event',
   [TYPE_MENU.LIBRARY]: '/library'
@@ -47,3 +47,14 @@ export const UI_TYPE_HOME_DATA = {
 };
 
 export const LIST_LOADING = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+// google map
+export const GOOGLE_MAP_KEY = process.env.REACT_APP_GOOGLE_MAP_KEY;
+export const SHOP_SEARCH_RADIUS =
+  process.env.REACT_APP_SHOP_SEARCH_RADIUS || 50;
+export const DEFAULT_LAT =
+  parseFloat(process.env.REACT_APP_DEFAULT_LAT) || 21.027763;
+export const DEFAULT_LNG =
+  parseFloat(process.env.REACT_APP_DEFAULT_LNG) || 105.83416;
+export const DEFAULT_DEBOUNCE =
+  parseInt(process.env.REACT_APP_DEFAULT_DEBOUNCE) || 800;

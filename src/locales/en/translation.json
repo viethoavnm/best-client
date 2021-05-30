@@ -1,5 +1,6 @@
 {
-  "newTitle": "NEWS",
+  "featuredNews": "FEATURED NEWS",
+  "newestNews": "NEWS",
   "viewMore": "View More",
   "nameProject": "Biomass gasification",
   "sloganFull": "Sustainable energy solutions for agricultural product processing and waste management in rural Vietnam",
@@ -20,10 +21,12 @@
   "txtHome": "Home",
   "titleNews": "News",
   "txtIntroduce": "Introduce",
+  "mapSection": "Map",
   "otherEvents": "Other events",
   "txtMonth": "Month",
   "eventsTitle": "Events",
   "upcomingEvents": "Upcoming events",
+  "eventIn": "Events in ",
   "month": {
     "January": "January",
     "February": "February",
@@ -61,5 +64,23 @@
   "footerDes": "This website is established and maintained with the financial assistance of the European Union. The contents of this site are the responsibility of Oxfam in Vietnam and the Center for Sustainable Innovation and Development (CCS) Research and Consultancy (CCS), and do not necessarily reflect the views of the European Union.",
   "contact": "Contact",
   "Oxfam": "Oxfam in VietNam",
-  "CCS": "CCS - Center for Creativity and Sustainability Study and Consultancy"
+  "CCS": "CCS - Center for Creativity and Sustainability Study and Consultancy",
+  "errorPage": {
+    "404Title": "The page you are looking for isn’t here",
+    "404Description": "You either tried some shady route or you came here by mistake. Whichever it is, try using the navigation",
+    "backButton": "Back to home",
+    "500Title": "Something went wrong",
+    "500Description": "We're sorry for the inconvenience. Please try again later."
+  },
+  "downloadApp": {
+    "title": "DOWNLOAD APP",
+    "description": "Download app to learn more about Biomass, VCBG & its relevant Services.",
+    "instructionTitle": "USER GUIDE",
+    "instructionButton": "SEE MORE"
+  },
+  "cookieConsent": {
+    "message": "We use cookies to ensure that we give you the best experience on our website. Read our",
+    "policy": "Privacy Policy",
+    "argee": "Accept"
+  }
 }

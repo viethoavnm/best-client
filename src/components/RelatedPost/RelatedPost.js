@@ -1,27 +1,19 @@
-import React from 'react';
-import {
-  Grid,
-  CardMedia,
-  Typography,
-  Box,
-  List,
-  ListItem
-} from '@material-ui/core';
-import { DATE_FORMAT } from 'utils/constant';
-import moment from 'moment';
+import { Box, CardMedia, Grid, Typography } from '@material-ui/core';
 import Lodash from 'lodash';
+import moment from 'moment';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getLinkFromArticle } from 'utils';
+import { DATE_FORMAT } from 'utils/constant';
 import useStyles from './styles';
-import { useHistory } from 'react-router-dom';
 
 const RelatedPost = ({ data, mode }) => {
   const classes = useStyles();
-  const history = useHistory();
-
+  const lang = useSelector(state => state.multiLang.lang);
   const handleClickItem = item => {
-    if (mode === 'event') return;
-    const linkDirect = getLinkFromArticle(item);
-    history.push(linkDirect);
+    if (mode === 'event') return '#';
+    return getLinkFromArticle(item, lang);
   };
 
   const renderPost = item => {
@@ -35,55 +27,48 @@ const RelatedPost = ({ data, mode }) => {
     }
     let dateItem = new Date(startTimeItem);
     let formatDateItem = moment(dateItem).format(DATE_FORMAT);
-
     return (
-      <ListItem
-        onClick={() => handleClickItem(item)}
-        className={classes.itemSuggest}>
-        <Box className={classes.boxSuggest}>
-          <CardMedia
-            className={classes.thumbnailSuggest}
-            alt=""
-            image={imageItem}
-          />
-          <div>
-            <Typography className={classes.titleItemSuggest}>
-              {nameItem}
+      <Box
+        component={Link}
+        className={classes.boxSuggest}
+        to={handleClickItem(item)}>
+        <CardMedia
+          className={classes.thumbnailSuggest}
+          alt=""
+          image={imageItem}
+        />
+        <div>
+          <h2 className={classes.titleItemSuggest}>{nameItem}</h2>
+          <Box display="flex" flexDirection="row">
+            <CardMedia
+              className={classes.smallClock}
+              image="/images/ic-small-clock.svg"
+              alt="small-clock"
+            />
+            <Typography className={classes.timeSuggest}>
+              {formatDateItem}
             </Typography>
-
-            <Box display="flex" flexDirection="row">
-              <CardMedia
-                className={classes.smallClock}
-                image="/images/ic-small-clock.svg"
-                alt="small-clock"
-              />
-              <Typography className={classes.timeSuggest}>
-                {formatDateItem}
-              </Typography>
-            </Box>
-          </div>
-        </Box>
-      </ListItem>
+          </Box>
+        </div>
+      </Box>
     );
   };
 
   return (
-    <List className={classes.listSuggest}>
-      {Array.isArray(data) &&
-        data.map((item, index) => {
-          return (
-            <Grid
-              item
-              key={index}
-              xs={12}
-              sm={6}
-              md={4}
-              className={classes.gridSuggest}>
-              {renderPost(item)}
-            </Grid>
-          );
-        })}
-    </List>
+    Array.isArray(data) &&
+    data.map((item, index) => {
+      return (
+        <Grid
+          item
+          key={index}
+          xs={12}
+          sm={6}
+          md={3}
+          className={classes.gridSuggest}>
+          {renderPost(item)}
+        </Grid>
+      );
+    })
   );
 };
 

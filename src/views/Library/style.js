@@ -9,7 +9,8 @@ const useStyles = makeStyles(theme =>
       }
     },
     header: {
-      padding: '40px 0'
+      marginTop: 32,
+      marginBottom: 32
     },
     title: {
       flexGrow: 1,
@@ -26,7 +27,7 @@ const useStyles = makeStyles(theme =>
     typeBox: {
       display: 'flex',
       alignItems: 'center',
-      marginBottom: 15
+      marginBottom: 24
     },
     type: {
       flexGrow: 1,
@@ -36,13 +37,15 @@ const useStyles = makeStyles(theme =>
       textTransform: 'uppercase'
     },
     readMore: {
+      textDecoration: 'none',
       color: '#92BF1F',
       fontSize: 19,
       cursor: 'pointer'
     },
     divider: {
-      margin: '25px 0',
-      backgroundColor: '#8197A0'
+      marginTop: 32,
+      marginBottom: 48,
+      backgroundColor: '#E5E5E5'
     }
   })
 );

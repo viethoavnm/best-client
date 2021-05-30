@@ -11,6 +11,7 @@ export const CustomColor = withStyles(theme => ({
     }
   }
 }))(Typography);
+
 const useStyles = makeStyles(theme => ({
   root: {
     paddingTop: 52,
@@ -142,7 +143,13 @@ const useStyles = makeStyles(theme => ({
     }
   },
   scrollToTop: {
-    marginTop: 16
+    margin: 0,
+    top: 'auto',
+    right: 20,
+    bottom: 20,
+    left: 'auto',
+    position: 'fixed'
+    // marginTop: 16
   },
   downloadBox: {
     display: 'inline-flex',

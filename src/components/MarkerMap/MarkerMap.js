@@ -9,11 +9,13 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const MarkerMap = () => {
+const MarkerMap = ({ onClick }) => {
   const classes = useStyles();
-
+  const onClickMarker = () => {
+    onClick instanceof Function && onClick();
+  };
   return (
-    <Button>
+    <Button onClick={onClickMarker} style={{ minWidth: 'auto', padding: 0 }}>
       <CardMedia
         className={classes.marker}
         image="images/icMarkerMap.svg"

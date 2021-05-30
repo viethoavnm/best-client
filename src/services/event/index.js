@@ -5,8 +5,8 @@ export const getEvent = (params = {}) => {
   return axios.get(urlEvent, { params });
 };
 
-export const getEventDetail = id => {
-  return axios.get(`${urlEvent}/${id}`);
+export const getEventDetail = slug => {
+  return axios.get(`${urlEvent}/slug/${slug}`);
 };
 
 export const getEventByYear = year => {

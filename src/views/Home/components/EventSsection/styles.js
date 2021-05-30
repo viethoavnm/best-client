@@ -2,9 +2,8 @@ import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
   titleBox: {
-    margin: 0,
-    marginTop: 48,
-    marginBottom: 24
+    marginTop: 32,
+    marginBottom: 32
   },
   title: {
     margin: 0,
@@ -63,10 +62,6 @@ const useStyles = makeStyles(theme => ({
       display: 'block'
     }
   },
-  eventDetailCard: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
   imgNoEvent: {
     // width: '100%'
     height: 0,
@@ -81,6 +76,7 @@ const useStyles = makeStyles(theme => ({
   eventTitle: {
     lineHeight: 1.25,
     color: 'white',
+    marginTop: 0,
     marginBottom: theme.spacing(2),
     fontWeight: 700,
     fontSize: '24px',
@@ -92,13 +88,9 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(5)
   },
   dayDate: {
+    margin: 0,
     fontSize: '24px',
-    fontWeight: '500',
-    color: '#3A3A3A',
-    lineHeight: '29px'
-    // position: 'absolute',
-    // bottom: 0,
-    // right: 0
+    fontWeight: '500'
   },
   thumbnailEvent: {
     paddingBottom: '46%',
@@ -191,6 +183,7 @@ const useStyles = makeStyles(theme => ({
   },
   eventDes: {
     padding: '24px 40px',
+    backgroundColor: '#92BF1F',
     [theme.breakpoints.down('sm')]: {
       padding: 16
     }

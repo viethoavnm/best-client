@@ -1,5 +1,6 @@
 {
-  "newTitle": "TIN MỚI NHẤT",
+  "featuredNews": "TIN NỔI BẬT",
+  "newestNews": "TIN MỚI NHẤT",
   "viewMore": "Xem thêm",
   "nameProject": "Công nghệ khí hóa sinh khối",
   "sloganFull": "Giải pháp năng lượng bền vững cho chế biến nông sản và quản lý chất thải ở nông thôn Việt Nam.",
@@ -20,10 +21,12 @@
   "txtHome": "Trang chủ",
   "titleNews": "Bản tin",
   "txtIntroduce": "Giới thiệu",
+  "mapSection": "Bản đồ",
   "otherEvents": "Sự kiện khác",
   "txtMonth": "Tháng",
   "eventsTitle": "Sự kiện",
   "upcomingEvents": "Sự kiện sắp diễn ra",
+  "eventIn": "Sự kiện trong năm ",
   "month": {
     "January": "Tháng 1",
     "February": "Tháng 2",
@@ -61,5 +64,23 @@
   "footerDes": "Trang web này được thiết lập và duy trì với sự hỗ trợ tài chính của Liên minh Châu Âu. Các nội dung trong trang này thuộc trách nhiệm của tổ chức Oxfam tại Việt Nam và Trung tâm Nghiên cứu, Tư vấn Sáng tạo và Phát triển Bền vững (CCS), và không nhất thiết phản ánh quan điểm của Liên minh Châu Âu.",
   "contact": "Liên hệ",
   "Oxfam": "Oxfam tại Việt Nam",
-  "CCS": "CCS - Trung tâm Nghiên cứu, Tư vấn Sáng tạo và Phát triển Bền vững"
+  "CCS": "CCS - Trung tâm Nghiên cứu, Tư vấn Sáng tạo và Phát triển Bền vững",
+  "errorPage": {
+    "404Title": "Không tìm thấy trang",
+    "404Description": "Chúng tôi không tìm thấy trang mà bạn đang truy cập. Vui lòng kiểm tra lại địa chỉ và thử lại",
+    "backButton": "Quay về trang chủ",
+    "500Title": "Đã có lỗi xảy ra",
+    "500Description": "Chúng tôi vô cùng xin lỗi vì sự bất tiện này. Xin vui lòng thử lại sau."
+  },
+  "downloadApp": {
+    "title": "TẢI APP CỦA CHÚNG TÔI",
+    "description": "Tải ứng dụng để có thêm thông tin về nguồn cung cấp sinh khối và dịch vụ bếp khí hóa sinh khối.",
+    "instructionTitle": "HƯỚNG DẪN SỬ DỤNG APP",
+    "instructionButton": "XEM NGAY"
+  },
+  "cookieConsent": {
+    "message": "Chúng tôi sử dụng cookies để cải thiện trải nghiệm của bạn khi sử dụng trang web này. Xin hãy đọc",
+    "policy": "Điều khoản Về Quyền riêng tư",
+    "argee": "Đồng ý"
+  }
 }
