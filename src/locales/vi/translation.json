@@ -12,7 +12,7 @@
   "emailSub": {
     "title": "ĐĂNG KÝ NHẬN THÔNG TIN MỚI NHẤT",
     "serverErrorMessage": "Đã có lỗi xảy ra khi đăng ký, vui lòng thử lại sau",
-    "duplicateMessage": "Bạn đã đăng ký nhận thông tin mới nhất rồi",
+    "duplicateMessage": "Email của bạn đã tồn tại. Xin vui lòng đăng ký mail khác.",
     "successMessage": "Đăng kí email thành công",
     "placeholderEmail": "Nhập email của bạn"
   },
