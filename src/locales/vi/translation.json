@@ -9,10 +9,13 @@
   "titleEvent": "Sự kiện sắp tới",
   "noEvent": "Hiện đang không có sự kiện nào",
   "titleLocationCompany": "Địa bàn dự án",
-  "titleEmailSub": "ĐĂNG KÝ NHẬN THÔNG TIN MỚI NHẤT",
-  "emaiSubFail": "Đăng kí email không thành công. Vui lòng thử lại sau!",
-  "emailSubSuccess": "Đăng kí email thành công",
-  "placeholderEmail": "Nhập email của bạn",
+  "emailSub": {
+    "title": "ĐĂNG KÝ NHẬN THÔNG TIN MỚI NHẤT",
+    "serverErrorMessage": "Đã có lỗi xảy ra khi đăng ký, vui lòng thử lại sau",
+    "duplicateMessage": "Bạn đã đăng ký nhận thông tin mới nhất rồi",
+    "successMessage": "Đăng kí email thành công",
+    "placeholderEmail": "Nhập email của bạn"
+  },
   "txtRegister": "Đăng ký",
   "aboutUs": "Về chúng tôi",
   "agencies": "Đơn vị thực hiện",
