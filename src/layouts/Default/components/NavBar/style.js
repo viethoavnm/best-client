@@ -113,7 +113,6 @@ const useStyles = makeStyles(theme => ({
     // padding: '10px',
     borderRadius: 0,
     color: '#ffffff',
-    backgroundColor: 'rgba(255, 255, 255, 0.32)',
     '&:hover': {
       backgroundColor: 'rgba(255, 255, 255, 0.32)'
     }
