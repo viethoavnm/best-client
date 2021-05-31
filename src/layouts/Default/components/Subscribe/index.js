@@ -21,7 +21,7 @@ const Subscribe = () => {
 
   const submitEmailSub = e => {
     e.preventDefault();
-    if (!isEmail(e.target.value)) {
+    if (!isEmail(emailInput)) {
       setErrorMessage(t('emailSub.placeholderEmail'));
       return;
     }
