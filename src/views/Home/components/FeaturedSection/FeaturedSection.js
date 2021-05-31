@@ -1,4 +1,5 @@
 import { Grid } from '@material-ui/core';
+import { ChevronRight } from '@material-ui/icons';
 import { Container, Title } from 'components';
 import Lodash from 'lodash';
 import moment from 'moment';
@@ -8,9 +9,10 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { getLinkFromArticle, getSafeValue, getTransObj } from 'utils';
-import { DATE_FORMAT } from 'utils/constant';
+import { DATE_FORMAT, TYPE_HOME_DATA } from 'utils/constant';
 import FeaturedItem from '../FeaturedItem';
 import useStyles from './styles';
+import useStylesLibrarySection from '../LibrarySection/styles';
 
 const FeaturedSection = props => {
   const { data, isNews } = props;
@@ -20,7 +22,8 @@ const FeaturedSection = props => {
   const history = useHistory();
   const [listData, setListData] = useState([]);
   const [cateName, setCateName] = useState('');
-
+  const [linkDrect, setLinkDirect] = useState('/');
+  const classesLibrary = useStylesLibrarySection();
   const transformList = (list, lang) => {
     const newList = Lodash.map(list, obj => {
       const category = getSafeValue(obj, 'category', {});
@@ -45,7 +48,27 @@ const FeaturedSection = props => {
       setCateName(cateNameData);
     }
 
+    // Handle link direction
+    const type = getSafeValue(data, 'type', '');
+    const id = getSafeValue(data, 'id', '');
+
+    // Server is not return slug yet, so we have to go to first post and get slug of category.
+    const cateTranslation = getSafeValue(
+      data,
+      'data[0].category.translations',
+      []
+    );
+    const objCate = Lodash.find(cateTranslation, obj => obj.lang === lang);
+
+    let link = '/';
+    if (type === TYPE_HOME_DATA.CATEGORY) {
+      link = objCate?.slug ? `/category/${objCate?.slug}` : '/category';
+    } else if (type === TYPE_HOME_DATA.LIBRARY) {
+      link = `/library`;
+    }
+
     setListData(newList);
+    setLinkDirect(link);
   }, [lang, data]);
 
   const renderFirstArticle = () => {
@@ -125,10 +148,17 @@ const FeaturedSection = props => {
   return (
     <section>
       <Container>
-        <Title size="large" className={classes.titleBox}>
-          <h2 className={classes.title}>
-            {isNews ? t('featuredNews') : cateName}
-          </h2>
+        <Title size="large" className={classesLibrary.titleBox}>
+          <div className={classesLibrary.titleContent}>
+            <h2 className={classesLibrary.title}>
+              {isNews ? t('featuredNews') : cateName}
+            </h2>
+            {!isNews && (
+              <Link to={linkDrect} className={classesLibrary.readMore}>
+                {t('viewMore')} <ChevronRight />
+              </Link>
+            )}
+          </div>
         </Title>
 
         <Grid container spacing={3} style={{ paddingBottom: 24 }}>
