@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getSetupByKey } from 'services/setup';
-import { convertTranslations } from 'utils';
+import { convertTranslations, getLinkFromArticle } from 'utils';
 import useStyles from './styles';
 
 const DownloadAppSection = () => {
@@ -92,11 +92,7 @@ const DownloadAppSection = () => {
                     {t('downloadApp.instructionTitle')}
                   </h2>
                   <Link
-                    to={
-                      config?.post?.[lang]?.slug
-                        ? `/post/${config?.post?.[lang]?.slug}`
-                        : '#'
-                    }
+                    to={getLinkFromArticle(config?.post, lang)}
                     target="_blank"
                     className={classes.instructionButton}>
                     {t('downloadApp.instructionButton')}
@@ -111,11 +107,7 @@ const DownloadAppSection = () => {
                       {t('downloadApp.instructionTitle')}
                     </h2>
                     <Link
-                      to={
-                        config?.post?.[lang]?.slug
-                          ? `/post/${config?.post?.[lang]?.slug}`
-                          : '#'
-                      }
+                      to={getLinkFromArticle(config?.post, lang)}
                       target="_blank"
                       className={classes.instructionButton}>
                       {t('downloadApp.instructionButton')}
