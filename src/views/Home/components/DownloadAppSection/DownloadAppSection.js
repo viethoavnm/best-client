@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { Container, Title } from 'components';
-import useStyles from './styles';
 import { Grid, Hidden } from '@material-ui/core';
-import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import clsx from 'clsx';
+import { Container } from 'components';
+import PropTypes from 'prop-types';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getSetupByKey } from 'services/setup';
 import { convertTranslations } from 'utils';
-import { useSelector } from 'react-redux';
+import useStyles from './styles';
 
 const DownloadAppSection = () => {
   const classes = useStyles();
@@ -37,22 +36,22 @@ const DownloadAppSection = () => {
             </div>
             <Grid container>
               <Grid item md={6} xs={6}>
-                <Link
-                  to={config?.appleLink || '#'}
+                <a
+                  href={config?.appleLink || '#'}
                   target="_blank"
                   className={clsx(
                     classes.downloadButton,
                     classes.appstore
-                  )}></Link>
+                  )}></a>
               </Grid>
               <Grid item md={6} xs={6}>
-                <Link
-                  to={config?.googleLink || '#'}
+                <a
+                  href={config?.googleLink || '#'}
                   target="_blank"
                   className={clsx(
                     classes.downloadButton,
                     classes.googleplay
-                  )}></Link>
+                  )}></a>
               </Grid>
             </Grid>
           </Container>
@@ -71,22 +70,22 @@ const DownloadAppSection = () => {
                   </p>
                   <Grid container spacing={3}>
                     <Grid item md={6} sm={6} xs={12}>
-                      <Link
-                        to={config?.appleLink || '#'}
+                      <a
+                        href={config?.appleLink || '#'}
                         target="_blank"
                         className={clsx(
                           classes.downloadButton,
                           classes.appstore
-                        )}></Link>
+                        )}></a>
                     </Grid>
                     <Grid item md={6} sm={6} xs={12}>
-                      <Link
-                        to={config?.googleLink || '#'}
+                      <a
+                        href={config?.googleLink || '#'}
                         target="_blank"
                         className={clsx(
                           classes.downloadButton,
                           classes.googleplay
-                        )}></Link>
+                        )}></a>
                     </Grid>
                   </Grid>
                   <h2 className={classes.title}>
