@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { Container, Title } from 'components';
@@ -7,10 +7,26 @@ import { Grid, Hidden } from '@material-ui/core';
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { getSetupByKey } from 'services/setup';
+import { convertTranslations } from 'utils';
+import { useSelector } from 'react-redux';
 
 const DownloadAppSection = () => {
   const classes = useStyles();
   const { t } = useTranslation();
+  const lang = useSelector(state => state.multiLang.lang);
+  const [config, setConfig] = useState({});
+
+  useEffect(() => {
+    getSetupByKey('DOWNLOAD_APP_CONFIG')
+      .then(res => {
+        let data = res.data?.data;
+        convertTranslations(data?.post);
+        setConfig(data);
+      })
+      .catch(err => {});
+  }, []);
+
   return (
     <Fragment>
       <Hidden smUp>
@@ -22,15 +38,21 @@ const DownloadAppSection = () => {
             <Grid container>
               <Grid item md={6} xs={6}>
                 <Link
-                  to="#"
-                  className={clsx(classes.downloadButton, classes.appstore)}
-                  onClick={() => alert('Download')}></Link>
+                  to={config?.appleLink || '#'}
+                  target="_blank"
+                  className={clsx(
+                    classes.downloadButton,
+                    classes.appstore
+                  )}></Link>
               </Grid>
               <Grid item md={6} xs={6}>
                 <Link
-                  to="#"
-                  className={clsx(classes.downloadButton, classes.googleplay)}
-                  onClick={() => alert('Download')}></Link>
+                  to={config?.googleLink || '#'}
+                  target="_blank"
+                  className={clsx(
+                    classes.downloadButton,
+                    classes.googleplay
+                  )}></Link>
               </Grid>
             </Grid>
           </Container>
@@ -50,27 +72,34 @@ const DownloadAppSection = () => {
                   <Grid container spacing={3}>
                     <Grid item md={6} sm={6} xs={12}>
                       <Link
-                        to="#"
+                        to={config?.appleLink || '#'}
+                        target="_blank"
                         className={clsx(
                           classes.downloadButton,
                           classes.appstore
-                        )}
-                        onClick={() => alert('Download')}></Link>
+                        )}></Link>
                     </Grid>
                     <Grid item md={6} sm={6} xs={12}>
                       <Link
-                        to="#"
+                        to={config?.googleLink || '#'}
+                        target="_blank"
                         className={clsx(
                           classes.downloadButton,
                           classes.googleplay
-                        )}
-                        onClick={() => alert('Download')}></Link>
+                        )}></Link>
                     </Grid>
                   </Grid>
                   <h2 className={classes.title}>
                     {t('downloadApp.instructionTitle')}
                   </h2>
-                  <Link to="#" className={classes.instructionButton}>
+                  <Link
+                    to={
+                      config?.post?.[lang]?.slug
+                        ? `/post/${config?.post?.[lang]?.slug}`
+                        : '#'
+                    }
+                    target="_blank"
+                    className={classes.instructionButton}>
                     {t('downloadApp.instructionButton')}
                   </Link>
                 </div>
@@ -82,7 +111,14 @@ const DownloadAppSection = () => {
                     <h2 className={classes.title}>
                       {t('downloadApp.instructionTitle')}
                     </h2>
-                    <Link to="#" className={classes.instructionButton}>
+                    <Link
+                      to={
+                        config?.post?.[lang]?.slug
+                          ? `/post/${config?.post?.[lang]?.slug}`
+                          : '#'
+                      }
+                      target="_blank"
+                      className={classes.instructionButton}>
                       {t('downloadApp.instructionButton')}
                     </Link>
                   </Grid>
