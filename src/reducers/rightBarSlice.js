@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { convertTranslations, getSafeValue } from 'utils';
 import { getArticle } from '../services/articles';
-import { getEvent } from '../services/event';
+import { getEvent, getEventByYear } from '../services/event';
 
 export const fetchNewArticle = createAsyncThunk(
   'righBar/fetchNewArticle',
@@ -14,9 +14,8 @@ export const fetchNewArticle = createAsyncThunk(
 );
 
 export const fetNewEvent = createAsyncThunk('righBar/fetNewEvent', async () => {
-  const params = { page: 1, limit: 3 };
-  const res = await getEvent(params);
-  const data = getSafeValue(res, 'data.results', []);
+  const res = await getEventByYear(new Date().getFullYear());
+  const data = getSafeValue(res, 'data', []);
   return data;
 });
 
@@ -44,7 +43,9 @@ export const rightBarSlice = createSlice({
           convertTranslations(item);
         });
       }
-      state.eventData = eventData;
+      state.eventData = eventData
+        .sort((a, b) => new Date(b?.startDate) - new Date(a?.startDate))
+        .slice(0, 3);
     }
   }
 });

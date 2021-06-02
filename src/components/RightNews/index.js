@@ -107,7 +107,7 @@ const RightNews = () => {
 
       {events?.length > 0 && (
         <Title className={classes.titleEvent} transform="uppercase">
-          {t('titleEvent')}
+          {`${t('eventIn')} ${new Date().getFullYear()}`}
         </Title>
       )}
       {events.map((event, key) => {
