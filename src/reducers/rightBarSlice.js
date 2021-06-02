@@ -14,8 +14,9 @@ export const fetchNewArticle = createAsyncThunk(
 );
 
 export const fetNewEvent = createAsyncThunk('righBar/fetNewEvent', async () => {
-  const res = await getEventByYear(new Date().getFullYear());
-  const data = getSafeValue(res, 'data', []);
+  const params = { page: 1, limit: 10 };
+  const res = await getEvent(params);
+  const data = getSafeValue(res, 'data.results', []);
   return data;
 });
 
