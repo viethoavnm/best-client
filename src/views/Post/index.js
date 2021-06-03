@@ -27,7 +27,6 @@ import useStyles from './styles';
 const PostDetail = props => {
   const { slug } = useParams();
   const history = useHistory();
-  const limitSuggest = 4;
   const classes = useStyles();
   const [data, setData] = useState({});
   const [dataSuggest, setDataSuggest] = useState([]);
@@ -72,30 +71,6 @@ const PostDetail = props => {
   }, [slug]);
 
   useEffect(() => {
-    const { category, _id } = data;
-
-    if (category) {
-      getArticle({ category: category._id, subType: 'single', type: 'news' })
-        .then(res => {
-          const data = Lodash.get(res, 'data.results', []);
-          const suggestionData = Lodash.filter(data, post => post._id !== _id);
-          const dataGet = suggestionData.reduce((arr, cur) => {
-            const newData = transformData(cur);
-            return [...arr, newData];
-          }, []);
-
-          if (Array.isArray(dataGet)) {
-            dataGet.forEach(item => {
-              convertTranslations(item);
-            });
-          }
-          setDataSuggest(dataGet);
-        })
-        .catch(err => {});
-    }
-  }, [data]);
-
-  useEffect(() => {
     if (data?._id) {
       const newData = transformData(data);
       setData(newData);
@@ -108,16 +83,6 @@ const PostDetail = props => {
       setDataSuggest(dataGet);
     }
   }, [lang]);
-
-  const _renderTitle = title => {
-    return (
-      <div className={classes.header}>
-        <Title size="large">
-          <div className={classes.titleSection}>{title}</div>
-        </Title>
-      </div>
-    );
-  };
 
   const renderSubHeader = () => {
     return (
@@ -225,14 +190,7 @@ const PostDetail = props => {
                 </Hidden>
               </Grid>
             </Grid>
-            {dataSuggest.length > 0 &&
-              _renderTitle(`${t('titleArticlesRelate')}`)}
-            <Grid container spacing={3} className={classes.gridSuggest}>
-              <RelatedPost
-                data={dataSuggest.slice(0, limitSuggest)}
-                mode="post"
-              />
-            </Grid>
+            <RelatedPost post={data} />
           </Fragment>
         )}
       </Container>

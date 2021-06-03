@@ -64,6 +64,32 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('sm')]: {
       '-webkit-line-clamp': 3
     }
+  },
+  title: {
+    fontSize: '24px',
+    fontWeight: 'bold',
+    color: '#3A3A3A'
+  },
+  container: {
+    marginBottom: 80,
+    [theme.breakpoints.down('md')]: {
+      marginBottom: 40
+    },
+    [theme.breakpoints.down('xs')]: {
+      marginBottom: 24
+    }
+  },
+  header: {
+    marginTop: 32,
+    marginBottom: 32,
+    [theme.breakpoints.down('sm')]: {
+      marginTop: 36,
+      marginBottom: 18
+    },
+    [theme.breakpoints.down('xs')]: {
+      marginTop: 24,
+      marginBottom: 12
+    }
   }
 }));
 
