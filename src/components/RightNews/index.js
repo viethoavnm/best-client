@@ -107,7 +107,7 @@ const RightNews = () => {
 
       {events?.length > 0 && (
         <Title className={classes.titleEvent} transform="uppercase">
-          {`${t('newestEventsTitle')}`}
+          {`${t('titleEvent')}`}
         </Title>
       )}
       {events.map((event, key) => {
