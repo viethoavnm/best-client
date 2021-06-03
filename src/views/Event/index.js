@@ -20,7 +20,6 @@ import { Link } from 'react-router-dom';
 import { getEventByYear } from 'services/event';
 import { convertTranslations, formatDateTime } from 'utils';
 import EventCardLarge from '../../components/EventCardLarge';
-import '../Home/day-picker.css';
 import useStyles from './style';
 
 const Event = () => {
