@@ -86,5 +86,12 @@
     "message": "Chúng tôi sử dụng cookies để cải thiện trải nghiệm của bạn khi sử dụng trang web này. Xin hãy đọc",
     "policy": "Điều khoản Về Quyền riêng tư",
     "argee": "Đồng ý"
+  },
+  "map": {
+    "shopName": "Tên cơ sở",
+    "address": "Địa chỉ",
+    "type": "Phân loại",
+    "biomassSellingFacility": "Cơ sở bán sinh khối",
+    "mechanicFacility": "Cơ sở cơ khí"
   }
 }

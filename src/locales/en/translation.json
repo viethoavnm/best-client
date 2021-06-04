@@ -86,5 +86,12 @@
     "message": "We use cookies to ensure that we give you the best experience on our website. Read our",
     "policy": "Privacy Policy",
     "argee": "Accept"
+  },
+  "map": {
+    "shopName": "Shop name",
+    "address": "Address",
+    "type": "Type",
+    "biomassSellingFacility": "Biomass selling facility",
+    "mechanicFacility": "Mechanic facility"
   }
 }

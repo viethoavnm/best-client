@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
+import { SHOP_SEARCH_RADIUS } from 'utils/constant';
 import { ReactComponent as MapIcon } from '../../../../assets/img/map.svg';
 import Map from './Map';
 import useStyles from './styles';
@@ -27,17 +28,32 @@ const MapSection = props => {
     if (!shop?._id) {
       return (
         <div className="map-box">
-          Nhấp chuột vào 1 địa điểm để xem thông tin chi tiết
+          <p>
+            Chọn 1 địa điểm trên bản đồ để xem các cở sở trong bán kính{' '}
+            {SHOP_SEARCH_RADIUS} km
+          </p>
+          <p> Nhấp chuột vào 1 cơ sở để xem thông tin chi tiết</p>
         </div>
       );
     }
     return (
       <div className="map-box">
+        <Typography className={classes.subTitle}>
+          {t('map.shopName')}
+        </Typography>
         <Typography className={classes.titleProject}>{shop?.name}</Typography>
+        <Typography className={classes.subTitle}>{t('map.address')}</Typography>
         <Typography className={classes.contentProject}>
           {shop?.address}
         </Typography>
-        <Typography className={classes.contentProject}>{shop?.type}</Typography>
+        <Typography className={classes.subTitle}>{t('map.type')}</Typography>
+        <Typography className={classes.contentProject}>
+          {shop?.type === 'Cơ sở bán sinh khối'
+            ? t('map.biomassSellingFacility')
+            : shop?.type === 'Cơ sở cơ khí'
+            ? t('map.mechanicFacility')
+            : shop?.type}
+        </Typography>
         {/* <Typography className={classes.subTitle}>Giờ mở cửa</Typography>
         <Typography className={classes.contentProject}>
           08:00 - 18:00
