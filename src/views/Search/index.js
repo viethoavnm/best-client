@@ -4,6 +4,7 @@ import { createStyles, makeStyles } from '@material-ui/styles';
 import logo from 'assets/img/logo-best.svg';
 import { Container, SearchBar2 } from 'components';
 import RightNews from 'components/RightNews';
+import { isEmpty } from 'helpers';
 import Lodash, { debounce } from 'lodash';
 import moment from 'moment';
 import { Fragment, useEffect, useRef, useState } from 'react';
@@ -25,7 +26,7 @@ const useStyles = makeStyles(theme =>
       }
     },
     search: {
-      margin: '15px 0'
+      margin: '32px 0 16px'
     },
     result: {
       color: '#ACB5BB',
@@ -66,6 +67,7 @@ const Search = () => {
   const [loading, setLoading] = useState(false);
   const [loadmore, setLoadmore] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
+  const [publishBefore] = useState(new Date().toISOString());
   const { t } = useTranslation();
 
   const transformData = list => {
@@ -80,8 +82,14 @@ const Search = () => {
   };
 
   useEffect(() => {
-    if (query === '') return;
-    let params = { page: 1, limit, q: query };
+    if (isEmpty(query)) return;
+    let params = {
+      page: 1,
+      limit,
+      q: query,
+      publishBefore,
+      isPublish: 1
+    };
     setLoading(true);
     getArticle(params)
       .then(res => {
@@ -162,7 +170,12 @@ const Search = () => {
       setLoadmore(true);
       if (loading || loadmore || !hasNext) return;
 
-      let params = { page: page + 1, limit };
+      let params = {
+        page: page + 1,
+        limit,
+        publishBefore,
+        isPublish: 1
+      };
       if (query !== '') {
         params = { ...params, q: query };
       }
@@ -196,7 +209,7 @@ const Search = () => {
         <Grid container spacing={4}>
           <Grid item xs={12} md={8} className={classes.search}>
             <SearchBar2
-              placeholder="Nhập từ khóa tìm kiếm"
+              placeholder={t('inputSearch')}
               onSubmit={txt => setQuery(txt)}
             />
           </Grid>
@@ -213,7 +226,9 @@ const Search = () => {
               />
               <Divider className={classes.divider} />
             </div>
-            {query !== '' && (
+            {query !== '' && isEmpty(query) ? (
+              <div className="error">{t('noEmpty')}</div>
+            ) : (
               <div className={classes.result}>
                 <span className={classes.total}>{searchResults.length} </span>
                 {t('matchingResults')}

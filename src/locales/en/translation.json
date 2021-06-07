@@ -93,5 +93,7 @@
     "type": "Type",
     "biomassSellingFacility": "Biomass selling facility",
     "mechanicFacility": "Mechanic facility"
-  }
+  },
+  "inputSearch": "Enter search keywords",
+  "noEmpty": "Please do not enter empty"
 }

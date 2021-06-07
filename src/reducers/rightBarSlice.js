@@ -6,7 +6,12 @@ import { getEvent, getEventByYear } from '../services/event';
 export const fetchNewArticle = createAsyncThunk(
   'righBar/fetchNewArticle',
   async () => {
-    const params = { page: 1, limit: 3 };
+    const params = {
+      page: 1,
+      limit: 3,
+      publishBefore: new Date().toISOString(),
+      isPublish: 1
+    };
     const res = await getArticle(params);
     const data = getSafeValue(res, 'data.results', []);
     return data;

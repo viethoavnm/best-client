@@ -93,5 +93,7 @@
     "type": "Phân loại",
     "biomassSellingFacility": "Cơ sở bán sinh khối",
     "mechanicFacility": "Cơ sở cơ khí"
-  }
+  },
+  "inputSearch": "Nhập từ khóa tìm kiếm",
+  "noEmpty": "Vui lòng không nhập rỗng"
 }

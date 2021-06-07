@@ -142,7 +142,7 @@ class Map extends PureComponent {
     const { lat, lng } = this.state;
     return (
       <Fragment>
-        <div className="map-box">
+        <div className="map-box" style={{ height: 350 }}>
           <div style={{ position: 'relative', height: '100%' }}>
             <GoogleMapReact
               bootstrapURLKeys={{ key: GOOGLE_MAP_KEY }}

@@ -26,7 +26,9 @@ const RelatedPost = ({ post }) => {
         category: post.category._id,
         subType: post.subType,
         type: post.type,
-        limit: 5
+        limit: 5,
+        publishBefore: new Date().toISOString(),
+        isPublish: 1
       })
         .then(res => {
           let dataGet = res.data?.results;

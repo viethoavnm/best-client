@@ -71,7 +71,9 @@ const News = () => {
         limit,
         subType: 'single',
         type: 'news',
-        category: idCate
+        category: idCate,
+        publishBefore: new Date().toISOString(),
+        isPublish: 1
       };
       const resArticle = await getArticle(params);
 
