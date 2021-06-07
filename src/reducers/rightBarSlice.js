@@ -22,6 +22,7 @@ export const fetNewEvent = createAsyncThunk('righBar/fetNewEvent', async () => {
   const params = {
     page: 1,
     limit: 3,
+    isPublish: 1,
     afterAt: new Date().toISOString()
   };
   const res = await getEvent(params);
