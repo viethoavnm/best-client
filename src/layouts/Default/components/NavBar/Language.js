@@ -40,10 +40,13 @@ const Language = () => {
 
   const onOpen = event => {
     setAnchorEl(event?.currentTarget);
+    document.body.style.paddingRight =
+      window.screen.width - document.body.clientWidth + 'px';
   };
 
   const onClose = () => {
     setAnchorEl(null);
+    document.body.style.paddingRight = null;
   };
 
   const clickVn = () => {
