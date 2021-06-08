@@ -95,5 +95,6 @@
     "mechanicFacility": "Cơ sở cơ khí"
   },
   "inputSearch": "Nhập từ khóa tìm kiếm",
-  "noEmpty": "Vui lòng không nhập rỗng"
+  "noEmpty": "Vui lòng không nhập rỗng",
+  "noPost": "Hiện tại chưa có bài viết nào được tìm thấy"
 }
