@@ -4,7 +4,7 @@ import 'firebase/analytics';
 
 const setup = () => {
   var app = firebase.initializeApp(firebaseConfig);
-  app.analytics();
+  app.analytics().logEvent('screen_view');
   return app;
 };
 
