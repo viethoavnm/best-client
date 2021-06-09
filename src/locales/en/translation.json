@@ -95,5 +95,6 @@
     "mechanicFacility": "Mechanic facility"
   },
   "inputSearch": "Enter search keywords",
-  "noEmpty": "Please do not enter empty"
+  "noEmpty": "Please do not enter empty",
+  "noPost": "There are currently no posts found"
 }
