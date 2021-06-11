@@ -46,6 +46,7 @@ const useStyles = makeStyles(theme =>
     },
     description: {
       fontSize: 14,
+      fontWeight: 'bold',
       color: '#000000',
       marginBottom: 32,
       [theme.breakpoints.down('sm')]: {
