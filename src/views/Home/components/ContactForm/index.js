@@ -119,9 +119,7 @@ const ContactForm = () => {
           <Grid item xs={12} md={5}>
             <div className={classes.border} onSubmit={onSubmit}>
               <form className={classes.form}>
-                <div className={classes.title}>
-                  {t('contactFormTitle')} <span className="error"> *</span>
-                </div>
+                <div className={classes.title}>{t('contactFormTitle')}</div>
                 <div className={classes.row}>
                   <label className={classes.label}>
                     {t('contactFormInputName')}{' '}
