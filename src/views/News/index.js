@@ -87,7 +87,6 @@ const News = () => {
       }
       setArticles(newList);
       setHasNext(dataHasNext);
-      window.scrollTo(0, 0);
     } catch (err) {
       // handle error here.
       setLoadError(err.response?.status || 404);
@@ -107,7 +106,6 @@ const News = () => {
     //     }
     //     setArticles(newList);
     //     setHasNext(dataHasNext);
-    //     window.scrollTo(0, 0);
     //   })
     //   .catch(err => {
     //     setLoadError(err.response?.status || 404);

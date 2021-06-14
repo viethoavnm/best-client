@@ -96,7 +96,6 @@ const LibrarySubCate = props => {
           const newList = transformMenu(results, lang);
           setArticles(newList);
           setHasNext(dataHasNext);
-          window.scrollTo(0, 0);
         })
         .catch(err => setLoadError(err.response?.status || 404))
         .finally(() => {

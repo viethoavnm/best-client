@@ -124,10 +124,6 @@ const Search = () => {
     }
   }, [lang]);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   const _rowRenderer = ({ index, style }) => {
     const { urlImg, title, description } = searchResults[index];
     const item = searchResults[index];
