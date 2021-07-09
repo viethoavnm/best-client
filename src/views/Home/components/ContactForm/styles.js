@@ -50,7 +50,8 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     outline: 'none',
     border: '1px solid #C4C4C4',
-    fontSize: 14
+    fontSize: 14,
+    fontFamily: "'Montserrat'"
   },
   textarea: {
     width: '100%',
@@ -59,7 +60,8 @@ const useStyles = makeStyles(theme => ({
     border: '1px solid #C4C4C4',
     padding: '7px 12px',
     fontSize: 14,
-    resize: 'vertical'
+    resize: 'vertical',
+    fontFamily: "'Montserrat'"
   },
   btn: {
     backgroundColor: '#F19101',

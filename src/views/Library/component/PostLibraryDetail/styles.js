@@ -19,12 +19,6 @@ const useStyles = makeStyles(theme => ({
     // paddingTop: 20,
     // paddingBottom: 20
   },
-  gridSuggest: {
-    marginBottom: 120,
-    [theme.breakpoints.down('600')]: {
-      marginBottom: 44
-    }
-  },
   content: {
     fontFamily: 'Montserrat',
     fontSize: 16,
@@ -33,14 +27,6 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '32px',
     marginBottom: 50
   },
-  title: {
-    fontFamily: 'Montserrat',
-    fontSize: '24px',
-    fontWeight: '700',
-    color: '#3A3A3A',
-    lineHeight: '29px'
-  },
-  icSlash: { width: 16, height: 40, marginRight: 16 },
   media: { width: 24, height: 24, marginRight: 10 },
   addressItem: {
     fontFamily: 'Montserrat',
@@ -104,6 +90,17 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('sm')]: {
       marginBottom: 20
     }
+  },
+  author: {
+    fontSize: 14,
+    fontWeight: 500,
+    color: '#000000',
+    textAlign: 'right',
+    marginTop: 32
+  },
+  divider: {
+    marginTop: 24,
+    marginBottom: 12
   }
 }));
 

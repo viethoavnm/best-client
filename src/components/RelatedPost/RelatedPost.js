@@ -1,44 +1,59 @@
-import { Box, CardMedia, Grid, Typography } from '@material-ui/core';
-import Lodash from 'lodash';
-import moment from 'moment';
-import React from 'react';
+import {
+  Box,
+  CardActionArea,
+  CardMedia,
+  Grid,
+  Typography
+} from '@material-ui/core';
+import { Title } from 'components';
+import React, { Fragment, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getLinkFromArticle } from 'utils';
-import { DATE_FORMAT } from 'utils/constant';
+import { getArticle } from 'services/articles';
+import { convertTranslations, formatDate, getLinkFromArticle } from 'utils';
 import useStyles from './styles';
 
-const RelatedPost = ({ data, mode }) => {
+const RelatedPost = ({ post }) => {
   const classes = useStyles();
   const lang = useSelector(state => state.multiLang.lang);
-  const handleClickItem = item => {
-    if (mode === 'event') return '#';
-    return getLinkFromArticle(item, lang);
-  };
+  const { t } = useTranslation();
+  const [postList, setPostList] = useState([]);
+
+  useEffect(() => {
+    if (post?.category?._id) {
+      getArticle({
+        category: post.category._id,
+        subType: post.subType,
+        type: post.type,
+        limit: 5,
+        publishBefore: new Date().toISOString(),
+        isPublish: 1
+      })
+        .then(res => {
+          let dataGet = res.data?.results;
+          if (Array.isArray(dataGet)) {
+            dataGet = dataGet.filter(item => item?._id !== post?._id);
+            if (dataGet.length > 4) dataGet.length = 4;
+            dataGet.forEach(item => {
+              convertTranslations(item);
+            });
+            setPostList(dataGet);
+          }
+        })
+        .catch(err => {});
+    }
+  }, [post]);
 
   const renderPost = item => {
-    let imageItem = Lodash.get(item, 'urlImg', '');
-    let nameItem = Lodash.get(item, 'title', '');
-    let startTimeItem = Lodash.get(item, 'publishedAt', '');
-    if (mode === 'event') {
-      imageItem = Lodash.get(item, 'image', '');
-      nameItem = Lodash.get(item, 'name', '');
-      startTimeItem = Lodash.get(item, 'startTime', '');
-    }
-    let dateItem = new Date(startTimeItem);
-    let formatDateItem = moment(dateItem).format(DATE_FORMAT);
     return (
-      <Box
+      <CardActionArea
         component={Link}
         className={classes.boxSuggest}
-        to={handleClickItem(item)}>
-        <CardMedia
-          className={classes.thumbnailSuggest}
-          alt=""
-          image={imageItem}
-        />
+        to={getLinkFromArticle(item, lang)}>
+        <CardMedia className={classes.thumbnailSuggest} image={item?.urlImg} />
         <div>
-          <h2 className={classes.titleItemSuggest}>{nameItem}</h2>
+          <h2 className={classes.titleItemSuggest}>{item?.[lang]?.title}</h2>
           <Box display="flex" flexDirection="row">
             <CardMedia
               className={classes.smallClock}
@@ -46,29 +61,40 @@ const RelatedPost = ({ data, mode }) => {
               alt="small-clock"
             />
             <Typography className={classes.timeSuggest}>
-              {formatDateItem}
+              {formatDate(item?.publishedAt)}
             </Typography>
           </Box>
         </div>
-      </Box>
+      </CardActionArea>
     );
   };
 
+  if (postList.length === 0) return null;
   return (
-    Array.isArray(data) &&
-    data.map((item, index) => {
-      return (
-        <Grid
-          item
-          key={index}
-          xs={12}
-          sm={6}
-          md={3}
-          className={classes.gridSuggest}>
-          {renderPost(item)}
-        </Grid>
-      );
-    })
+    <Fragment>
+      <div className={classes.header}>
+        <Title size="large">
+          <Typography className={classes.title}>
+            {t('titleArticlesRelate')}
+          </Typography>
+        </Title>
+      </div>
+      <Grid container spacing={3} className={classes.container}>
+        {postList.map((item, index) => {
+          return (
+            <Grid
+              item
+              key={index}
+              xs={12}
+              sm={6}
+              md={3}
+              className={classes.gridSuggest}>
+              {renderPost(item)}
+            </Grid>
+          );
+        })}
+      </Grid>
+    </Fragment>
   );
 };
 

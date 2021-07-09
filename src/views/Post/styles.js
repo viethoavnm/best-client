@@ -24,15 +24,6 @@ const useStyles = makeStyles(theme => ({
     marginTop: 24,
     marginBottom: 12
   },
-  gridSuggest: {
-    marginBottom: 80,
-    [theme.breakpoints.down('md')]: {
-      marginBottom: 40
-    },
-    [theme.breakpoints.down('xs')]: {
-      marginBottom: 24
-    }
-  },
   content: {
     fontFamily: 'Montserrat',
     fontSize: 16,

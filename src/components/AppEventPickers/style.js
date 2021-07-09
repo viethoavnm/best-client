@@ -47,6 +47,7 @@ const useStyles = makeStyles(theme => ({
   eventLeft: {
     backgroundColor: '#92BF1F',
     borderRadius: '16px 0 0 16px',
+    overflow: 'hidden',
     [theme.breakpoints.down('sm')]: {
       borderRadius: '16px 16px 0 0'
     }
@@ -174,7 +175,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     height: '100%'
   },
-  media: { width: 24, height: 24, marginRight: 10 },
+  media: { width: 24, height: 24, marginRight: 5, flexShrink: 0 },
   addressItem: {
     margin: 0,
     fontSize: '14px',

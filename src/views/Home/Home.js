@@ -12,7 +12,6 @@ import {
   MapSection,
   NewsSection as UiSection2
 } from './components';
-import './day-picker.css';
 import { Helmet } from 'react-helmet';
 import LogoBEST from 'assets/img/logo-best.svg';
 

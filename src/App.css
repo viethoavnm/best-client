@@ -88,3 +88,7 @@
 .modal-open {
   overflow: hidden;
 }
+
+.error {
+  color: #f44336;
+}

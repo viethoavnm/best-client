@@ -9,10 +9,13 @@
   "titleEvent": "Upcoming events",
   "noEvent": "There are currently no events",
   "titleLocationCompany": "Location",
-  "titleEmailSub": "REGISTER TO RECEIVE THE LATEST INFORMATION",
-  "emaiSubFail": "Email registration failed. Please try again later!",
-  "emailSubSuccess": "Đăng kí email thành công",
-  "placeholderEmail": "Please input your email",
+  "emailSub": {
+    "title": "REGISTER TO RECEIVE THE LATEST INFORMATION",
+    "serverErrorMessage": "Email registration failed. Please try again later!",
+    "duplicateMessage": "You have already subcribed to our newsletter!",
+    "successMessage": "You have successfully subscribed to our newsletter!",
+    "placeholderEmail": "Please input your email"
+  },
   "txtRegister": "Register",
   "aboutUs": "About Us",
   "agencies": "Implementing agencies",
@@ -25,6 +28,7 @@
   "otherEvents": "Other events",
   "txtMonth": "Month",
   "eventsTitle": "Events",
+  "newestEventsTitle": "Latest events",
   "upcomingEvents": "Upcoming events",
   "eventIn": "Events in ",
   "month": {
@@ -82,5 +86,15 @@
     "message": "We use cookies to ensure that we give you the best experience on our website. Read our",
     "policy": "Privacy Policy",
     "argee": "Accept"
-  }
+  },
+  "map": {
+    "shopName": "Shop name",
+    "address": "Address",
+    "type": "Type",
+    "biomassSellingFacility": "Biomass selling facility",
+    "mechanicFacility": "Mechanic facility"
+  },
+  "inputSearch": "Enter search keywords",
+  "noEmpty": "Please do not enter empty",
+  "noPost": "There are currently no posts found"
 }

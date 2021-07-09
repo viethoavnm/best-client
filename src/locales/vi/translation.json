@@ -9,10 +9,13 @@
   "titleEvent": "Sự kiện sắp tới",
   "noEvent": "Hiện đang không có sự kiện nào",
   "titleLocationCompany": "Địa bàn dự án",
-  "titleEmailSub": "ĐĂNG KÝ NHẬN THÔNG TIN MỚI NHẤT",
-  "emaiSubFail": "Đăng kí email không thành công. Vui lòng thử lại sau!",
-  "emailSubSuccess": "Đăng kí email thành công",
-  "placeholderEmail": "Nhập email của bạn",
+  "emailSub": {
+    "title": "ĐĂNG KÝ NHẬN THÔNG TIN MỚI NHẤT",
+    "serverErrorMessage": "Đã có lỗi xảy ra khi đăng ký, vui lòng thử lại sau",
+    "duplicateMessage": "Email của bạn đã tồn tại. Xin vui lòng đăng ký mail khác.",
+    "successMessage": "Đăng kí email thành công",
+    "placeholderEmail": "Nhập email của bạn"
+  },
   "txtRegister": "Đăng ký",
   "aboutUs": "Về chúng tôi",
   "agencies": "Đơn vị thực hiện",
@@ -25,6 +28,7 @@
   "otherEvents": "Sự kiện khác",
   "txtMonth": "Tháng",
   "eventsTitle": "Sự kiện",
+  "newestEventsTitle": "Sự kiện mới nhất",
   "upcomingEvents": "Sự kiện sắp diễn ra",
   "eventIn": "Sự kiện trong năm ",
   "month": {
@@ -82,5 +86,15 @@
     "message": "Chúng tôi sử dụng cookies để cải thiện trải nghiệm của bạn khi sử dụng trang web này. Xin hãy đọc",
     "policy": "Điều khoản Về Quyền riêng tư",
     "argee": "Đồng ý"
-  }
+  },
+  "map": {
+    "shopName": "Tên cơ sở",
+    "address": "Địa chỉ",
+    "type": "Phân loại",
+    "biomassSellingFacility": "Cơ sở bán sinh khối",
+    "mechanicFacility": "Cơ sở cơ khí"
+  },
+  "inputSearch": "Nhập từ khóa tìm kiếm",
+  "noEmpty": "Vui lòng không nhập rỗng",
+  "noPost": "Hiện tại chưa có bài viết nào được tìm thấy"
 }

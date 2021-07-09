@@ -3,9 +3,9 @@ import { createStyles, makeStyles } from '@material-ui/core';
 const useStyles = makeStyles(theme =>
   createStyles({
     container: {
-      padding: '48px 0',
+      marginTop: 32,
       [theme.breakpoints.down('sm')]: {
-        padding: '24px 0'
+        marginTop: 24
       }
     },
     title: {
@@ -46,6 +46,7 @@ const useStyles = makeStyles(theme =>
     },
     description: {
       fontSize: 14,
+      fontWeight: 'bold',
       color: '#000000',
       marginBottom: 32,
       [theme.breakpoints.down('sm')]: {

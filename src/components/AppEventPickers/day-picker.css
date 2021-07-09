@@ -218,6 +218,16 @@
   background-color: #92bf1f;
 }
 
+@media (min-width: 0px) and (max-width: 599.95px) {
+  .DayPicker-Day---box {
+    width: 42px;
+    height: 42px;
+  }
+  .DayPicker-Day---box.has-event::after {
+    left: 17px;
+  }
+}
+
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside)
   > div {
   position: relative;
@@ -252,4 +262,15 @@
 
   background: white;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* carousel-customize */
+.carousel-customize {
+  padding-bottom: 14px;
+}
+.carousel-customize .control-dots {
+  bottom: -14px;
+}
+.carousel-customize .thumbs-wrapper {
+  display: none;
 }

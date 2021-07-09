@@ -1,11 +1,3 @@
-.presentation-mode .carousel .slide {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-}
-.presentation-mode .carousel .slide > div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+.carousel.carousel-slider .control-arrow:hover {
+  background-color: rgba(34, 42, 50, 0.6);
 }

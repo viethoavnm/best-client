@@ -1,4 +1,4 @@
-import { Divider, Fab, Hidden } from '@material-ui/core';
+import { Divider, Hidden } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
@@ -9,8 +9,7 @@ import ccsLogo from 'assets/img/ccs.png';
 import oxfamLogo from 'assets/img/oxfam.png';
 import switchAsiaLogo from 'assets/img/switch-asia.png';
 import clsx from 'clsx';
-import React, { Fragment, useEffect, useState } from 'react';
-import { useRef } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -99,29 +98,17 @@ function DefaultLayoutFooter(props) {
 
   const renderfooter = () => {
     return (
-      <Fragment>
-        <Box className={classes.downloadBox}>
-          <Typography
-            color="inherit"
-            className={clsx(classes.downloadAppTitle)}>
-            {t('downloadAppInHere')}
-          </Typography>
-          <img src="/images/ic-download.svg" alt="download" />
-        </Box>
-        <Box className={classes.sponsorBox}>
-          <Typography
-            color="inherit"
-            className={clsx(classes.footerColumnTitle)}>
-            {t('sponsor')}
-          </Typography>
-          <a
-            href="https://www.switch-asia.eu/"
-            target="_blank"
-            style={{ display: 'inline-block' }}>
-            <img src={switchAsiaLogo} alt="switchasia-logo" />
-          </a>
-        </Box>
-      </Fragment>
+      <Box className={classes.sponsorBox}>
+        <Typography color="inherit" className={clsx(classes.footerColumnTitle)}>
+          {t('sponsor')}
+        </Typography>
+        <a
+          href="https://www.switch-asia.eu/"
+          target="_blank"
+          style={{ display: 'inline-block' }}>
+          <img src={switchAsiaLogo} alt="switchasia-logo" />
+        </a>
+      </Box>
     );
   };
 

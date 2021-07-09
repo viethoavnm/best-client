@@ -1,4 +1,4 @@
-import MarkerClusterer from '@google/markerclusterer';
+// import MarkerClusterer from '@google/markerclusterer';
 import { IconButton, Tooltip } from '@material-ui/core';
 import { MyLocation } from '@material-ui/icons';
 import biomassMarker from 'assets/img/biomass-marker.png';
@@ -6,8 +6,7 @@ import mechanicalMarker from 'assets/img/mechanical-marker.png';
 import myLocationMarker from 'assets/img/my-location-marker.png';
 import GoogleMapReact from 'google-map-react';
 import { debounce } from 'lodash';
-import { Fragment } from 'react';
-import { memo, PureComponent } from 'react';
+import { Fragment, memo, PureComponent } from 'react';
 import { searchShop } from 'services/shop';
 import {
   DEFAULT_DEBOUNCE,
@@ -47,7 +46,7 @@ class Map extends PureComponent {
   updateMarker = () => {
     if (this.googleMapRef && this.googleRef) {
       // clearn all markers
-      this.markerCluster?.clearMarkers();
+      // this.markerCluster?.clearMarkers();
       for (let i = 0; i < this.markers?.length; i++) {
         this.markers[i].setMap(null);
       }
@@ -65,18 +64,19 @@ class Map extends PureComponent {
             onClickMarker(shop);
           });
         })(marker, shop, this.onChangeShop);
+        marker.setMap(this.googleMapRef);
         return marker;
       });
-      this.markerCluster = new MarkerClusterer(
-        this.googleMapRef,
-        this.markers,
-        {
-          imagePath:
-            'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
-          gridSize: 10,
-          minimumClusterSize: 2
-        }
-      );
+      // this.markerCluster = new MarkerClusterer(
+      //   this.googleMapRef,
+      //   this.markers,
+      //   {
+      //     imagePath:
+      //       'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
+      //     gridSize: 10,
+      //     minimumClusterSize: 2
+      //   }
+      // );
     }
   };
 
@@ -142,7 +142,7 @@ class Map extends PureComponent {
     const { lat, lng } = this.state;
     return (
       <Fragment>
-        <div className="map-box">
+        <div className="map-box" style={{ height: 350 }}>
           <div style={{ position: 'relative', height: '100%' }}>
             <GoogleMapReact
               bootstrapURLKeys={{ key: GOOGLE_MAP_KEY }}

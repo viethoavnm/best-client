@@ -71,7 +71,9 @@ const News = () => {
         limit,
         subType: 'single',
         type: 'news',
-        category: idCate
+        category: idCate,
+        publishBefore: new Date().toISOString(),
+        isPublish: 1
       };
       const resArticle = await getArticle(params);
 
@@ -85,7 +87,6 @@ const News = () => {
       }
       setArticles(newList);
       setHasNext(dataHasNext);
-      window.scrollTo(0, 0);
     } catch (err) {
       // handle error here.
       setLoadError(err.response?.status || 404);
@@ -105,7 +106,6 @@ const News = () => {
     //     }
     //     setArticles(newList);
     //     setHasNext(dataHasNext);
-    //     window.scrollTo(0, 0);
     //   })
     //   .catch(err => {
     //     setLoadError(err.response?.status || 404);
@@ -193,17 +193,19 @@ const News = () => {
                           </Grid>
                         );
                       })}
+                      {articles.length === 0 && <h2>{t('noPost')}</h2>}
                     </Grid>
 
                     {/* <div className={classes.btnMore}>
                     <Button className={classes.more}>xem thêm</Button>
                   </div> */}
                   </div>
-
-                  <Pagination
-                    count={hasNext && !loading ? page + 1 : page}
-                    onChange={onChangePage}
-                  />
+                  {articles.length > 0 && (
+                    <Pagination
+                      count={hasNext && !loading ? page + 1 : page}
+                      onChange={onChangePage}
+                    />
+                  )}
                 </Grid>
 
                 <Grid item xs={12} md={4} className={classes.rightSidebar}>

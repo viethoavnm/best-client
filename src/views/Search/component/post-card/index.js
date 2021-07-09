@@ -1,14 +1,5 @@
 import {
-  Fragment,
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-  memo
-} from 'react';
-import {
   Card,
-  CardActionArea,
   CardContent,
   CardMedia,
   Grid,
@@ -17,6 +8,7 @@ import {
 import { AccessTime } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
+import { memo } from 'react';
 
 const useStyles = makeStyles(theme => ({
   img: {
@@ -76,35 +68,30 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }));
-const PostCard = memo(({ image, title, date, description, onClick }) => {
+const PostCard = memo(({ image, title, date, description }) => {
   const classes = useStyles();
   return (
     <Card className={classes.root} elevation={0}>
-      <CardActionArea onClick={onClick}>
-        <Grid container spacing={2}>
-          <Grid item xs={5} sm={4} md={4}>
-            <CardActionArea>
-              <CardMedia className={classes.img} image={image} title={title} />
-              <div></div>
-            </CardActionArea>
-          </Grid>
-
-          <Grid item xs={7} sm={8} md={8}>
-            <CardContent className={classes.content}>
-              <Typography className={classes.title} component="h2">
-                {title}
-              </Typography>
-              <Typography className={classes.time} component="p">
-                <AccessTime className={classes.icon} />
-                {date}
-              </Typography>
-              <Typography className={classes.description} component="p">
-                {description}
-              </Typography>
-            </CardContent>
-          </Grid>
+      <Grid container spacing={2}>
+        <Grid item xs={5} sm={4} md={4}>
+          <CardMedia className={classes.img} image={image} />
         </Grid>
-      </CardActionArea>
+
+        <Grid item xs={7} sm={8} md={8}>
+          <CardContent className={classes.content}>
+            <Typography className={classes.title} component="h2">
+              {title}
+            </Typography>
+            <Typography className={classes.time} component="p">
+              <AccessTime className={classes.icon} />
+              {date}
+            </Typography>
+            <Typography className={classes.description} component="p">
+              {description}
+            </Typography>
+          </CardContent>
+        </Grid>
+      </Grid>
     </Card>
   );
 });

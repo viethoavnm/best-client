@@ -117,12 +117,13 @@ const ContactForm = () => {
             className={classes.bg}
             style={{ backgroundImage: `url(${Bg})` }}></Grid>
           <Grid item xs={12} md={5}>
-            <div className={classes.border}>
-              <div className={classes.form}>
+            <div className={classes.border} onSubmit={onSubmit}>
+              <form className={classes.form}>
                 <div className={classes.title}>{t('contactFormTitle')}</div>
                 <div className={classes.row}>
                   <label className={classes.label}>
-                    {t('contactFormInputName')}
+                    {t('contactFormInputName')}{' '}
+                    <span className="error"> *</span>
                   </label>
                   <input
                     className={classes.input}
@@ -137,6 +138,7 @@ const ContactForm = () => {
                 <div className={classes.row}>
                   <label className={classes.label}>
                     {t('contactFormInputTitle')}
+                    <span className="error"> *</span>
                   </label>
                   <input
                     className={classes.input}
@@ -151,6 +153,7 @@ const ContactForm = () => {
                 <div className={classes.row}>
                   <label className={classes.label}>
                     {t('contactFormInputEmail')}
+                    <span className="error"> *</span>
                   </label>
                   <input
                     className={classes.input}
@@ -163,19 +166,20 @@ const ContactForm = () => {
                   />
                 </div>
                 <div className={classes.row}>
-                  <p style={{ color: 'red' }}>
+                  <div className="error">
                     {submit && (!isEmail(email) || isEmpty(email))
                       ? t('inputNotEmail')
                       : null}
-                  </p>
+                  </div>
                 </div>
                 <div className={classes.row} style={{ alignItems: 'baseline' }}>
                   <label className={classes.label}>
-                    {t('contactFormInputContent')}
+                    {t('contactFormInputContent')}{' '}
+                    <span className="error"> *</span>
                   </label>
                   <textarea
                     className={classes.textarea}
-                    rows={3}
+                    rows={4}
                     type="text"
                     required
                     value={content}
@@ -185,17 +189,17 @@ const ContactForm = () => {
                   />
                 </div>
                 <div className={classes.row} style={{ alignItems: 'baseline' }}>
-                  <p style={{ color: 'red' }}>
+                  <div className="error">
                     {submit && !validate() ? t('inputEmpty') : null}
-                  </p>
+                  </div>
                 </div>
                 <div className={classes.row} style={{ alignItems: 'baseline' }}>
                   <label className={classes.label}></label>
-                  <Button className={classes.btn} onClick={onSubmit}>
+                  <Button className={classes.btn} type="submit">
                     {t('submitButton')}
                   </Button>
                 </div>
-              </div>
+              </form>
             </div>
           </Grid>
         </Grid>

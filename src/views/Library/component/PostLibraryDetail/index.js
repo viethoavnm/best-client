@@ -1,10 +1,8 @@
 import { Button, Hidden } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import CardMedia from '@material-ui/core/CardMedia';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { AccessTime } from '@material-ui/icons';
 import { Container } from 'components';
 import RelatedPost from 'components/RelatedPost';
@@ -12,7 +10,6 @@ import RightNews from 'components/RightNews';
 import ShareSocial from 'components/ShareSocial';
 import { removeHTMLTag, truncateString } from 'helpers';
 import Lodash from 'lodash';
-import moment from 'moment';
 import 'moment/locale/vi';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
@@ -32,33 +29,6 @@ import Error404 from 'views/Error404';
 import Error500 from 'views/Error500';
 import useStylesDetailVideo from '../detail-video/style';
 import useStyles from './styles';
-
-const events = [
-  {
-    image: '/images/new-1.png',
-    name: `Hội thảo “Khí hóa sinh khối - Giải pháp bền vững và kinh tế”.`,
-    address: 'Đường số 68, Nguyễn Hoàng, Hà Nội',
-    startTime: '2020-03-27T06:30'
-  },
-  {
-    image: '/images/new-1.png',
-    name: `Hội thảo hoa quả và thực phẩm lần thứ XXI`,
-    address: 'Đường số 8, Thanh Xuân, Triều Khúc, Hà Nội',
-    startTime: '2020-06-12T10:30'
-  },
-  {
-    image: '/images/new-1.png',
-    name: `Công cuộc đổi mới nông thôn 2021`,
-    address: 'Đường số 8, Thanh Xuân, Triều Khúc, Hà Nội',
-    startTime: '2020-12-01T15:30'
-  },
-  {
-    image: '/images/new-1.png',
-    name: `Xây dựng trường học cho học sinh vùng nông thôn Cao Bằng Xây dựng trường học cho học sinh vùng nông thôn Cao Bằng. Xây dựng trường học cho học sinh vùng nông thôn Cao Bằng.`,
-    address: 'Đường số 8, Thanh Xuân, Triều Khúc, Hà Nội',
-    startTime: '2020-01-31T10:30'
-  }
-];
 
 const PostLibraryDetail = props => {
   const { t } = useTranslation();
@@ -107,25 +77,6 @@ const PostLibraryDetail = props => {
     }
   }, [lang]);
 
-  const _renderTitle = title => {
-    return (
-      <Grid item xs={12} md={12}>
-        <Box
-          display="flex"
-          flexDirection="row"
-          alignItems="center"
-          marginBottom="30px">
-          <CardMedia
-            className={classes.icSlash}
-            image="/images/ic-slash-title.svg"
-            alt="slash"
-          />
-          <Typography className={classes.title}>{title}</Typography>
-        </Box>
-      </Grid>
-    );
-  };
-
   const _renderContentEvent = () => {
     const htmlContent = Lodash.unescape(data?.[lang]?.content);
     return (
@@ -153,6 +104,7 @@ const PostLibraryDetail = props => {
             __html: htmlContent
           }}
         />
+        <div className={classes.author}>{data?.authorName}</div>
         <Divider className={classes.divider} />
       </Box>
     );
@@ -206,10 +158,7 @@ const PostLibraryDetail = props => {
                 </Grid>
               </Hidden>
             </Grid>
-            {_renderTitle(`${t('titleArticlesRelate')}`)}
-            <Grid container spacing={3} mb={3} className={classes.gridSuggest}>
-              <RelatedPost data={events} mode="event" />
-            </Grid>
+            <RelatedPost post={data} />
           </Fragment>
         )}
       </Container>

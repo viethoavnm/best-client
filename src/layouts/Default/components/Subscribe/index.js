@@ -6,7 +6,7 @@ import { postEmail } from 'services/emailSub';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { useTranslation } from 'react-i18next';
-
+import { isEmail } from '../../../../helpers';
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -15,27 +15,34 @@ const Subscribe = () => {
   const classes = useStyles();
   const [emailInput, setEmailInput] = useState('');
   const [openSnackBar, setOpenSnackBar] = React.useState(false);
-  const [openFailAlert, setOpenFailAlert] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState('');
   const { t } = useTranslation();
   // We will change to state to control alert fail/success later.
 
   const submitEmailSub = e => {
     e.preventDefault();
+    if (!isEmail(emailInput)) {
+      setErrorMessage(t('emailSub.placeholderEmail'));
+      return;
+    }
     const body = {
       email: emailInput
     };
 
     setOpenSnackBar(false);
-    setOpenFailAlert(false);
+    setErrorMessage('');
     postEmail(body)
       .then(res => {
-        console.log('res', res);
         setEmailInput('');
         setOpenSnackBar(true);
+        setErrorMessage('');
       })
       .catch(err => {
-        console.log('err', err.response);
-        setOpenFailAlert(true);
+        if (err.response.status === 409) {
+          setErrorMessage(t('emailSub.duplicateMessage'));
+        } else {
+          setErrorMessage(t('emailSub.serverErrorMessage'));
+        }
       });
   };
 
@@ -51,8 +58,7 @@ const Subscribe = () => {
     if (reason === 'clickaway') {
       return;
     }
-
-    setOpenFailAlert(false);
+    setErrorMessage('');
   };
 
   return (
@@ -65,25 +71,25 @@ const Subscribe = () => {
           onClose={handleClose}
           severity="success"
           style={{ minWidth: '400px', height: '50px' }}>
-          {t('emailSubSuccess')}
+          {t('emailSub.successMessage')}
         </Alert>
       </Snackbar>
 
       <Snackbar
-        open={openFailAlert}
+        open={errorMessage !== ''}
         autoHideDuration={6000}
         onClose={handleCloseFail}>
         <Alert
           onClose={handleCloseFail}
           severity="error"
           style={{ minWidth: '400px', height: '50px' }}>
-          {t('emaiSubFail')}
+          {errorMessage}
         </Alert>
       </Snackbar>
 
       <Container>
         <div className={classes.content}>
-          <div className={classes.label}>{t('titleEmailSub')}</div>
+          <div className={classes.label}>{t('emailSub.title')}</div>
           <Paper
             component="form"
             elevation={0}
@@ -91,11 +97,10 @@ const Subscribe = () => {
             onSubmit={submitEmailSub}>
             <InputBase
               className={classes.input}
-              placeholder={t('placeholderEmail')}
-              inputProps={{ 'aria-label': 'Subscribe' }}
-              onChange={e => {
-                setEmailInput(e.target.value);
-              }}
+              type="email"
+              placeholder={t('emailSub.placeholderEmail')}
+              inputProps={{ 'aria-label': t('emailSub.placeholderEmail') }}
+              onChange={e => setEmailInput(e.target.value)}
             />
 
             <Button className={classes.button} onClick={submitEmailSub}>

@@ -1,4 +1,4 @@
-import { Box, CardMedia, createStyles, Modal } from '@material-ui/core';
+import { Box, Card, CardMedia, createStyles, Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { createPortal } from 'react-dom';
 import { Carousel } from 'react-responsive-carousel';
@@ -14,11 +14,10 @@ const useStyles = makeStyles(theme =>
       justifyContent: 'center'
     },
     content: {
-      padding: 15,
+      margin: 15,
+      position: 'relative',
       width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        maxWidth: '80%'
-      },
+      maxWidth: 945,
       '&:focus': {
         border: 'none',
         boxShadow: 'none',
@@ -26,7 +25,7 @@ const useStyles = makeStyles(theme =>
       }
     },
     img: {
-      borderRadius: 6
+      paddingBottom: '60%'
     }
   })
 );
@@ -51,14 +50,9 @@ const CarouselImg = ({ open, onClose, listImg, selectedItem }) => {
           {Array.isArray(listImg) &&
             listImg.map((img, index) => {
               return (
-                <Box key={index}>
-                  <CardMedia
-                    className={classes.img}
-                    component="img"
-                    image={img}
-                    title=""
-                  />
-                </Box>
+                <Card key={index}>
+                  <CardMedia className={classes.img} image={img} />
+                </Card>
               );
             })}
         </Carousel>

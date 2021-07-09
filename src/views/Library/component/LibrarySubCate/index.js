@@ -81,7 +81,14 @@ const LibrarySubCate = props => {
       typeLibrary === TYPE_ARTICLE.news
     ) {
       setLoading(true);
-      const params = { page, limit, type: typeLibrary, subType: 'library' };
+      const params = {
+        page,
+        limit,
+        type: typeLibrary,
+        subType: 'library',
+        publishBefore: new Date().toISOString(),
+        isPublish: 1
+      };
       getArticle(params)
         .then(res => {
           const results = getSafeValue(res, 'data.results', []);
@@ -89,7 +96,6 @@ const LibrarySubCate = props => {
           const newList = transformMenu(results, lang);
           setArticles(newList);
           setHasNext(dataHasNext);
-          window.scrollTo(0, 0);
         })
         .catch(err => setLoadError(err.response?.status || 404))
         .finally(() => {
