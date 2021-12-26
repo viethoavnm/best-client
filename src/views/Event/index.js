@@ -16,7 +16,7 @@ import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { getEventByYear } from 'services/event';
+import { getEventByYear, getEvent } from 'services/event';
 import { getTransObj } from 'utils';
 import EventCardLarge from '../../components/EventCardLarge';
 import useStyles from './style';
@@ -59,7 +59,15 @@ const Event = () => {
       .then(res => {
         const data = Lodash.get(res, 'data', []);
         const newList = transformData(data);
-        setListEvent(newList);
+        let newListNext = [];
+        if (new Date().getMonth() + 1 >= 10) {
+          getEventByYear(year + 1).then(res => {
+            newListNext = transformData(Lodash.get(res, 'data', []));
+            setListEvent([...newList, ...newListNext]);
+          });
+        } else {
+          setListEvent(newList);
+        }
       })
       .catch(err => {})
       .finally(() => {
@@ -241,19 +249,30 @@ const Event = () => {
 
               {!loading ? (
                 <div className={classes.eventList}>
-                  {listEvent.map(item => {
-                    return (
-                      <Fragment key={item?._id}>
-                        <CardActionArea
-                          component={Link}
-                          to={`/event/${item._id}`}
-                          style={{ textDecoration: 'none' }}>
-                          <EventCardLarge item={item} />
-                        </CardActionArea>
-                        <Divider className={classes.divider} />
-                      </Fragment>
-                    );
-                  })}
+                  {listEvent
+                    .filter(
+                      event =>
+                        new Date(event.startDate) <=
+                        new Date().setMonth(new Date().getMonth() + 3)
+                    )
+                    .sort(
+                      (a, b) =>
+                        new Date(b.startDate).getTime() -
+                        new Date(a.startDate).getTime()
+                    )
+                    .map(item => {
+                      return (
+                        <Fragment key={item?._id}>
+                          <CardActionArea
+                            component={Link}
+                            to={`/event/${item._id}`}
+                            style={{ textDecoration: 'none' }}>
+                            <EventCardLarge item={item} />
+                          </CardActionArea>
+                          <Divider className={classes.divider} />
+                        </Fragment>
+                      );
+                    })}
                 </div>
               ) : (
                 <div
