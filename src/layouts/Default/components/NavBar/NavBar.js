@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { TYPE_MENU } from 'utils/constant';
 import { mapIcon } from 'views/Home/components/MapSection/MapSection';
-import logo from '../../../../assets/img/logo-best.svg';
+import logo from '../../../../assets/img/logo-best.png';
 import Language from './Language';
 import useStyles from './style';
 

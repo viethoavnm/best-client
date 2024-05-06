@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import { Container } from 'components';
 import { useSelector } from 'react-redux';
-import logo from '../../../../assets/img/logo-best.svg';
+import logo from '../../../../assets/img/logo-best.png';
 import { BREAKPOINTS } from '../NavBar/style';
 import { useTranslation } from 'react-i18next';
 

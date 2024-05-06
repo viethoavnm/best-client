@@ -121,7 +121,7 @@ function DefaultLayoutFooter(props) {
             <Grid item xs={12} sm={6} md={3}>
               <img
                 className="logo-icon"
-                src="/images/logo-best.svg"
+                src="/images/logo-best.png"
                 alt="logo"
               />
               <p className={classes.title}>{t('nameProject')}</p>
