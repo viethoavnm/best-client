@@ -1,7 +1,7 @@
 import { Divider, Grid } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { createStyles, makeStyles } from '@material-ui/styles';
-import logo from 'assets/img/logo-best.png';
+import logo from '../../assets/img/logo-best.png';
 import { Container, SearchBar2 } from 'components';
 import RightNews from 'components/RightNews';
 import { isEmpty } from 'helpers';

@@ -13,7 +13,6 @@ import {
   NewsSection as UiSection2
 } from './components';
 import { Helmet } from 'react-helmet';
-import LogoBEST from 'assets/img/logo-best.png';
 
 const Home = () => {
   const history = useHistory();
